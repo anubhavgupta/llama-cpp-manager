@@ -1,6 +1,6 @@
 // DOM Elements
 const serverPathInput = document.getElementById('serverPath');
-const modelPathInput = document.getElementById('modelPath');
+const modelPathSelect = document.getElementById('modelPath');
 const nglInput = document.getElementById('ngl');
 const threadsInput = document.getElementById('threads');
 const tempInput = document.getElementById('temp');
@@ -62,7 +62,7 @@ function loadSavedValues() {
     const savedValues = JSON.parse(localStorage.getItem('llamaCppConfig') || '{}');
     
     if (savedValues.serverPath) serverPathInput.value = savedValues.serverPath;
-    if (savedValues.modelPath) modelPathInput.value = savedValues.modelPath;
+    if (savedValues.modelPath) modelPathSelect.value = savedValues.modelPath;
     if (savedValues.ngl !== undefined) nglInput.value = savedValues.ngl;
     if (savedValues.threads !== undefined) threadsInput.value = savedValues.threads;
     if (savedValues.temp !== undefined) tempInput.value = savedValues.temp;
@@ -75,11 +75,38 @@ function loadSavedValues() {
     if (savedValues.nCpuMoe !== undefined) nCpuMoeInput.value = savedValues.nCpuMoe;
 }
 
+// Fetch and populate models dropdown
+async function fetchModels() {
+    try {
+        const response = await fetch('/models');
+        const data = await response.json();
+        
+        if (data.success) {
+            // Clear existing options except the placeholder
+            modelPathSelect.innerHTML = '<option value="">-- Select a Model --</option>';
+            
+            // Add models to dropdown
+            data.models.forEach(model => {
+                const option = document.createElement('option');
+                option.value = model.path;  // Use full path for the value
+                option.textContent = model.relativePath || model.name;  // Show relative path or just name
+                modelPathSelect.appendChild(option);
+            });
+        } else {
+            console.error('Failed to fetch models:', data.error);
+            showOutput('Error fetching models: ' + data.error);
+        }
+    } catch (error) {
+        console.error('Error fetching models:', error);
+        showOutput('Error fetching models: ' + error.message);
+    }
+}
+
 // Save current values to localStorage
 function saveCurrentValues() {
     const config = {
         serverPath: serverPathInput.value,
-        modelPath: modelPathInput.value,
+        modelPath: modelPathSelect.value,  // Use select value instead of input value
         ngl: parseInt(nglInput.value) || 0,
         threads: parseInt(threadsInput.value) || 1,
         temp: parseFloat(tempInput.value) || 0,
@@ -105,9 +132,15 @@ async function launchServer() {
         return;
     }
     
+    // Check if model is selected
+    if (!modelPathSelect.value.trim()) {
+        alert('Please select a model from the dropdown');
+        return;
+    }
+    
     // Collect all configuration values
     const config = {
-        modelPath: modelPathInput.value.trim(),
+        modelPath: modelPathSelect.value.trim(),  // Use select value instead of input value
         ngl: parseInt(nglInput.value) || 0,
         threads: parseInt(threadsInput.value) || 1,
         temp: parseFloat(tempInput.value) || 0,
@@ -235,7 +268,7 @@ async function stopServer() {
 async function init() {
     // Load saved values from localStorage
     loadSavedValues();
-    
+    fetchModels();
     // Set up event listeners
     launchBtn.addEventListener('click', launchServer);
     stopBtn.addEventListener('click', stopServer);
