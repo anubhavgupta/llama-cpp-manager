@@ -14,6 +14,10 @@ const swaFullCheckbox = document.getElementById('swaFull');
 const contextSizeInput = document.getElementById('contextSize');
 const nCpuMoeInput = document.getElementById('nCpuMoe');
 const cpuMoeCheckbox = document.getElementById('cpuMoe');
+const ctkEnableCheckbox = document.getElementById('ctkEnable');
+const contextTokenKeySelect = document.getElementById('contextTokenKey');
+const contextTokenValueSelect = document.getElementById('contextTokenValue');
+const fastAttentionCheckbox = document.getElementById('fastAttention');
 const launchBtn = document.getElementById('launchBtn');
 const stopBtn = document.getElementById('stopBtn');
 const statusMessage = document.getElementById('statusMessage');
@@ -78,6 +82,10 @@ function loadSavedValues() {
     if (savedValues.swaFull !== undefined) swaFullCheckbox.checked = savedValues.swaFull;
     if (savedValues.contextSize !== undefined) contextSizeInput.value = savedValues.contextSize;
     if (savedValues.nCpuMoe !== undefined) nCpuMoeInput.value = savedValues.nCpuMoe;
+    if (savedValues.ctkEnable !== undefined) ctkEnableCheckbox.checked = savedValues.ctkEnable;
+    if (savedValues.contextTokenKey !== undefined) contextTokenKeySelect.value = savedValues.contextTokenKey;
+    if (savedValues.contextTokenValue !== undefined) contextTokenValueSelect.value = savedValues.contextTokenValue;
+    if (savedValues.fastAttention !== undefined) fastAttentionCheckbox.checked = savedValues.fastAttention;
 }
 
 // Fetch and populate models dropdown
@@ -122,53 +130,21 @@ function saveCurrentValues() {
         swaFull: swaFullCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
         nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
-        cpuMoe: cpuMoeCheckbox.checked
+        cpuMoe: cpuMoeCheckbox.checked,
+        ctkEnable: ctkEnableCheckbox.checked,
+        contextTokenKey: contextTokenKeySelect.value,
+        contextTokenValue: contextTokenValueSelect.value,
+        fastAttention: fastAttentionCheckbox.checked
     };
     
     localStorage.setItem('llamaCppConfig', JSON.stringify(config));
 }
 
-// Initialize WebSocket connection for log streaming
-function initWebSocket() {
-    // Only initialize if not already connected
-    if (socket) return;
-    
-    try {
-        // Connect to the server's WebSocket endpoint
-        socket = io();
-        
-        socket.on('connect', () => {
-            console.log('Connected to WebSocket server for log streaming');
-            showOutput('Connected to server for real-time logging');
-        });
-        
-        socket.on('log-stream', (data) => {
-            // Stream logs to output box
-            if (data && data.data) {
-                showOutput(data.data.trim());
-            }
-        });
-        
-        socket.on('server-ended', (data) => {
-            console.log('Server process ended:', data.message);
-            showOutput('Server process has ended');
-            updateStatus(false);
-            updateButtonStates(false);
-        });
-        
-        socket.on('server-error', (data) => {
-            console.error('Server error:', data.message);
-            showOutput('Server error: ' + data.message);
-        });
-        
-        socket.on('disconnect', () => {
-            console.log('Disconnected from WebSocket server');
-            showOutput('Disconnected from server for real-time logging');
-        });
-    } catch (error) {
-        console.error('Failed to initialize WebSocket:', error);
-        showOutput('Failed to connect to server for real-time logging: ' + error.message);
-    }
+// Update enable/disable state for context token parameters
+function updateContextTokenEnableState() {
+    const isEnabled = ctkEnableCheckbox.checked;
+    contextTokenKeySelect.disabled = !isEnabled;
+    contextTokenValueSelect.disabled = !isEnabled;
 }
 
 // Launch the server with all parameters
@@ -199,7 +175,11 @@ async function launchServer() {
         swaFull: swaFullCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
         nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
-        cpuMoe: cpuMoeCheckbox.checked
+        cpuMoe: cpuMoeCheckbox.checked,
+        ctkEnable: ctkEnableCheckbox.checked,
+        contextTokenKey: contextTokenKeySelect.value,
+        contextTokenValue: contextTokenValueSelect.value,
+        fastAttention: fastAttentionCheckbox.checked
     };
     
     // Save current values to localStorage
@@ -260,6 +240,17 @@ async function launchServer() {
             args.push('--cpu-moe');
         }
         
+        // Add context token parameters if enabled
+        if (config.ctkEnable && config.contextTokenKey && config.contextTokenValue) {
+            args.push('-ctk', config.contextTokenKey);
+            args.push('-ctv', config.contextTokenValue);
+        }
+        
+        // Add fast attention flag if checked
+        if (config.fastAttention) {
+            args.push('-fa');
+        }
+        
         showOutput(`Command arguments: ${args.join(' ')}`);
         
         const response = await fetch('/start', {
@@ -289,6 +280,50 @@ async function launchServer() {
         showOutput('Error launching server: ' + error.message);
     }
 }
+
+// Initialize WebSocket connection for log streaming
+function initWebSocket() {
+    // Only initialize if not already connected
+    if (socket) return;
+    
+    try {
+        // Connect to the server's WebSocket endpoint
+        socket = io();
+        
+        socket.on('connect', () => {
+            console.log('Connected to WebSocket server for log streaming');
+            showOutput('Connected to server for real-time logging');
+        });
+        
+        socket.on('log-stream', (data) => {
+            // Stream logs to output box
+            if (data && data.data) {
+                showOutput(data.data.trim());
+            }
+        });
+        
+        socket.on('server-ended', (data) => {
+            console.log('Server process ended:', data.message);
+            showOutput('Server process has ended');
+            updateStatus(false);
+            updateButtonStates(false);
+        });
+        
+        socket.on('server-error', (data) => {
+            console.error('Server error:', data.message);
+            showOutput('Server error: ' + data.message);
+        });
+        
+        socket.on('disconnect', () => {
+            console.log('Disconnected from WebSocket server');
+            showOutput('Disconnected from server for real-time logging');
+        });
+    } catch (error) {
+        console.error('Failed to initialize WebSocket:', error);
+        showOutput('Failed to connect to server for real-time logging: ' + error.message);
+    }
+}
+
 
 // Stop the server
 async function stopServer() {
@@ -322,12 +357,15 @@ async function stopServer() {
 
 // Initialize the application
 async function init() {
+    
+    await fetchModels();
     // Load saved values from localStorage
     loadSavedValues();
-    fetchModels();
+    
     // Set up event listeners
     launchBtn.addEventListener('click', launchServer);
     stopBtn.addEventListener('click', stopServer);
+    ctkEnableCheckbox.addEventListener('change', updateContextTokenEnableState);
     
     // Check initial status
     await fetchStatus();

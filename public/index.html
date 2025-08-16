@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLaMA CPP Manager</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Load Socket.IO client library as ES Module -->
-     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        window.socket = io();
-    </script>
 </head>
 <body>
     <div class="container">
@@ -79,6 +74,45 @@
             <div class="config-group">
                 <label for="cpuMoe">CPU MoE (--cpu-moe):</label>
                 <input type="checkbox" id="cpuMoe">
+            </div>
+            
+            <!-- New Context Token Parameters -->
+            <div class="config-group">
+                <label for="ctkEnable">Context Token Parameters:</label>
+                <input type="checkbox" id="ctkEnable">
+                <label for="ctkEnable">Enable -ctk/-ctv</label>
+            </div>
+            <div class="config-group">
+                <label for="contextTokenKey">Context Token Key (-ctk):</label>
+                <select id="contextTokenKey" disabled>
+                    <option value="f32">f32</option>
+                    <option value="f16" selected>f16</option>
+                    <option value="bf16">bf16</option>
+                    <option value="q8_0">q8_0</option>
+                    <option value="q4_0">q4_0</option>
+                    <option value="q4_1">q4_1</option>
+                    <option value="iq4_nl">iq4_nl</option>
+                    <option value="q5_0">q5_0</option>
+                    <option value="q5_1">q5_1</option>
+                </select>
+            </div>
+            <div class="config-group">
+                <label for="contextTokenValue">Context Token Value (-ctv):</label>
+                <select id="contextTokenValue" disabled>
+                    <option value="f32">f32</option>
+                    <option value="f16" selected>f16</option>
+                    <option value="bf16">bf16</option>
+                    <option value="q8_0">q8_0</option>
+                    <option value="q4_0">q4_0</option>
+                    <option value="q4_1">q4_1</option>
+                    <option value="iq4_nl">iq4_nl</option>
+                    <option value="q5_0">q5_0</option>
+                    <option value="q5_1">q5_1</option>
+                </select>
+            </div>
+            <div class="config-group">
+                <label for="fastAttention">Fast Attention (--fa):</label>
+                <input type="checkbox" id="fastAttention">
             </div>
             
             <button id="launchBtn" class="btn btn-primary">Launch</button>
