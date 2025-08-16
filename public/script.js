@@ -1,3 +1,5 @@
+import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
+
 // DOM Elements
 const serverPathInput = document.getElementById('serverPath');
 const modelPathSelect = document.getElementById('modelPath');
@@ -133,7 +135,7 @@ function initWebSocket() {
     
     try {
         // Connect to the server's WebSocket endpoint
-        socket = io('http://localhost:3001');
+        socket = io();
         
         socket.on('connect', () => {
             console.log('Connected to WebSocket server for log streaming');
