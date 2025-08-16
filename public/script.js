@@ -18,6 +18,9 @@ const statusMessage = document.getElementById('statusMessage');
 const processInfo = document.getElementById('processInfo');
 const output = document.getElementById('output');
 
+// Store WebSocket connection
+let socket = null;
+
 // Disable/enable buttons based on status
 function updateButtonStates(isRunning) {
     launchBtn.disabled = isRunning;
@@ -123,6 +126,49 @@ function saveCurrentValues() {
     localStorage.setItem('llamaCppConfig', JSON.stringify(config));
 }
 
+// Initialize WebSocket connection for log streaming
+function initWebSocket() {
+    // Only initialize if not already connected
+    if (socket) return;
+    
+    try {
+        // Connect to the server's WebSocket endpoint
+        socket = io('http://localhost:3001');
+        
+        socket.on('connect', () => {
+            console.log('Connected to WebSocket server for log streaming');
+            showOutput('Connected to server for real-time logging');
+        });
+        
+        socket.on('log-stream', (data) => {
+            // Stream logs to output box
+            if (data && data.data) {
+                showOutput(data.data.trim());
+            }
+        });
+        
+        socket.on('server-ended', (data) => {
+            console.log('Server process ended:', data.message);
+            showOutput('Server process has ended');
+            updateStatus(false);
+            updateButtonStates(false);
+        });
+        
+        socket.on('server-error', (data) => {
+            console.error('Server error:', data.message);
+            showOutput('Server error: ' + data.message);
+        });
+        
+        socket.on('disconnect', () => {
+            console.log('Disconnected from WebSocket server');
+            showOutput('Disconnected from server for real-time logging');
+        });
+    } catch (error) {
+        console.error('Failed to initialize WebSocket:', error);
+        showOutput('Failed to connect to server for real-time logging: ' + error.message);
+    }
+}
+
 // Launch the server with all parameters
 async function launchServer() {
     const serverPath = serverPathInput.value.trim();
@@ -159,6 +205,7 @@ async function launchServer() {
     
     try {
         showOutput(`Starting server: ${serverPath}`);
+        showOutput('Connecting to server for real-time logging...');
         
         // Build command arguments
         const args = [];
@@ -230,6 +277,8 @@ async function launchServer() {
             showOutput('Server started successfully');
             updateStatus(true);
             updateButtonStates(true);
+            // Initialize WebSocket connection for logging
+            initWebSocket();
         } else {
             showOutput('Error starting server: ' + data.error);
         }
@@ -255,6 +304,11 @@ async function stopServer() {
             showOutput('Server stopped successfully');
             updateStatus(false);
             updateButtonStates(false);
+            // Close WebSocket connection
+            if (socket) {
+                socket.disconnect();
+                socket = null;
+            }
         } else {
             showOutput('Error stopping server: ' + data.error);
         }

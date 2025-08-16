@@ -12,6 +12,15 @@ app.use(express.urlencoded({ extended: true }));
 
 // Store the running process
 let runningProcess = null;
+let connectedClients = [];
+
+// Create WebSocket server for log streaming
+const httpServer = require('http').createServer(app);
+const io = require('socket.io')(httpServer, {
+    cors: {
+        origin: "*"
+    }
+});
 
 // Function to recursively find GGUF files
 async function findGGUFFiles(directory) {
@@ -84,15 +93,47 @@ app.post('/start', (req, res) => {
         console.log('Starting server with args:', args);
         runningProcess = spawn(serverPath, args, { stdio: 'pipe' });
         
+        // Handle process events
         runningProcess.on('close', (code) => {
             console.log(`Server process exited with code ${code}`);
             runningProcess = null;
+            // Notify clients that the process has ended
+            connectedClients.forEach(client => {
+                client.emit('server-ended', { message: 'Server process has ended' });
+            });
         });
         
         runningProcess.on('error', (error) => {
             console.error(`Failed to start process: ${error}`);
             runningProcess = null;
+            // Notify clients of error
+            connectedClients.forEach(client => {
+                client.emit('server-error', { message: 'Failed to start server: ' + error.message });
+            });
         });
+        
+        // Stream stdout and stderr to connected clients
+        if (runningProcess.stdout) {
+            runningProcess.stdout.on('data', (data) => {
+                const logData = data.toString();
+                console.log('STDOUT:', logData);
+                // Broadcast to all connected clients
+                connectedClients.forEach(client => {
+                    client.emit('log-stream', { type: 'stdout', data: logData });
+                });
+            });
+        }
+        
+        if (runningProcess.stderr) {
+            runningProcess.stderr.on('data', (data) => {
+                const logData = data.toString();
+                console.log('STDERR:', logData);
+                // Broadcast to all connected clients
+                connectedClients.forEach(client => {
+                    client.emit('log-stream', { type: 'stderr', data: logData });
+                });
+            });
+        }
         
         res.json({ 
             success: true, 
@@ -162,6 +203,22 @@ app.get('/status', (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
+// WebSocket connection handling for log streaming
+io.on('connection', (socket) => {
+    console.log('Client connected for log streaming');
+    connectedClients.push(socket);
+    
+    // Remove client when disconnected
+    socket.on('disconnect', () => {
+        console.log('Client disconnected from log streaming');
+        const index = connectedClients.indexOf(socket);
+        if (index > -1) {
+            connectedClients.splice(index, 1);
+        }
+    });
+});
+
+// Start the server with WebSocket support
+httpServer.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
