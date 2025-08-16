@@ -32,13 +32,34 @@ label {
     font-weight: bold;
 }
 
-#serverPath {
+#serverPath, #modelPath, #ngl, #threads, #temp, #topK, #topP, #repeatPenalty, #contextSize, #nCpuMoe {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+.config-group {
+    margin-bottom: 15px;
+}
+
+.config-group h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.config-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.config-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
 }
 
 .btn {

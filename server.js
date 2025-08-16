@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 
 // API endpoint to start the llama server
 app.post('/start', (req, res) => {
-    const { serverPath } = req.body;
+    const { serverPath, args = [] } = req.body;
     
     if (!serverPath) {
         return res.status(400).json({ 
@@ -38,7 +38,8 @@ app.post('/start', (req, res) => {
     
     // Start the server using spawn for better process control
     try {
-        runningProcess = spawn(serverPath, [], { stdio: 'pipe' });
+        console.log('Starting server with args:', args);
+        runningProcess = spawn(serverPath, args, { stdio: 'pipe' });
         
         runningProcess.on('close', (code) => {
             console.log(`Server process exited with code ${code}`);
