@@ -11,6 +11,7 @@ const mlockCheckbox = document.getElementById('mlock');
 const swaFullCheckbox = document.getElementById('swaFull');
 const contextSizeInput = document.getElementById('contextSize');
 const nCpuMoeInput = document.getElementById('nCpuMoe');
+const cpuMoeCheckbox = document.getElementById('cpuMoe');
 const launchBtn = document.getElementById('launchBtn');
 const stopBtn = document.getElementById('stopBtn');
 const statusMessage = document.getElementById('statusMessage');
@@ -88,7 +89,8 @@ function saveCurrentValues() {
         mlock: mlockCheckbox.checked,
         swaFull: swaFullCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
-        nCpuMoe: parseInt(nCpuMoeInput.value) || 0
+        nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
+        cpuMoe: cpuMoeCheckbox.checked
     };
     
     localStorage.setItem('llamaCppConfig', JSON.stringify(config));
@@ -115,7 +117,8 @@ async function launchServer() {
         mlock: mlockCheckbox.checked,
         swaFull: swaFullCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
-        nCpuMoe: parseInt(nCpuMoeInput.value) || 0
+        nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
+        cpuMoe: cpuMoeCheckbox.checked
     };
     
     // Save current values to localStorage
@@ -169,6 +172,10 @@ async function launchServer() {
         
         if (config.nCpuMoe > 0) {
             args.push('--n-cpu-moe', config.nCpuMoe.toString());
+        }
+        
+        if (config.cpuMoe) {
+            args.push('--cpu-moe');
         }
         
         showOutput(`Command arguments: ${args.join(' ')}`);
