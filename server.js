@@ -1,8 +1,9 @@
 const express = require('express');
-const { spawn, exec } = require('child_process');
+const { spawn, execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs').promises;
 const os = require('os');
+const osUtils = require('os-utils');
 const app = express();
 const PORT = 3001;
 
@@ -32,18 +33,30 @@ let systemMetrics = {
 };
 
 // Function to get system metrics
-function getSystemMetrics() {
-    // CPU Usage (simplified - in a real app you'd use a library like node-os-utils)
-    const cpus = os.cpus();
-    let totalIdle = 0;
-    let totalTick = 0;
-    cpus.forEach(cpu => {
-        totalIdle += cpu.times.idle;
-        totalTick += Object.values(cpu.times).reduce((a, b) => a + b, 0);
-    });
-    
-    const idlePercentage = (totalIdle / cpus.length) / (totalTick / cpus.length) * 100;
-    const cpuUsage = 100 - idlePercentage;
+async function getSystemMetrics() {
+    // CPU Usage using os-utils for more accurate readings
+    let cpuUsage = 0;
+    try {
+        // Use os-utils for better CPU monitoring
+        cpuUsage = await new Promise((res, rej)=>{
+            osUtils.cpuUsage((usage)=>{
+                res(usage * 100);
+            });
+        });
+
+    } catch (error) {
+        // Fallback to manual calculation if os-utils fails
+        const cpus = os.cpus();
+        let totalIdle = 0;
+        let totalTick = 0;
+        cpus.forEach(cpu => {
+            const times = cpu.times;
+            totalIdle += times.idle;
+            totalTick += Object.values(times).reduce((a, b) => a + b, 0);
+        });
+        const idlePercentage = (totalIdle / cpus.length) / (totalTick / cpus.length) * 100;
+        cpuUsage = Math.max(0, 100 - idlePercentage);
+    }
     
     // RAM Usage
     const totalMemory = os.totalmem();
@@ -58,10 +71,6 @@ function getSystemMetrics() {
     let vramFree = 0;
     
     try {
-        // Execute nvidia-smi command to get GPU metrics
-        const { execSync } = require('child_process');
-        const output = execSync('nvidia-smi --query-compute-apps=pid,used_memory --format=csv,noheader,nounits', { encoding: 'utf8' });
-        
         // Parse the output to extract VRAM usage for the current process
         // For now, we'll use a simpler approach - get general GPU info
         const smiOutput = execSync('nvidia-smi --query-gpu=utilization.gpu,memory.total,memory.used --format=csv,noheader,nounits', { encoding: 'utf8' });
@@ -102,9 +111,8 @@ function getSystemMetrics() {
 }
 
 // Function to update system metrics history
-function updateSystemMetricsHistory() {
-    const metrics = getSystemMetrics();
-    
+async function updateSystemMetricsHistory() {
+    const metrics = await getSystemMetrics();
     // Update CPU history (keep last 50 points)
     systemMetrics.cpu.usage = metrics.cpu;
     if (systemMetrics.cpu.history.length >= 50) {
@@ -323,7 +331,8 @@ app.get('/metrics', (req, res) => {
         cpu: systemMetrics.cpu.usage,
         ram: systemMetrics.ram.usage,
         gpu: systemMetrics.gpu.usage,
-        vram: systemMetrics.vram.usage
+        vram:  systemMetrics.vram.usage,
+        vramUsage: `${systemMetrics.vram.total - systemMetrics.vram.free}/${systemMetrics.vram.total}`,
     });
 });
 

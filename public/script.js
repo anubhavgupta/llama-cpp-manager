@@ -846,7 +846,7 @@ async function fetchSystemMetrics() {
             if (chartData.vram.length > 50) {
                 chartData.vram.shift(); // Remove oldest point
             }
-            document.getElementById('vramValue').textContent = `${Math.round(data.vram)}%`;
+            document.getElementById('vramValue').textContent = `${data.vramUsage}`;
         }
         
         updateCharts();
