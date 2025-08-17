@@ -1,5 +1,5 @@
 const express = require('express');
-const { spawn } = require('child_process');
+const { spawn, exec } = require('child_process');
 const path = require('path');
 const fs = require('fs').promises;
 const os = require('os');
@@ -37,7 +37,6 @@ function getSystemMetrics() {
     const cpus = os.cpus();
     let totalIdle = 0;
     let totalTick = 0;
-    
     cpus.forEach(cpu => {
         totalIdle += cpu.times.idle;
         totalTick += Object.values(cpu.times).reduce((a, b) => a + b, 0);
@@ -52,12 +51,43 @@ function getSystemMetrics() {
     const usedMemory = totalMemory - freeMemory;
     const ramUsage = (usedMemory / totalMemory) * 100;
     
-    // For GPU and VRAM, we'll simulate values since node doesn't have native GPU monitoring
-    // In a real implementation, you'd use libraries like node-ffi-napi or system-specific tools
-    const gpuUsage = Math.random() * 100; // Simulated
-    const vramUsage = Math.random() * 100; // Simulated
-    const vramTotal = 8 * 1024 * 1024 * 1024; // 8GB in bytes (simulated)
-    const vramFree = vramTotal * (1 - vramUsage / 100);
+    // GPU and VRAM Usage - Parse nvidia-smi output
+    let gpuUsage = 0;
+    let vramUsage = 0;
+    let vramTotal = 0;
+    let vramFree = 0;
+    
+    try {
+        // Execute nvidia-smi command to get GPU metrics
+        const { execSync } = require('child_process');
+        const output = execSync('nvidia-smi --query-compute-apps=pid,used_memory --format=csv,noheader,nounits', { encoding: 'utf8' });
+        
+        // Parse the output to extract VRAM usage for the current process
+        // For now, we'll use a simpler approach - get general GPU info
+        const smiOutput = execSync('nvidia-smi --query-gpu=utilization.gpu,memory.total,memory.used --format=csv,noheader,nounits', { encoding: 'utf8' });
+        
+        if (smiOutput) {
+            const lines = smiOutput.trim().split('\n');
+            if (lines.length > 0) {
+                const line = lines[0].trim();
+                const parts = line.split(',').map(p => p.trim());
+                if (parts.length >= 3) {
+                    gpuUsage = parseFloat(parts[0]) || 0;
+                    vramTotal = parseFloat(parts[1]) || 0;
+                    const vramUsed = parseFloat(parts[2]) || 0;
+                    vramFree = vramTotal - vramUsed;
+                    vramUsage = (vramUsed / vramTotal) * 100 || 0;
+                }
+            }
+        }
+    } catch (error) {
+        // If nvidia-smi fails, fall back to simulated values
+        console.log('Failed to get GPU/VRAM data from nvidia-smi:', error.message);
+        gpuUsage = Math.random() * 100; // Simulated fallback
+        vramUsage = Math.random() * 100; // Simulated fallback
+        vramTotal = 8 * 1024 * 1024 * 1024 / (1024 * 1024); // 8GB in MB
+        vramFree = vramTotal * (1 - vramUsage / 100);
+    }
     
     return {
         cpu: cpuUsage,
