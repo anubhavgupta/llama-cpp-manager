@@ -1,7 +1,5 @@
 /* Updated CSS for improved layout and styling */
 
-/* Updated CSS for improved layout and styling */
-
 body {
     font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
@@ -184,53 +182,202 @@ body {
     position: relative;
 }
 
-/* New approach for scrollable content area */
-.scrollable-content {
-    flex: 1;
-    overflow-y: auto;
-    /* This will be the scrollable area */
-}
-
+/* Make the main content area scrollable but keep action buttons sticky at bottom */
 .input-section {
     flex: 1;
     overflow-y: auto;
-    /* Make the input section scrollable */
-    height: 100%;
-    position: relative;
+    /* This will be the scrollable area for configuration options */
+    height: calc(100% - 120px); /* Leave space for sticky action buttons */
 }
 
-.input-section h3 {
-    margin-top: 0;
-    margin-bottom: 20px;
+/* Sticky action buttons container at the bottom of main content */
+.action-buttons-container {
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    padding: 15px 0;
+    margin-top: auto; /* Push to bottom of flex container */
+    z-index: 100;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 0 20px;
+}
+
+/* Model Status and Output Styles - Updated for smaller size */
+.model-status-output-section {
+    margin-top: 20px; /* Reduced from 30px */
+    padding: 15px; /* Reduced from 20px */
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.model-status-container {
+    margin-bottom: 10px; /* Reduced from 15px */
+}
+
+.status-message {
+    font-weight: bold;
+    margin-bottom: 8px; /* Reduced from 10px */
+    padding: 8px; /* Reduced from 10px */
+    border-radius: 4px; /* Slightly smaller */
+    background-color: #fff3e0;
+    color: #ff9800;
+    font-size: 12px; /* Smaller size */
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.status-message.running {
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+.process-info {
+    padding: 6px; /* Reduced from 8px */
+    background-color: #e3f2fd;
+    border-radius: 4px; /* Slightly smaller */
+    font-size: 12px; /* Smaller size */
     color: #333;
-    font-weight: 500;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 10px;
-    font-size: 18px;
+    margin-top: 6px; /* Reduced from 8px */
 }
 
+.model-output-container {
+    margin-top: 8px; /* Reduced from 10px */
+}
+
+.output-content {
+    background-color: #000;
+    color: #00ff00;
+    padding: 8px; /* Reduced from 10px */
+    border-radius: 4px; /* Slightly smaller */
+    white-space: pre-wrap;
+    overflow-y: auto;
+    max-height: 120px; /* Reduced from 150px */
+    font-family: 'Courier New', monospace;
+    font-size: 10px; /* Smaller size */
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Model Status Inline - Make it small and occupy less space */
+.model-status-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Reduced from 10px */
+    margin-left: auto; /* Push to the right side */
+    background-color: #f8f9fa;
+    padding: 6px 10px; /* Reduced from 8px 12px */
+    border-radius: 4px; /* Slightly smaller */
+    border: 1px solid #e0e0e0;
+    min-width: 150px; /* Reduced width */
+}
+
+.model-status-inline .status-message {
+    font-size: 11px; /* Smaller size */
+    margin-bottom: 0;
+    padding: 4px; /* Reduced from 5px */
+    flex-shrink: 0;
+}
+
+.model-status-inline .status-message.running {
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+.model-status-inline .status-message:not(.running) {
+    background-color: #fff3e0;
+    color: #ff9800;
+}
+
+/* Material Design checkbox styling - Updated for smaller size and inline display */
+.checkbox {
+    width: 16px !important; /* Smaller checkbox size */
+    height: 16px !important; /* Smaller checkbox size */
+    margin-right: 6px !important; /* Reduced spacing */
+    padding: 0; /* Remove padding */
+    border-radius: 3px; /* Slightly smaller border radius */
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.checkbox:checked {
+    background-color: #2196f3;
+    border-color: #2196f3;
+}
+
+.checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 1px;
+    left: 7px;
+    color: white;
+    font-size: 12px; /* Smaller checkmark */
+    font-weight: bold;
+}
+
+/* Inline checkbox styling - Updated for better spacing and smaller size */
+.inline-checkboxes {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Reduced from 15px */
+    flex-wrap: wrap;
+    margin-bottom: 10px; /* Reduced from 20px */
+}
+
+.inline-checkboxes .form-group {
+    margin-bottom: 0; /* Remove bottom margin */
+    flex: 1; /* Allow to grow */
+    min-width: 100px; /* Minimum width for better layout */
+    display: flex;
+    align-items: center; /* Align items vertically */
+    gap: 6px; /* Reduced spacing between label and checkbox */
+    flex-direction: row;
+}
+
+.inline-checkboxes .form-group label {
+    font-size: 12px; /* Smaller label size */
+    margin-bottom: 0; /* Remove bottom margin */
+    flex-shrink: 0; /* Prevent shrinking of labels */
+}
+
+/* Form group styling - Updated for smaller size */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Reduced from 20px */
     display: flex;
     flex-direction: column;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px; /* Reduced from 8px */
     font-weight: 500;
     color: #333;
-    font-size: 14px;
+    font-size: 13px; /* Smaller size */
 }
 
 .form-control {
     width: 100%;
-    padding: 12px 15px;
+    padding: 10px 12px; /* Reduced padding */
     border: 1px solid #ddd;
-    border-radius: 6px;
+    border-radius: 4px; /* Slightly smaller */
     box-sizing: border-box;
     font-family: 'Roboto', Arial, sans-serif;
-    font-size: 14px;
+    font-size: 13px; /* Smaller size */
     transition: all 0.2s ease;
     background-color: #fff;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
@@ -239,56 +386,47 @@ body {
 .form-control:focus {
     outline: none;
     border-color: #2196f3;
-    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
-}
-
-.checkbox {
-    width: auto !important;
-    margin-right: 8px !important;
-    padding: 8px;
-    border-radius: 4px;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
 }
 
 .btn {
-    padding: 12px 20px;
-    margin: 4px;
+    padding: 8px 16px; /* Reduced padding */
+    margin: 2px; /* Reduced margin */
     border: none;
-    border-radius: 6px;
+    border-radius: 4px; /* Slightly smaller */
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px; /* Smaller size */
     font-weight: 500;
     transition: all 0.2s ease;
     font-family: 'Roboto', Arial, sans-serif;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px; /* Reduced gap */
 }
 
 .btn-primary {
     background-color: #2196f3;
     color: white;
-    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
+    box-shadow: 0 1px 3px rgba(33, 150, 243, 0.3);
 }
 
 .btn-primary:hover {
     background-color: #1976d2;
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(33, 150, 243, 0.4);
+    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.4);
 }
 
 .btn-danger {
     background-color: #f44336;
     color: white;
-    box-shadow: 0 2px 4px rgba(244, 67, 54, 0.3);
+    box-shadow: 0 1px 3px rgba(244, 67, 54, 0.3);
 }
 
 .btn-danger:hover {
     background-color: #d32f2f;
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(244, 67, 54, 0.4);
+    box-shadow: 0 2px 4px rgba(244, 67, 54, 0.4);
 }
 
 .btn-secondary {
@@ -310,126 +448,17 @@ body {
     transform: none;
 }
 
-.action-buttons {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 2px solid #e0e0e0;
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    flex-wrap: wrap;
-    /* Make action buttons sticky at bottom */
-    position: sticky;
-    bottom: 0;
-    background-color: white;
-    z-index: 100;
-    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
-}
-
-/* Add styling to show model status next to action buttons */
-.model-status-inline {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: auto; /* Push to the right side */
-    background-color: #f8f9fa;
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid #e0e0e0;
-    min-width: 200px;
-}
-
-.model-status-inline .status-message {
-    font-size: 12px;
-    margin-bottom: 0;
-    padding: 5px;
-    flex-shrink: 0;
-}
-
-.model-status-inline .status-message.running {
-    background-color: #e8f5e9;
-    color: #4caf50;
-}
-
-.model-status-inline .status-message:not(.running) {
-    background-color: #fff3e0;
-    color: #ff9800;
-}
-
-/* Model Status and Output Styles - Updated for smaller size */
-.model-status-output-section {
-    margin-top: 30px;
-    padding: 15px; /* Reduced from 20px */
-    background-color: #f8f9fa;
-    border-radius: 6px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.model-status-container {
-    margin-bottom: 15px; /* Reduced from 20px */
-}
-
-.status-message {
-    font-weight: bold;
-    margin-bottom: 10px; /* Reduced from 15px */
-    padding: 10px; /* Reduced from 15px */
-    border-radius: 6px;
-    background-color: #fff3e0;
-    color: #ff9800;
-    font-size: 14px; /* Slightly smaller */
-    text-align: center;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-}
-
-.status-message.running {
-    background-color: #e8f5e9;
-    color: #4caf50;
-}
-
-.process-info {
-    padding: 8px; /* Reduced from 10px */
-    background-color: #e3f2fd;
-    border-radius: 6px;
-    font-size: 13px; /* Slightly smaller */
-    color: #333;
-    margin-top: 8px; /* Reduced from 10px */
-}
-
-.model-output-container {
-    margin-top: 10px; /* Reduced from 15px */
-}
-
-.output-content {
-    background-color: #000;
-    color: #00ff00;
-    padding: 10px; /* Reduced from 15px */
-    border-radius: 6px;
-    white-space: pre-wrap;
-    overflow-y: auto;
-    max-height: 150px; /* Reduced from 200px */
-    font-family: 'Courier New', monospace;
-    font-size: 11px; /* Slightly smaller */
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
-}
-
 .hidden {
     display: none !important;
 }
 
-/* Material Design specific enhancements */
-.card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-}
-
-.card:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    transform: translateY(-2px);
+.config-form-container {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    width: 400px;
+    padding-bottom: 30px;
+    box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
 }
 
 /* Responsive design */

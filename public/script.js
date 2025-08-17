@@ -496,7 +496,7 @@ function saveConfiguration() {
     saveCurrentValues(configName);
     
     // Close the form and refresh the list
-    configFormContainer.classList.add('hidden');
+    configFormContainer.close();
     renderConfigList();
     
     // Clear the form
@@ -506,7 +506,7 @@ function saveConfiguration() {
 
 // Cancel configuration editing
 function cancelConfiguration() {
-    configFormContainer.classList.add('hidden');
+    configFormContainer.close();
     configNameInput.value = '';
     configFormTitle.textContent = 'Create New Configuration';
 }
@@ -547,7 +547,7 @@ function deleteConfiguration(configName) {
 function addNewConfiguration() {
     configFormTitle.textContent = 'Create New Configuration';
     configNameInput.value = '';
-    configFormContainer.classList.remove('hidden');
+    configFormContainer.showModal();
     currentConfigId = null;
 }
 
