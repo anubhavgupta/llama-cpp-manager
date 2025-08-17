@@ -2,6 +2,7 @@ const express = require('express');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs').promises;
+const os = require('os');
 const app = express();
 const PORT = 3001;
 
@@ -21,6 +22,95 @@ const io = require('socket.io')(httpServer, {
         origin: "*"
     }
 });
+
+// System monitoring variables
+let systemMetrics = {
+    cpu: { usage: 0, history: [] },
+    ram: { usage: 0, total: 0, free: 0, history: [] },
+    gpu: { usage: 0, memory: 0, history: [] },
+    vram: { usage: 0, total: 0, free: 0, history: [] }
+};
+
+// Function to get system metrics
+function getSystemMetrics() {
+    // CPU Usage (simplified - in a real app you'd use a library like node-os-utils)
+    const cpus = os.cpus();
+    let totalIdle = 0;
+    let totalTick = 0;
+    
+    cpus.forEach(cpu => {
+        totalIdle += cpu.times.idle;
+        totalTick += Object.values(cpu.times).reduce((a, b) => a + b, 0);
+    });
+    
+    const idlePercentage = (totalIdle / cpus.length) / (totalTick / cpus.length) * 100;
+    const cpuUsage = 100 - idlePercentage;
+    
+    // RAM Usage
+    const totalMemory = os.totalmem();
+    const freeMemory = os.freemem();
+    const usedMemory = totalMemory - freeMemory;
+    const ramUsage = (usedMemory / totalMemory) * 100;
+    
+    // For GPU and VRAM, we'll simulate values since node doesn't have native GPU monitoring
+    // In a real implementation, you'd use libraries like node-ffi-napi or system-specific tools
+    const gpuUsage = Math.random() * 100; // Simulated
+    const vramUsage = Math.random() * 100; // Simulated
+    const vramTotal = 8 * 1024 * 1024 * 1024; // 8GB in bytes (simulated)
+    const vramFree = vramTotal * (1 - vramUsage / 100);
+    
+    return {
+        cpu: cpuUsage,
+        ram: ramUsage,
+        gpu: gpuUsage,
+        vram: vramUsage,
+        totalMemory: totalMemory,
+        freeMemory: freeMemory,
+        vramTotal: vramTotal,
+        vramFree: vramFree
+    };
+}
+
+// Function to update system metrics history
+function updateSystemMetricsHistory() {
+    const metrics = getSystemMetrics();
+    
+    // Update CPU history (keep last 50 points)
+    systemMetrics.cpu.usage = metrics.cpu;
+    if (systemMetrics.cpu.history.length >= 50) {
+        systemMetrics.cpu.history.shift();
+    }
+    systemMetrics.cpu.history.push(metrics.cpu);
+    
+    // Update RAM history
+    systemMetrics.ram.usage = metrics.ram;
+    systemMetrics.ram.total = metrics.totalMemory;
+    systemMetrics.ram.free = metrics.freeMemory;
+    if (systemMetrics.ram.history.length >= 50) {
+        systemMetrics.ram.history.shift();
+    }
+    systemMetrics.ram.history.push(metrics.ram);
+    
+    // Update GPU history
+    systemMetrics.gpu.usage = metrics.gpu;
+    systemMetrics.gpu.memory = metrics.vramTotal - metrics.vramFree; // Used VRAM in bytes
+    if (systemMetrics.gpu.history.length >= 50) {
+        systemMetrics.gpu.history.shift();
+    }
+    systemMetrics.gpu.history.push(metrics.gpu);
+    
+    // Update VRAM history
+    systemMetrics.vram.usage = metrics.vram;
+    systemMetrics.vram.total = metrics.vramTotal;
+    systemMetrics.vram.free = metrics.vramFree;
+    if (systemMetrics.vram.history.length >= 50) {
+        systemMetrics.vram.history.shift();
+    }
+    systemMetrics.vram.history.push(metrics.vram);
+}
+
+// Start periodic system metrics collection
+setInterval(updateSystemMetricsHistory, 1000); // Update every second
 
 // Function to recursively find GGUF files
 async function findGGUFFiles(directory) {
@@ -194,6 +284,17 @@ app.get('/models', async (req, res) => {
             error: 'Failed to fetch models: ' + error.message 
         });
     }
+});
+
+// API endpoint to get system metrics
+app.get('/metrics', (req, res) => {
+    // Return just the current values for CPU, RAM, GPU, and VRAM
+    res.json({ 
+        cpu: systemMetrics.cpu.usage,
+        ram: systemMetrics.ram.usage,
+        gpu: systemMetrics.gpu.usage,
+        vram: systemMetrics.vram.usage
+    });
 });
 
 // API endpoint to check if server is running

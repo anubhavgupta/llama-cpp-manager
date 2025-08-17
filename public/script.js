@@ -40,6 +40,15 @@ let socket = null;
 let currentConfigId = null;
 let configurations = {};
 
+// Chart variables
+let cpuCtx, ramCtx, gpuCtx, vramCtx;
+let chartData = {
+    cpu: [],
+    ram: [],
+    gpu: [],
+    vram: []
+};
+
 // Disable/enable buttons based on status
 function updateButtonStates(isRunning) {
     launchBtn.disabled = isRunning;
@@ -580,5 +589,296 @@ async function init() {
     renderConfigList();
 }
 
+// Initialize chart contexts and set canvas dimensions
+function initCharts() {
+    const cpuCanvas = document.getElementById('cpuGraph');
+    const ramCanvas = document.getElementById('ramGraph');
+    const gpuCanvas = document.getElementById('gpuGraph');
+    const vramCanvas = document.getElementById('vramGraph');
+    
+    // Set canvas dimensions to match their CSS dimensions
+    function setCanvasSize(canvas) {
+        if (canvas) {
+            const style = window.getComputedStyle(canvas);
+            const width = parseInt(style.width) || canvas.offsetWidth;
+            const height = parseInt(style.height) || canvas.offsetHeight;
+            
+            // Set the actual canvas dimensions (this is important for proper rendering)
+            canvas.width = width;
+            canvas.height = height;
+        }
+    }
+    
+    if (cpuCanvas) {
+        setCanvasSize(cpuCanvas);
+        cpuCtx = cpuCanvas.getContext('2d');
+    }
+    if (ramCanvas) {
+        setCanvasSize(ramCanvas);
+        ramCtx = ramCanvas.getContext('2d');
+    }
+    if (gpuCanvas) {
+        setCanvasSize(gpuCanvas);
+        gpuCtx = gpuCanvas.getContext('2d');
+    }
+    if (vramCanvas) {
+        setCanvasSize(vramCanvas);
+        vramCtx = vramCanvas.getContext('2d');
+    }
+}
+
+// Draw CPU usage chart
+function drawCpuChart() {
+    if (!cpuCtx || chartData.cpu.length === 0) return;
+    
+    const canvas = cpuCtx.canvas;
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    // Clear canvas
+    cpuCtx.clearRect(0, 0, width, height);
+    
+    // Draw grid lines
+    cpuCtx.strokeStyle = '#444';
+    cpuCtx.lineWidth = 1;
+    cpuCtx.beginPath();
+    for (let i = 0; i <= 10; i++) {
+        const x = (i / 10) * width;
+        cpuCtx.moveTo(x, 0);
+        cpuCtx.lineTo(x, height);
+    }
+    cpuCtx.stroke();
+    
+    // Draw data line
+    cpuCtx.strokeStyle = '#4CAF50';
+    cpuCtx.lineWidth = 2;
+    cpuCtx.beginPath();
+    
+    const maxDataPoints = Math.min(chartData.cpu.length, 50); // Limit to last 50 points
+    const stepX = width / (maxDataPoints - 1);
+    
+    for (let i = 0; i < maxDataPoints; i++) {
+        const x = i * stepX;
+        const value = chartData.cpu[chartData.cpu.length - maxDataPoints + i];
+        const y = height - (value / 100) * height;
+        
+        if (i === 0) {
+            cpuCtx.moveTo(x, y);
+        } else {
+            cpuCtx.lineTo(x, y);
+        }
+    }
+    cpuCtx.stroke();
+}
+
+// Draw RAM usage chart
+function drawRamChart() {
+    if (!ramCtx || chartData.ram.length === 0) return;
+    
+    const canvas = ramCtx.canvas;
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    // Clear canvas
+    ramCtx.clearRect(0, 0, width, height);
+    
+    // Draw grid lines
+    ramCtx.strokeStyle = '#444';
+    ramCtx.lineWidth = 1;
+    ramCtx.beginPath();
+    for (let i = 0; i <= 10; i++) {
+        const x = (i / 10) * width;
+        ramCtx.moveTo(x, 0);
+        ramCtx.lineTo(x, height);
+    }
+    ramCtx.stroke();
+    
+    // Draw data line
+    ramCtx.strokeStyle = '#2196F3';
+    ramCtx.lineWidth = 2;
+    ramCtx.beginPath();
+    
+    const maxDataPoints = Math.min(chartData.ram.length, 50); // Limit to last 50 points
+    const stepX = width / (maxDataPoints - 1);
+    
+    for (let i = 0; i < maxDataPoints; i++) {
+        const x = i * stepX;
+        const value = chartData.ram[chartData.ram.length - maxDataPoints + i];
+        const y = height - (value / 100) * height;
+        
+        if (i === 0) {
+            ramCtx.moveTo(x, y);
+        } else {
+            ramCtx.lineTo(x, y);
+        }
+    }
+    ramCtx.stroke();
+}
+
+// Draw GPU usage chart
+function drawGpuChart() {
+    if (!gpuCtx || chartData.gpu.length === 0) return;
+    
+    const canvas = gpuCtx.canvas;
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    // Clear canvas
+    gpuCtx.clearRect(0, 0, width, height);
+    
+    // Draw grid lines
+    gpuCtx.strokeStyle = '#444';
+    gpuCtx.lineWidth = 1;
+    gpuCtx.beginPath();
+    for (let i = 0; i <= 10; i++) {
+        const x = (i / 10) * width;
+        gpuCtx.moveTo(x, 0);
+        gpuCtx.lineTo(x, height);
+    }
+    gpuCtx.stroke();
+    
+    // Draw data line
+    gpuCtx.strokeStyle = '#FF9800';
+    gpuCtx.lineWidth = 2;
+    gpuCtx.beginPath();
+    
+    const maxDataPoints = Math.min(chartData.gpu.length, 50); // Limit to last 50 points
+    const stepX = width / (maxDataPoints - 1);
+    
+    for (let i = 0; i < maxDataPoints; i++) {
+        const x = i * stepX;
+        const value = chartData.gpu[chartData.gpu.length - maxDataPoints + i];
+        const y = height - (value / 100) * height;
+        
+        if (i === 0) {
+            gpuCtx.moveTo(x, y);
+        } else {
+            gpuCtx.lineTo(x, y);
+        }
+    }
+    gpuCtx.stroke();
+}
+
+// Draw VRAM usage chart
+function drawVramChart() {
+    if (!vramCtx || chartData.vram.length === 0) return;
+    
+    const canvas = vramCtx.canvas;
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    // Clear canvas
+    vramCtx.clearRect(0, 0, width, height);
+    
+    // Draw grid lines
+    vramCtx.strokeStyle = '#444';
+    vramCtx.lineWidth = 1;
+    vramCtx.beginPath();
+    for (let i = 0; i <= 10; i++) {
+        const x = (i / 10) * width;
+        vramCtx.moveTo(x, 0);
+        vramCtx.lineTo(x, height);
+    }
+    vramCtx.stroke();
+    
+    // Draw data line
+    vramCtx.strokeStyle = '#9C27B0';
+    vramCtx.lineWidth = 2;
+    vramCtx.beginPath();
+    
+    const maxDataPoints = Math.min(chartData.vram.length, 50); // Limit to last 50 points
+    const stepX = width / (maxDataPoints - 1);
+    
+    for (let i = 0; i < maxDataPoints; i++) {
+        const x = i * stepX;
+        const value = chartData.vram[chartData.vram.length - maxDataPoints + i];
+        const y = height - (value / 100) * height;
+        
+        if (i === 0) {
+            vramCtx.moveTo(x, y);
+        } else {
+            vramCtx.lineTo(x, y);
+        }
+    }
+    vramCtx.stroke();
+}
+
+// Update all charts with new data
+function updateCharts() {
+    drawCpuChart();
+    drawRamChart();
+    drawGpuChart();
+    drawVramChart();
+}
+
+// Fetch system metrics and update charts
+async function fetchSystemMetrics() {
+    try {
+        const response = await fetch('/metrics');
+        const data = await response.json();
+        
+        if (data.cpu !== undefined) {
+            chartData.cpu.push(data.cpu);
+            if (chartData.cpu.length > 50) {
+                chartData.cpu.shift(); // Remove oldest point
+            }
+            document.getElementById('cpuValue').textContent = `${Math.round(data.cpu)}%`;
+        }
+        
+        if (data.ram !== undefined) {
+            chartData.ram.push(data.ram);
+            if (chartData.ram.length > 50) {
+                chartData.ram.shift(); // Remove oldest point
+            }
+            document.getElementById('ramValue').textContent = `${Math.round(data.ram)}%`;
+        }
+        
+        if (data.gpu !== undefined) {
+            chartData.gpu.push(data.gpu);
+            if (chartData.gpu.length > 50) {
+                chartData.gpu.shift(); // Remove oldest point
+            }
+            document.getElementById('gpuValue').textContent = `${Math.round(data.gpu)}%`;
+        }
+        
+        if (data.vram !== undefined) {
+            chartData.vram.push(data.vram);
+            if (chartData.vram.length > 50) {
+                chartData.vram.shift(); // Remove oldest point
+            }
+            document.getElementById('vramValue').textContent = `${Math.round(data.vram)}%`;
+        }
+        
+        updateCharts();
+    } catch (error) {
+        console.error('Error fetching system metrics:', error);
+    }
+}
+
+// Start periodic metric updates
+function startMetricUpdates() {
+    // Update every second
+    setInterval(fetchSystemMetrics, 1000);
+    
+    // Initial fetch
+    fetchSystemMetrics();
+}
+
+// Handle window resize for charts
+function handleResize() {
+    // Reinitialize charts when window is resized to ensure proper canvas dimensions
+    setTimeout(() => {
+        initCharts();
+        updateCharts();
+    }, 100); // Small delay to ensure DOM is updated
+}
+
 // Start the application when DOM is loaded
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', function() {
+    init();
+    initCharts(); // Initialize chart contexts
+    startMetricUpdates(); // Start periodic metric updates
+    
+    // Add resize listener for charts
+    window.addEventListener('resize', handleResize);
+});

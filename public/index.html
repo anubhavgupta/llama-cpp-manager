@@ -33,6 +33,33 @@
                     </div>
                 </dialog>
                 <div id="configList" class="config-list"></div>
+                
+                <!-- System Metrics Graphs (Bottom of Left Panel) -->
+                <div class="system-metrics-container">
+                    <h3 style="margin-top: 20px; margin-bottom: 10px; font-size: 14px; color: #666;">System Resources</h3>
+                    <div class="metrics-graphs">
+                        <div class="metric-graph">
+                            <div class="graph-title">CPU Usage</div>
+                            <canvas id="cpuGraph" class="graph-canvas"></canvas>
+                            <div class="metric-value" id="cpuValue">0%</div>
+                        </div>
+                        <div class="metric-graph">
+                            <div class="graph-title">RAM Usage</div>
+                            <canvas id="ramGraph" class="graph-canvas"></canvas>
+                            <div class="metric-value" id="ramValue">0%</div>
+                        </div>
+                        <div class="metric-graph">
+                            <div class="graph-title">GPU Usage</div>
+                            <canvas id="gpuGraph" class="graph-canvas"></canvas>
+                            <div class="metric-value" id="gpuValue">0%</div>
+                        </div>
+                        <div class="metric-graph">
+                            <div class="graph-title">VRAM Usage</div>
+                            <canvas id="vramGraph" class="graph-canvas"></canvas>
+                            <div class="metric-value" id="vramValue">0%</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Main Content (Right) -->
