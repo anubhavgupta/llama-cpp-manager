@@ -4,130 +4,155 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLaMA CPP Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>LLaMA CPP Manager</h1>
+        <h1 class="app-title">LLaMA CPP Manager</h1>
         
-<div class="input-section">
-            <label for="serverPath">LLaMA Server Path:</label>
-            <input type="text" id="serverPath" placeholder="Enter path to llama-server.exe">
-            
-            <h3>Model Configuration</h3>
-            <div class="config-group">
-                <label for="modelPath">Model Path (-m):</label>
-                <select id="modelPath" placeholder="Select a model">
-                    <option value="">-- Select a Model --</option>
-                </select>
+        <div class="main-layout">
+            <!-- Configuration Panel (Left) -->
+            <div class="config-panel">
+                <div class="config-header">
+                    <h2>Configurations</h2>
+                    <button id="addConfigBtn" class="btn btn-primary">+ Add</button>
+                </div>
+                <div id="configList" class="config-list"></div>
+                <div id="configFormContainer" class="config-form-container hidden">
+                    <h3 id="configFormTitle">Create New Configuration</h3>
+                    <div class="form-group">
+                        <label for="configName">Configuration Name:</label>
+                        <input type="text" id="configName" class="form-control" placeholder="Enter configuration name">
+                    </div>
+                    <div class="form-actions">
+                        <button id="saveConfigBtn" class="btn btn-primary">Save</button>
+                        <button id="cancelConfigBtn" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
             </div>
-            
-            <h3>GPU Configuration</h3>
-            <div class="config-group">
-                <label for="ngl">GPU Layers (-ngl):</label>
-                <input type="number" id="ngl" min="0" value="99">
+
+            <!-- Main Content (Right) -->
+            <div class="main-content">
+                <div class="input-section">
+                    <h3>Server Configuration</h3>
+                    <div class="form-group">
+                        <label for="serverPath">LLaMA Server Path:</label>
+                        <input type="text" id="serverPath" class="form-control" placeholder="Enter path to llama-server.exe">
+                    </div>
+
+                    <h3>Model Configuration</h3>
+                    <div class="form-group">
+                        <label for="modelPath">Model Path (-m):</label>
+                        <select id="modelPath" class="form-control">
+                            <option value="">-- Select a Model --</option>
+                        </select>
+                    </div>
+
+                    <h3>GPU Configuration</h3>
+                    <div class="form-group">
+                        <label for="ngl">GPU Layers (-ngl):</label>
+                        <input type="number" id="ngl" class="form-control" min="0" value="99">
+                    </div>
+
+                    <h3>Performance Settings</h3>
+                    <div class="form-group">
+                        <label for="threads">Threads (-t):</label>
+                        <input type="number" id="threads" class="form-control" min="1" value="12">
+                    </div>
+
+                    <h3>Sampling Parameters</h3>
+                    <div class="form-group">
+                        <label for="temp">Temperature (--temp):</label>
+                        <input type="number" id="temp" class="form-control" step="0.01" min="0" value="0.7">
+                    </div>
+                    <div class="form-group">
+                        <label for="topK">Top-K (--top-k):</label>
+                        <input type="number" id="topK" class="form-control" min="0" value="20">
+                    </div>
+                    <div class="form-group">
+                        <label for="topP">Top-P (--top-p):</label>
+                        <input type="number" id="topP" class="form-control" step="0.01" min="0" max="1" value="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="repeatPenalty">Repeat Penalty (--repeat-penalty):</label>
+                        <input type="number" id="repeatPenalty" class="form-control" step="0.01" min="0" value="1.05">
+                    </div>
+
+                    <h3>Memory Settings</h3>
+                    <div class="form-group">
+                        <label for="mlock">Memory Lock (--mlock):</label>
+                        <input type="checkbox" id="mlock" class="form-control checkbox">
+                    </div>
+                    <div class="form-group">
+                        <label for="swaFull">SWA Full (--swa-full):</label>
+                        <input type="checkbox" id="swaFull" class="form-control checkbox">
+                    </div>
+
+                    <h3>Advanced Settings</h3>
+                    <div class="form-group">
+                        <label for="contextSize">Context Size (-c):</label>
+                        <input type="number" id="contextSize" class="form-control" min="1" value="16384">
+                    </div>
+                    <div class="form-group">
+                        <label for="nCpuMoe">CPU MoE Layers (--n-cpu-moe):</label>
+                        <input type="number" id="nCpuMoe" class="form-control" min="0" value="8">
+                    </div>
+                    <div class="form-group">
+                        <label for="cpuMoe">CPU MoE (--cpu-moe):</label>
+                        <input type="checkbox" id="cpuMoe" class="form-control checkbox">
+                    </div>
+
+                    <!-- New Context Token Parameters -->
+                    <h3>Context Token Parameters</h3>
+                    <div class="form-group">
+                        <label for="ctkEnable">Enable -ctk/-ctv:</label>
+                        <input type="checkbox" id="ctkEnable" class="form-control checkbox">
+                    </div>
+                    <div class="form-group">
+                        <label for="contextTokenKey">Context Token Key (-ctk):</label>
+                        <select id="contextTokenKey" class="form-control" disabled>
+                            <option value="f32">f32</option>
+                            <option value="f16" selected>f16</option>
+                            <option value="bf16">bf16</option>
+                            <option value="q8_0">q8_0</option>
+                            <option value="q4_0">q4_0</option>
+                            <option value="q4_1">q4_1</option>
+                            <option value="iq4_nl">iq4_nl</option>
+                            <option value="q5_0">q5_0</option>
+                            <option value="q5_1">q5_1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contextTokenValue">Context Token Value (-ctv):</label>
+                        <select id="contextTokenValue" class="form-control" disabled>
+                            <option value="f32">f32</option>
+                            <option value="f16" selected>f16</option>
+                            <option value="bf16">bf16</option>
+                            <option value="q8_0">q8_0</option>
+                            <option value="q4_0">q4_0</option>
+                            <option value="q4_1">q4_1</option>
+                            <option value="iq4_nl">iq4_nl</option>
+                            <option value="q5_0">q5_0</option>
+                            <option value="q5_1">q5_1</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fastAttention">Fast Attention (--fa):</label>
+                        <input type="checkbox" id="fastAttention" class="form-control checkbox">
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="launchBtn" class="btn btn-primary">Launch</button>
+                        <button id="stopBtn" class="btn btn-danger" disabled>Stop</button>
+                        
+                        <!-- Model Status Inline -->
+                        <div class="model-status-inline">
+                            <div id="modelStatusMessage" class="status-message">Not running</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <h3>Performance Settings</h3>
-            <div class="config-group">
-                <label for="threads">Threads (-t):</label>
-                <input type="number" id="threads" min="1" value="12">
-            </div>
-            
-            <h3>Sampling Parameters</h3>
-            <div class="config-group">
-                <label for="temp">Temperature (--temp):</label>
-                <input type="number" id="temp" step="0.01" min="0" value="0.7">
-            </div>
-            <div class="config-group">
-                <label for="topK">Top-K (--top-k):</label>
-                <input type="number" id="topK" min="0" value="20">
-            </div>
-            <div class="config-group">
-                <label for="topP">Top-P (--top-p):</label>
-                <input type="number" id="topP" step="0.01" min="0" max="1" value="0.00">
-            </div>
-            <div class="config-group">
-                <label for="repeatPenalty">Repeat Penalty (--repeat-penalty):</label>
-                <input type="number" id="repeatPenalty" step="0.01" min="0" value="1.05">
-            </div>
-            
-            <h3>Memory Settings</h3>
-            <div class="config-group">
-                <label for="mlock">Memory Lock (--mlock):</label>
-                <input type="checkbox" id="mlock">
-            </div>
-            <div class="config-group">
-                <label for="swaFull">SWA Full (--swa-full):</label>
-                <input type="checkbox" id="swaFull">
-            </div>
-            
-            <h3>Advanced Settings</h3>
-            <div class="config-group">
-                <label for="contextSize">Context Size (-c):</label>
-                <input type="number" id="contextSize" min="1" value="16384">
-            </div>
-            <div class="config-group">
-                <label for="nCpuMoe">CPU MoE Layers (--n-cpu-moe):</label>
-                <input type="number" id="nCpuMoe" min="0" value="8">
-            </div>
-            <div class="config-group">
-                <label for="cpuMoe">CPU MoE (--cpu-moe):</label>
-                <input type="checkbox" id="cpuMoe">
-            </div>
-            
-            <!-- New Context Token Parameters -->
-            <div class="config-group">
-                <label for="ctkEnable">Context Token Parameters:</label>
-                <input type="checkbox" id="ctkEnable">
-                <label for="ctkEnable">Enable -ctk/-ctv</label>
-            </div>
-            <div class="config-group">
-                <label for="contextTokenKey">Context Token Key (-ctk):</label>
-                <select id="contextTokenKey" disabled>
-                    <option value="f32">f32</option>
-                    <option value="f16" selected>f16</option>
-                    <option value="bf16">bf16</option>
-                    <option value="q8_0">q8_0</option>
-                    <option value="q4_0">q4_0</option>
-                    <option value="q4_1">q4_1</option>
-                    <option value="iq4_nl">iq4_nl</option>
-                    <option value="q5_0">q5_0</option>
-                    <option value="q5_1">q5_1</option>
-                </select>
-            </div>
-            <div class="config-group">
-                <label for="contextTokenValue">Context Token Value (-ctv):</label>
-                <select id="contextTokenValue" disabled>
-                    <option value="f32">f32</option>
-                    <option value="f16" selected>f16</option>
-                    <option value="bf16">bf16</option>
-                    <option value="q8_0">q8_0</option>
-                    <option value="q4_0">q4_0</option>
-                    <option value="q4_1">q4_1</option>
-                    <option value="iq4_nl">iq4_nl</option>
-                    <option value="q5_0">q5_0</option>
-                    <option value="q5_1">q5_1</option>
-                </select>
-            </div>
-            <div class="config-group">
-                <label for="fastAttention">Fast Attention (--fa):</label>
-                <input type="checkbox" id="fastAttention">
-            </div>
-            
-            <button id="launchBtn" class="btn btn-primary">Launch</button>
-            <button id="stopBtn" class="btn btn-danger" disabled>Stop</button>
-        </div>
-        
-        <div class="status-section">
-            <h2>Status</h2>
-            <div id="statusMessage">Not running</div>
-            <div id="processInfo"></div>
-        </div>
-        
-        <div class="output-section">
-            <h2>Output</h2>
-            <pre id="output"></pre>
         </div>
     </div>
 

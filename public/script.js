@@ -20,12 +20,25 @@ const contextTokenValueSelect = document.getElementById('contextTokenValue');
 const fastAttentionCheckbox = document.getElementById('fastAttention');
 const launchBtn = document.getElementById('launchBtn');
 const stopBtn = document.getElementById('stopBtn');
-const statusMessage = document.getElementById('statusMessage');
-const processInfo = document.getElementById('processInfo');
-const output = document.getElementById('output');
+const modelStatusMessage = document.getElementById('modelStatusMessage');
+const modelProcessInfo = document.getElementById('modelProcessInfo');
+const modelOutput = document.getElementById('modelOutput');
+
+// Configuration management elements
+const configList = document.getElementById('configList');
+const addConfigBtn = document.getElementById('addConfigBtn');
+const configFormContainer = document.getElementById('configFormContainer');
+const configFormTitle = document.getElementById('configFormTitle');
+const configNameInput = document.getElementById('configName');
+const saveConfigBtn = document.getElementById('saveConfigBtn');
+const cancelConfigBtn = document.getElementById('cancelConfigBtn');
 
 // Store WebSocket connection
 let socket = null;
+
+// Configuration management state
+let currentConfigId = null;
+let configurations = {};
 
 // Disable/enable buttons based on status
 function updateButtonStates(isRunning) {
@@ -36,19 +49,19 @@ function updateButtonStates(isRunning) {
 // Update status display
 function updateStatus(isRunning) {
     if (isRunning) {
-        statusMessage.textContent = 'Running';
-        statusMessage.style.color = 'green';
+        modelStatusMessage.textContent = 'Running';
+        modelStatusMessage.style.color = 'green';
     } else {
-        statusMessage.textContent = 'Not running';
-        statusMessage.style.color = 'red';
+        modelStatusMessage.textContent = 'Not running';
+        modelStatusMessage.style.color = 'red';
     }
 }
 
 // Show output in the pre element
 function showOutput(message) {
     const timestamp = new Date().toISOString();
-    output.textContent += `[${timestamp}] ${message}\n`;
-    output.scrollTop = output.scrollHeight;
+    modelOutput.textContent += `[${timestamp}] ${message}\n`;
+    modelOutput.scrollTop = modelOutput.scrollHeight;
 }
 
 // Fetch current status
@@ -64,28 +77,6 @@ async function fetchStatus() {
         showOutput('Error checking status: ' + error.message);
         return false;
     }
-}
-
-// Load saved values from localStorage
-function loadSavedValues() {
-    const savedValues = JSON.parse(localStorage.getItem('llamaCppConfig') || '{}');
-    
-    if (savedValues.serverPath) serverPathInput.value = savedValues.serverPath;
-    if (savedValues.modelPath) modelPathSelect.value = savedValues.modelPath;
-    if (savedValues.ngl !== undefined) nglInput.value = savedValues.ngl;
-    if (savedValues.threads !== undefined) threadsInput.value = savedValues.threads;
-    if (savedValues.temp !== undefined) tempInput.value = savedValues.temp;
-    if (savedValues.topK !== undefined) topKInput.value = savedValues.topK;
-    if (savedValues.topP !== undefined) topPInput.value = savedValues.topP;
-    if (savedValues.repeatPenalty !== undefined) repeatPenaltyInput.value = savedValues.repeatPenalty;
-    if (savedValues.mlock !== undefined) mlockCheckbox.checked = savedValues.mlock;
-    if (savedValues.swaFull !== undefined) swaFullCheckbox.checked = savedValues.swaFull;
-    if (savedValues.contextSize !== undefined) contextSizeInput.value = savedValues.contextSize;
-    if (savedValues.nCpuMoe !== undefined) nCpuMoeInput.value = savedValues.nCpuMoe;
-    if (savedValues.ctkEnable !== undefined) ctkEnableCheckbox.checked = savedValues.ctkEnable;
-    if (savedValues.contextTokenKey !== undefined) contextTokenKeySelect.value = savedValues.contextTokenKey;
-    if (savedValues.contextTokenValue !== undefined) contextTokenValueSelect.value = savedValues.contextTokenValue;
-    if (savedValues.fastAttention !== undefined) fastAttentionCheckbox.checked = savedValues.fastAttention;
 }
 
 // Fetch and populate models dropdown
@@ -115,8 +106,39 @@ async function fetchModels() {
     }
 }
 
-// Save current values to localStorage
-function saveCurrentValues() {
+// Load configurations from localStorage
+function loadConfigurations() {
+    const savedConfigs = localStorage.getItem('llamaCppConfigs');
+    if (savedConfigs) {
+        configurations = JSON.parse(savedConfigs);
+    } else {
+        configurations = {};
+    }
+    return configurations;
+}
+
+// Save configurations to localStorage
+function saveConfigurations() {
+    localStorage.setItem('llamaCppConfigs', JSON.stringify(configurations));
+}
+
+// Get all configuration names
+function getConfigNames() {
+    return Object.keys(configurations);
+}
+
+// Create a new configuration with default name based on model
+function createDefaultConfigName() {
+    const modelName = modelPathSelect.options[modelPathSelect.selectedIndex]?.text || 'Default';
+    // Extract just the model name without path and extension
+    const cleanName = modelName.split('/').pop().split('\\').pop().replace(/\.[^/.]+$/, "") || 'Configuration';
+    return cleanName;
+}
+
+// Save current values to configurations
+function saveCurrentValues(configId) {
+    if (!configId) return;
+    
     const config = {
         serverPath: serverPathInput.value,
         modelPath: modelPathSelect.value,  // Use select value instead of input value
@@ -137,7 +159,35 @@ function saveCurrentValues() {
         fastAttention: fastAttentionCheckbox.checked
     };
     
-    localStorage.setItem('llamaCppConfig', JSON.stringify(config));
+    configurations[configId] = config;
+    saveConfigurations();
+}
+
+// Load configuration values into form
+function loadConfiguration(configId) {
+    if (!configId || !configurations[configId]) return;
+    
+    const config = configurations[configId];
+    currentConfigId = configId;
+    
+    // Load values into form fields
+    if (config.serverPath) serverPathInput.value = config.serverPath;
+    if (config.modelPath) modelPathSelect.value = config.modelPath;
+    if (config.ngl !== undefined) nglInput.value = config.ngl;
+    if (config.threads !== undefined) threadsInput.value = config.threads;
+    if (config.temp !== undefined) tempInput.value = config.temp;
+    if (config.topK !== undefined) topKInput.value = config.topK;
+    if (config.topP !== undefined) topPInput.value = config.topP;
+    if (config.repeatPenalty !== undefined) repeatPenaltyInput.value = config.repeatPenalty;
+    if (config.mlock !== undefined) mlockCheckbox.checked = config.mlock;
+    if (config.swaFull !== undefined) swaFullCheckbox.checked = config.swaFull;
+    if (config.contextSize !== undefined) contextSizeInput.value = config.contextSize;
+    if (config.nCpuMoe !== undefined) nCpuMoeInput.value = config.nCpuMoe;
+    if (config.cpuMoe !== undefined) cpuMoeCheckbox.checked = config.cpuMoe;
+    if (config.ctkEnable !== undefined) ctkEnableCheckbox.checked = config.ctkEnable;
+    if (config.contextTokenKey !== undefined) contextTokenKeySelect.value = config.contextTokenKey;
+    if (config.contextTokenValue !== undefined) contextTokenValueSelect.value = config.contextTokenValue;
+    if (config.fastAttention !== undefined) fastAttentionCheckbox.checked = config.fastAttention;
 }
 
 // Update enable/disable state for context token parameters
@@ -182,8 +232,10 @@ async function launchServer() {
         fastAttention: fastAttentionCheckbox.checked
     };
     
-    // Save current values to localStorage
-    saveCurrentValues();
+    // Save current values to localStorage (if we have a config ID)
+    if (currentConfigId) {
+        saveCurrentValues(currentConfigId);
+    }
     
     try {
         showOutput(`Starting server: ${serverPath}`);
@@ -270,7 +322,7 @@ async function launchServer() {
             showOutput('Server started successfully');
             updateStatus(true);
             updateButtonStates(true);
-            // Initialize WebSocket connection for logging
+            // Initialize WebSocket connection for log streaming
             initWebSocket();
         } else {
             showOutput('Error starting server: ' + data.error);
@@ -324,7 +376,6 @@ function initWebSocket() {
     }
 }
 
-
 // Stop the server
 async function stopServer() {
     try {
@@ -355,23 +406,178 @@ async function stopServer() {
     }
 }
 
+// Configuration management functions
+function renderConfigList() {
+    configList.innerHTML = '';
+    
+    const configNames = getConfigNames();
+    if (configNames.length === 0) {
+        configList.innerHTML = '<div class="empty-configs">No configurations saved</div>';
+        return;
+    }
+    
+    // Sort configurations by name for consistent display
+    configNames.sort().forEach(name => {
+        const configItem = document.createElement('div');
+        configItem.className = 'config-item';
+        if (currentConfigId === name) {
+            configItem.classList.add('active');
+        }
+        
+        configItem.innerHTML = `
+            <span class="config-item-name">${name}</span>
+            <div class="config-item-actions">
+                <button class="config-item-btn edit-btn" data-name="${name}">✏️</button>
+                <button class="config-item-btn delete-btn" data-name="${name}">🗑️</button>
+            </div>
+        `;
+        
+        configList.appendChild(configItem);
+    });
+    
+    // Add event listeners for config items
+    document.querySelectorAll('.config-item-btn.edit-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const configName = btn.dataset.name;
+            editConfiguration(configName);
+        });
+    });
+    
+    document.querySelectorAll('.config-item-btn.delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const configName = btn.dataset.name;
+            deleteConfiguration(configName);
+        });
+    });
+    
+    // Add click event for selecting configurations
+    document.querySelectorAll('.config-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            if (e.target.classList.contains('config-item-btn')) return;
+            const configName = e.currentTarget.querySelector('.config-item-name').textContent;
+            selectConfiguration(configName);
+        });
+    });
+}
+
+// Select a configuration to use
+function selectConfiguration(configName) {
+    if (configurations[configName]) {
+        loadConfiguration(configName);
+        currentConfigId = configName;
+        renderConfigList();
+    }
+}
+
+// Edit a configuration
+function editConfiguration(configName) {
+    const config = configurations[configName];
+    if (config) {
+        // Show the form with the configuration name
+        configFormTitle.textContent = 'Edit Configuration';
+        configNameInput.value = configName || '';
+        configFormContainer.classList.remove('hidden');
+        currentConfigId = configName;
+    }
+}
+
+// Save a new or edited configuration
+function saveConfiguration() {
+    const configName = configNameInput.value.trim();
+    
+    if (!configName) {
+        alert('Please enter a configuration name');
+        return;
+    }
+    
+    // Save the current form values to this configuration
+    saveCurrentValues(configName);
+    
+    // Close the form and refresh the list
+    configFormContainer.classList.add('hidden');
+    renderConfigList();
+    
+    // Clear the form
+    configNameInput.value = '';
+    configFormTitle.textContent = 'Create New Configuration';
+}
+
+// Cancel configuration editing
+function cancelConfiguration() {
+    configFormContainer.classList.add('hidden');
+    configNameInput.value = '';
+    configFormTitle.textContent = 'Create New Configuration';
+}
+
+// Delete a configuration
+function deleteConfiguration(configName) {
+    if (confirm(`Are you sure you want to delete the configuration "${configName}"?`)) {
+        delete configurations[configName];
+        saveConfigurations();
+        renderConfigList();
+        
+        // If we just deleted the current config, clear the form
+        if (currentConfigId === configName) {
+            currentConfigId = null;
+            // Clear all fields
+            serverPathInput.value = '';
+            modelPathSelect.value = '';
+            nglInput.value = '99';
+            threadsInput.value = '12';
+            tempInput.value = '0.7';
+            topKInput.value = '20';
+            topPInput.value = '0.00';
+            repeatPenaltyInput.value = '1.05';
+            mlockCheckbox.checked = false;
+            swaFullCheckbox.checked = false;
+            contextSizeInput.value = '16384';
+            nCpuMoeInput.value = '8';
+            cpuMoeCheckbox.checked = false;
+            ctkEnableCheckbox.checked = false;
+            contextTokenKeySelect.value = 'f16';
+            contextTokenValueSelect.value = 'f16';
+            fastAttentionCheckbox.checked = false;
+        }
+    }
+}
+
+// Add a new configuration
+function addNewConfiguration() {
+    configFormTitle.textContent = 'Create New Configuration';
+    configNameInput.value = '';
+    configFormContainer.classList.remove('hidden');
+    currentConfigId = null;
+}
+
 // Initialize the application
 async function init() {
+    // Load configurations
+    loadConfigurations();
     
     await fetchModels();
-    // Load saved values from localStorage
-    loadSavedValues();
     
-    // Set up event listeners
+    // Set up event listeners for configuration management
+    addConfigBtn.addEventListener('click', addNewConfiguration);
+    saveConfigBtn.addEventListener('click', saveConfiguration);
+    cancelConfigBtn.addEventListener('click', cancelConfiguration);
+    
+    // Set up event listeners for context token parameters
+    ctkEnableCheckbox.addEventListener('change', updateContextTokenEnableState);
+    
+    // Set up event listeners for launching and stopping
     launchBtn.addEventListener('click', launchServer);
     stopBtn.addEventListener('click', stopServer);
-    ctkEnableCheckbox.addEventListener('change', updateContextTokenEnableState);
     
     // Check initial status
     await fetchStatus();
     
     // Periodically check status (every 5 seconds)
     setInterval(fetchStatus, 5000);
+    
+    // Render the configuration list
+    renderConfigList();
 }
 
 // Start the application when DOM is loaded
