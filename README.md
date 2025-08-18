@@ -1,30 +1,17 @@
-# Cline Demo Project
+# LLAMA CPP Manager
+Tool to manage LLAMA.CPP model configurations.
 
-This is a simple web application demonstrating basic HTML, CSS, and JavaScript functionality.
+# Features
+- Load / Unload a model
+- Store multiple model configurations.
+- PWA, can be installed as a desktop app.
+- Monitor usage of CPU, GPU, RAM and VRAM
 
-## Features
-- Interactive UI elements
-- Responsive design
-- Modern styling with CSS
-- Client-side JavaScript functionality
-
-## Files Included
-- `index.html` - Main HTML structure
-- `styles.css` - Styling rules
-- `script.js` - JavaScript functionality
-- `server.js` - Basic HTTP server configuration
+## Important
+- Model Discovery: Model location is currently hardcoded in server.js file, this needs to be updated to the location where you store your models.
 
 ## Getting Started
 1. Install dependencies: `npm install`
-2. Start the server: `node server.js`
-3. Open browser to `http://localhost:3000`
+2. Start the server: `node run start`
+3. Open browser to `http://localhost:3001`
 
-## Project Structure
-```
-.
-├── public/
-│   ├── index.html
-│   ├── styles.css
-│   └── script.js
-├── server.js
-└── package.json
