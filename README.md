@@ -15,3 +15,5 @@ Tool to manage LLAMA.CPP model configurations.
 2. Start the server: `node run start`
 3. Open browser to `http://localhost:3001`
 
+# PS:
+This tool was vibecoded using QWEN3-30B-A3B_2507_Q4 model.
