@@ -18,6 +18,7 @@ const ctkEnableCheckbox = document.getElementById('ctkEnable');
 const contextTokenKeySelect = document.getElementById('contextTokenKey');
 const contextTokenValueSelect = document.getElementById('contextTokenValue');
 const fastAttentionCheckbox = document.getElementById('fastAttention');
+const jinjaCheckbox = document.getElementById('jinja');
 const launchBtn = document.getElementById('launchBtn');
 const stopBtn = document.getElementById('stopBtn');
 const modelStatusMessage = document.getElementById('modelStatusMessage');
@@ -165,7 +166,8 @@ function saveCurrentValues(configId) {
         ctkEnable: ctkEnableCheckbox.checked,
         contextTokenKey: contextTokenKeySelect.value,
         contextTokenValue: contextTokenValueSelect.value,
-        fastAttention: fastAttentionCheckbox.checked
+        fastAttention: fastAttentionCheckbox.checked,
+        jinja: jinjaCheckbox.checked
     };
     
     configurations[configId] = config;
@@ -238,7 +240,8 @@ async function launchServer() {
         ctkEnable: ctkEnableCheckbox.checked,
         contextTokenKey: contextTokenKeySelect.value,
         contextTokenValue: contextTokenValueSelect.value,
-        fastAttention: fastAttentionCheckbox.checked
+        fastAttention: fastAttentionCheckbox.checked,
+        jinja: jinjaCheckbox.checked
     };
     
     // Save current values to localStorage (if we have a config ID)
@@ -310,6 +313,11 @@ async function launchServer() {
         // Add fast attention flag if checked
         if (config.fastAttention) {
             args.push('-fa');
+        }
+        
+        // Add jinja flag if checked
+        if (config.jinja) {
+            args.push('--jinja');
         }
         
         showOutput(`Command arguments: ${args.join(' ')}`);
@@ -487,7 +495,7 @@ function editConfiguration(configName) {
         // Show the form with the configuration name
         configFormTitle.textContent = 'Edit Configuration';
         configNameInput.value = configName || '';
-        configFormContainer.classList.remove('hidden');
+        configFormContainer.showModal();
         currentConfigId = configName;
     }
 }
