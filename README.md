@@ -1,6 +1,9 @@
 # LLAMA CPP Manager
 Tool to manage LLAMA.CPP model configurations.
 
+<img width="1036" height="904" alt="image" src="https://github.com/user-attachments/assets/af300847-a926-45ff-a932-4c0f384e80c0" />
+
+
 # Features
 - Load / Unload a model
 - Store multiple model configurations.
