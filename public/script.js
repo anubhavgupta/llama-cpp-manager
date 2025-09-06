@@ -19,6 +19,7 @@ const contextTokenKeySelect = document.getElementById('contextTokenKey');
 const contextTokenValueSelect = document.getElementById('contextTokenValue');
 const fastAttentionCheckbox = document.getElementById('fastAttention');
 const jinjaCheckbox = document.getElementById('jinja');
+const verboseCheckbox = document.getElementById('verbose');
 const launchBtn = document.getElementById('launchBtn');
 const stopBtn = document.getElementById('stopBtn');
 const modelStatusMessage = document.getElementById('modelStatusMessage');
@@ -167,7 +168,8 @@ function saveCurrentValues(configId) {
         contextTokenKey: contextTokenKeySelect.value,
         contextTokenValue: contextTokenValueSelect.value,
         fastAttention: fastAttentionCheckbox.value,
-        jinja: jinjaCheckbox.checked
+        jinja: jinjaCheckbox.checked,
+        verbose: verboseCheckbox.checked
     };
     
     configurations[configId] = config;
@@ -251,7 +253,8 @@ async function launchServer() {
         contextTokenKey: contextTokenKeySelect.value,
         contextTokenValue: contextTokenValueSelect.value,
         fastAttention: fastAttentionCheckbox.value,
-        jinja: jinjaCheckbox.checked
+        jinja: jinjaCheckbox.checked,
+        verbose: verboseCheckbox.checked
     };
     
     // Save current values to localStorage (if we have a config ID)
@@ -332,6 +335,11 @@ async function launchServer() {
         // Add jinja flag if checked
         if (config.jinja) {
             args.push('--jinja');
+        }
+        
+        // Add verbose flag if checked
+        if (config.verbose) {
+            args.push('--verbose');
         }
         
         showOutput(`Command arguments: ${args.join(' ')}`);
