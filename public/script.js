@@ -172,6 +172,9 @@ function saveCurrentValues(configId) {
     
     configurations[configId] = config;
     saveConfigurations();
+    
+    // Debug logging
+    console.log('Saved configuration:', configId, config);
 }
 
 // Load configuration values into form
@@ -198,7 +201,14 @@ function loadConfiguration(configId) {
     if (config.ctkEnable !== undefined) ctkEnableCheckbox.checked = config.ctkEnable;
     if (config.contextTokenKey !== undefined) contextTokenKeySelect.value = config.contextTokenKey;
     if (config.contextTokenValue !== undefined) contextTokenValueSelect.value = config.contextTokenValue;
-    if (config.fastAttention !== undefined) fastAttentionCheckbox.value = config.fastAttention;
+    if (config.fastAttention !== undefined) {
+        // Handle fastAttention properly - it's a select element, not a checkbox
+        fastAttentionCheckbox.value = config.fastAttention == true ? 'on': config.fastAttention;
+    }
+    if (config.jinja !== undefined) jinjaCheckbox.checked = config.jinja;
+    
+    // Debug logging for loaded configuration
+    console.log('Loaded configuration:', configId, config);
 }
 
 // Update enable/disable state for context token parameters
@@ -559,7 +569,8 @@ function deleteConfiguration(configName) {
             ctkEnableCheckbox.checked = false;
             contextTokenKeySelect.value = 'f16';
             contextTokenValueSelect.value = 'f16';
-            fastAttentionCheckbox.checked = false;
+            // Fix: Set fastAttention to its default value instead of checked state
+            fastAttentionCheckbox.value = 'auto';
         }
     }
 }
