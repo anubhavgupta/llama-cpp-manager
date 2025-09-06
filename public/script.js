@@ -166,7 +166,7 @@ function saveCurrentValues(configId) {
         ctkEnable: ctkEnableCheckbox.checked,
         contextTokenKey: contextTokenKeySelect.value,
         contextTokenValue: contextTokenValueSelect.value,
-        fastAttention: fastAttentionCheckbox.checked,
+        fastAttention: fastAttentionCheckbox.value,
         jinja: jinjaCheckbox.checked
     };
     
@@ -198,7 +198,7 @@ function loadConfiguration(configId) {
     if (config.ctkEnable !== undefined) ctkEnableCheckbox.checked = config.ctkEnable;
     if (config.contextTokenKey !== undefined) contextTokenKeySelect.value = config.contextTokenKey;
     if (config.contextTokenValue !== undefined) contextTokenValueSelect.value = config.contextTokenValue;
-    if (config.fastAttention !== undefined) fastAttentionCheckbox.checked = config.fastAttention;
+    if (config.fastAttention !== undefined) fastAttentionCheckbox.value = config.fastAttention;
 }
 
 // Update enable/disable state for context token parameters
@@ -240,7 +240,7 @@ async function launchServer() {
         ctkEnable: ctkEnableCheckbox.checked,
         contextTokenKey: contextTokenKeySelect.value,
         contextTokenValue: contextTokenValueSelect.value,
-        fastAttention: fastAttentionCheckbox.checked,
+        fastAttention: fastAttentionCheckbox.value,
         jinja: jinjaCheckbox.checked
     };
     
@@ -310,8 +310,12 @@ async function launchServer() {
             args.push('-ctv', config.contextTokenValue);
         }
         
-        // Add fast attention flag if checked
-        if (config.fastAttention) {
+        // Add fast attention flag with proper value
+        if (config.fastAttention && config.fastAttention !== 'auto') {
+            args.push('-fa', config.fastAttention);
+        } else if (config.fastAttention === 'auto') {
+            // For 'auto' we still add -fa but without a value to maintain compatibility
+            // Or we can just skip it since 'auto' is default behavior
             args.push('-fa');
         }
         

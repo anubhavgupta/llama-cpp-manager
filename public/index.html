@@ -173,16 +173,20 @@
                             <option value="q5_1">q5_1</option>
                         </select>
                     </div>
-                    <div class="inline-checkboxes">
-                        <div class="form-group">
-                            <label for="fastAttention">Fast Attention (--fa):</label>
-                            <input type="checkbox" id="fastAttention" class="form-control checkbox">
-                        </div>
-                        <div class="form-group">
-                            <label for="jinja">Jinja (--jinja):</label>
-                            <input type="checkbox" id="jinja" class="form-control checkbox">
-                        </div>
+                <div class="inline-checkboxes">
+                    <div class="form-group">
+                        <label for="fastAttention">Fast Attention (--fa):</label>
+                        <select id="fastAttention" class="form-control">
+                            <option value="auto">auto</option>
+                            <option value="on">on</option>
+                            <option value="off">off</option>
+                        </select>
                     </div>
+                    <div class="form-group">
+                        <label for="jinja">Jinja (--jinja):</label>
+                        <input type="checkbox" id="jinja" class="form-control checkbox">
+                    </div>
+                </div>
 
                     <!-- Action Buttons with Model Status -->
                     <div class="action-buttons-container">
