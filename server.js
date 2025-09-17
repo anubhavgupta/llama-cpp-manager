@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs').promises;
 const os = require('os');
 const osUtils = require('os-utils');
+require('dotenv').config();
 const app = express();
 const PORT = 3001;
 
@@ -189,7 +190,7 @@ setInterval(updateSystemMetricsHistory, 1000); // Update every second
 // Function to recursively find GGUF files
 async function findGGUFFiles(directory) {
     const ggufFiles = [];
-    const basePath = directory || "D:\\.lmstudio\\models";
+    const basePath = directory || process.env.MODEL_PATH;
     
     try {
         // Check if directory exists
