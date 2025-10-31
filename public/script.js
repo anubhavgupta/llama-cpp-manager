@@ -9,6 +9,7 @@ const tempInput = document.getElementById('temp');
 const topKInput = document.getElementById('topK');
 const topPInput = document.getElementById('topP');
 const repeatPenaltyInput = document.getElementById('repeatPenalty');
+const presencePenaltyInput = document.getElementById('presencePenalty');
 const mlockCheckbox = document.getElementById('mlock');
 const swaFullCheckbox = document.getElementById('swaFull');
 const contextSizeInput = document.getElementById('contextSize');
@@ -151,7 +152,7 @@ function createDefaultConfigName() {
 function saveCurrentValues(configId) {
     if (!configId) return;
     
-    const config = {
+const config = {
         serverPath: serverPathInput.value,
         modelPath: modelPathSelect.value,  // Use select value instead of input value
         ngl: parseInt(nglInput.value) || 0,
@@ -160,6 +161,7 @@ function saveCurrentValues(configId) {
         topK: parseInt(topKInput.value) || 0,
         topP: parseFloat(topPInput.value) || 0,
         repeatPenalty: parseFloat(repeatPenaltyInput.value) || 0,
+        presencePenalty: parseFloat(presencePenaltyInput.value) || 0,
         mlock: mlockCheckbox.checked,
         swaFull: swaFullCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
@@ -237,7 +239,7 @@ async function launchServer() {
     }
     
     // Collect all configuration values
-    const config = {
+const config = {
         modelPath: modelPathSelect.value.trim(),  // Use select value instead of input value
         ngl: parseInt(nglInput.value) || 0,
         threads: parseInt(threadsInput.value) || 1,
@@ -245,6 +247,7 @@ async function launchServer() {
         topK: parseInt(topKInput.value) || 0,
         topP: parseFloat(topPInput.value) || 0,
         repeatPenalty: parseFloat(repeatPenaltyInput.value) || 0,
+        presencePenalty: parseFloat(presencePenaltyInput.value) || 0,
         mlock: mlockCheckbox.checked,
         swaFull: swaFullCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
@@ -296,6 +299,10 @@ async function launchServer() {
         
         if (config.repeatPenalty > 0) {
             args.push('--repeat-penalty', config.repeatPenalty.toString());
+        }
+        
+        if (config.presencePenalty > 0) {
+            args.push('--presence-penalty', config.presencePenalty.toString());
         }
         
         if (config.mlock) {
