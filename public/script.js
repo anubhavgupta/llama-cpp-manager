@@ -152,7 +152,7 @@ function createDefaultConfigName() {
 function saveCurrentValues(configId) {
     if (!configId) return;
     
-const config = {
+    const config = {
         serverPath: serverPathInput.value,
         modelPath: modelPathSelect.value,  // Use select value instead of input value
         ngl: parseInt(nglInput.value) || 0,
@@ -162,6 +162,7 @@ const config = {
         topP: parseFloat(topPInput.value) || 0,
         repeatPenalty: parseFloat(repeatPenaltyInput.value) || 0,
         presencePenalty: parseFloat(presencePenaltyInput.value) || 0,
+        parallel: parseInt(document.getElementById('parallel').value) || 0,
         mlock: mlockCheckbox.checked,
         swaFull: swaFullCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
@@ -198,6 +199,8 @@ function loadConfiguration(configId) {
     if (config.topK !== undefined) topKInput.value = config.topK;
     if (config.topP !== undefined) topPInput.value = config.topP;
     if (config.repeatPenalty !== undefined) repeatPenaltyInput.value = config.repeatPenalty;
+    if (config.presencePenalty !== undefined) presencePenaltyInput.value = config.presencePenalty;
+    if (config.parallel !== undefined) document.getElementById('parallel').value = config.parallel;
     if (config.mlock !== undefined) mlockCheckbox.checked = config.mlock;
     if (config.swaFull !== undefined) swaFullCheckbox.checked = config.swaFull;
     if (config.contextSize !== undefined) contextSizeInput.value = config.contextSize;
@@ -239,7 +242,7 @@ async function launchServer() {
     }
     
     // Collect all configuration values
-const config = {
+    const config = {
         modelPath: modelPathSelect.value.trim(),  // Use select value instead of input value
         ngl: parseInt(nglInput.value) || 0,
         threads: parseInt(threadsInput.value) || 1,
@@ -248,6 +251,7 @@ const config = {
         topP: parseFloat(topPInput.value) || 0,
         repeatPenalty: parseFloat(repeatPenaltyInput.value) || 0,
         presencePenalty: parseFloat(presencePenaltyInput.value) || 0,
+        parallel: parseInt(document.getElementById('parallel').value) || 0,
         mlock: mlockCheckbox.checked,
         swaFull: swaFullCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
@@ -303,6 +307,11 @@ const config = {
         
         if (config.presencePenalty > 0) {
             args.push('--presence-penalty', config.presencePenalty.toString());
+        }
+        
+        // Add parallel parameter
+        if (config.parallel > 0) {
+            args.push('--parallel', config.parallel.toString());
         }
         
         if (config.mlock) {
