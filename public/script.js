@@ -217,6 +217,7 @@ function loadConfiguration(configId) {
     
     // Debug logging for loaded configuration
     console.log('Loaded configuration:', configId, config);
+    updateContextTokenEnableState();
 }
 
 // Update enable/disable state for context token parameters
@@ -224,6 +225,15 @@ function updateContextTokenEnableState() {
     const isEnabled = ctkEnableCheckbox.checked;
     contextTokenKeySelect.disabled = !isEnabled;
     contextTokenValueSelect.disabled = !isEnabled;
+    
+    // Ensure the dropdowns are properly enabled/disabled when loaded from config
+    if (isEnabled) {
+        contextTokenKeySelect.removeAttribute('disabled');
+        contextTokenValueSelect.removeAttribute('disabled');
+    } else {
+        contextTokenKeySelect.setAttribute('disabled', 'disabled');
+        contextTokenValueSelect.setAttribute('disabled', 'disabled');
+    }
 }
 
 // Launch the server with all parameters
@@ -628,8 +638,11 @@ async function init() {
     saveConfigBtn.addEventListener('click', saveConfiguration);
     cancelConfigBtn.addEventListener('click', cancelConfiguration);
     
-    // Set up event listeners for context token parameters
+// Set up event listeners for context token parameters
     ctkEnableCheckbox.addEventListener('change', updateContextTokenEnableState);
+    
+    // Initialize the state on page load
+    updateContextTokenEnableState();
     
     // Set up event listeners for launching and stopping
     launchBtn.addEventListener('click', launchServer);
