@@ -95,6 +95,7 @@ async function fetchModels() {
     try {
         const response = await fetch('/models');
         const data = await response.json();
+        window.models = data.models; // Store globally for later use
         
         if (data.success) {
             // Clear existing options except the placeholder
@@ -341,6 +342,14 @@ async function launchServer() {
         if (config.verbose) {
             args.push('--verbose');
         }
+
+        // mmproj loading
+        const modelPath = modelPathSelect.value.trim();
+        window.models.forEach(model => {
+            if (model.path === modelPath && model.mmprojFile) {
+                args.push('--mmproj', model.mmprojFile);
+            }
+        });
         
         showOutput(`Command arguments: ${args.join(' ')}`);
         

@@ -188,7 +188,7 @@ async function updateSystemMetricsHistory() {
 setInterval(updateSystemMetricsHistory, 1000); // Update every second
 
 // Function to recursively find GGUF files
-async function findGGUFFiles(directory) {
+async function findGGUFFiles(directory = "C:\\Users\\anubh\\.lmstudio\\models") {
     const ggufFiles = [];
     const basePath = directory || process.env.MODEL_PATH;
     
@@ -206,13 +206,29 @@ async function findGGUFFiles(directory) {
                     if (item.isDirectory()) {
                         // Recursively search subdirectories
                         await searchDirectory(itemPath);
-                    } else if (item.isFile() && item.name.toLowerCase().endsWith('.gguf')) {
+                    } else if (item.isFile() && item.name.toLowerCase().startsWith('mmproj')) {
+                        continue; // Skip mmproj files
+                    }
+                    else if (item.isFile() && item.name.toLowerCase().endsWith('.gguf')) {
                         // Add GGUF file with relative path
                         const relativePath = path.relative(basePath, itemPath);
+
+                        // Check for corresponding mmproj file in the same directory
+                        let mmprojFile = null;
+                        
+                        // Look for any file starting with "mmproj" in the same directory
+                        for (const dirItem of items) {
+                            if (dirItem.isFile() && dirItem.name.startsWith('mmproj')) {
+                                mmprojFile = path.join(dir, dirItem.name);
+                                break;
+                            }
+                        }
+                        
                         ggufFiles.push({
                             name: item.name,
                             path: itemPath,
-                            relativePath: relativePath
+                            relativePath: relativePath,
+                            mmprojFile: mmprojFile
                         });
                     }
                 }
