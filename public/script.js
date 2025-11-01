@@ -85,9 +85,8 @@ async function fetchStatus() {
         updateStatus(data.running);
         return data.running;
     } catch (error) {
-        console.error('Error fetching status:', error);
-        showOutput('Error checking status: ' + error.message);
-        return false;
+        console.error('Error fetching models:', error);
+        showOutput('Error fetching models: ' + error.message);
     }
 }
 
@@ -101,13 +100,21 @@ async function fetchModels() {
         if (data.success) {
             // Clear existing options except the placeholder
             modelPathSelect.innerHTML = '<option value="">-- Select a Model --</option>';
+            // Also clear draft model dropdown
+            document.getElementById('draftModelPath').innerHTML = '<option value="">-- Select a Draft Model --</option>';
             
-            // Add models to dropdown
+            // Add models to both dropdowns
             data.models.forEach(model => {
                 const option = document.createElement('option');
                 option.value = model.path;  // Use full path for the value
                 option.textContent = model.relativePath || model.name;  // Show relative path or just name
+                
+                // Add to main model dropdown
                 modelPathSelect.appendChild(option);
+                
+                // Also add to draft model dropdown (clone the option)
+                const draftOption = option.cloneNode(true);
+                document.getElementById('draftModelPath').appendChild(draftOption);
             });
         } else {
             console.error('Failed to fetch models:', data.error);
@@ -173,7 +180,14 @@ function saveCurrentValues(configId) {
         contextTokenValue: contextTokenValueSelect.value,
         fastAttention: fastAttentionCheckbox.value,
         jinja: jinjaCheckbox.checked,
-        verbose: verboseCheckbox.checked
+        verbose: verboseCheckbox.checked,
+        draftModelPath: document.getElementById('draftModelPath') ? document.getElementById('draftModelPath').value.trim() : '',
+        ngld: parseInt(document.getElementById('ngld') ? document.getElementById('ngld').value : 0) || 0,
+        ctkd: document.getElementById('ctkd') ? document.getElementById('ctkd').value : '',
+        ctvd: document.getElementById('ctvd') ? document.getElementById('ctvd').value : '',
+        draftPMin: parseFloat(document.getElementById('draftPMin') ? document.getElementById('draftPMin').value : 0) || 0,
+        draftMin: parseInt(document.getElementById('draftMin') ? document.getElementById('draftMin').value : 0) || 0,
+        draftMax: parseInt(document.getElementById('draftMax') ? document.getElementById('draftMax').value : 0) || 0
     };
     
     configurations[configId] = config;
@@ -272,7 +286,14 @@ async function launchServer() {
         contextTokenValue: contextTokenValueSelect.value,
         fastAttention: fastAttentionCheckbox.value,
         jinja: jinjaCheckbox.checked,
-        verbose: verboseCheckbox.checked
+        verbose: verboseCheckbox.checked,
+        draftModelPath: document.getElementById('draftModelPath').value.trim(),
+        ngld: parseInt(document.getElementById('ngld').value) || 0,
+        ctkd: document.getElementById('ctkd').value,
+        ctvd: document.getElementById('ctvd').value,
+        draftPMin: parseFloat(document.getElementById('draftPMin').value) || 0,
+        draftMin: parseInt(document.getElementById('draftMin').value) || 0,
+        draftMax: parseInt(document.getElementById('draftMax').value) || 0
     };
     
     // Save current values to localStorage (if we have a config ID)
@@ -368,6 +389,36 @@ async function launchServer() {
         if (config.verbose) {
             args.push('--verbose');
         }
+
+        // Add draft model parameters if specified
+        if (config.draftModelPath) {
+            args.push('-md', config.draftModelPath);
+            if (config.ngld >= 0) {  // Allow 0 as a valid value
+                args.push('-ngld', config.ngld.toString());
+            }
+            
+            if (config.ctkd) {
+                args.push('-ctkd', config.ctkd);
+            }
+            
+            if (config.ctvd) {
+                args.push('-ctvd', config.ctvd);
+            }
+            
+            if (config.draftPMin >= 0) {  // Allow 0 as a valid value
+                args.push('--draft-p-min', config.draftPMin.toString());
+            }
+            
+            if (config.draftMin >= 0) {  // Allow 0 as a valid value
+                args.push('--draft-min', config.draftMin.toString());
+            }
+            
+            if (config.draftMax >= 0) {  // Allow 0 as a valid value
+                args.push('--draft-max', config.draftMax.toString());
+            }
+        }
+        
+        
 
         // mmproj loading
         const modelPath = modelPathSelect.value.trim();

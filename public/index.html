@@ -182,38 +182,100 @@
                         <input type="number" id="parallel" class="form-control" min="0" value="1">
                     </div>
                     
-                <div class="inline-checkboxes">
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="fastAttention">Fast Attention (--fa):</label>
+                            <select id="fastAttention" class="form-control">
+                                <option value="auto">auto</option>
+                                <option value="on">on</option>
+                                <option value="off">off</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jinja">Jinja (--jinja):</label>
+                            <input type="checkbox" id="jinja" class="form-control checkbox">
+                        </div>
+                    </div>
+
+                    <h3>Other</h3>
                     <div class="form-group">
-                        <label for="fastAttention">Fast Attention (--fa):</label>
-                        <select id="fastAttention" class="form-control">
-                            <option value="auto">auto</option>
-                            <option value="on">on</option>
-                            <option value="off">off</option>
+                        <label for="verbose">Verbose (--verbose):</label>
+                        <input type="checkbox" id="verbose" class="form-control checkbox">
+                    </div>
+
+                     <h3>Draft Model Settings</h3>
+                    <div class="form-group">
+                        <label for="draftModelPath">Draft Model Path (-md):</label>
+                        <select id="draftModelPath" class="form-control">
+                            <option value="">-- Select a Draft Model --</option>
                         </select>
                     </div>
+                    
                     <div class="form-group">
-                        <label for="jinja">Jinja (--jinja):</label>
-                        <input type="checkbox" id="jinja" class="form-control checkbox">
+                        <label for="ngld">GPU Layers for Draft Model (-ngld):</label>
+                        <input type="number" id="ngld" class="form-control" min="0" value="0">
                     </div>
+
+                    <div class="form-group">
+                        <label for="ctkd">Context Token Key for Draft Model (-ctkd):</label>
+                        <select id="ctkd" class="form-control">
+                            <option value="f32">f32</option>
+                            <option value="f16" selected>f16</option>
+                            <option value="bf16">bf16</option>
+                            <option value="q8_0">q8_0</option>
+                            <option value="q4_0">q4_0</option>
+                            <option value="q4_1">q4_1</option>
+                            <option value="iq4_nl">iq4_nl</option>
+                            <option value="q5_0">q5_0</option>
+                            <option value="q5_1">q5_1</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ctvd">Context Token Value for Draft Model (-ctvd):</label>
+                        <select id="ctvd" class="form-control">
+                            <option value="f32">f32</option>
+                            <option value="f16" selected>f16</option>
+                            <option value="bf16">bf16</option>
+                            <option value="q8_0">q8_0</option>
+                            <option value="q4_0">q4_0</option>
+                            <option value="q4_1">q4_1</option>
+                            <option value="iq4_nl">iq4_nl</option>
+                            <option value="q5_0">q5_0</option>
+                            <option value="q5_1">q5_1</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="draftPMin">Draft P Min (--draft-p-min):</label>
+                        <input type="number" id="draftPMin" class="form-control" step="0.01" min="0" value="0.1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="draftMin">Draft Min (--draft-min):</label>
+                        <input type="number" id="draftMin" class="form-control" min="0" value="5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="draftMax">Draft Max (--draft-max):</label>
+                        <input type="number" id="draftMax" class="form-control" min="0" value="10">
+                    </div>
+
                 </div>
 
-                <h3>Other</h3>
-                <div class="form-group">
-                            <label for="verbose">Verbose (--verbose):</label>
-                            <input type="checkbox" id="verbose" class="form-control checkbox">
-                        </div>
 
-                    <!-- Action Buttons with Model Status -->
-                    <div class="action-buttons-container">
-                        <div class="action-buttons">
-                            <button id="launchBtn" class="btn btn-primary">Launch</button>
-                            <button id="stopBtn" class="btn btn-danger" disabled>Stop</button>
-                        </div>
-                        
-                        <!-- Model Status Inline -->
-                        <div class="model-status-inline">
-                            <div id="modelStatusMessage" class="status-message">Not running</div>
-                        </div>
+                
+
+                <!-- Action Buttons with Model Status -->
+                <div class="action-buttons-container">
+                    <div class="action-buttons">
+                        <button id="launchBtn" class="btn btn-primary">Launch</button>
+                        <button id="stopBtn" class="btn btn-danger" disabled>Stop</button>
+                    </div>
+                    
+                    <!-- Model Status Inline -->
+                    <div class="model-status-inline">
+                        <div id="modelStatusMessage" class="status-message">Not running</div>
                     </div>
                 </div>
                 
