@@ -12,6 +12,7 @@ const repeatPenaltyInput = document.getElementById('repeatPenalty');
 const presencePenaltyInput = document.getElementById('presencePenalty');
 const mlockCheckbox = document.getElementById('mlock');
 const swaFullCheckbox = document.getElementById('swaFull');
+const noMmapCheckbox = document.getElementById('noMmap');
 const contextSizeInput = document.getElementById('contextSize');
 const nCpuMoeInput = document.getElementById('nCpuMoe');
 const cpuMoeCheckbox = document.getElementById('cpuMoe');
@@ -172,6 +173,7 @@ function saveCurrentValues(configId) {
         parallel: parseInt(document.getElementById('parallel').value) || 0,
         mlock: mlockCheckbox.checked,
         swaFull: swaFullCheckbox.checked,
+        noMmap: noMmapCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
         nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
         cpuMoe: cpuMoeCheckbox.checked,
@@ -217,6 +219,7 @@ function loadConfiguration(configId) {
     if (config.parallel !== undefined) document.getElementById('parallel').value = config.parallel;
     if (config.mlock !== undefined) mlockCheckbox.checked = config.mlock;
     if (config.swaFull !== undefined) swaFullCheckbox.checked = config.swaFull;
+    noMmapCheckbox.checked = !!config.noMmap;
     if (config.contextSize !== undefined) contextSizeInput.value = config.contextSize;
     if (config.nCpuMoe !== undefined) nCpuMoeInput.value = config.nCpuMoe;
     if (config.cpuMoe !== undefined) cpuMoeCheckbox.checked = config.cpuMoe;
@@ -278,6 +281,7 @@ async function launchServer() {
         parallel: parseInt(document.getElementById('parallel').value) || 0,
         mlock: mlockCheckbox.checked,
         swaFull: swaFullCheckbox.checked,
+        noMmap: noMmapCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
         nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
         cpuMoe: cpuMoeCheckbox.checked,
@@ -388,6 +392,11 @@ async function launchServer() {
         // Add verbose flag if checked
         if (config.verbose) {
             args.push('--verbose');
+        }
+
+        // Add no-mmap flag if checked
+        if (config.noMmap) {
+            args.push('--no-mmap');
         }
 
         // Add draft model parameters if specified
