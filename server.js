@@ -415,3 +415,105 @@ io.on('connection', (socket) => {
 httpServer.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
+
+// API endpoint to launch model presets
+app.post('/launch-presets', async (req, res) => {
+    try {
+        const { presets, configs } = req.body;
+        
+        if (!presets) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Presets content is required' 
+            });
+        }
+        
+        // Save the presets to a file
+        const presetsFilePath = path.join(__dirname, 'models-preset.ini');
+        await fs.writeFile(presetsFilePath, presets);
+        console.log('Generated models-preset.ini file:', presetsFilePath);
+        showOutput(`Generated models-preset.ini file: ${presetsFilePath}`);
+        
+        // Get server path from the first config or use default
+        let serverPath = null;
+        for (const [configName, config] of Object.entries(configs)) {
+            if (config.serverPath && config.serverPath.trim()) {
+                serverPath = config.serverPath.trim();
+                break;
+            }
+        }
+        
+        // If no server path found, use default or prompt user
+        if (!serverPath) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Server path not found in configurations' 
+            });
+        }
+        
+        // Build command arguments for llama-server with --models-preset flag
+        const args = [];
+        args.push('--models-preset', presetsFilePath);
+        
+        
+        console.log('Starting server with presets:', args);
+        showOutput(`Starting server with presets: ${args.join(' ')}`);
+        
+        // Start the server using spawn for better process control
+        runningProcess = spawn(serverPath, args, { stdio: 'pipe' });
+        
+        // Handle process events
+        runningProcess.on('close', (code) => {
+            console.log(`Server process exited with code ${code}`);
+            runningProcess = null;
+            // Notify clients that the process has ended
+            connectedClients.forEach(client => {
+                client.emit('server-ended', { message: 'Server process has ended' });
+            });
+        });
+        
+        runningProcess.on('error', (error) => {
+            console.error(`Failed to start process: ${error}`);
+            runningProcess = null;
+            // Notify clients of error
+            connectedClients.forEach(client => {
+                client.emit('server-error', { message: 'Failed to start server: ' + error.message });
+            });
+        });
+        
+        // Stream stdout and stderr to connected clients
+        if (runningProcess.stdout) {
+            runningProcess.stdout.on('data', (data) => {
+                const logData = data.toString();
+                console.log('STDOUT:', logData);
+                // Broadcast to all connected clients
+                connectedClients.forEach(client => {
+                    client.emit('log-stream', { type: 'stdout', data: logData });
+                });
+            });
+        }
+        
+        if (runningProcess.stderr) {
+            runningProcess.stderr.on('data', (data) => {
+                const logData = data.toString();
+                console.log('STDERR:', logData);
+                // Broadcast to all connected clients
+                connectedClients.forEach(client => {
+                    client.emit('log-stream', { type: 'stderr', data: logData });
+                });
+            });
+        }
+        
+        res.json({ 
+            success: true, 
+            message: 'Server started with model presets successfully',
+            presetsFile: presetsFilePath
+        });
+    } catch (error) {
+        console.error('Error launching server with presets:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: `Failed to start server with presets: ${error.message}` 
+        });
+    }
+});

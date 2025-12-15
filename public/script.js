@@ -475,6 +475,169 @@ async function launchServer() {
     }
 }
 
+// Launch model presets functionality
+async function launchModelPresets() {
+    try {
+        showOutput('Starting model presets process...');
+        
+        // Get all configurations from localStorage
+        const savedConfigs = localStorage.getItem('llamaCppConfigs');
+        if (!savedConfigs) {
+            showOutput('No configurations found to create presets file');
+            return;
+        }
+        
+        const configs = JSON.parse(savedConfigs);
+        if (Object.keys(configs).length === 0) {
+            showOutput('No configurations found to create presets file');
+            return;
+        }
+        
+        // Convert configurations to models-preset.ini format
+        let presetContent = 'version = 1\n\n';
+        
+        // Process each configuration
+        for (const [configName, config] of Object.entries(configs)) {
+            // Create a section name based on the model path or configuration name
+            let sectionName = configName;
+            // if (config.modelPath) {
+            //     // Extract just the filename for the section name if it's a GGUF model path
+            //     const fileName = config.modelPath.split('/').pop().split('\\').pop();
+            //     if (fileName && fileName.endsWith('.gguf')) {
+            //         sectionName = fileName.replace('.gguf', '');
+            //     }
+            // }
+            
+            // Create section header with proper format
+            presetContent += `[${sectionName}]\n`;
+            
+            // Add model path if available
+            if (config.modelPath) {
+                presetContent += `model = ${config.modelPath}\n`;
+            }
+            
+            // Add other parameters based on the configuration
+            if (config.temp !== undefined && config.temp >= 0) {
+                presetContent += `temp = ${config.temp}\n`;
+            }
+            
+            if (config.topK !== undefined && config.topK > 0) {
+                presetContent += `top-k = ${config.topK}\n`;
+            }
+            
+            if (config.topP !== undefined && config.topP >= 0) {
+                presetContent += `top-p = ${config.topP}\n`;
+            }
+            
+            if (config.repeatPenalty !== undefined && config.repeatPenalty > 0) {
+                presetContent += `repeat-penalty = ${config.repeatPenalty}\n`;
+            }
+            
+            if (config.presencePenalty !== undefined && config.presencePenalty > 0) {
+                presetContent += `presence-penalty = ${config.presencePenalty}\n`;
+            }
+            
+            if (config.ngl !== undefined && config.ngl > 0) {
+                presetContent += `n-gpu-layer = ${config.ngl}\n`;
+            }
+            
+            if (config.threads !== undefined && config.threads > 0) {
+                presetContent += `threads = ${config.threads}\n`;
+            }
+            
+            if (config.contextSize !== undefined && config.contextSize > 0) {
+                presetContent += `c = ${config.contextSize}\n`;
+            }
+            
+            if (config.mlock !== undefined && config.mlock) {
+                presetContent += `mlock = true\n`;
+            }
+            
+            if (config.swaFull !== undefined && config.swaFull) {
+                presetContent += `swa-full = true\n`;
+            }
+            
+            if (config.noMmap !== undefined && config.noMmap) {
+                presetContent += `no-mmap = true\n`;
+            }
+            
+            if (config.noKvOffload !== undefined && config.noKvOffload) {
+                presetContent += `no-kv-offload = true\n`;
+            }
+            
+            if (config.jinja !== undefined && config.jinja) {
+                presetContent += `jinja = true\n`;
+            }
+            
+            if (config.verbose !== undefined && config.verbose) {
+                presetContent += `verbose = true\n`;
+            }
+            
+            // Add draft model parameters if available
+            if (config.draftModelPath) {
+                presetContent += `model-draft = ${config.draftModelPath}\n`;
+            }
+            
+            if (config.ngld !== undefined && config.ngld >= 0) {
+                presetContent += `ngld = ${config.ngld}\n`;
+            }
+            
+            if (config.ctkd) {
+                presetContent += `ctkd = ${config.ctkd}\n`;
+            }
+            
+            if (config.ctvd) {
+                presetContent += `ctvd = ${config.ctvd}\n`;
+            }
+            
+            if (config.draftPMin !== undefined && config.draftPMin >= 0) {
+                presetContent += `draft-p-min = ${config.draftPMin}\n`;
+            }
+            
+            if (config.draftMin !== undefined && config.draftMin >= 0) {
+                presetContent += `draft-min = ${config.draftMin}\n`;
+            }
+            
+            if (config.draftMax !== undefined && config.draftMax >= 0) {
+                presetContent += `draft-max = ${config.draftMax}\n`;
+            }
+            
+            // Add a blank line between sections for readability
+            presetContent += '\n';
+        }
+        
+        showOutput('Generated models-preset.ini content:');
+        showOutput(presetContent);
+        
+        // Send the presets to server for processing
+        const response = await fetch('/launch-presets', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                presets: presetContent,
+                configs: configs
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showOutput('Model presets process started successfully');
+            updateStatus(true);
+            updateButtonStates(true);
+            // Initialize WebSocket connection for log streaming
+            initWebSocket();
+        } else {
+            showOutput('Error starting model presets: ' + data.error);
+        }
+    } catch (error) {
+        console.error('Error launching model presets:', error);
+        showOutput('Error launching model presets: ' + error.message);
+    }
+}
+
 // Initialize WebSocket connection for log streaming
 function initWebSocket() {
     // Only initialize if not already connected
@@ -715,6 +878,10 @@ async function init() {
     // Set up event listeners for launching and stopping
     launchBtn.addEventListener('click', launchServer);
     stopBtn.addEventListener('click', stopServer);
+    
+    // Add event listener for the new Launch Model Presets button
+    const launchPresetsBtn = document.querySelector('#launchPresetsBtn');
+    launchPresetsBtn.addEventListener('click', launchModelPresets);
     
     // Check initial status
     await fetchStatus();
