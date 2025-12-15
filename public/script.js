@@ -22,6 +22,7 @@ const contextTokenValueSelect = document.getElementById('contextTokenValue');
 const fastAttentionCheckbox = document.getElementById('fastAttention');
 const jinjaCheckbox = document.getElementById('jinja');
 const verboseCheckbox = document.getElementById('verbose');
+const noKvOffloadCheckbox = document.getElementById('noKvOffload');
 const launchBtn = document.getElementById('launchBtn');
 const stopBtn = document.getElementById('stopBtn');
 const modelStatusMessage = document.getElementById('modelStatusMessage');
@@ -183,6 +184,7 @@ function saveCurrentValues(configId) {
         fastAttention: fastAttentionCheckbox.value,
         jinja: jinjaCheckbox.checked,
         verbose: verboseCheckbox.checked,
+        noKvOffload: noKvOffloadCheckbox.checked,
         draftModelPath: document.getElementById('draftModelPath') ? document.getElementById('draftModelPath').value.trim() : '',
         ngld: parseInt(document.getElementById('ngld') ? document.getElementById('ngld').value : 0) || 0,
         ctkd: document.getElementById('ctkd') ? document.getElementById('ctkd').value : '',
@@ -231,6 +233,7 @@ function loadConfiguration(configId) {
         fastAttentionCheckbox.value = config.fastAttention == true ? 'on': config.fastAttention;
     }
     if (config.jinja !== undefined) jinjaCheckbox.checked = config.jinja;
+    noKvOffloadCheckbox.checked = !!config.noKvOffload;
     
     // Debug logging for loaded configuration
     console.log('Loaded configuration:', configId, config);
@@ -397,6 +400,11 @@ async function launchServer() {
         // Add no-mmap flag if checked
         if (config.noMmap) {
             args.push('--no-mmap');
+        }
+
+        // Add no-kv-offload flag if checked
+        if (config.noKvOffload) {
+            args.push('--no-kv-offload');
         }
 
         // Add draft model parameters if specified
