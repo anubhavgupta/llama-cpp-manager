@@ -283,7 +283,13 @@
                     <div class="action-buttons">
                         <button id="launchBtn" class="btn btn-primary">Launch</button>
                         <button id="stopBtn" class="btn btn-secondary" disabled>Stop</button>
-                        <button id="launchPresetsBtn" class="btn btn-primary">Launch Model Presets</button>
+                        <div class="launch-presets-combo">
+                            <select id="launchPresetsSelect" class="form-control">
+                                <option value="">-- Select Server Path --</option>
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                            <button id="launchPresetsBtn" class="btn btn-primary">Launch Presets</button>
+                        </div>
                     </div>
                     
                     <!-- Model Status Inline -->

@@ -37,6 +37,7 @@ const configFormTitle = document.getElementById('configFormTitle');
 const configNameInput = document.getElementById('configName');
 const saveConfigBtn = document.getElementById('saveConfigBtn');
 const cancelConfigBtn = document.getElementById('cancelConfigBtn');
+const launchPresetsSelect = document.querySelector('#launchPresetsSelect');
 
 // Store WebSocket connection
 let socket = null;
@@ -234,6 +235,14 @@ function loadConfiguration(configId) {
     }
     if (config.jinja !== undefined) jinjaCheckbox.checked = config.jinja;
     noKvOffloadCheckbox.checked = !!config.noKvOffload;
+
+    if(config.draftModelPath !== undefined) document.getElementById('draftModelPath').value = config.draftModelPath;
+    if(config.ngld !== undefined) document.getElementById('ngld').value = config.ngld.toString();
+    if(config.ctkd !== undefined) document.getElementById('ctkd').value = config.ctkd;
+    if(config.ctvd !== undefined) document.getElementById('ctvd').value = config.ctvd;
+    if(config.draftPMin !== undefined) document.getElementById('draftPMin').value = config.draftPMin.toString();
+    if(config.draftMin !== undefined) document.getElementById('draftMin').value = config.draftMin.toString();
+    if(config.draftMax !== undefined) document.getElementById('draftMax').value = config.draftMax.toString();
     
     // Debug logging for loaded configuration
     console.log('Loaded configuration:', configId, config);
@@ -544,6 +553,19 @@ async function launchModelPresets() {
             if (config.threads !== undefined && config.threads > 0) {
                 presetContent += `threads = ${config.threads}\n`;
             }
+
+            if (config.nCpuMoe !== undefined && config.nCpuMoe > 0) {
+                presetContent += `n-cpu-moe = ${config.nCpuMoe}\n`;
+            }
+            
+            if (config.cpuMoe) {
+                presetContent += 'cpu-moe = true';
+            }
+
+            // Add parallel parameter
+            if (config.parallel > 0) {
+                   presetContent += `parallel = ${config.parallel}`;
+            }
             
             if (config.contextSize !== undefined && config.contextSize > 0) {
                 presetContent += `c = ${config.contextSize}\n`;
@@ -589,6 +611,18 @@ async function launchModelPresets() {
             if (config.ctvd) {
                 presetContent += `ctvd = ${config.ctvd}\n`;
             }
+
+             if (config.ctk) {
+                presetContent += `ctk = ${config.ctk}\n`;
+            }
+            
+            if (config.ctv) {
+                presetContent += `ctv = ${config.ctv}\n`;
+            }
+
+            if (config.fastAttention) {
+                presetContent += `fa = ${config.fastAttention ?? 'auto'}\n`;
+            }
             
             if (config.draftPMin !== undefined && config.draftPMin >= 0) {
                 presetContent += `draft-p-min = ${config.draftPMin}\n`;
@@ -617,7 +651,7 @@ async function launchModelPresets() {
             },
             body: JSON.stringify({ 
                 presets: presetContent,
-                configs: configs
+                serverPath: launchPresetsSelect.value
             })
         });
         
@@ -881,6 +915,8 @@ async function init() {
     
     // Add event listener for the new Launch Model Presets button
     const launchPresetsBtn = document.querySelector('#launchPresetsBtn');
+
+   
     launchPresetsBtn.addEventListener('click', launchModelPresets);
     
     // Check initial status
@@ -892,6 +928,36 @@ async function init() {
     // Render the configuration list
     renderConfigList();
 }
+
+ // Function to populate the dropdown with server paths from configurations
+function populateLaunchPresetsDropdown() {
+
+    // Clear existing options except the placeholder
+    launchPresetsSelect.innerHTML = '<option value="">-- Select Server Path --</option>';
+    
+    // Get all configurations
+    const savedConfigs = localStorage.getItem('llamaCppConfigs');
+    if (!savedConfigs) return;
+    
+    const configs = JSON.parse(savedConfigs);
+    const serverPaths = new Set(); // Use Set to avoid duplicates
+    
+    // Collect unique server paths from all configurations
+    for (const [configName, config] of Object.entries(configs)) {
+        if (config.serverPath && config.serverPath.trim()) {
+            serverPaths.add(config.serverPath.trim());
+        }
+    }
+    
+    // Add options to dropdown
+    serverPaths.forEach(path => {
+        const option = document.createElement('option');
+        option.value = path;
+        option.textContent = path;
+        launchPresetsSelect.appendChild(option);
+    });
+}
+
 
 // Initialize chart contexts and set canvas dimensions
 function initCharts() {
@@ -1182,6 +1248,7 @@ document.addEventListener('DOMContentLoaded', function() {
     init();
     initCharts(); // Initialize chart contexts
     startMetricUpdates(); // Start periodic metric updates
+    populateLaunchPresetsDropdown();
     
     // Add resize listener for charts
     window.addEventListener('resize', handleResize);

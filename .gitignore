@@ -15,6 +15,7 @@
 /dist
 /build
 /out
+models-preset.ini
 
 # Logs
 *.log

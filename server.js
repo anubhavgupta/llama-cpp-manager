@@ -419,7 +419,7 @@ httpServer.listen(PORT, () => {
 // API endpoint to launch model presets
 app.post('/launch-presets', async (req, res) => {
     try {
-        const { presets, configs } = req.body;
+        const { presets, serverPath } = req.body;
         
         if (!presets) {
             return res.status(400).json({ 
@@ -432,22 +432,12 @@ app.post('/launch-presets', async (req, res) => {
         const presetsFilePath = path.join(__dirname, 'models-preset.ini');
         await fs.writeFile(presetsFilePath, presets);
         console.log('Generated models-preset.ini file:', presetsFilePath);
-        showOutput(`Generated models-preset.ini file: ${presetsFilePath}`);
-        
-        // Get server path from the first config or use default
-        let serverPath = null;
-        for (const [configName, config] of Object.entries(configs)) {
-            if (config.serverPath && config.serverPath.trim()) {
-                serverPath = config.serverPath.trim();
-                break;
-            }
-        }
         
         // If no server path found, use default or prompt user
         if (!serverPath) {
             return res.status(400).json({ 
                 success: false, 
-                error: 'Server path not found in configurations' 
+                error: 'Server path not found' 
             });
         }
         
@@ -457,7 +447,6 @@ app.post('/launch-presets', async (req, res) => {
         
         
         console.log('Starting server with presets:', args);
-        showOutput(`Starting server with presets: ${args.join(' ')}`);
         
         // Start the server using spawn for better process control
         runningProcess = spawn(serverPath, args, { stdio: 'pipe' });
