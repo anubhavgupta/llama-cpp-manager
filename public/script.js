@@ -443,8 +443,8 @@ async function launchServer() {
                 args.push('--draft-max', config.draftMax.toString());
             }
         }
-        
-        
+
+        args.push("--host", "0.0.0.0");
 
         // mmproj loading
         const modelPath = modelPathSelect.value.trim();

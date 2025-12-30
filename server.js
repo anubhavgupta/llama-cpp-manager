@@ -444,6 +444,7 @@ app.post('/launch-presets', async (req, res) => {
         // Build command arguments for llama-server with --models-preset flag
         const args = [];
         args.push('--models-preset', presetsFilePath);
+        args.push('--host', "0.0.0.0");
         
         
         console.log('Starting server with presets:', args);
