@@ -524,10 +524,21 @@ async function launchModelPresets() {
             if (config.modelPath) {
                 presetContent += `model = ${config.modelPath}\n`;
             }
+            // mmproj loading
+            const modelPath = config.modelPath;
+            window.models.forEach(model => {
+                if (model.path === modelPath && model.mmprojFile) {
+                    presetContent += `mmproj = ${model.mmprojFile}\n`;
+                }
+            });
             
             // Add other parameters based on the configuration
             if (config.temp !== undefined && config.temp >= 0) {
                 presetContent += `temp = ${config.temp}\n`;
+            }
+
+            if (config.contextSize > 0) {
+                presetContent += `c = ${config.contextSize.toString()}\n`;
             }
             
             if (config.topK !== undefined && config.topK > 0) {
@@ -559,17 +570,14 @@ async function launchModelPresets() {
             }
             
             if (config.cpuMoe) {
-                presetContent += 'cpu-moe = true';
+                presetContent += 'cpu-moe = true\n';
             }
 
             // Add parallel parameter
             if (config.parallel > 0) {
-                   presetContent += `parallel = ${config.parallel}`;
+                   presetContent += `parallel = ${config.parallel}\n`;
             }
             
-            if (config.contextSize !== undefined && config.contextSize > 0) {
-                presetContent += `c = ${config.contextSize}\n`;
-            }
             
             if (config.mlock !== undefined && config.mlock) {
                 presetContent += `mlock = true\n`;
@@ -594,6 +602,7 @@ async function launchModelPresets() {
             if (config.verbose !== undefined && config.verbose) {
                 presetContent += `verbose = true\n`;
             }
+
             
             // Add draft model parameters if available
             if (config.draftModelPath) {
