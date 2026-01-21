@@ -61,7 +61,7 @@ let chartData = {
 function updateButtonStates(isRunning) {
     launchBtn.disabled = isRunning;
     stopBtn.disabled = !isRunning;
-    restartBtn.disabled = !isRunning; // Enable restart button when running
+    // restartBtn.disabled = !isRunning; // Enable restart button when running
 }
 
 // Update status display
@@ -963,7 +963,7 @@ async function init() {
     // Set up event listeners for launching and stopping
     launchBtn.addEventListener('click', launchServer);
     stopBtn.addEventListener('click', stopServer);
-    restartBtn.addEventListener('click', restartServer); // Add restart button listener
+    // restartBtn.addEventListener('click', restartServer); // Add restart button listener
     
     // Add event listener for the new Launch Model Presets button
     const launchPresetsBtn = document.querySelector('#launchPresetsBtn');
