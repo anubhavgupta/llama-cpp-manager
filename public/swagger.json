@@ -1,0 +1,345 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Llama CPP Manager API",
+    "version": "1.0.0",
+    "description": "API for managing Llama CPP server instances"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Serve the main page",
+        "responses": {
+          "200": {
+            "description": "Main HTML page"
+          }
+        }
+      }
+    },
+    "/start": {
+      "post": {
+        "summary": "Start the llama server",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "serverPath": {
+                    "type": "string",
+                    "description": "Path to the llama server executable"
+                  },
+                  "args": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Arguments to pass to the server"
+                  }
+                },
+                "required": ["serverPath"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Server started successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Server path is required"
+          }
+        }
+      }
+    },
+    "/stop": {
+      "post": {
+        "summary": "Stop the llama server",
+        "responses": {
+          "200": {
+            "description": "Server stopped successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/models": {
+      "get": {
+        "summary": "Get available GGUF models",
+        "responses": {
+          "200": {
+            "description": "List of available models",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "models": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "path": {
+                            "type": "string"
+                          },
+                          "relativePath": {
+                            "type": "string"
+                          },
+                          "mmprojFile": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "summary": "Get system metrics",
+        "responses": {
+          "200": {
+            "description": "System metrics data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cpu": {
+                      "type": "number"
+                    },
+                    "ram": {
+                      "type": "number"
+                    },
+                    "gpu": {
+                      "type": "number"
+                    },
+                    "vram": {
+                      "type": "number"
+                    },
+                    "vramUsage": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/status": {
+      "get": {
+        "summary": "Check if server is running",
+        "responses": {
+          "200": {
+            "description": "Server status information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "running": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/restart": {
+      "post": {
+        "summary": "Restart the llama server",
+        "responses": {
+          "200": {
+            "description": "Server restarted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/settings": {
+      "get": {
+        "summary": "Get current models directory path",
+        "responses": {
+          "200": {
+            "description": "Current settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "settings": {
+                      "type": "object",
+                      "properties": {
+                        "modelsDirectory": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Save models directory path",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "modelsDirectory": {
+                    "type": "string",
+                    "description": "Path to the models directory"
+                  }
+                },
+                "required": ["modelsDirectory"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Settings saved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/launch-presets": {
+      "post": {
+        "summary": "Launch model presets",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "presets": {
+                    "type": "string",
+                    "description": "Presets content"
+                  },
+                  "serverPath": {
+                    "type": "string",
+                    "description": "Path to the llama server executable"
+                  }
+                },
+                "required": ["presets"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Server started with model presets successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "presetsFile": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

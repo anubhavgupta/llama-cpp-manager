@@ -265,6 +265,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Serve Swagger documentation
+app.get('/swagger', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'swagger.html'));
+});
+
 // API endpoint to start the llama server
 app.post('/start', (req, res) => {
     const { serverPath, args = [] } = req.body;
