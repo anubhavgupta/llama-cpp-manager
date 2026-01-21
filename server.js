@@ -94,7 +94,7 @@ async function getSystemMetrics() {
                 vramTotal = 16 * 1024 * 1024 * 1024 / (1024 * 1024); // 16GB in MB (simulated)
                 vramFree = vramTotal * (1 - vramUsage / 100);
             } else {
-                //console.log('Detected Intel-based Mac - using standard GPU simulation');
+                // Detected Intel-based Mac - using standard GPU simulation
                 // For Intel-based Macs, we'll also simulate values but with different ranges
                 gpuUsage = Math.random() * 30; // Lower usage for Intel Mac (simulated)
                 vramUsage = Math.random() * 50; // Simulated VRAM usage (lower for Mac)
@@ -121,7 +121,7 @@ async function getSystemMetrics() {
             }
         } else {
             // For other platforms, simulate values
-            //console.log(`Running on ${platform} - using simulated GPU data`);
+            //Running on ${platform} - using simulated GPU data
             gpuUsage = Math.random() * 50; // Simulated usage for other platforms
             vramUsage = Math.random() * 60; // Simulated VRAM usage
             vramTotal = 8 * 1024 * 1024 * 1024 / (1024 * 1024); // 8GB in MB (simulated)
@@ -129,7 +129,7 @@ async function getSystemMetrics() {
         }
     } catch (error) {
         // If we fail to get GPU/VRAM data, fall back to simulated values
-        // console.log(`Failed to get GPU/VRAM data: ${error.message}`);
+        // Failed to get GPU/VRAM data
         gpuUsage = Math.random() * 50; // Simulated fallback for all platforms
         vramUsage = Math.random() * 60; // Simulated fallback for all platforms
         vramTotal = 8 * 1024 * 1024 * 1024 / (1024 * 1024); // 8GB in MB (simulated)
