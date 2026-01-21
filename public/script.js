@@ -27,6 +27,7 @@ const noKvOffloadCheckbox = document.getElementById('noKvOffload');
 const launchBtn = document.getElementById('launchBtn');
 const stopBtn = document.getElementById('stopBtn');
 const restartBtn = document.getElementById('restartBtn'); // New restart button
+const settingsBtn = document.getElementById('settingsBtn'); // New settings button
 const modelStatusMessage = document.getElementById('modelStatusMessage');
 const modelProcessInfo = document.getElementById('modelProcessInfo');
 const modelOutput = document.getElementById('modelOutput');
@@ -40,6 +41,14 @@ const configNameInput = document.getElementById('configName');
 const saveConfigBtn = document.getElementById('saveConfigBtn');
 const cancelConfigBtn = document.getElementById('cancelConfigBtn');
 const launchPresetsSelect = document.querySelector('#launchPresetsSelect');
+
+// Settings dialog elements
+const settingsDialog = document.createElement('dialog');
+settingsDialog.id = 'settingsDialog';
+settingsDialog.className = 'settings-dialog';
+
+// Add the settings dialog to the body
+document.body.appendChild(settingsDialog);
 
 // Store WebSocket connection
 let socket = null;
@@ -1295,6 +1304,78 @@ function handleResize() {
     }, 100); // Small delay to ensure DOM is updated
 }
 
+// Open settings dialog
+function openSettingsDialog() {
+    fetch('/settings')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const currentDirectory = data.settings.modelsDirectory || '';
+                settingsDialog.innerHTML = `
+                    <h3>Settings</h3>
+                    <div class="form-group">
+                        <label for="modelsDirectory">Models Directory:</label>
+                        <input type="text" id="modelsDirectory" class="form-control" value="${currentDirectory}" placeholder="Enter models directory path">
+                    </div>
+                    <div class="form-actions">
+                        <button id="saveSettingsBtn" class="btn btn-primary">Save</button>
+                        <button id="cancelSettingsBtn" class="btn btn-secondary">Cancel</button>
+                    </div>
+                `;
+                
+                // Add event listeners to the dialog buttons
+                const saveSettingsBtn = settingsDialog.querySelector('#saveSettingsBtn');
+                const cancelSettingsBtn = settingsDialog.querySelector('#cancelSettingsBtn');
+                const modelsDirectoryInput = settingsDialog.querySelector('#modelsDirectory');
+                
+                saveSettingsBtn.addEventListener('click', () => {
+                    const directory = modelsDirectoryInput.value.trim();
+                    if (!directory) {
+                        alert('Please enter a models directory path');
+                        return;
+                    }
+                    
+                    // Save the settings
+                    fetch('/settings', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ modelsDirectory: directory })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showOutput('Settings saved successfully');
+                            settingsDialog.close();
+                            // Reload models to use the new directory
+                            fetchModels();
+                        } else {
+                            showOutput('Error saving settings: ' + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error saving settings:', error);
+                        showOutput('Error saving settings: ' + error.message);
+                    });
+                });
+                
+                cancelSettingsBtn.addEventListener('click', () => {
+                    settingsDialog.close();
+                });
+                
+                // Show the dialog
+                settingsDialog.showModal();
+            } else {
+                showOutput('Error fetching settings: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching settings:', error);
+            showOutput('Error fetching settings: ' + error.message);
+        });
+}
+
 // Start the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     init();
@@ -1304,4 +1385,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add resize listener for charts
     window.addEventListener('resize', handleResize);
+    
+    // Set up settings button event listener
+    settingsBtn.addEventListener('click', openSettingsDialog);
 });

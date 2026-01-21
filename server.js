@@ -189,9 +189,9 @@ async function updateSystemMetricsHistory() {
 setInterval(updateSystemMetricsHistory, 1000); // Update every second
 
 // Function to recursively find GGUF files
-async function findGGUFFiles(directory = "C:\\Users\\anubh\\.lmstudio\\models") {
+async function findGGUFFiles(directory) {
     const ggufFiles = [];
-    const basePath = directory || process.env.MODEL_PATH;
+    const basePath = directory || process.env.MODEL_PATH || "C:\\Users\\anubh\\.lmstudio\\models";
     
     try {
         // Check if directory exists
@@ -510,6 +510,53 @@ io.on('connection', (socket) => {
 // Start the server with WebSocket support
 httpServer.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
+});
+
+// API endpoint to get the current models directory path
+app.get('/settings', (req, res) => {
+    // Read settings from a JSON file or use default if not set
+    const settingsPath = path.join(__dirname, 'settings.json');
+    fs.readFile(settingsPath, 'utf8')
+        .then(data => {
+            const settings = JSON.parse(data);
+            res.json({ success: true, settings });
+        })
+        .catch(err => {
+            // If settings file doesn't exist, return default settings
+            res.json({ success: true, settings: { modelsDirectory: process.env.MODEL_PATH || "C:\\Users\\anubh\\.lmstudio\\models" } });
+        });
+});
+
+// API endpoint to save the models directory path
+app.post('/settings', async (req, res) => {
+    const { modelsDirectory } = req.body;
+    
+    if (!modelsDirectory) {
+        return res.status(400).json({ 
+            success: false, 
+            error: 'Models directory path is required' 
+        });
+    }
+    
+    try {
+        // Validate that the directory exists
+        await fs.access(modelsDirectory);
+        
+        // Save settings to a JSON file
+        const settingsPath = path.join(__dirname, 'settings.json');
+        const settings = { modelsDirectory };
+        await fs.writeFile(settingsPath, JSON.stringify(settings, null, 2));
+        
+        res.json({ 
+            success: true, 
+            message: 'Settings saved successfully' 
+        });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            error: `Failed to save settings: ${error.message}` 
+        });
+    }
 });
 
 // API endpoint to launch model presets
