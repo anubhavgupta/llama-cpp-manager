@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 // Store the running process
 let runningProcess = null;
 let connectedClients = [];
+let lastLaunchConfig = null;
 
 // Create WebSocket server for log streaming
 const httpServer = require('http').createServer(app);
@@ -269,6 +270,9 @@ app.post('/start', (req, res) => {
         });
     }
     
+    // Store the launch configuration for restart functionality
+    lastLaunchConfig = { serverPath, args };
+    
     // Start the server using spawn for better process control
     try {
         console.log('Starting server with args:', args);
@@ -394,6 +398,98 @@ app.get('/status', (req, res) => {
     res.json({ 
         running: !!runningProcess && !runningProcess.killed
     });
+});
+
+// API endpoint to restart the llama server
+app.post('/restart', (req, res) => {
+    // Check if we have a previous launch configuration
+    if (!lastLaunchConfig) {
+        return res.status(400).json({ 
+            success: false, 
+            error: 'No previous configuration found to restart from' 
+        });
+    }
+    
+    // Stop the current server if running
+    if (runningProcess) {
+        try {
+            // Check if process is still running before attempting to kill
+            if (runningProcess && !runningProcess.killed) {
+                runningProcess.kill('SIGTERM'); // Try graceful shutdown first
+                setTimeout(() => {
+                    if (runningProcess && !runningProcess.killed) {
+                        runningProcess.kill('SIGKILL'); // Force kill if still running
+                    }
+                }, 1000);
+            }
+            runningProcess = null;
+        } catch (error) {
+            console.error('Error stopping server during restart:', error);
+            return res.status(500).json({ 
+                success: false, 
+                error: `Failed to stop server: ${error.message}` 
+            });
+        }
+    }
+    
+    // Start the server with the last launch configuration
+    try {
+        const { serverPath, args } = lastLaunchConfig;
+        console.log('Restarting server with args:', args);
+        runningProcess = spawn(serverPath, args, { stdio: 'pipe' });
+        
+        // Handle process events
+        runningProcess.on('close', (code) => {
+            console.log(`Server process exited with code ${code}`);
+            runningProcess = null;
+            // Notify clients that the process has ended
+            connectedClients.forEach(client => {
+                client.emit('server-ended', { message: 'Server process has ended' });
+            });
+        });
+        
+        runningProcess.on('error', (error) => {
+            console.error(`Failed to start process: ${error}`);
+            runningProcess = null;
+            // Notify clients of error
+            connectedClients.forEach(client => {
+                client.emit('server-error', { message: 'Failed to start server: ' + error.message });
+            });
+        });
+        
+        // Stream stdout and stderr to connected clients
+        if (runningProcess.stdout) {
+            runningProcess.stdout.on('data', (data) => {
+                const logData = data.toString();
+                console.log('STDOUT:', logData);
+                // Broadcast to all connected clients
+                connectedClients.forEach(client => {
+                    client.emit('log-stream', { type: 'stdout', data: logData });
+                });
+            });
+        }
+        
+        if (runningProcess.stderr) {
+            runningProcess.stderr.on('data', (data) => {
+                const logData = data.toString();
+                console.log('STDERR:', logData);
+                // Broadcast to all connected clients
+                connectedClients.forEach(client => {
+                    client.emit('log-stream', { type: 'stderr', data: logData });
+                });
+            });
+        }
+        
+        res.json({ 
+            success: true, 
+            message: 'Server restarted successfully' 
+        });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            error: `Failed to restart server: ${error.message}` 
+        });
+    }
 });
 
 // WebSocket connection handling for log streaming
