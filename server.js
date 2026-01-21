@@ -191,7 +191,21 @@ setInterval(updateSystemMetricsHistory, 1000); // Update every second
 // Function to recursively find GGUF files
 async function findGGUFFiles(directory) {
     const ggufFiles = [];
-    const basePath = directory || process.env.MODEL_PATH || "C:\\Users\\anubh\\.lmstudio\\models";
+    // Get the models directory from settings or use environment variable or default
+    let basePath = directory || process.env.MODEL_PATH || "C:\\models";
+    
+    // Try to read the settings file to get the configured models directory
+    try {
+        const settingsPath = path.join(__dirname, 'settings.json');
+        const settingsData = await fs.readFile(settingsPath, 'utf8');
+        const settings = JSON.parse(settingsData);
+        if (settings.modelsDirectory) {
+            basePath = settings.modelsDirectory;
+        }
+    } catch (error) {
+        // If settings file doesn't exist or can't be read, use default path
+        console.log('Using default models directory since settings file not found:', error.message);
+    }
     
     try {
         // Check if directory exists

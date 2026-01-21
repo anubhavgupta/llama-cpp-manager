@@ -1348,8 +1348,8 @@ function openSettingsDialog() {
                         if (data.success) {
                             showOutput('Settings saved successfully');
                             settingsDialog.close();
-                            // Reload models to use the new directory
-                            fetchModels();
+                            // Refresh the page to reload models with new directory
+                            location.reload();
                         } else {
                             showOutput('Error saving settings: ' + data.error);
                         }
