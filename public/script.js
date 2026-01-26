@@ -465,6 +465,7 @@ async function launchServer() {
         }
 
         args.push("--host", "0.0.0.0");
+        args.push("-fit", "off");
 
         // mmproj loading
         const modelPath = modelPathSelect.value.trim();
