@@ -24,6 +24,7 @@ const fastAttentionCheckbox = document.getElementById('fastAttention');
 const jinjaCheckbox = document.getElementById('jinja');
 const verboseCheckbox = document.getElementById('verbose');
 const noKvOffloadCheckbox = document.getElementById('noKvOffload');
+const ngramModCheckbox = document.getElementById('ngramMod');
 const launchBtn = document.getElementById('launchBtn');
 const stopBtn = document.getElementById('stopBtn');
 const restartBtn = document.getElementById('restartBtn'); // New restart button
@@ -199,6 +200,7 @@ function saveCurrentValues(configId) {
         jinja: jinjaCheckbox.checked,
         verbose: verboseCheckbox.checked,
         noKvOffload: noKvOffloadCheckbox.checked,
+        ngramMod: ngramModCheckbox.checked,
         draftModelPath: document.getElementById('draftModelPath') ? document.getElementById('draftModelPath').value.trim() : '',
         ngld: parseInt(document.getElementById('ngld') ? document.getElementById('ngld').value : 0) || 0,
         ctkd: document.getElementById('ctkd') ? document.getElementById('ctkd').value : '',
@@ -249,6 +251,7 @@ function loadConfiguration(configId) {
     }
     if (config.jinja !== undefined) jinjaCheckbox.checked = config.jinja;
     noKvOffloadCheckbox.checked = !!config.noKvOffload;
+    ngramModCheckbox.checked = !!config.ngramMod;
 
     if(config.draftModelPath !== undefined) document.getElementById('draftModelPath').value = config.draftModelPath;
     if(config.ngld !== undefined) document.getElementById('ngld').value = config.ngld.toString();
@@ -319,6 +322,7 @@ async function launchServer() {
         jinja: jinjaCheckbox.checked,
         verbose: verboseCheckbox.checked,
         draftModelPath: document.getElementById('draftModelPath').value.trim(),
+        ngramMod: ngramModCheckbox.checked,
         ngld: parseInt(document.getElementById('ngld').value) || 0,
         ctkd: document.getElementById('ctkd').value,
         ctvd: document.getElementById('ctvd').value,
@@ -434,6 +438,14 @@ async function launchServer() {
         // Add no-direct-io flag if checked
         if (config.ndio) {
             args.push('-ndio');
+        }
+
+        // Add ngram-mod flags if checked
+        if (config.ngramMod) {
+            args.push('--spec-type', 'ngram-mod');
+            args.push('--spec-ngram-size-n', '24');
+            args.push('--draft-min', '48');
+            args.push('--draft-max', '64');
         }
 
         // Add draft model parameters if specified
@@ -668,6 +680,14 @@ async function launchModelPresets() {
             
             if (config.draftMax !== undefined && config.draftMax >= 0) {
                 presetContent += `draft-max = ${config.draftMax}\n`;
+            }
+            
+            // Add ngram-mod settings if enabled
+            if (config.ngramMod !== undefined && config.ngramMod) {
+                presetContent += `spec-type = ngram-mod\n`;
+                presetContent += `spec-ngram-size-n = 24\n`;
+                presetContent += `draft-min = 48\n`;
+                presetContent += `draft-max = 64\n`;
             }
             
             // Add a blank line between sections for readability
