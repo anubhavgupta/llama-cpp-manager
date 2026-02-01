@@ -25,6 +25,7 @@ const jinjaCheckbox = document.getElementById('jinja');
 const verboseCheckbox = document.getElementById('verbose');
 const noKvOffloadCheckbox = document.getElementById('noKvOffload');
 const ngramModCheckbox = document.getElementById('ngramMod');
+const disableReasoningCheckbox = document.getElementById('disableReasoning');
 const launchBtn = document.getElementById('launchBtn');
 const stopBtn = document.getElementById('stopBtn');
 const restartBtn = document.getElementById('restartBtn'); // New restart button
@@ -201,6 +202,7 @@ function saveCurrentValues(configId) {
         verbose: verboseCheckbox.checked,
         noKvOffload: noKvOffloadCheckbox.checked,
         ngramMod: ngramModCheckbox.checked,
+        disableReasoning: disableReasoningCheckbox.checked,
         draftModelPath: document.getElementById('draftModelPath') ? document.getElementById('draftModelPath').value.trim() : '',
         ngld: parseInt(document.getElementById('ngld') ? document.getElementById('ngld').value : 0) || 0,
         ctkd: document.getElementById('ctkd') ? document.getElementById('ctkd').value : '',
@@ -252,6 +254,7 @@ function loadConfiguration(configId) {
     if (config.jinja !== undefined) jinjaCheckbox.checked = config.jinja;
     noKvOffloadCheckbox.checked = !!config.noKvOffload;
     ngramModCheckbox.checked = !!config.ngramMod;
+    disableReasoningCheckbox.checked = !!config.disableReasoning;
 
     if(config.draftModelPath !== undefined) document.getElementById('draftModelPath').value = config.draftModelPath;
     if(config.ngld !== undefined) document.getElementById('ngld').value = config.ngld.toString();
@@ -323,6 +326,7 @@ async function launchServer() {
         verbose: verboseCheckbox.checked,
         draftModelPath: document.getElementById('draftModelPath').value.trim(),
         ngramMod: ngramModCheckbox.checked,
+        disableReasoning: disableReasoningCheckbox.checked,
         ngld: parseInt(document.getElementById('ngld').value) || 0,
         ctkd: document.getElementById('ctkd').value,
         ctvd: document.getElementById('ctvd').value,
@@ -446,6 +450,11 @@ async function launchServer() {
             args.push('--spec-ngram-size-n', '24');
             args.push('--draft-min', '48');
             args.push('--draft-max', '64');
+        }
+
+        // Add reasoning-budget flag if checked
+        if (config.disableReasoning) {
+            args.push('--reasoning-budget', '0');
         }
 
         // Add draft model parameters if specified
@@ -688,6 +697,11 @@ async function launchModelPresets() {
                 presetContent += `spec-ngram-size-n = 24\n`;
                 presetContent += `draft-min = 48\n`;
                 presetContent += `draft-max = 64\n`;
+            }
+            
+            // Add reasoning-budget setting if enabled
+            if (config.disableReasoning !== undefined && config.disableReasoning) {
+                presetContent += `reasoning-budget = 0\n`;
             }
             
             // Add a blank line between sections for readability
