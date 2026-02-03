@@ -471,8 +471,8 @@ body {
 }
 
 .output-content {
-    background: #0a0a0a;
-    color: #00ff41;
+    background: linear-gradient(145deg, #0f0f0f, #0a0a0a);
+    color: var(--text-primary);
     padding: 12px;
     border-radius: 4px;
     white-space: pre-wrap;
@@ -483,6 +483,27 @@ body {
     box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
     border: 1px solid var(--border-color);
     position: relative;
+    line-height: 1.5;
+}
+
+.output-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.output-content::-webkit-scrollbar-track {
+    background: rgba(201, 162, 39, 0.1);
+    border-radius: 3px;
+}
+
+.output-content::-webkit-scrollbar-thumb {
+    background: rgba(201, 162, 39, 0.4);
+    border-radius: 3px;
+    border: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.output-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(201, 162, 39, 0.6);
+    box-shadow: 0 0 10px rgba(201, 162, 39, 0.3);
 }
 
 .output-content::before {
@@ -491,8 +512,11 @@ body {
     top: 4px;
     right: 8px;
     font-size: 8px;
-    color: var(--text-muted);
+    color: var(--accent-copper);
     font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.6;
 }
 
 /* Model Status Inline - Make it small and occupy less space */
