@@ -90,6 +90,13 @@ function updateStatus(isRunning) {
 function showOutput(message) {
     const timestamp = new Date().toISOString();
     modelOutput.textContent += `[${timestamp}] ${message}\n`;
+
+    // Limit output to last 1000 lines
+    const lines = modelOutput.textContent.split('\n');
+    if (lines.length > 1000) {
+        modelOutput.textContent = lines.slice(lines.length - 1000).join('\n');
+    }
+
     modelOutput.scrollTop = modelOutput.scrollHeight;
 }
 

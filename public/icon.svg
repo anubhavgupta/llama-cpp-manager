@@ -1,0 +1,39 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="copperGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#c9a227;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#8b6914;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+        </linearGradient>
+        <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <!-- Background -->
+    <rect width="512" height="512" fill="#0d0d0d"/>
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+        <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+    </pattern>
+    <rect width="512" height="512" fill="url(#grid)"/>
+    <!-- Main Circle -->
+    <circle cx="256" cy="256" r="180" fill="#1a1a1a" stroke="url(#copperGradient)" stroke-width="4"/>
+    <!-- Inner Design -->
+    <circle cx="256" cy="256" r="140" fill="none" stroke="url(#blueGradient)" stroke-width="2" opacity="0.8"/>
+    <circle cx="256" cy="256" r="100" fill="none" stroke="url(#copperGradient)" stroke-width="2" opacity="0.6"/>
+    <!-- LLaMA Text -->
+    <text x="256" y="260" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="32" font-weight="bold" fill="#c9a227" filter="url(#glow)">LLaMA</text>
+    <text x="256" y="295" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#666">CPP Manager</text>
+    <!-- Decorative Elements -->
+    <rect x="100" y="100" width="20" height="20" fill="#3b82f6" opacity="0.5"/>
+    <rect x="392" y="100" width="20" height="20" fill="#3b82f6" opacity="0.5"/>
+    <rect x="100" y="392" width="20" height="20" fill="#3b82f6" opacity="0.5"/>
+    <rect x="392" y="392" width="20" height="20" fill="#3b82f6" opacity="0.5"/>
+</svg>
