@@ -4,8 +4,8 @@
   "description": "A browser-based tool to configure and run llama-cpp server",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2196f3",
+  "background_color": "#0d0d0d",
+  "theme_color": "#c9a227",
   "icons": [
     {
       "src": "/icon-192x192.png",

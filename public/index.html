@@ -4,24 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLaMA CPP Manager</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#2196f3">
+    <meta name="theme-color" content="#c9a227">
     <meta name="description" content="A browser-based tool to configure and run llama-cpp server">
 </head>
 <body>
     <div class="container">
-        <h1 class="app-title">LLaMA CPP Manager</h1>
-        <!-- Settings Button in Top Right Corner -->
-        <button id="settingsBtn" class="settings-icon-btn">⚙️</button>
+        <div class="top-bar">
+            <h1 class="app-title">LLaMA CPP Manager</h1>
+            <!-- Model Status in Top Bar -->
+            <div class="model-status-inline">
+                <div id="modelStatusMessage" class="status-message">Not running</div>
+            </div>
+            <!-- Settings Button in Top Right Corner -->
+            <button id="settingsBtn" class="settings-icon-btn">⚙️</button>
+        </div>
         
         <div class="main-layout">
             <!-- Configuration Panel (Left) -->
             <div class="config-panel">
                 <div class="config-header">
                     <h2>Configurations</h2>
-                    <button id="addConfigBtn" class="btn btn-primary">+ Add</button>
+                    <button id="addConfigBtn" class="btn btn-primary">
+                        <span class="btn-icon">+</span>
+                    </button>
                 </div>
                 <dialog id="configFormContainer" class="config-form-container">
                     <h3 id="configFormTitle">Create New Configuration</h3>
@@ -161,18 +171,20 @@
 
                     <!-- New Context Token Parameters -->
                     <h3>Context Token Parameters</h3>
-                    <div class="inline-checkboxes">
-                        <div class="form-group">
-                            <label for="ctkEnable">Enable -ctk/-ctv:</label>
-                            <input type="checkbox" id="ctkEnable" class="form-control checkbox">
-                        </div>
-                        <div class="form-group">
-                            <label for="ngramMod">Enable Ngram-mod Speculation:</label>
-                            <input type="checkbox" id="ngramMod" class="form-control checkbox">
-                        </div>
+ 		    <div class="inline-checkboxes">
                         <div class="form-group">
                             <label for="disableReasoning">Disable Reasoning (--reasoning-budget 0):</label>
                             <input type="checkbox" id="disableReasoning" class="form-control checkbox">
+                        </div>
+			<div class="form-group">
+                            <label for="ngramMod">Enable Ngram-mod Speculation:</label>
+                            <input type="checkbox" id="ngramMod" class="form-control checkbox">
+                        </div>
+                    </div>
+		    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="ctkEnable">Enable -ctk/-ctv:</label>
+                            <input type="checkbox" id="ctkEnable" class="form-control checkbox">
                         </div>
                     </div>
                     <div class="form-group">
@@ -307,11 +319,6 @@
                             </select>
                             <button id="launchPresetsBtn" class="btn btn-primary">Launch Presets</button>
                         </div>
-                    </div>
-                    
-                    <!-- Model Status Inline -->
-                    <div class="model-status-inline">
-                        <div id="modelStatusMessage" class="status-message">Not running</div>
                     </div>
                 </div>
                 
