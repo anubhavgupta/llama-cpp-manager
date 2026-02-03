@@ -781,6 +781,47 @@ body {
     text-align: center;
 }
 
+/* Settings Dialog Styles */
+.settings-dialog {
+    background: linear-gradient(145deg, var(--bg-secondary), var(--bg-tertiary));
+    border: 1px solid var(--border-color);
+    width: 400px;
+    padding: 30px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    position: relative;
+}
+
+.settings-dialog::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-copper), var(--accent-blue));
+}
+
+.settings-dialog::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-copper));
+}
+
+.settings-dialog h3 {
+    margin: 0 0 24px;
+    font-size: 16px;
+    color: var(--accent-copper);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
 .form-actions {
     display: flex;
     gap: 12px;
