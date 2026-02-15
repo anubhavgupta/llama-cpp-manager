@@ -13,7 +13,7 @@ const presencePenaltyInput = document.getElementById('presencePenalty');
 const mlockCheckbox = document.getElementById('mlock');
 const swaFullCheckbox = document.getElementById('swaFull');
 const noMmapCheckbox = document.getElementById('noMmap');
-const ndioCheckbox = document.getElementById('ndio');
+const dioCheckbox = document.getElementById('dio');
 const contextSizeInput = document.getElementById('contextSize');
 const nCpuMoeInput = document.getElementById('nCpuMoe');
 const cpuMoeCheckbox = document.getElementById('cpuMoe');
@@ -197,7 +197,7 @@ function saveCurrentValues(configId) {
         mlock: mlockCheckbox.checked,
         swaFull: swaFullCheckbox.checked,
         noMmap: noMmapCheckbox.checked,
-        ndio: ndioCheckbox.checked,
+        dio: dioCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
         nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
         cpuMoe: cpuMoeCheckbox.checked,
@@ -247,7 +247,7 @@ function loadConfiguration(configId) {
     if (config.mlock !== undefined) mlockCheckbox.checked = config.mlock;
     if (config.swaFull !== undefined) swaFullCheckbox.checked = config.swaFull;
     noMmapCheckbox.checked = !!config.noMmap;
-    ndioCheckbox.checked = !!config.ndio;
+    dioCheckbox.checked = !!config.dio;
     if (config.contextSize !== undefined) contextSizeInput.value = config.contextSize;
     if (config.nCpuMoe !== undefined) nCpuMoeInput.value = config.nCpuMoe;
     if (config.cpuMoe !== undefined) cpuMoeCheckbox.checked = config.cpuMoe;
@@ -324,7 +324,7 @@ async function launchServer() {
         contextSize: parseInt(contextSizeInput.value) || 1,
         nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
         cpuMoe: cpuMoeCheckbox.checked,
-        ndio: ndioCheckbox.checked,
+        dio: dioCheckbox.checked,
         ctkEnable: ctkEnableCheckbox.checked,
         contextTokenKey: contextTokenKeySelect.value,
         contextTokenValue: contextTokenValueSelect.value,
@@ -447,8 +447,8 @@ async function launchServer() {
         }
 
         // Add no-direct-io flag if checked
-        if (config.ndio) {
-            args.push('-ndio');
+        if (config.dio) {
+            args.push('-dio');
         }
 
         // Add ngram-mod flags if checked
@@ -607,7 +607,7 @@ async function launchModelPresets() {
             }
             
             if (config.ngl !== undefined && config.ngl > 0) {
-                presetContent += `n-gpu-layer = ${config.ngl}\n`;
+                presetContent += `ngl = ${config.ngl}\n`;
             }
             
             if (config.threads !== undefined && config.threads > 0) {
@@ -644,8 +644,8 @@ async function launchModelPresets() {
                 presetContent += `no-kv-offload = true\n`;
             }
             
-            if (config.ndio !== undefined && config.ndio) {
-                presetContent += `ndio = true\n`;
+            if (config.dio !== undefined && config.dio) {
+                presetContent += `dio = true\n`;
             }
             
             if (config.jinja !== undefined && config.jinja) {
