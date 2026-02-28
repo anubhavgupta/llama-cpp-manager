@@ -24,6 +24,7 @@ const fastAttentionCheckbox = document.getElementById('fastAttention');
 const jinjaCheckbox = document.getElementById('jinja');
 const verboseCheckbox = document.getElementById('verbose');
 const noKvOffloadCheckbox = document.getElementById('noKvOffload');
+const noMmprojOffloadCheckbox = document.getElementById('noMmprojOffload');
 const ngramModCheckbox = document.getElementById('ngramMod');
 const disableReasoningCheckbox = document.getElementById('disableReasoning');
 const launchBtn = document.getElementById('launchBtn');
@@ -208,6 +209,7 @@ function saveCurrentValues(configId) {
         jinja: jinjaCheckbox.checked,
         verbose: verboseCheckbox.checked,
         noKvOffload: noKvOffloadCheckbox.checked,
+        noMmprojOffload: noMmprojOffloadCheckbox.checked,
         ngramMod: ngramModCheckbox.checked,
         disableReasoning: disableReasoningCheckbox.checked,
         draftModelPath: document.getElementById('draftModelPath') ? document.getElementById('draftModelPath').value.trim() : '',
@@ -260,6 +262,7 @@ function loadConfiguration(configId) {
     }
     if (config.jinja !== undefined) jinjaCheckbox.checked = config.jinja;
     noKvOffloadCheckbox.checked = !!config.noKvOffload;
+    noMmprojOffloadCheckbox.checked = !!config.noMmprojOffload;
     ngramModCheckbox.checked = !!config.ngramMod;
     disableReasoningCheckbox.checked = !!config.disableReasoning;
 
@@ -325,6 +328,8 @@ async function launchServer() {
         nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
         cpuMoe: cpuMoeCheckbox.checked,
         dio: dioCheckbox.checked,
+        noKvOffload: noKvOffloadCheckbox.checked,
+        noMmprojOffload: noMmprojOffloadCheckbox.checked,
         ctkEnable: ctkEnableCheckbox.checked,
         contextTokenKey: contextTokenKeySelect.value,
         contextTokenValue: contextTokenValueSelect.value,
@@ -444,6 +449,11 @@ async function launchServer() {
         // Add no-kv-offload flag if checked
         if (config.noKvOffload) {
             args.push('--no-kv-offload');
+        }
+
+        // Add no-mmproj-offload flag if checked
+        if (config.noMmprojOffload) {
+            args.push('--no-mmproj-offload');
         }
 
         // Add no-direct-io flag if checked
@@ -643,7 +653,11 @@ async function launchModelPresets() {
             if (config.noKvOffload !== undefined && config.noKvOffload) {
                 presetContent += `no-kv-offload = true\n`;
             }
-            
+
+            if (config.noMmprojOffload !== undefined && config.noMmprojOffload) {
+                presetContent += `no-mmproj-offload = true\n`;
+            }
+
             if (config.dio !== undefined && config.dio) {
                 presetContent += `dio = true\n`;
             }
@@ -984,6 +998,9 @@ function deleteConfiguration(configName) {
             repeatPenaltyInput.value = '1.05';
             mlockCheckbox.checked = false;
             swaFullCheckbox.checked = false;
+            noMmapCheckbox.checked = false;
+            noMmprojOffloadCheckbox.checked = false;
+            dioCheckbox.checked = false;
             contextSizeInput.value = '16384';
             nCpuMoeInput.value = '8';
             cpuMoeCheckbox.checked = false;
