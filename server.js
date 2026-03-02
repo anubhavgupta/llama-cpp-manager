@@ -77,9 +77,28 @@ function startProxyServer() {
         const httpModule = parsedUrl.protocol === 'https:' ? https : http;
 
         const proxyReq = httpModule.request(options, (proxyRes) => {
-            // Forward status code
+            // Forward status + headers first
             res.writeHead(proxyRes.statusCode, proxyRes.headers);
-            proxyRes.pipe(res);
+
+            let responseBody = '';
+
+            proxyRes.on('data', (chunk) => {
+                // Log chunk (convert buffer safely)
+                const chunkString = chunk.toString();
+                responseBody += chunkString;
+                // Write to client
+                res.write(chunk);
+            });
+
+            proxyRes.on('end', () => {
+                console.log('Proxy response body:', responseBody);
+                res.end();
+            });
+
+            proxyRes.on('error', (err) => {
+                console.error('Error in proxy response:', err);
+                res.end();
+            });
         });
 
         proxyReq.on('error', (error) => {
@@ -107,7 +126,29 @@ function startProxyServer() {
         });
 
         // Pipe request body to proxy
-         req.pipe(proxyReq);
+        let requestBody = '';
+
+        req.on('data', (chunk) => {
+            const chunkString = chunk.toString();
+            requestBody += chunkString;
+
+            // Forward chunk to backend
+            proxyReq.write(chunk);
+        });
+
+        req.on('end', () => {
+            try {
+                console.log('Full proxy request body:', JSON.stringify(requestBody, null, 4));
+            } catch(ex) {
+                console.log("request data not in JSON.");
+            }
+            proxyReq.end();
+        });
+
+        req.on('error', (err) => {
+            console.error('Error reading incoming request:', err);
+            proxyReq.destroy(err);
+        });
     });
 
     proxyServer = proxyApp.listen(3002, () => {
