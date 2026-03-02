@@ -2,6 +2,7 @@ import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
 
 // DOM Elements
 const serverPathInput = document.getElementById('serverPath');
+const proxyEnabledCheckbox = document.getElementById('proxyEnabled');
 const modelPathSelect = document.getElementById('modelPath');
 const nglInput = document.getElementById('ngl');
 const threadsInput = document.getElementById('threads');
@@ -99,6 +100,37 @@ function showOutput(message) {
     }
 
     modelOutput.scrollTop = modelOutput.scrollHeight;
+}
+
+// Proxy control functions
+async function startProxy() {
+    try {
+        const response = await fetch('/start-proxy', { method: 'POST' });
+        const data = await response.json();
+        if (data.success) {
+            showOutput('Proxy server started on port 3002');
+        } else {
+            showOutput('Error starting proxy: ' + data.error);
+        }
+    } catch (error) {
+        console.error('Error starting proxy:', error);
+        showOutput('Error starting proxy: ' + error.message);
+    }
+}
+
+async function stopProxy() {
+    try {
+        const response = await fetch('/stop-proxy', { method: 'POST' });
+        const data = await response.json();
+        if (data.success) {
+            showOutput('Proxy server stopped');
+        } else {
+            showOutput('Error stopping proxy: ' + data.error);
+        }
+    } catch (error) {
+        console.error('Error stopping proxy:', error);
+        showOutput('Error stopping proxy: ' + error.message);
+    }
 }
 
 // Fetch current status
@@ -532,6 +564,12 @@ async function launchServer() {
             showOutput('Server started successfully');
             updateStatus(true);
             updateButtonStates(true);
+
+            // Start proxy server if checkbox is checked
+            if (proxyEnabledCheckbox.checked) {
+                await startProxy();
+            }
+
             // Initialize WebSocket connection for log streaming
             initWebSocket();
         } else {

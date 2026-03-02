@@ -29,6 +29,102 @@ const io = require('socket.io')(httpServer, {
     }
 });
 
+// Proxy server variables
+let proxyServer = null;
+
+// Function to start proxy server on port 3002
+function startProxyServer() {
+    const proxyApp = express();
+    // proxyApp.use(express.json());
+    // proxyApp.use(express.urlencoded({ extended: true }));
+
+    proxyApp.all('*', (req, res) => {
+        const http = require('http');
+        const https = require('https');
+        const targetUrl = `http://localhost:8080${req.originalUrl}`;
+
+        // Parse URL to determine if we should use http or https
+        const url = require('url');
+        const parsedUrl = url.parse(targetUrl);
+
+        const options = {
+            hostname: parsedUrl.hostname,
+            port: parsedUrl.port,
+            path: req.path,
+            method: req.method,
+            headers: {
+                ...req.headers
+            }
+        };
+
+        // Forward headers, excluding hop-by-hop headers
+        const hopByHopHeaders = [
+            'connection',
+            'keep-alive',
+            'proxy-authenticate',
+            'proxy-authorization',
+            'te',
+            'trailers',
+            'transfer-encoding',
+            'upgrade'
+        ];
+
+        hopByHopHeaders.forEach(h => delete options.headers[h]);
+        // Ensure host header is set correctly
+        options.headers.host = 'localhost:8080';
+
+        // Choose http or https agent
+        const httpModule = parsedUrl.protocol === 'https:' ? https : http;
+
+        const proxyReq = httpModule.request(options, (proxyRes) => {
+            // Forward status code
+            res.writeHead(proxyRes.statusCode, proxyRes.headers);
+            proxyRes.pipe(res);
+        });
+
+        proxyReq.on('error', (error) => {
+            console.error('Proxy request error:', error);
+            if (!res.headersSent) {
+                res.status(502).json({
+                    error: 'Bad Gateway',
+                    message: 'Failed to connect to backend server on port 8080'
+                });
+            } else {
+                res.end();
+            }
+        });
+
+        proxyReq.on('timeout', () => {
+            proxyReq.destroy();
+            if (!res.headersSent) {
+                res.status(504).json({
+                    error: 'Gateway Timeout',
+                    message: 'Backend server did not respond in time'
+                });
+            } else {
+                res.end();
+            }
+        });
+
+        // Pipe request body to proxy
+         req.pipe(proxyReq);
+    });
+
+    proxyServer = proxyApp.listen(3002, () => {
+        console.log('Proxy server running on port 3002');
+    });
+}
+
+// Function to stop proxy server
+function stopProxyServer() {
+    if (proxyServer) {
+        proxyServer.close(() => {
+            console.log('Proxy server stopped');
+            proxyServer = null;
+        });
+    }
+}
+
 // System monitoring variables
 let systemMetrics = {
     cpu: { usage: 0, history: [] },
@@ -354,12 +450,12 @@ app.post('/start', (req, res) => {
 // API endpoint to stop the llama server
 app.post('/stop', (req, res) => {
     if (!runningProcess) {
-        return res.json({ 
-            success: false, 
-            error: 'No server is currently running' 
+        return res.json({
+            success: false,
+            error: 'No server is currently running'
         });
     }
-    
+
     // Kill the process gracefully
     try {
         // Check if process is still running before attempting to kill
@@ -372,14 +468,18 @@ app.post('/stop', (req, res) => {
             }, 1000);
         }
         runningProcess = null;
-        res.json({ 
-            success: true, 
-            message: 'Server stopped successfully' 
+
+        // Also stop the proxy server if it's running
+        stopProxyServer();
+
+        res.json({
+            success: true,
+            message: 'Server stopped successfully'
         });
     } catch (error) {
-        res.status(500).json({ 
-            success: false, 
-            error: `Failed to stop server: ${error.message}` 
+        res.status(500).json({
+            success: false,
+            error: `Failed to stop server: ${error.message}`
         });
     }
 });
@@ -662,10 +762,33 @@ app.post('/launch-presets', async (req, res) => {
             presetsFile: presetsFilePath
         });
     } catch (error) {
-        console.error('Error launching server with presets:', error);
-        res.status(500).json({ 
-            success: false, 
-            error: `Failed to start server with presets: ${error.message}` 
+        res.status(500).json({
+            success: false,
+            error: `Failed to start proxy: ${error.message}`
+        });
+    }
+});
+
+
+// API endpoint to start proxy server
+app.post('/start-proxy', (req, res) => {
+    if (proxyServer) {
+        return res.json({
+            success: false,
+            error: 'Proxy server is already running'
+        });
+    }
+
+    try {
+        startProxyServer();
+        res.json({
+            success: true,
+            message: 'Proxy server started on port 3002'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: `Failed to start proxy: ${error.message}`
         });
     }
 });
