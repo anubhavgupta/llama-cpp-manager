@@ -76,6 +76,9 @@ function startProxyServer() {
         // Choose http or https agent
         const httpModule = parsedUrl.protocol === 'https:' ? https : http;
 
+        // Check if this is an endpoint that should be logged
+        const shouldLog = req.path === '/v1/messages' || req.path === '/v1/chat/completions';
+
         const proxyReq = httpModule.request(options, (proxyRes) => {
             // Forward status + headers first
             res.writeHead(proxyRes.statusCode, proxyRes.headers);
@@ -91,7 +94,9 @@ function startProxyServer() {
             });
 
             proxyRes.on('end', () => {
-                console.log('Proxy response body:', responseBody);
+                if (shouldLog) {
+                    console.log('Proxy response body:', responseBody);
+                }
                 res.end();
             });
 
@@ -137,10 +142,12 @@ function startProxyServer() {
         });
 
         req.on('end', () => {
-            try {
-                console.log('Full proxy request body:', JSON.stringify(requestBody, null, 4));
-            } catch(ex) {
-                console.log("request data not in JSON.");
+            if (shouldLog) {
+                try {
+                    console.log('Full proxy request body:', JSON.stringify(requestBody, null, 4));
+                } catch(ex) {
+                    console.log("request data not in JSON.");
+                }
             }
             proxyReq.end();
         });
