@@ -8,6 +8,7 @@ const threadsInput = document.getElementById('threads');
 const tempInput = document.getElementById('temp');
 const topKInput = document.getElementById('topK');
 const topPInput = document.getElementById('topP');
+const minPInput = document.getElementById('minP');
 const repeatPenaltyInput = document.getElementById('repeatPenalty');
 const presencePenaltyInput = document.getElementById('presencePenalty');
 const mlockCheckbox = document.getElementById('mlock');
@@ -183,7 +184,7 @@ function createDefaultConfigName() {
 // Save current values to configurations
 function saveCurrentValues(configId) {
     if (!configId) return;
-    
+
     const config = {
         serverPath: serverPathInput.value,
         modelPath: modelPathSelect.value,  // Use select value instead of input value
@@ -192,6 +193,7 @@ function saveCurrentValues(configId) {
         temp: parseFloat(tempInput.value) || 0,
         topK: parseInt(topKInput.value) || 0,
         topP: parseFloat(topPInput.value) || 0,
+        minP: minPInput.value || 0,
         repeatPenalty: parseFloat(repeatPenaltyInput.value) || 0,
         presencePenalty: parseFloat(presencePenaltyInput.value) || 0,
         parallel: parseInt(document.getElementById('parallel').value) || 0,
@@ -243,6 +245,7 @@ function loadConfiguration(configId) {
     if (config.temp !== undefined) tempInput.value = config.temp;
     if (config.topK !== undefined) topKInput.value = config.topK;
     if (config.topP !== undefined) topPInput.value = config.topP;
+    if (config.minP !== undefined) minPInput.value = config.minP;
     if (config.repeatPenalty !== undefined) repeatPenaltyInput.value = config.repeatPenalty;
     if (config.presencePenalty !== undefined) presencePenaltyInput.value = config.presencePenalty;
     if (config.parallel !== undefined) document.getElementById('parallel').value = config.parallel;
@@ -318,6 +321,7 @@ async function launchServer() {
         temp: parseFloat(tempInput.value) || 0,
         topK: parseInt(topKInput.value) || 0,
         topP: parseFloat(topPInput.value) || 0,
+        minP: minPInput.value || 0,
         repeatPenalty: parseFloat(repeatPenaltyInput.value) || 0,
         presencePenalty: parseFloat(presencePenaltyInput.value) || 0,
         parallel: parseInt(document.getElementById('parallel').value) || 0,
@@ -382,7 +386,11 @@ async function launchServer() {
         if (config.topP >= 0) {
             args.push('--top-p', config.topP.toString());
         }
-        
+
+        if ((!isNaN(parseFloat(config.minP)) && config.minP != "0") || config.minP == "0.00") {
+            args.push('--min-p', config.minP.toString());
+        }
+
         if (config.repeatPenalty > 0) {
             args.push('--repeat-penalty', config.repeatPenalty.toString());
         }
@@ -607,7 +615,11 @@ async function launchModelPresets() {
             if (config.topP !== undefined && config.topP >= 0) {
                 presetContent += `top-p = ${config.topP}\n`;
             }
-            
+
+            if ((!isNaN(parseFloat(config.minP)) && config.minP != "0") || config.minP == "0.00") {
+                presetContent += `min-p = ${config.minP}\n`;
+            }
+
             if (config.repeatPenalty !== undefined && config.repeatPenalty > 0) {
                 presetContent += `repeat-penalty = ${config.repeatPenalty}\n`;
             }
