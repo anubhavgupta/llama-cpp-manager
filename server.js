@@ -32,11 +32,51 @@ const io = require('socket.io')(httpServer, {
 // Proxy server variables
 let proxyServer = null;
 
+function getLines(chunk) {
+    let result = [];
+    const lines = chunk.toString().split('\n');
+
+    for (const line of lines) {
+        if (line.startsWith('data: ')) {
+            const jsonStr = line.replace('data: ', '').trim();
+
+            if (jsonStr === '[DONE]') break;
+
+            const parsed = JSON.parse(jsonStr);
+            result.push(parsed);
+        }
+    }
+    return result;
+}
+
 // Function to start proxy server on port 3002
 function startProxyServer() {
     const proxyApp = express();
     // proxyApp.use(express.json());
     // proxyApp.use(express.urlencoded({ extended: true }));
+
+    // Function to store request to file
+    async function storeRequestToFile(reqData) {
+        const requestLogPath = path.join(__dirname, 'requests.log');
+        const timestamp = new Date().toISOString();
+
+        const logEntry = {
+            requestId: `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            timestamp,
+            method: reqData.method,
+            path: reqData.path,
+            headers: reqData.headers,
+            body: reqData.body,
+            originalUrl: reqData.originalUrl
+        };
+
+        try {
+            await fs.appendFile(requestLogPath, JSON.stringify(logEntry) + '\n', 'utf8');
+            console.log('Request stored to file:', reqData.path);
+        } catch (error) {
+            console.error('Error storing request to file:', error.message);
+        }
+    }
 
     proxyApp.all('*', (req, res) => {
         const http = require('http');
@@ -54,7 +94,8 @@ function startProxyServer() {
             method: req.method,
             headers: {
                 ...req.headers
-            }
+            },
+            timeout: 30000 // 30 seconds timeout
         };
 
         // Forward headers, excluding hop-by-hop headers
@@ -77,7 +118,17 @@ function startProxyServer() {
         const httpModule = parsedUrl.protocol === 'https:' ? https : http;
 
         // Check if this is an endpoint that should be logged
-        const shouldLog = req.path === '/v1/messages' || req.path === '/v1/chat/completions';
+        const APIType = {
+            'openai': 'openai',
+            'anthropic': 'anthropic'
+        };
+
+        let shouldLog = false;
+        if(req.path === '/v1/messages') {
+            shouldLog = APIType.anthropic;
+        } else if (req.path === '/v1/chat/completions') {
+            shouldLog = APIType.openai;
+        }
 
         const proxyReq = httpModule.request(options, (proxyRes) => {
             // Forward status + headers first
@@ -88,13 +139,27 @@ function startProxyServer() {
             proxyRes.on('data', (chunk) => {
                 // Log chunk (convert buffer safely)
                 const chunkString = chunk.toString();
-                responseBody += chunkString;
+                if(shouldLog === APIType.openai) {
+                    console.log("anubhav", chunkString, "gupta");
+                    getLines(chunkString).forEach(res => {
+                        let value = res.choices[0].delta.content;
+                        if(value !== undefined && value !== null) {
+                            responseBody += res.choices[0].delta.content;
+                        }
+                    });
+                } else {
+                    responseBody += chunkString;
+                }
+                
                 // Write to client
                 res.write(chunk);
             });
 
             proxyRes.on('end', () => {
                 if (shouldLog) {
+                    if(shouldLog === APIType.openai) {
+                        logToFile("Response", responseBody);
+                    }
                     console.log('Proxy response body:', responseBody);
                 }
                 res.end();
@@ -107,11 +172,11 @@ function startProxyServer() {
         });
 
         proxyReq.on('error', (error) => {
-            console.error('Proxy request error:', error);
+            console.error('Proxy request error:', error.message, error.code);
             if (!res.headersSent) {
                 res.status(502).json({
                     error: 'Bad Gateway',
-                    message: 'Failed to connect to backend server on port 8080'
+                    message: `Failed to connect to backend server on port 8080: ${error.message} (${error.code})`
                 });
             } else {
                 res.end();
@@ -143,12 +208,27 @@ function startProxyServer() {
 
         req.on('end', () => {
             if (shouldLog) {
+                if(shouldLog === APIType.openai) {
+                    logToFile("Request", JSON.parse(requestBody).messages[0].content);
+                }
                 try {
                     console.log('Full proxy request body:', JSON.stringify(requestBody, null, 4));
                 } catch(ex) {
                     console.log("request data not in JSON.");
                 }
             }
+
+            // Store request to file if path is /v1/messages (after body is fully received)
+            if (req.path === '/v1/messages') {
+                storeRequestToFile({
+                    method: req.method,
+                    path: req.path,
+                    headers: req.headers,
+                    body: requestBody,
+                    originalUrl: req.originalUrl
+                });
+            }
+
             proxyReq.end();
         });
 
@@ -161,6 +241,10 @@ function startProxyServer() {
     proxyServer = proxyApp.listen(3002, () => {
         console.log('Proxy server running on port 3002');
     });
+}
+
+function logToFile(type, str) {
+    console.log(type, str);
 }
 
 // Function to stop proxy server
