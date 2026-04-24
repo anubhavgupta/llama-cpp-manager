@@ -23,6 +23,7 @@ const contextTokenKeySelect = document.getElementById('contextTokenKey');
 const contextTokenValueSelect = document.getElementById('contextTokenValue');
 const fastAttentionCheckbox = document.getElementById('fastAttention');
 const jinjaCheckbox = document.getElementById('jinja');
+const chatTemplateKwargsInput = document.getElementById('chatTemplateKwargs');
 const verboseCheckbox = document.getElementById('verbose');
 const noKvOffloadCheckbox = document.getElementById('noKvOffload');
 const noMmprojOffloadCheckbox = document.getElementById('noMmprojOffload');
@@ -194,8 +195,8 @@ function saveCurrentValues(configId) {
         topK: parseInt(topKInput.value) || 0,
         topP: parseFloat(topPInput.value) || 0,
         minP: minPInput.value || 0,
-        repeatPenalty: parseFloat(repeatPenaltyInput.value) || 0,
-        presencePenalty: parseFloat(presencePenaltyInput.value) || 0,
+        repeatPenalty: repeatPenaltyInput.value || 0,
+        presencePenalty: presencePenaltyInput.value || 0,
         parallel: parseInt(document.getElementById('parallel').value) || 0,
         mlock: mlockCheckbox.checked,
         swaFull: swaFullCheckbox.checked,
@@ -220,7 +221,8 @@ function saveCurrentValues(configId) {
         ctvd: document.getElementById('ctvd') ? document.getElementById('ctvd').value : '',
         draftPMin: parseFloat(document.getElementById('draftPMin') ? document.getElementById('draftPMin').value : 0) || 0,
         draftMin: parseInt(document.getElementById('draftMin') ? document.getElementById('draftMin').value : 0) || 0,
-        draftMax: parseInt(document.getElementById('draftMax') ? document.getElementById('draftMax').value : 0) || 0
+        draftMax: parseInt(document.getElementById('draftMax') ? document.getElementById('draftMax').value : 0) || 0,
+        chatTemplateKwargs: chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : ''
     };
     
     configurations[configId] = config;
@@ -276,6 +278,7 @@ function loadConfiguration(configId) {
     if(config.draftPMin !== undefined) document.getElementById('draftPMin').value = config.draftPMin.toString();
     if(config.draftMin !== undefined) document.getElementById('draftMin').value = config.draftMin.toString();
     if(config.draftMax !== undefined) document.getElementById('draftMax').value = config.draftMax.toString();
+    chatTemplateKwargsInput.value = config.chatTemplateKwargs ?? "";
     
     // Debug logging for loaded configuration
     console.log('Loaded configuration:', configId, config);
@@ -322,8 +325,8 @@ async function launchServer() {
         topK: parseInt(topKInput.value) || 0,
         topP: parseFloat(topPInput.value) || 0,
         minP: minPInput.value || 0,
-        repeatPenalty: parseFloat(repeatPenaltyInput.value) || 0,
-        presencePenalty: parseFloat(presencePenaltyInput.value) || 0,
+        repeatPenalty: repeatPenaltyInput.value || 0,
+        presencePenalty: presencePenaltyInput.value || 0,
         parallel: parseInt(document.getElementById('parallel').value) || 0,
         mlock: mlockCheckbox.checked,
         swaFull: swaFullCheckbox.checked,
@@ -348,7 +351,8 @@ async function launchServer() {
         ctvd: document.getElementById('ctvd').value,
         draftPMin: parseFloat(document.getElementById('draftPMin').value) || 0,
         draftMin: parseInt(document.getElementById('draftMin').value) || 0,
-        draftMax: parseInt(document.getElementById('draftMax').value) || 0
+        draftMax: parseInt(document.getElementById('draftMax').value) || 0,
+        chatTemplateKwargs: chatTemplateKwargsInput.value.trim()
     };
     
     // Save current values to localStorage (if we have a config ID)
@@ -391,11 +395,11 @@ async function launchServer() {
             args.push('--min-p', config.minP.toString());
         }
 
-        if (config.repeatPenalty > 0) {
+        if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != "0") || config.repeatPenalty == "0.00") {
             args.push('--repeat-penalty', config.repeatPenalty.toString());
         }
         
-        if (config.presencePenalty > 0) {
+        if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != "0") || config.presencePenalty == "0.00") {
             args.push('--presence-penalty', config.presencePenalty.toString());
         }
         
@@ -442,6 +446,11 @@ async function launchServer() {
         // Add jinja flag if checked
         if (config.jinja) {
             args.push('--jinja');
+        }
+
+        // Add chat-template-kwargs if provided
+        if (config.chatTemplateKwargs) {
+            args.push('--chat-template-kwargs', config.chatTemplateKwargs);
         }
         
         // Add verbose flag if checked
@@ -620,11 +629,11 @@ async function launchModelPresets() {
                 presetContent += `min-p = ${config.minP}\n`;
             }
 
-            if (config.repeatPenalty !== undefined && config.repeatPenalty > 0) {
+            if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != "0") || config.repeatPenalty == "0.00") {
                 presetContent += `repeat-penalty = ${config.repeatPenalty}\n`;
             }
             
-            if (config.presencePenalty !== undefined && config.presencePenalty > 0) {
+            if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != "0") || config.presencePenalty == "0.00") {
                 presetContent += `presence-penalty = ${config.presencePenalty}\n`;
             }
             
@@ -676,6 +685,10 @@ async function launchModelPresets() {
             
             if (config.jinja !== undefined && config.jinja) {
                 presetContent += `jinja = true\n`;
+            }
+
+            if (config.chatTemplateKwargs) {
+                presetContent += `chat-template-kwargs = ${config.chatTemplateKwargs}\n`;
             }
             
             if (config.verbose !== undefined && config.verbose) {
