@@ -481,9 +481,9 @@ async function launchServer() {
         // Add ngram-mod flags if checked
         if (config.ngramMod) {
             args.push('--spec-type', 'ngram-mod');
-            args.push('--spec-ngram-size-n', '24');
-            args.push('--draft-min', '48');
-            args.push('--draft-max', '64');
+            args.push('--spec-ngram-mod-n-match', '24');
+            args.push('--spec-ngram-mod-n-min', '48');
+            args.push('--spec-ngram-mod-n-max', '64');
         }
 
         // Add reasoning-budget flag if checked
