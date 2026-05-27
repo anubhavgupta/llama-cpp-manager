@@ -28,6 +28,7 @@ const verboseCheckbox = document.getElementById('verbose');
 const noKvOffloadCheckbox = document.getElementById('noKvOffload');
 const noMmprojOffloadCheckbox = document.getElementById('noMmprojOffload');
 const ngramModCheckbox = document.getElementById('ngramMod');
+const specDraftNMaxInput = document.getElementById('specDraftNMax');
 const disableReasoningCheckbox = document.getElementById('disableReasoning');
 const launchBtn = document.getElementById('launchBtn');
 const stopBtn = document.getElementById('stopBtn');
@@ -214,6 +215,7 @@ function saveCurrentValues(configId) {
         noKvOffload: noKvOffloadCheckbox.checked,
         noMmprojOffload: noMmprojOffloadCheckbox.checked,
         ngramMod: ngramModCheckbox.checked,
+        specDraftNMax: parseInt(specDraftNMaxInput.value) || 0,
         disableReasoning: disableReasoningCheckbox.checked,
         draftModelPath: document.getElementById('draftModelPath') ? document.getElementById('draftModelPath').value.trim() : '',
         ngld: parseInt(document.getElementById('ngld') ? document.getElementById('ngld').value : 0) || 0,
@@ -269,6 +271,7 @@ function loadConfiguration(configId) {
     noKvOffloadCheckbox.checked = !!config.noKvOffload;
     noMmprojOffloadCheckbox.checked = !!config.noMmprojOffload;
     ngramModCheckbox.checked = !!config.ngramMod;
+    specDraftNMaxInput.value = config.specDraftNMax ?? 0;
     disableReasoningCheckbox.checked = !!config.disableReasoning;
 
     if(config.draftModelPath !== undefined) document.getElementById('draftModelPath').value = config.draftModelPath;
@@ -290,7 +293,7 @@ function updateContextTokenEnableState() {
     const isEnabled = ctkEnableCheckbox.checked;
     contextTokenKeySelect.disabled = !isEnabled;
     contextTokenValueSelect.disabled = !isEnabled;
-    
+
     // Ensure the dropdowns are properly enabled/disabled when loaded from config
     if (isEnabled) {
         contextTokenKeySelect.removeAttribute('disabled');
@@ -337,6 +340,8 @@ async function launchServer() {
         dio: dioCheckbox.checked,
         noKvOffload: noKvOffloadCheckbox.checked,
         noMmprojOffload: noMmprojOffloadCheckbox.checked,
+        ngramMod: ngramModCheckbox.checked,
+        specDraftNMax: parseInt(specDraftNMaxInput.value) || 0,
         ctkEnable: ctkEnableCheckbox.checked,
         contextTokenKey: contextTokenKeySelect.value,
         contextTokenValue: contextTokenValueSelect.value,
@@ -344,7 +349,6 @@ async function launchServer() {
         jinja: jinjaCheckbox.checked,
         verbose: verboseCheckbox.checked,
         draftModelPath: document.getElementById('draftModelPath').value.trim(),
-        ngramMod: ngramModCheckbox.checked,
         disableReasoning: disableReasoningCheckbox.checked,
         ngld: parseInt(document.getElementById('ngld').value) || 0,
         ctkd: document.getElementById('ctkd').value,
@@ -478,12 +482,21 @@ async function launchServer() {
             args.push('-dio');
         }
 
-        // Add ngram-mod flags if checked
-        if (config.ngramMod) {
+        // Add ngram-mod and/or MTP flags if enabled
+        if (config.ngramMod && config.specDraftNMax > 0) {
+            args.push('--spec-type', 'ngram-mod,draft-mtp');
+            args.push('--spec-ngram-mod-n-match', '24');
+            args.push('--spec-ngram-mod-n-min', '48');
+            args.push('--spec-ngram-mod-n-max', '64');
+            args.push('--spec-draft-n-max', config.specDraftNMax.toString());
+        } else if (config.ngramMod) {
             args.push('--spec-type', 'ngram-mod');
             args.push('--spec-ngram-mod-n-match', '24');
             args.push('--spec-ngram-mod-n-min', '48');
             args.push('--spec-ngram-mod-n-max', '64');
+        } else if (config.specDraftNMax > 0) {
+            args.push('--spec-type', 'draft-mtp');
+            args.push('--spec-draft-n-max', config.specDraftNMax.toString());
         }
 
         // Add reasoning-budget flag if checked
@@ -737,12 +750,21 @@ async function launchModelPresets() {
                 presetContent += `draft-max = ${config.draftMax}\n`;
             }
             
-            // Add ngram-mod settings if enabled
-            if (config.ngramMod !== undefined && config.ngramMod) {
+             // Add ngram-mod and/or MTP settings if enabled
+            if (config.ngramMod && config.specDraftNMax > 0) {
+                presetContent += `spec-type = ngram-mod,draft-mtp\n`;
+                presetContent += `spec-ngram-size-n = 24\n`;
+                presetContent += `draft-min = 48\n`;
+                presetContent += `draft-max = 64\n`;
+                presetContent += `spec-draft-n-max = ${config.specDraftNMax}\n`;
+            } else if (config.ngramMod) {
                 presetContent += `spec-type = ngram-mod\n`;
                 presetContent += `spec-ngram-size-n = 24\n`;
                 presetContent += `draft-min = 48\n`;
                 presetContent += `draft-max = 64\n`;
+            } else if (config.specDraftNMax > 0) {
+                presetContent += `spec-type = draft-mtp\n`;
+                presetContent += `spec-draft-n-max = ${config.specDraftNMax}\n`;
             }
             
             // Add reasoning-budget setting if enabled
@@ -1030,6 +1052,7 @@ function deleteConfiguration(configName) {
             nCpuMoeInput.value = '8';
             cpuMoeCheckbox.checked = false;
             ctkEnableCheckbox.checked = false;
+            specDraftNMaxInput.value = '0';
             contextTokenKeySelect.value = 'f16';
             contextTokenValueSelect.value = 'f16';
             // Fix: Set fastAttention to its default value instead of checked state
@@ -1060,7 +1083,7 @@ async function init() {
     
 // Set up event listeners for context token parameters
     ctkEnableCheckbox.addEventListener('change', updateContextTokenEnableState);
-    
+
     // Initialize the state on page load
     updateContextTokenEnableState();
     
