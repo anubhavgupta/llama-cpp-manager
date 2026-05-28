@@ -8,7 +8,7 @@ const os = require('os');
 const osUtils = require('os-utils');
 require('dotenv').config();
 const app = express();
-const PORT = 3001;
+const PORT = 7837;
 
 // Detect platform
 const platform = os.platform();
