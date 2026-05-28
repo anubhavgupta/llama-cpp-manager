@@ -1,3 +1,5 @@
+const DEFAULT_PORT = 8080;
+
 import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
 
 // DOM Elements
@@ -62,6 +64,7 @@ let socket = null;
 // Configuration management state
 let currentConfigId = null;
 let configurations = {};
+let settings = { serverPort: DEFAULT_PORT };
 
 // Chart variables
 let cpuCtx, ramCtx, gpuCtx, vramCtx;
@@ -152,6 +155,21 @@ async function fetchModels() {
         console.error('Error fetching models:', error);
         showOutput('Error fetching models: ' + error.message);
     }
+}
+
+// Load settings from localStorage
+function loadSettings() {
+    const saved = localStorage.getItem('llamaCppSettings');
+    if (saved) {
+        settings = JSON.parse(saved);
+    }
+    settings.serverPort = settings.serverPort || DEFAULT_PORT;
+    return settings;
+}
+
+// Save settings to localStorage
+function saveSettingsLocally() {
+    localStorage.setItem('llamaCppSettings', JSON.stringify(settings));
 }
 
 // Load configurations from localStorage
@@ -534,6 +552,7 @@ async function launchServer() {
 
         args.push("--host", "0.0.0.0");
         args.push("-fit", "off");
+        args.push("--port", settings.serverPort.toString());
 
         // mmproj loading
         const modelPath = modelPathSelect.value.trim();
@@ -779,15 +798,19 @@ async function launchModelPresets() {
         showOutput('Generated models-preset.ini content:');
         showOutput(presetContent);
         
+        // Add port to preset content
+        presetContent += `port = ${settings.serverPort}\n`;
+
         // Send the presets to server for processing
         const response = await fetch('/launch-presets', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ 
+             body: JSON.stringify({
                 presets: presetContent,
-                serverPath: launchPresetsSelect.value
+                serverPath: launchPresetsSelect.value,
+                serverPort: settings.serverPort
             })
         });
         
@@ -1071,8 +1094,9 @@ function addNewConfiguration() {
 
 // Initialize the application
 async function init() {
-    // Load configurations
+     // Load configurations
     loadConfigurations();
+    loadSettings();
     
     await fetchModels();
     
@@ -1428,12 +1452,18 @@ function openSettingsDialog() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                const currentDirectory = data.settings.modelsDirectory || '';
+                settings = { ...settings, ...data.settings };
+                const currentDirectory = settings.modelsDirectory || '';
+                const currentPort = settings.serverPort ?? DEFAULT_PORT;
                 settingsDialog.innerHTML = `
                     <h3>Settings</h3>
                     <div class="form-group">
                         <label for="modelsDirectory">Models Directory:</label>
                         <input type="text" id="modelsDirectory" class="form-control" value="${currentDirectory}" placeholder="Enter models directory path">
+                    </div>
+                    <div class="form-group">
+                        <label for="serverPort">Server Port (--port):</label>
+                        <input type="number" id="serverPort" class="form-control" value="${currentPort}" min="1" max="65535" placeholder="${DEFAULT_PORT}">
                     </div>
                     <div class="form-actions">
                         <button id="saveSettingsBtn" class="btn btn-primary">Save</button>
@@ -1452,14 +1482,20 @@ function openSettingsDialog() {
                         alert('Please enter a models directory path');
                         return;
                     }
-                    
+
+                    const port = parseInt(settingsDialog.querySelector('#serverPort').value) || DEFAULT_PORT;
+
+                    // Persist to localStorage before server round-trip
+                    settings.serverPort = port;
+                    saveSettingsLocally();
+
                     // Save the settings
                     fetch('/settings', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ modelsDirectory: directory })
+                        body: JSON.stringify({ modelsDirectory: directory, serverPort: port })
                     })
                     .then(response => response.json())
                     .then(data => {

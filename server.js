@@ -1,3 +1,5 @@
+const DEFAULT_PORT = 8080;
+
 const express = require('express');
 const { spawn, execSync } = require('child_process');
 const path = require('path');
@@ -542,13 +544,13 @@ app.get('/settings', (req, res) => {
         })
         .catch(err => {
             // If settings file doesn't exist, return default settings
-            res.json({ success: true, settings: { modelsDirectory: process.env.MODEL_PATH || "C:\\Users\\anubh\\.lmstudio\\models" } });
+            res.json({ success: true, settings: { modelsDirectory: process.env.MODEL_PATH || "C:\\Users\\anubh\\.lmstudio\\models", serverPort: DEFAULT_PORT } });
         });
 });
 
 // API endpoint to save the models directory path
 app.post('/settings', async (req, res) => {
-    const { modelsDirectory } = req.body;
+    const { modelsDirectory, serverPort } = req.body;
     
     if (!modelsDirectory) {
         return res.status(400).json({ 
@@ -560,10 +562,17 @@ app.post('/settings', async (req, res) => {
     try {
         // Validate that the directory exists
         await fs.access(modelsDirectory);
-        
+
+        // Load existing settings to preserve serverPort
+        let existingSettings = {};
+        try {
+            const existingData = await fs.readFile(settingsPath, 'utf8');
+            existingSettings = JSON.parse(existingData);
+        } catch {}
+
         // Save settings to a JSON file
         const settingsPath = path.join(__dirname, 'settings.json');
-        const settings = { modelsDirectory };
+        const settings = { modelsDirectory, serverPort: serverPort !== undefined ? serverPort : (existingSettings.serverPort || DEFAULT_PORT) };
         await fs.writeFile(settingsPath, JSON.stringify(settings, null, 2));
         
         res.json({ 
@@ -581,7 +590,7 @@ app.post('/settings', async (req, res) => {
 // API endpoint to launch model presets
 app.post('/launch-presets', async (req, res) => {
     try {
-        const { presets, serverPath } = req.body;
+     const { presets, serverPath, serverPort } = req.body;
         
         if (!presets) {
             return res.status(400).json({ 
@@ -607,6 +616,7 @@ app.post('/launch-presets', async (req, res) => {
         const args = [];
         args.push('--models-preset', presetsFilePath);
         args.push('--host', "0.0.0.0");
+        args.push('--port', (serverPort || DEFAULT_PORT).toString());
         
         
         console.log('Starting server with presets:', args);
