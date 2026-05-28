@@ -1,6 +1,6 @@
 const DEFAULT_PORT = 8080;
 
-import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
+import { io } from "./socket.io.esm.min.js";
 
 // DOM Elements
 const serverPathInput = document.getElementById('serverPath');
