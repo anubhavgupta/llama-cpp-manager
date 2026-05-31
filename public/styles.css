@@ -856,15 +856,11 @@ body {
 /* System Metrics Graphs Styles */
 .system-metrics-container {
     flex-shrink: 0;
-    margin-top: 20px;
     padding: 15px;
     background: linear-gradient(145deg, var(--bg-secondary), var(--bg-tertiary));
     border: 1px solid var(--border-color);
     border-radius: 4px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
     position: relative;
 }
 
@@ -892,7 +888,7 @@ body {
 .metric-graph {
     background: linear-gradient(145deg, var(--bg-tertiary), var(--bg-secondary));
     border-radius: 4px;
-    padding: 12px;
+    padding: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     border: 1px solid var(--border-color);
     display: flex;
@@ -915,7 +911,7 @@ body {
 .graph-title {
     font-size: 10px;
     color: var(--text-muted);
-    margin-bottom: 8px;
+    margin-bottom: 2px;
     text-align: center;
     font-family: 'JetBrains Mono', monospace;
     letter-spacing: 1px;
@@ -927,7 +923,7 @@ body {
     height: 40px;
     background: var(--bg-primary);
     border-radius: 3px;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
     border: 1px solid var(--border-color);
 }
 

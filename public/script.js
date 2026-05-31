@@ -33,6 +33,7 @@ const ngramModCheckbox = document.getElementById('ngramMod');
 const specDraftNMaxInput = document.getElementById('specDraftNMax');
 const disableReasoningCheckbox = document.getElementById('disableReasoning');
 const launchBtn = document.getElementById('launchBtn');
+
 const stopBtn = document.getElementById('stopBtn');
 const restartBtn = document.getElementById('restartBtn'); // New restart button
 const settingsBtn = document.getElementById('settingsBtn'); // New settings button
@@ -131,21 +132,15 @@ async function fetchModels() {
         if (data.success) {
             // Clear existing options except the placeholder
             modelPathSelect.innerHTML = '<option value="">-- Select a Model --</option>';
-            // Also clear draft model dropdown
-            document.getElementById('draftModelPath').innerHTML = '<option value="">-- Select a Draft Model --</option>';
-            
-            // Add models to both dropdowns
+
+            // Add models to main dropdown
             data.models.forEach(model => {
                 const option = document.createElement('option');
                 option.value = model.path;  // Use full path for the value
                 option.textContent = model.relativePath || model.name;  // Show relative path or just name
-                
+
                 // Add to main model dropdown
                 modelPathSelect.appendChild(option);
-                
-                // Also add to draft model dropdown (clone the option)
-                const draftOption = option.cloneNode(true);
-                document.getElementById('draftModelPath').appendChild(draftOption);
             });
         } else {
             console.error('Failed to fetch models:', data.error);
@@ -235,13 +230,6 @@ function saveCurrentValues(configId) {
         ngramMod: ngramModCheckbox.checked,
         specDraftNMax: parseInt(specDraftNMaxInput.value) || 0,
         disableReasoning: disableReasoningCheckbox.checked,
-        draftModelPath: document.getElementById('draftModelPath') ? document.getElementById('draftModelPath').value.trim() : '',
-        ngld: parseInt(document.getElementById('ngld') ? document.getElementById('ngld').value : 0) || 0,
-        ctkd: document.getElementById('ctkd') ? document.getElementById('ctkd').value : '',
-        ctvd: document.getElementById('ctvd') ? document.getElementById('ctvd').value : '',
-        draftPMin: parseFloat(document.getElementById('draftPMin') ? document.getElementById('draftPMin').value : 0) || 0,
-        draftMin: parseInt(document.getElementById('draftMin') ? document.getElementById('draftMin').value : 0) || 0,
-        draftMax: parseInt(document.getElementById('draftMax') ? document.getElementById('draftMax').value : 0) || 0,
         chatTemplateKwargs: chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : ''
     };
     
@@ -291,14 +279,6 @@ function loadConfiguration(configId) {
     ngramModCheckbox.checked = !!config.ngramMod;
     specDraftNMaxInput.value = config.specDraftNMax ?? 0;
     disableReasoningCheckbox.checked = !!config.disableReasoning;
-
-    if(config.draftModelPath !== undefined) document.getElementById('draftModelPath').value = config.draftModelPath;
-    if(config.ngld !== undefined) document.getElementById('ngld').value = config.ngld.toString();
-    if(config.ctkd !== undefined) document.getElementById('ctkd').value = config.ctkd;
-    if(config.ctvd !== undefined) document.getElementById('ctvd').value = config.ctvd;
-    if(config.draftPMin !== undefined) document.getElementById('draftPMin').value = config.draftPMin.toString();
-    if(config.draftMin !== undefined) document.getElementById('draftMin').value = config.draftMin.toString();
-    if(config.draftMax !== undefined) document.getElementById('draftMax').value = config.draftMax.toString();
     chatTemplateKwargsInput.value = config.chatTemplateKwargs ?? "";
     
     // Debug logging for loaded configuration
@@ -366,14 +346,7 @@ async function launchServer() {
         fastAttention: fastAttentionCheckbox.value,
         jinja: jinjaCheckbox.checked,
         verbose: verboseCheckbox.checked,
-        draftModelPath: document.getElementById('draftModelPath').value.trim(),
         disableReasoning: disableReasoningCheckbox.checked,
-        ngld: parseInt(document.getElementById('ngld').value) || 0,
-        ctkd: document.getElementById('ctkd').value,
-        ctvd: document.getElementById('ctvd').value,
-        draftPMin: parseFloat(document.getElementById('draftPMin').value) || 0,
-        draftMin: parseInt(document.getElementById('draftMin').value) || 0,
-        draftMax: parseInt(document.getElementById('draftMax').value) || 0,
         chatTemplateKwargs: chatTemplateKwargsInput.value.trim()
     };
     
@@ -520,34 +493,6 @@ async function launchServer() {
         // Add reasoning-budget flag if checked
         if (config.disableReasoning) {
             args.push('--reasoning-budget', '0');
-        }
-
-        // Add draft model parameters if specified
-        if (config.draftModelPath) {
-            args.push('-md', config.draftModelPath);
-            if (config.ngld >= 0) {  // Allow 0 as a valid value
-                args.push('-ngld', config.ngld.toString());
-            }
-            
-            if (config.ctkd) {
-                args.push('-ctkd', config.ctkd);
-            }
-            
-            if (config.ctvd) {
-                args.push('-ctvd', config.ctvd);
-            }
-            
-            if (config.draftPMin >= 0) {  // Allow 0 as a valid value
-                args.push('--draft-p-min', config.draftPMin.toString());
-            }
-            
-            if (config.draftMin >= 0) {  // Allow 0 as a valid value
-                args.push('--draft-min', config.draftMin.toString());
-            }
-            
-            if (config.draftMax >= 0) {  // Allow 0 as a valid value
-                args.push('--draft-max', config.draftMax.toString());
-            }
         }
 
         args.push("--host", "0.0.0.0");
@@ -728,48 +673,11 @@ async function launchModelPresets() {
             }
 
             
-            // Add draft model parameters if available
-            if (config.draftModelPath) {
-                presetContent += `model-draft = ${config.draftModelPath}\n`;
-            }
-            
-            if (config.ngld !== undefined && config.ngld >= 0) {
-                presetContent += `ngld = ${config.ngld}\n`;
-            }
-            
-            if (config.ctkd) {
-                presetContent += `ctkd = ${config.ctkd}\n`;
-            }
-            
-            if (config.ctvd) {
-                presetContent += `ctvd = ${config.ctvd}\n`;
-            }
-
-             if (config.ctk) {
-                presetContent += `ctk = ${config.ctk}\n`;
-            }
-            
-            if (config.ctv) {
-                presetContent += `ctv = ${config.ctv}\n`;
-            }
-
             if (config.fastAttention) {
                 presetContent += `fa = ${config.fastAttention ?? 'auto'}\n`;
             }
-            
-            if (config.draftPMin !== undefined && config.draftPMin >= 0) {
-                presetContent += `draft-p-min = ${config.draftPMin}\n`;
-            }
-            
-            if (config.draftMin !== undefined && config.draftMin >= 0) {
-                presetContent += `draft-min = ${config.draftMin}\n`;
-            }
-            
-            if (config.draftMax !== undefined && config.draftMax >= 0) {
-                presetContent += `draft-max = ${config.draftMax}\n`;
-            }
-            
-             // Add ngram-mod and/or MTP settings if enabled
+
+            // Add ngram-mod and/or MTP settings if enabled
             if (config.ngramMod && config.specDraftNMax > 0) {
                 presetContent += `spec-type = ngram-mod,draft-mtp\n`;
                 presetContent += `spec-ngram-size-n = 24\n`;
@@ -1076,9 +984,6 @@ function deleteConfiguration(configName) {
             cpuMoeCheckbox.checked = false;
             ctkEnableCheckbox.checked = false;
             specDraftNMaxInput.value = '0';
-            contextTokenKeySelect.value = 'f16';
-            contextTokenValueSelect.value = 'f16';
-            // Fix: Set fastAttention to its default value instead of checked state
             fastAttentionCheckbox.value = 'auto';
         }
     }
