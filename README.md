@@ -15,7 +15,7 @@ Tool to manage LLAMA.CPP model configurations.
 
 1. Install dependencies: `npm install`
 2. Start the server: `node run start`
-3. Open browser to `http://localhost:3001`
+3. Open browser to `http://localhost:7837`
 
 # How to use
 
