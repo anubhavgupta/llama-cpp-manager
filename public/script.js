@@ -32,6 +32,7 @@ const noMmprojOffloadCheckbox = document.getElementById('noMmprojOffload');
 const ngramModCheckbox = document.getElementById('ngramMod');
 const specDraftNMaxInput = document.getElementById('specDraftNMax');
 const disableReasoningCheckbox = document.getElementById('disableReasoning');
+const loadCustomChatTemplateCheckbox = document.getElementById('loadCustomChatTemplate');
 const launchBtn = document.getElementById('launchBtn');
 
 const stopBtn = document.getElementById('stopBtn');
@@ -230,9 +231,10 @@ function saveCurrentValues(configId) {
         ngramMod: ngramModCheckbox.checked,
         specDraftNMax: parseInt(specDraftNMaxInput.value) || 0,
         disableReasoning: disableReasoningCheckbox.checked,
+        loadCustomChatTemplate: loadCustomChatTemplateCheckbox.checked,
         chatTemplateKwargs: chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : ''
     };
-    
+
     configurations[configId] = config;
     saveConfigurations();
     
@@ -279,6 +281,7 @@ function loadConfiguration(configId) {
     ngramModCheckbox.checked = !!config.ngramMod;
     specDraftNMaxInput.value = config.specDraftNMax ?? 0;
     disableReasoningCheckbox.checked = !!config.disableReasoning;
+    loadCustomChatTemplateCheckbox.checked = !!config.loadCustomChatTemplate;
     chatTemplateKwargsInput.value = config.chatTemplateKwargs ?? "";
     
     // Debug logging for loaded configuration
@@ -347,6 +350,7 @@ async function launchServer() {
         jinja: jinjaCheckbox.checked,
         verbose: verboseCheckbox.checked,
         disableReasoning: disableReasoningCheckbox.checked,
+        loadCustomChatTemplate: loadCustomChatTemplateCheckbox.checked,
         chatTemplateKwargs: chatTemplateKwargsInput.value.trim()
     };
     
@@ -447,7 +451,14 @@ async function launchServer() {
         if (config.chatTemplateKwargs) {
             args.push('--chat-template-kwargs', config.chatTemplateKwargs);
         }
-        
+
+         // Add --chat-template-file if custom chat template is enabled
+        if (config.loadCustomChatTemplate && config.modelPath) {
+            // Derive the model directory from the model path and append chat-template.jinja
+            const modelDir = config.modelPath.replace(/[/\\][^/\\]*$/, '');
+            args.push('--chat-template-file', modelDir + '\\chat-template.jinja');
+        }
+
         // Add verbose flag if checked
         if (config.verbose) {
             args.push('--verbose');
@@ -666,6 +677,10 @@ async function launchModelPresets() {
 
             if (config.chatTemplateKwargs) {
                 presetContent += `chat-template-kwargs = ${config.chatTemplateKwargs}\n`;
+            }
+
+            if (config.loadCustomChatTemplate !== undefined && config.loadCustomChatTemplate) {
+                presetContent += `chat-template-file = ${config.modelPath.replace(/[/\\][^/\\]*$/, '')}\\chat-template.jinja\n`;
             }
             
             if (config.verbose !== undefined && config.verbose) {
@@ -985,6 +1000,7 @@ function deleteConfiguration(configName) {
             ctkEnableCheckbox.checked = false;
             specDraftNMaxInput.value = '0';
             fastAttentionCheckbox.value = 'auto';
+            loadCustomChatTemplateCheckbox.checked = false;
         }
     }
 }
