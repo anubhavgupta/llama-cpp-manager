@@ -28,10 +28,20 @@ const chatTemplateKwargsInput = document.getElementById('chatTemplateKwargs');
 const verboseCheckbox = document.getElementById('verbose');
 const noKvOffloadCheckbox = document.getElementById('noKvOffload');
 const noMmprojOffloadCheckbox = document.getElementById('noMmprojOffload');
+const speculationTypeSelect = document.getElementById('speculationType');
 const ngramModCheckbox = document.getElementById('ngramMod');
 const specDraftNMaxInput = document.getElementById('specDraftNMax');
+const specDraftNMaxGroup = document.getElementById('specDraftNMaxGroup');
 const reasoningSelect = document.getElementById('reasoning');
+const draftModelSection = document.getElementById('draftModelSection');
 const loadCustomChatTemplateCheckbox = document.getElementById('loadCustomChatTemplate');
+const draftModelPathSelect = document.getElementById('draftModelPath');
+const ngldInput = document.getElementById('ngld');
+const ctkdSelect = document.getElementById('ctkd');
+const ctvdSelect = document.getElementById('ctvd');
+const draftPMinInput = document.getElementById('draftPMin');
+const draftMinInput = document.getElementById('draftMin');
+const draftMaxInput = document.getElementById('draftMax');
 const launchBtn = document.getElementById('launchBtn');
 
 const stopBtn = document.getElementById('stopBtn');
@@ -132,8 +142,9 @@ async function fetchModels() {
         if (data.success) {
             // Clear existing options except the placeholder
             modelPathSelect.innerHTML = '<option value="">-- Select a Model --</option>';
+            draftModelPathSelect.innerHTML = '<option value="">-- Select a Draft Model --</option>';
 
-            // Add models to main dropdown
+            // Add models to both dropdowns
             data.models.forEach(model => {
                 const option = document.createElement('option');
                 option.value = model.path;  // Use full path for the value
@@ -141,6 +152,10 @@ async function fetchModels() {
 
                 // Add to main model dropdown
                 modelPathSelect.appendChild(option);
+
+                // Also add to draft model dropdown (clone the option)
+                const draftOption = option.cloneNode(true);
+                draftModelPathSelect.appendChild(draftOption);
             });
         } else {
             console.error('Failed to fetch models:', data.error);
@@ -226,11 +241,19 @@ function saveCurrentValues(configId) {
         verbose: verboseCheckbox.checked,
         noKvOffload: noKvOffloadCheckbox.checked,
         noMmprojOffload: noMmprojOffloadCheckbox.checked,
+        speculationType: speculationTypeSelect.value,
         ngramMod: ngramModCheckbox.checked,
         specDraftNMax: parseInt(specDraftNMaxInput.value) || 0,
         reasoning: reasoningSelect.value,
         loadCustomChatTemplate: loadCustomChatTemplateCheckbox.checked,
-        chatTemplateKwargs: chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : ''
+        chatTemplateKwargs: chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : '',
+        draftModelPath: draftModelPathSelect.value.trim(),
+        ngld: parseInt(ngldInput.value) || 0,
+        ctkd: ctkdSelect.value,
+        ctvd: ctvdSelect.value,
+        draftPMin: parseFloat(draftPMinInput.value) || 0,
+        draftMin: parseInt(draftMinInput.value) || 0,
+        draftMax: parseInt(draftMaxInput.value) || 0
     };
 
     configurations[configId] = config;
@@ -293,7 +316,9 @@ function loadConfiguration(configId) {
     if (config.jinja !== undefined) jinjaCheckbox.checked = config.jinja;
     noKvOffloadCheckbox.checked = !!config.noKvOffload;
     noMmprojOffloadCheckbox.checked = !!config.noMmprojOffload;
-    ngramModCheckbox.checked = !!config.ngramMod;
+    if (config.speculationType !== undefined) speculationTypeSelect.value = config.speculationType;
+    if (config.ngramMod !== undefined) ngramModCheckbox.checked = config.ngramMod;
+    updateDraftModelVisibility();
     specDraftNMaxInput.value = config.specDraftNMax ?? 0;
     if (config.reasoning !== undefined) {
         reasoningSelect.value = config.reasoning;
@@ -302,6 +327,13 @@ function loadConfiguration(configId) {
     } else {
         reasoningSelect.value = 'auto';
     }
+    if (config.draftModelPath !== undefined) draftModelPathSelect.value = config.draftModelPath;
+    if (config.ngld !== undefined) ngldInput.value = config.ngld.toString();
+    if (config.ctkd !== undefined) ctkdSelect.value = config.ctkd;
+    if (config.ctvd !== undefined) ctvdSelect.value = config.ctvd;
+    if (config.draftPMin !== undefined) draftPMinInput.value = config.draftPMin.toString();
+    if (config.draftMin !== undefined) draftMinInput.value = config.draftMin.toString();
+    if (config.draftMax !== undefined) draftMaxInput.value = config.draftMax.toString();
     loadCustomChatTemplateCheckbox.checked = !!config.loadCustomChatTemplate;
     chatTemplateKwargsInput.value = config.chatTemplateKwargs ?? "";
     
@@ -323,6 +355,18 @@ function updateContextTokenEnableState() {
     } else {
         contextTokenKeySelect.setAttribute('disabled', 'disabled');
         contextTokenValueSelect.setAttribute('disabled', 'disabled');
+    }
+}
+
+// Toggle draft model section and spec-draft-n-max visibility based on speculation type
+function updateDraftModelVisibility() {
+    const showDraft = speculationTypeSelect.value === 'draft-dflash' || speculationTypeSelect.value === 'draft-dspark';
+    const showDraftNMax = speculationTypeSelect.value !== 'none';
+    if (draftModelSection) {
+        draftModelSection.style.display = showDraft ? 'block' : 'none';
+    }
+    if (specDraftNMaxGroup) {
+        specDraftNMaxGroup.style.display = showDraftNMax ? 'block' : 'none';
     }
 }
 
@@ -361,6 +405,7 @@ async function launchServer() {
         cpuMoe: cpuMoeCheckbox.checked,
         noKvOffload: noKvOffloadCheckbox.checked,
         noMmprojOffload: noMmprojOffloadCheckbox.checked,
+        speculationType: speculationTypeSelect.value,
         ngramMod: ngramModCheckbox.checked,
         specDraftNMax: parseInt(specDraftNMaxInput.value) || 0,
         ctkEnable: ctkEnableCheckbox.checked,
@@ -371,7 +416,14 @@ async function launchServer() {
         verbose: verboseCheckbox.checked,
         reasoning: reasoningSelect.value,
         loadCustomChatTemplate: loadCustomChatTemplateCheckbox.checked,
-        chatTemplateKwargs: chatTemplateKwargsInput.value.trim()
+        chatTemplateKwargs: chatTemplateKwargsInput.value.trim(),
+        draftModelPath: draftModelPathSelect.value.trim(),
+        ngld: parseInt(ngldInput.value) || 0,
+        ctkd: ctkdSelect.value,
+        ctvd: ctvdSelect.value,
+        draftPMin: parseFloat(draftPMinInput.value) || 0,
+        draftMin: parseInt(draftMinInput.value) || 0,
+        draftMax: parseInt(draftMaxInput.value) || 0
     };
     
     // Save current values to localStorage (if we have a config ID)
@@ -499,21 +551,24 @@ async function launchServer() {
             args.push('--no-mmproj-offload');
         }
 
-        // Add ngram-mod and/or MTP flags if enabled
-        if (config.ngramMod && config.specDraftNMax > 0) {
-            args.push('--spec-type', 'ngram-mod,draft-mtp');
-            args.push('--spec-ngram-mod-n-match', '24');
-            args.push('--spec-ngram-mod-n-min', '48');
-            args.push('--spec-ngram-mod-n-max', '64');
-            args.push('--spec-draft-n-max', config.specDraftNMax.toString());
-        } else if (config.ngramMod) {
-            args.push('--spec-type', 'ngram-mod');
-            args.push('--spec-ngram-mod-n-match', '24');
-            args.push('--spec-ngram-mod-n-min', '48');
-            args.push('--spec-ngram-mod-n-max', '64');
-        } else if (config.specDraftNMax > 0) {
-            args.push('--spec-type', 'draft-mtp');
-            args.push('--spec-draft-n-max', config.specDraftNMax.toString());
+        // Add speculation flags
+        if (config.speculationType !== 'none' || config.ngramMod) {
+            const specTypes = [];
+            if (config.ngramMod) specTypes.push('ngram-mod');
+            if (config.speculationType !== 'none') specTypes.push(config.speculationType);
+            if (specTypes.length > 0) {
+                args.push('--spec-type', specTypes.join(','));
+            }
+            // ngram-mod specific flags (always added when ngramMod is checked)
+            if (config.ngramMod) {
+                args.push('--spec-ngram-mod-n-match', '24');
+                args.push('--spec-ngram-mod-n-min', '48');
+                args.push('--spec-ngram-mod-n-max', '64');
+            }
+            // draft n-max (applies to draft-mtp, draft-dflash, draft-dspark only)
+            if (config.specDraftNMax > 0 && config.speculationType !== 'none') {
+                args.push('--spec-draft-n-max', config.specDraftNMax.toString());
+            }
         }
 
         // Add reasoning flag
@@ -521,6 +576,29 @@ async function launchServer() {
             args.push('--reasoning', 'off');
         } else if (config.reasoning === 'on') {
             args.push('--reasoning', 'on');
+        }
+
+        // Add draft model parameters if specified
+        if (config.draftModelPath) {
+            args.push('-md', config.draftModelPath);
+            if (config.ngld >= 0) {
+                args.push('-ngld', config.ngld.toString());
+            }
+            if (config.ctkd) {
+                args.push('-ctkd', config.ctkd);
+            }
+            if (config.ctvd) {
+                args.push('-ctvd', config.ctvd);
+            }
+            if (config.draftPMin >= 0) {
+                args.push('--draft-p-min', config.draftPMin.toString());
+            }
+            if (config.draftMin >= 0) {
+                args.push('--draft-min', config.draftMin.toString());
+            }
+            if (config.draftMax >= 0) {
+                args.push('--draft-max', config.draftMax.toString());
+            }
         }
 
         args.push("--host", "0.0.0.0");
@@ -700,23 +778,47 @@ async function launchModelPresets() {
                 presetContent += `fa = ${config.fastAttention ?? 'auto'}\n`;
             }
 
-            // Add ngram-mod and/or MTP settings if enabled
-            if (config.ngramMod && config.specDraftNMax > 0) {
-                presetContent += `spec-type = ngram-mod,draft-mtp\n`;
-                presetContent += `spec-ngram-size-n = 24\n`;
-                presetContent += `draft-min = 48\n`;
-                presetContent += `draft-max = 64\n`;
-                presetContent += `spec-draft-n-max = ${config.specDraftNMax}\n`;
-            } else if (config.ngramMod) {
-                presetContent += `spec-type = ngram-mod\n`;
-                presetContent += `spec-ngram-size-n = 24\n`;
-                presetContent += `draft-min = 48\n`;
-                presetContent += `draft-max = 64\n`;
-            } else if (config.specDraftNMax > 0) {
-                presetContent += `spec-type = draft-mtp\n`;
-                presetContent += `spec-draft-n-max = ${config.specDraftNMax}\n`;
+            // Add draft model parameters if available
+            if (config.draftModelPath) {
+                presetContent += `model-draft = ${config.draftModelPath}\n`;
             }
-            
+            if (config.ngld !== undefined && config.ngld >= 0) {
+                presetContent += `ngld = ${config.ngld}\n`;
+            }
+            if (config.ctkd) {
+                presetContent += `ctkd = ${config.ctkd}\n`;
+            }
+            if (config.ctvd) {
+                presetContent += `ctvd = ${config.ctvd}\n`;
+            }
+            if (config.draftPMin !== undefined && config.draftPMin >= 0) {
+                presetContent += `draft-p-min = ${config.draftPMin}\n`;
+            }
+            if (config.draftMin !== undefined && config.draftMin >= 0) {
+                presetContent += `draft-min = ${config.draftMin}\n`;
+            }
+            if (config.draftMax !== undefined && config.draftMax >= 0) {
+                presetContent += `draft-max = ${config.draftMax}\n`;
+            }
+
+            // Add speculation settings
+            if (config.speculationType !== 'none' || config.ngramMod) {
+                const specTypes = [];
+                if (config.ngramMod) specTypes.push('ngram-mod');
+                if (config.speculationType !== 'none') specTypes.push(config.speculationType);
+                if (specTypes.length > 0) {
+                    presetContent += `spec-type = ${specTypes.join(',')}\n`;
+                }
+                if (config.ngramMod) {
+                    presetContent += `spec-ngram-size-n = 24\n`;
+                    presetContent += `draft-min = 48\n`;
+                    presetContent += `draft-max = 64\n`;
+                }
+                if (config.specDraftNMax > 0 && config.speculationType !== 'none') {
+                    presetContent += `spec-draft-n-max = ${config.specDraftNMax}\n`;
+                }
+            }
+
             // Add reasoning setting
             if (config.reasoning !== undefined && config.reasoning !== 'auto') {
                 presetContent += `reasoning = ${config.reasoning}\n`;
@@ -1006,9 +1108,18 @@ function deleteConfiguration(configName) {
             nCpuMoeInput.value = '8';
             cpuMoeCheckbox.checked = false;
             ctkEnableCheckbox.checked = false;
+            speculationTypeSelect.value = 'none';
+            ngramModCheckbox.checked = false;
             specDraftNMaxInput.value = '0';
             fastAttentionCheckbox.value = 'auto';
             loadCustomChatTemplateCheckbox.checked = false;
+            draftModelPathSelect.value = '';
+            ngldInput.value = '0';
+            ctkdSelect.value = 'f16';
+            ctvdSelect.value = 'f16';
+            draftPMinInput.value = '0.1';
+            draftMinInput.value = '5';
+            draftMaxInput.value = '10';
         }
     }
 }
@@ -1036,6 +1147,8 @@ async function init() {
     
 // Set up event listeners for context token parameters
     ctkEnableCheckbox.addEventListener('change', updateContextTokenEnableState);
+    speculationTypeSelect.addEventListener('change', updateDraftModelVisibility);
+    ngramModCheckbox.addEventListener('change', updateDraftModelVisibility);
 
     // Initialize the state on page load
     updateContextTokenEnableState();
