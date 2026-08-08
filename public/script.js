@@ -15,6 +15,7 @@ const repeatPenaltyInput = document.getElementById('repeatPenalty');
 const presencePenaltyInput = document.getElementById('presencePenalty');
 const loadModeSelect = document.getElementById('loadMode');
 const swaFullCheckbox = document.getElementById('swaFull');
+const backendSamplingCheckbox = document.getElementById('backendSampling');
 const contextSizeInput = document.getElementById('contextSize');
 const nCpuMoeInput = document.getElementById('nCpuMoe');
 const cpuMoeCheckbox = document.getElementById('cpuMoe');
@@ -213,6 +214,7 @@ function saveCurrentValues(configId) {
         parallel: parseInt(document.getElementById('parallel').value) || 0,
         loadMode: loadModeSelect.value,
         swaFull: swaFullCheckbox.checked,
+        backendSampling: backendSamplingCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
         nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
         cpuMoe: cpuMoeCheckbox.checked,
@@ -277,6 +279,7 @@ function loadConfiguration(configId) {
         }
     }
     if (config.swaFull !== undefined) swaFullCheckbox.checked = config.swaFull;
+    if (config.backendSampling !== undefined) backendSamplingCheckbox.checked = config.backendSampling;
     if (config.contextSize !== undefined) contextSizeInput.value = config.contextSize;
     if (config.nCpuMoe !== undefined) nCpuMoeInput.value = config.nCpuMoe;
     if (config.cpuMoe !== undefined) cpuMoeCheckbox.checked = config.cpuMoe;
@@ -346,6 +349,7 @@ async function launchServer() {
         parallel: parseInt(document.getElementById('parallel').value) || 0,
         loadMode: loadModeSelect.value,
         swaFull: swaFullCheckbox.checked,
+        backendSampling: backendSamplingCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
         nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
         cpuMoe: cpuMoeCheckbox.checked,
@@ -472,6 +476,11 @@ async function launchServer() {
         // Add verbose flag if checked
         if (config.verbose) {
             args.push('--verbose');
+        }
+
+        // Add backend-sampling flag if checked
+        if (config.backendSampling) {
+            args.push('--backend-sampling');
         }
 
         // Add no-kv-offload flag if checked
@@ -677,7 +686,10 @@ async function launchModelPresets() {
                 presetContent += `verbose = true\n`;
             }
 
-            
+            if (config.backendSampling !== undefined && config.backendSampling) {
+                presetContent += `backend-sampling = true\n`;
+            }
+
             if (config.fastAttention) {
                 presetContent += `fa = ${config.fastAttention ?? 'auto'}\n`;
             }
