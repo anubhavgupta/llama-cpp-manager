@@ -39,9 +39,6 @@ const draftModelPathSelect = document.getElementById('draftModelPath');
 const ngldInput = document.getElementById('ngld');
 const ctkdSelect = document.getElementById('ctkd');
 const ctvdSelect = document.getElementById('ctvd');
-const draftPMinInput = document.getElementById('draftPMin');
-const draftMinInput = document.getElementById('draftMin');
-const draftMaxInput = document.getElementById('draftMax');
 const launchBtn = document.getElementById('launchBtn');
 
 const stopBtn = document.getElementById('stopBtn');
@@ -250,10 +247,7 @@ function saveCurrentValues(configId) {
         draftModelPath: draftModelPathSelect.value.trim(),
         ngld: parseInt(ngldInput.value) || 0,
         ctkd: ctkdSelect.value,
-        ctvd: ctvdSelect.value,
-        draftPMin: parseFloat(draftPMinInput.value) || 0,
-        draftMin: parseInt(draftMinInput.value) || 0,
-        draftMax: parseInt(draftMaxInput.value) || 0
+        ctvd: ctvdSelect.value
     };
 
     configurations[configId] = config;
@@ -316,7 +310,18 @@ function loadConfiguration(configId) {
     if (config.jinja !== undefined) jinjaCheckbox.checked = config.jinja;
     noKvOffloadCheckbox.checked = !!config.noKvOffload;
     noMmprojOffloadCheckbox.checked = !!config.noMmprojOffload;
-    if (config.speculationType !== undefined) speculationTypeSelect.value = config.speculationType;
+    if (config.speculationType !== undefined) {
+        speculationTypeSelect.value = config.speculationType;
+    } else {
+        // Migrate old config: infer speculation type from old fields
+        if (config.specDraftNMax && config.specDraftNMax > 0) {
+            speculationTypeSelect.value = 'draft-mtp';
+        } else if (config.ngramMod) {
+            speculationTypeSelect.value = 'none';
+        } else {
+            speculationTypeSelect.value = 'none';
+        }
+    }
     if (config.ngramMod !== undefined) ngramModCheckbox.checked = config.ngramMod;
     updateDraftModelVisibility();
     specDraftNMaxInput.value = config.specDraftNMax ?? 0;
@@ -327,13 +332,10 @@ function loadConfiguration(configId) {
     } else {
         reasoningSelect.value = 'auto';
     }
-    if (config.draftModelPath !== undefined) draftModelPathSelect.value = config.draftModelPath;
-    if (config.ngld !== undefined) ngldInput.value = config.ngld.toString();
-    if (config.ctkd !== undefined) ctkdSelect.value = config.ctkd;
-    if (config.ctvd !== undefined) ctvdSelect.value = config.ctvd;
-    if (config.draftPMin !== undefined) draftPMinInput.value = config.draftPMin.toString();
-    if (config.draftMin !== undefined) draftMinInput.value = config.draftMin.toString();
-    if (config.draftMax !== undefined) draftMaxInput.value = config.draftMax.toString();
+    draftModelPathSelect.value = config.draftModelPath ?? '';
+    ngldInput.value = config.ngld ?? 0;
+    ctkdSelect.value = config.ctkd ?? 'f16';
+    ctvdSelect.value = config.ctvd ?? 'f16';
     loadCustomChatTemplateCheckbox.checked = !!config.loadCustomChatTemplate;
     chatTemplateKwargsInput.value = config.chatTemplateKwargs ?? "";
     
@@ -420,10 +422,7 @@ async function launchServer() {
         draftModelPath: draftModelPathSelect.value.trim(),
         ngld: parseInt(ngldInput.value) || 0,
         ctkd: ctkdSelect.value,
-        ctvd: ctvdSelect.value,
-        draftPMin: parseFloat(draftPMinInput.value) || 0,
-        draftMin: parseInt(draftMinInput.value) || 0,
-        draftMax: parseInt(draftMaxInput.value) || 0
+        ctvd: ctvdSelect.value
     };
     
     // Save current values to localStorage (if we have a config ID)
@@ -579,7 +578,7 @@ async function launchServer() {
         }
 
         // Add draft model parameters if specified
-        if (config.draftModelPath) {
+        if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') {
             args.push('-md', config.draftModelPath);
             if (config.ngld >= 0) {
                 args.push('-ngld', config.ngld.toString());
@@ -589,15 +588,6 @@ async function launchServer() {
             }
             if (config.ctvd) {
                 args.push('-ctvd', config.ctvd);
-            }
-            if (config.draftPMin >= 0) {
-                args.push('--draft-p-min', config.draftPMin.toString());
-            }
-            if (config.draftMin >= 0) {
-                args.push('--draft-min', config.draftMin.toString());
-            }
-            if (config.draftMax >= 0) {
-                args.push('--draft-max', config.draftMax.toString());
             }
         }
 
@@ -779,27 +769,19 @@ async function launchModelPresets() {
             }
 
             // Add draft model parameters if available
-            if (config.draftModelPath) {
+            if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') {
                 presetContent += `model-draft = ${config.draftModelPath}\n`;
+                if (config.ngld !== undefined && config.ngld >= 0) {
+                    presetContent += `ngld = ${config.ngld}\n`;
+                }
+                if (config.ctkd) {
+                    presetContent += `ctkd = ${config.ctkd}\n`;
+                }
+                if (config.ctvd) {
+                    presetContent += `ctvd = ${config.ctvd}\n`;
+                }
             }
-            if (config.ngld !== undefined && config.ngld >= 0) {
-                presetContent += `ngld = ${config.ngld}\n`;
-            }
-            if (config.ctkd) {
-                presetContent += `ctkd = ${config.ctkd}\n`;
-            }
-            if (config.ctvd) {
-                presetContent += `ctvd = ${config.ctvd}\n`;
-            }
-            if (config.draftPMin !== undefined && config.draftPMin >= 0) {
-                presetContent += `draft-p-min = ${config.draftPMin}\n`;
-            }
-            if (config.draftMin !== undefined && config.draftMin >= 0) {
-                presetContent += `draft-min = ${config.draftMin}\n`;
-            }
-            if (config.draftMax !== undefined && config.draftMax >= 0) {
-                presetContent += `draft-max = ${config.draftMax}\n`;
-            }
+            
 
             // Add speculation settings
             if (config.speculationType !== 'none' || config.ngramMod) {
@@ -1117,9 +1099,6 @@ function deleteConfiguration(configName) {
             ngldInput.value = '0';
             ctkdSelect.value = 'f16';
             ctvdSelect.value = 'f16';
-            draftPMinInput.value = '0.1';
-            draftMinInput.value = '5';
-            draftMaxInput.value = '10';
         }
     }
 }
