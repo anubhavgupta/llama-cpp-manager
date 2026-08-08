@@ -145,22 +145,18 @@
                     <h3>Memory Settings</h3>
                     <div class="inline-checkboxes">
                         <div class="form-group">
-                            <label for="mlock">Memory Lock:</label>
-                            <input type="checkbox" id="mlock" class="form-control checkbox">
+                            <label for="loadMode">Load Mode (--load-mode):</label>
+                            <select id="loadMode" class="form-control">
+                                <option value="none">none</option>
+                                <option value="mmap">mmap</option>
+                                <option value="mlock">mlock</option>
+                                <option value="mmap+mlock">mmap+mlock</option>
+                                <option value="dio">dio</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="swaFull">SWA Full:</label>
                             <input type="checkbox" id="swaFull" class="form-control checkbox">
-                        </div>
-                    </div>
-                    <div class="inline-checkboxes">
-                        <div class="form-group">
-                            <label for="noMmap">No Memory Mapping:</label>
-                            <input type="checkbox" id="noMmap" class="form-control checkbox">
-                        </div>
-                        <div class="form-group">
-                            <label for="dio">Direct IO:</label>
-                            <input type="checkbox" id="dio" class="form-control checkbox">
                         </div>
                     </div>
                     <div class="inline-checkboxes">

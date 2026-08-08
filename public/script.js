@@ -13,10 +13,8 @@ const topPInput = document.getElementById('topP');
 const minPInput = document.getElementById('minP');
 const repeatPenaltyInput = document.getElementById('repeatPenalty');
 const presencePenaltyInput = document.getElementById('presencePenalty');
-const mlockCheckbox = document.getElementById('mlock');
+const loadModeSelect = document.getElementById('loadMode');
 const swaFullCheckbox = document.getElementById('swaFull');
-const noMmapCheckbox = document.getElementById('noMmap');
-const dioCheckbox = document.getElementById('dio');
 const contextSizeInput = document.getElementById('contextSize');
 const nCpuMoeInput = document.getElementById('nCpuMoe');
 const cpuMoeCheckbox = document.getElementById('cpuMoe');
@@ -213,10 +211,8 @@ function saveCurrentValues(configId) {
         repeatPenalty: repeatPenaltyInput.value || 0,
         presencePenalty: presencePenaltyInput.value || 0,
         parallel: parseInt(document.getElementById('parallel').value) || 0,
-        mlock: mlockCheckbox.checked,
+        loadMode: loadModeSelect.value,
         swaFull: swaFullCheckbox.checked,
-        noMmap: noMmapCheckbox.checked,
-        dio: dioCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
         nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
         cpuMoe: cpuMoeCheckbox.checked,
@@ -261,10 +257,26 @@ function loadConfiguration(configId) {
     if (config.repeatPenalty !== undefined) repeatPenaltyInput.value = config.repeatPenalty;
     if (config.presencePenalty !== undefined) presencePenaltyInput.value = config.presencePenalty;
     if (config.parallel !== undefined) document.getElementById('parallel').value = config.parallel;
-    if (config.mlock !== undefined) mlockCheckbox.checked = config.mlock;
+    if (config.loadMode !== undefined) {
+        loadModeSelect.value = config.loadMode;
+    } else {
+        // Migrate old config with separate mlock/noMmap/dio fields to loadMode
+        const oldMlock = !!config.mlock;
+        const oldNoMmap = !!config.noMmap;
+        const oldDio = !!config.dio;
+        if (oldDio) {
+            loadModeSelect.value = 'dio';
+        } else if (oldMlock && oldNoMmap) {
+            loadModeSelect.value = 'mmap+mlock';
+        } else if (oldMlock) {
+            loadModeSelect.value = 'mlock';
+        } else if (oldNoMmap) {
+            loadModeSelect.value = 'none';
+        } else {
+            loadModeSelect.value = 'mmap';
+        }
+    }
     if (config.swaFull !== undefined) swaFullCheckbox.checked = config.swaFull;
-    noMmapCheckbox.checked = !!config.noMmap;
-    dioCheckbox.checked = !!config.dio;
     if (config.contextSize !== undefined) contextSizeInput.value = config.contextSize;
     if (config.nCpuMoe !== undefined) nCpuMoeInput.value = config.nCpuMoe;
     if (config.cpuMoe !== undefined) cpuMoeCheckbox.checked = config.cpuMoe;
@@ -332,13 +344,11 @@ async function launchServer() {
         repeatPenalty: repeatPenaltyInput.value || 0,
         presencePenalty: presencePenaltyInput.value || 0,
         parallel: parseInt(document.getElementById('parallel').value) || 0,
-        mlock: mlockCheckbox.checked,
+        loadMode: loadModeSelect.value,
         swaFull: swaFullCheckbox.checked,
-        noMmap: noMmapCheckbox.checked,
         contextSize: parseInt(contextSizeInput.value) || 1,
         nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
         cpuMoe: cpuMoeCheckbox.checked,
-        dio: dioCheckbox.checked,
         noKvOffload: noKvOffloadCheckbox.checked,
         noMmprojOffload: noMmprojOffloadCheckbox.checked,
         ngramMod: ngramModCheckbox.checked,
@@ -407,10 +417,10 @@ async function launchServer() {
             args.push('--parallel', config.parallel.toString());
         }
         
-        if (config.mlock) {
-            args.push('--mlock');
+        if (config.loadMode && config.loadMode !== 'none') {
+            args.push('--load-mode', config.loadMode);
         }
-        
+
         if (config.swaFull) {
             args.push('--swa-full');
         }
@@ -464,11 +474,6 @@ async function launchServer() {
             args.push('--verbose');
         }
 
-        // Add no-mmap flag if checked
-        if (config.noMmap) {
-            args.push('--no-mmap');
-        }
-
         // Add no-kv-offload flag if checked
         if (config.noKvOffload) {
             args.push('--no-kv-offload');
@@ -477,11 +482,6 @@ async function launchServer() {
         // Add no-mmproj-offload flag if checked
         if (config.noMmprojOffload) {
             args.push('--no-mmproj-offload');
-        }
-
-        // Add no-direct-io flag if checked
-        if (config.dio) {
-            args.push('-dio');
         }
 
         // Add ngram-mod and/or MTP flags if enabled
@@ -649,16 +649,8 @@ async function launchModelPresets() {
             }
             
             
-            if (config.mlock !== undefined && config.mlock) {
-                presetContent += `mlock = true\n`;
-            }
-            
-            if (config.swaFull !== undefined && config.swaFull) {
-                presetContent += `swa-full = true\n`;
-            }
-            
-            if (config.noMmap !== undefined && config.noMmap) {
-                presetContent += `no-mmap = true\n`;
+            if (config.loadMode !== undefined && config.loadMode !== 'none') {
+                presetContent += `load-mode = ${config.loadMode}\n`;
             }
             
             if (config.noKvOffload !== undefined && config.noKvOffload) {
@@ -669,10 +661,6 @@ async function launchModelPresets() {
                 presetContent += `no-mmproj-offload = true\n`;
             }
 
-            if (config.dio !== undefined && config.dio) {
-                presetContent += `dio = true\n`;
-            }
-            
             if (config.jinja !== undefined && config.jinja) {
                 presetContent += `jinja = true\n`;
             }
@@ -991,11 +979,9 @@ function deleteConfiguration(configName) {
             topKInput.value = '20';
             topPInput.value = '0.00';
             repeatPenaltyInput.value = '1.05';
-            mlockCheckbox.checked = false;
+            loadModeSelect.value = 'mmap';
             swaFullCheckbox.checked = false;
-            noMmapCheckbox.checked = false;
             noMmprojOffloadCheckbox.checked = false;
-            dioCheckbox.checked = false;
             contextSizeInput.value = '16384';
             nCpuMoeInput.value = '8';
             cpuMoeCheckbox.checked = false;
