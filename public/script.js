@@ -504,6 +504,8 @@ async function launchServer() {
         // Add reasoning-budget flag if checked
         if (config.disableReasoning) {
             args.push('--reasoning-budget', '0');
+        } else {
+            args.push('--reasoning', 'on');
         }
 
         args.push("--host", "0.0.0.0");
