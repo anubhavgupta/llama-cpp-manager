@@ -30,7 +30,7 @@ const noKvOffloadCheckbox = document.getElementById('noKvOffload');
 const noMmprojOffloadCheckbox = document.getElementById('noMmprojOffload');
 const ngramModCheckbox = document.getElementById('ngramMod');
 const specDraftNMaxInput = document.getElementById('specDraftNMax');
-const disableReasoningCheckbox = document.getElementById('disableReasoning');
+const reasoningSelect = document.getElementById('reasoning');
 const loadCustomChatTemplateCheckbox = document.getElementById('loadCustomChatTemplate');
 const launchBtn = document.getElementById('launchBtn');
 
@@ -228,7 +228,7 @@ function saveCurrentValues(configId) {
         noMmprojOffload: noMmprojOffloadCheckbox.checked,
         ngramMod: ngramModCheckbox.checked,
         specDraftNMax: parseInt(specDraftNMaxInput.value) || 0,
-        disableReasoning: disableReasoningCheckbox.checked,
+        reasoning: reasoningSelect.value,
         loadCustomChatTemplate: loadCustomChatTemplateCheckbox.checked,
         chatTemplateKwargs: chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : ''
     };
@@ -295,7 +295,13 @@ function loadConfiguration(configId) {
     noMmprojOffloadCheckbox.checked = !!config.noMmprojOffload;
     ngramModCheckbox.checked = !!config.ngramMod;
     specDraftNMaxInput.value = config.specDraftNMax ?? 0;
-    disableReasoningCheckbox.checked = !!config.disableReasoning;
+    if (config.reasoning !== undefined) {
+        reasoningSelect.value = config.reasoning;
+    } else if (config.disableReasoning !== undefined) {
+        reasoningSelect.value = config.disableReasoning ? 'off' : 'on';
+    } else {
+        reasoningSelect.value = 'auto';
+    }
     loadCustomChatTemplateCheckbox.checked = !!config.loadCustomChatTemplate;
     chatTemplateKwargsInput.value = config.chatTemplateKwargs ?? "";
     
@@ -363,7 +369,7 @@ async function launchServer() {
         fastAttention: fastAttentionCheckbox.value,
         jinja: jinjaCheckbox.checked,
         verbose: verboseCheckbox.checked,
-        disableReasoning: disableReasoningCheckbox.checked,
+        reasoning: reasoningSelect.value,
         loadCustomChatTemplate: loadCustomChatTemplateCheckbox.checked,
         chatTemplateKwargs: chatTemplateKwargsInput.value.trim()
     };
@@ -510,10 +516,10 @@ async function launchServer() {
             args.push('--spec-draft-n-max', config.specDraftNMax.toString());
         }
 
-        // Add reasoning-budget flag if checked
-        if (config.disableReasoning) {
-            args.push('--reasoning-budget', '0');
-        } else {
+        // Add reasoning flag
+        if (config.reasoning === 'off') {
+            args.push('--reasoning', 'off');
+        } else if (config.reasoning === 'on') {
             args.push('--reasoning', 'on');
         }
 
@@ -711,9 +717,11 @@ async function launchModelPresets() {
                 presetContent += `spec-draft-n-max = ${config.specDraftNMax}\n`;
             }
             
-            // Add reasoning-budget setting if enabled
-            if (config.disableReasoning !== undefined && config.disableReasoning) {
-                presetContent += `reasoning-budget = 0\n`;
+            // Add reasoning setting
+            if (config.reasoning !== undefined && config.reasoning !== 'auto') {
+                presetContent += `reasoning = ${config.reasoning}\n`;
+            } else if (config.disableReasoning !== undefined) {
+                presetContent += `reasoning = ${config.disableReasoning ? 'off' : 'on'}\n`;
             }
             
             // Add a blank line between sections for readability
