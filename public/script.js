@@ -27,6 +27,7 @@ const jinjaCheckbox = document.getElementById('jinja');
 const chatTemplateKwargsInput = document.getElementById('chatTemplateKwargs');
 const verboseCheckbox = document.getElementById('verbose');
 const noKvOffloadCheckbox = document.getElementById('noKvOffload');
+const cacheRamInput = document.getElementById('cacheRam');
 const noMmprojOffloadCheckbox = document.getElementById('noMmprojOffload');
 const speculationTypeSelect = document.getElementById('speculationType');
 const ngramModCheckbox = document.getElementById('ngramMod');
@@ -238,6 +239,7 @@ function saveCurrentValues(configId) {
         verbose: verboseCheckbox.checked,
         noKvOffload: noKvOffloadCheckbox.checked,
         noMmprojOffload: noMmprojOffloadCheckbox.checked,
+        cacheRam: parseInt(cacheRamInput.value),
         speculationType: speculationTypeSelect.value,
         ngramMod: ngramModCheckbox.checked,
         specDraftNMax: parseInt(specDraftNMaxInput.value) || 0,
@@ -310,6 +312,7 @@ function loadConfiguration(configId) {
     if (config.jinja !== undefined) jinjaCheckbox.checked = config.jinja;
     noKvOffloadCheckbox.checked = !!config.noKvOffload;
     noMmprojOffloadCheckbox.checked = !!config.noMmprojOffload;
+    cacheRamInput.value = config.cacheRam ?? 8192;
     if (config.speculationType !== undefined) {
         speculationTypeSelect.value = config.speculationType;
     } else {
@@ -342,6 +345,7 @@ function loadConfiguration(configId) {
     // Debug logging for loaded configuration
     console.log('Loaded configuration:', configId, config);
     updateContextTokenEnableState();
+    refreshKvarnWarnings();
 }
 
 // Update enable/disable state for context token parameters
@@ -372,19 +376,21 @@ function updateKvarnWarning(select, warningEl) {
     }
 }
 
-function setupKvarnWarnings() {
-    [
-        [contextTokenKeySelect, 'contextTokenKey'],
-        [contextTokenValueSelect, 'contextTokenValue'],
-        [ctkdSelect, 'ctkd'],
-        [ctvdSelect, 'ctvd'],
-    ].forEach(([select, id]) => {
+// Re-sync every KVarN warning with its dropdown's current value.
+// Called after the select values change (manual change, config load, reset) so the
+// warnings always match the loaded config.
+function refreshKvarnWarnings() {
+    [contextTokenKeySelect, contextTokenValueSelect, ctkdSelect, ctvdSelect].forEach((select) => {
         const warningEl = select.parentElement.querySelector('.kvarn-warning');
-        if (warningEl) {
-            select.addEventListener('change', () => updateKvarnWarning(select, warningEl));
-            updateKvarnWarning(select, warningEl);
-        }
+        if (warningEl) updateKvarnWarning(select, warningEl);
     });
+}
+
+function setupKvarnWarnings() {
+    [contextTokenKeySelect, contextTokenValueSelect, ctkdSelect, ctvdSelect].forEach((select) => {
+        select.addEventListener('change', refreshKvarnWarnings);
+    });
+    refreshKvarnWarnings();
 }
 
 // Toggle draft model section and spec-draft-n-max visibility based on speculation type
@@ -434,6 +440,7 @@ async function launchServer() {
         cpuMoe: cpuMoeCheckbox.checked,
         noKvOffload: noKvOffloadCheckbox.checked,
         noMmprojOffload: noMmprojOffloadCheckbox.checked,
+        cacheRam: parseInt(cacheRamInput.value),
         speculationType: speculationTypeSelect.value,
         ngramMod: ngramModCheckbox.checked,
         specDraftNMax: parseInt(specDraftNMaxInput.value) || 0,
@@ -575,6 +582,11 @@ async function launchServer() {
         // Add no-mmproj-offload flag if checked
         if (config.noMmprojOffload) {
             args.push('--no-mmproj-offload');
+        }
+
+        // Add cache RAM limit (--cache-ram): -1 = no limit, 0 = disable
+        if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam)) {
+            args.push('--cache-ram', String(config.cacheRam));
         }
 
         // Add speculation flags
@@ -769,6 +781,10 @@ async function launchModelPresets() {
 
             if (config.noMmprojOffload !== undefined && config.noMmprojOffload) {
                 presetContent += `no-mmproj-offload = true\n`;
+            }
+
+            if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam)) {
+                presetContent += `cache-ram = ${config.cacheRam}\n`;
             }
 
             if (config.jinja !== undefined && config.jinja) {
@@ -1116,6 +1132,7 @@ function deleteConfiguration(configName) {
             contextSizeInput.value = '16384';
             nCpuMoeInput.value = '8';
             cpuMoeCheckbox.checked = false;
+            cacheRamInput.value = '8192';
             ctkEnableCheckbox.checked = false;
             speculationTypeSelect.value = 'none';
             ngramModCheckbox.checked = false;

@@ -660,6 +660,14 @@ body {
     cursor: not-allowed;
 }
 
+.hint-text {
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+}
+
 .kvarn-warning {
     margin-top: 6px;
     padding: 8px 12px;
