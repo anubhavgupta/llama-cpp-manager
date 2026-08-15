@@ -478,7 +478,7 @@ async function launchServer() {
             args.push('--parallel', config.parallel.toString());
         }
         
-        if (config.loadMode && config.loadMode !== 'none') {
+        if (config.loadMode) {
             args.push('--load-mode', config.loadMode);
         }
 
@@ -732,7 +732,7 @@ async function launchModelPresets() {
             }
             
             
-            if (config.loadMode !== undefined && config.loadMode !== 'none') {
+            if (config.loadMode !== undefined) {
                 presetContent += `load-mode = ${config.loadMode}\n`;
             }
             
