@@ -360,6 +360,33 @@ function updateContextTokenEnableState() {
     }
 }
 
+// Show/hide the "KVarN requires beellama.cpp" warning under a ctk/ctv/ctkd/ctvd dropdown
+const KVARN_WARNING_HTML = 'KVarN cache types are only supported by <a href="https://github.com/Anbeeld/beellama.cpp" target="_blank" rel="noopener">beellama.cpp</a>, not standard llama.cpp.';
+
+function updateKvarnWarning(select, warningEl) {
+    if (select.value.startsWith('kvarn')) {
+        warningEl.innerHTML = KVARN_WARNING_HTML;
+        warningEl.style.display = 'block';
+    } else {
+        warningEl.style.display = 'none';
+    }
+}
+
+function setupKvarnWarnings() {
+    [
+        [contextTokenKeySelect, 'contextTokenKey'],
+        [contextTokenValueSelect, 'contextTokenValue'],
+        [ctkdSelect, 'ctkd'],
+        [ctvdSelect, 'ctvd'],
+    ].forEach(([select, id]) => {
+        const warningEl = select.parentElement.querySelector('.kvarn-warning');
+        if (warningEl) {
+            select.addEventListener('change', () => updateKvarnWarning(select, warningEl));
+            updateKvarnWarning(select, warningEl);
+        }
+    });
+}
+
 // Toggle draft model section and spec-draft-n-max visibility based on speculation type
 function updateDraftModelVisibility() {
     const showDraft = speculationTypeSelect.value === 'draft-dflash' || speculationTypeSelect.value === 'draft-dspark';
@@ -1099,6 +1126,7 @@ function deleteConfiguration(configName) {
             ngldInput.value = '0';
             ctkdSelect.value = 'f16';
             ctvdSelect.value = 'f16';
+            setupKvarnWarnings();
         }
     }
 }
@@ -1128,6 +1156,9 @@ async function init() {
     ctkEnableCheckbox.addEventListener('change', updateContextTokenEnableState);
     speculationTypeSelect.addEventListener('change', updateDraftModelVisibility);
     ngramModCheckbox.addEventListener('change', updateDraftModelVisibility);
+
+    // Set up KVarN support warnings under the ctk/ctv/ctkd/ctvd dropdowns
+    setupKvarnWarnings();
 
     // Initialize the state on page load
     updateContextTokenEnableState();

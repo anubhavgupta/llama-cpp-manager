@@ -660,6 +660,21 @@ body {
     cursor: not-allowed;
 }
 
+.kvarn-warning {
+    margin-top: 6px;
+    padding: 8px 12px;
+    border-left: 3px solid var(--warning);
+    background: rgba(245, 158, 11, 0.08);
+    color: var(--warning);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.kvarn-warning a {
+    color: var(--warning);
+}
+
 .btn {
     padding: 12px 20px;
     margin: 4px;
