@@ -1,0 +1,7 @@
+# Git line-ending policy: golden hashes must be checkout-stable
+* text=auto eol=lf
+*.cmd -text
+*.bat -text
+*.png binary
+*.ico binary
+*.gguf binary
