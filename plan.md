@@ -1,8 +1,11 @@
 # Parity Port Plan — llama-cpp-manager
+### Two-part, fully autonomous (no human involvement in engineering work)
 
 **Objective:** Re-implement `llama-cpp-manager` in a different technology stack with **bug-for-bug, byte-for-byte user-visible parity**. No scope changes. No bug fixes. No improvements.
 
-**Baseline:** legacy app at the commit tagged at Phase 0. Legacy output is correct by definition.
+**Method:** Part 1 reverse-engineers the legacy app into an executable, self-validating conformance oracle. Part 2 (deferred) builds a candidate until that oracle goes green. Humans do not review, approve, or adjudicate anything except the single irreversible cutover command (§10).
+
+**Oracle:** the legacy app at tag `parity-baseline`. Legacy output is correct by definition.
 
 ---
 
@@ -10,252 +13,250 @@
 
 | # | Constraint | Consequence |
 |---|---|---|
-| C1 | No behavior changes, no bug fixes | Every quirk in §7 is a **requirement**, not a defect |
+| C1 | No behavior changes, no bug fixes | Every quirk in §8 is a **requirement**, not a defect |
 | C2 | "Same from the user's perspective" | Dead code (never reachable from UI) is **out of scope** — not ported, not tested, but recorded |
-| C3 | User configs live in `localStorage`, keyed by origin | New app must serve on **`http://localhost:7837`** or all existing configs are orphaned |
-| C4 | Legacy is the only oracle | Any diff ⇒ the **candidate** is wrong. Never edit a golden to go green |
-| C5 | Fixtures are recorded, never authored | A hand-written fixture encodes the AI's *belief* about the system and will pass while wrong |
+| C3 | User configs live in `localStorage`, keyed by origin | Candidate must serve on **`http://localhost:7837`** or all existing configs are orphaned |
+| C4 | Legacy is the only oracle | Any diff ⇒ the **candidate** is wrong. Never edit a golden/assertion to go green |
+| C5 | Fixtures are recorded, never authored | A hand-written fixture encodes a *belief* and passes while wrong |
 | C6 | Keep Socket.IO | Its reconnect choreography drives user-visible log lines (`Connected to server for real-time logging`) |
-
-### Open decision (blocking Phase 3)
-Target stack. Must support: local HTTP server, spawn native exe without a shell, recursive FS walk, WebSocket, static file serving. Candidates: Node/TS, Go, Rust/axum, Bun. **Not** Tauri/Electron with a native window — that changes the experience.
-
----
-
-## 1. Parity contract — the six observable surfaces
-
-| Surface | Source | Parity requirement |
-|---|---|---|
-| HTTP API — 9 endpoints, status codes, body bytes | `server.js` | Byte-identical, incl. error branches and the 200-`success:false` quirk |
-| Socket.IO events `log-stream` / `server-ended` / `server-error` | `server.js`, `script.js:895` | Event names, payload shape `{type,data}`, order, raw chunk fidelity |
-| The `argv` array handed to `llama-server` | `script.js:409-650` | Ordered array equality — **this is the product** |
-| `models-preset.ini` text | `script.js:676-870` | Byte-level, incl. key order and CLI-vs-ini name divergences |
-| `localStorage` schema `llamaCppConfigs`, `llamaCppSettings` | `script.js` | Must import existing user data unchanged, incl. legacy `disableReasoning` |
-| UI: layout, sections, dialogs, log pane, charts, polling cadence | `index.html`, `styles.css`, `script.js` | DOM + a11y + screenshot ledgers |
+| C7 | No human in the engineering loop | Every judgment is replaced by a machine gate (§3) and a pre-committed tie-break ladder (§4) |
+| C8 | Gates are immutable | Thresholds, assertions, fixtures, `AGENTS.md` are hash-pinned; changing them fails the Auditor (§5) |
 
 ---
 
-## 2. Repository layout for the port
+## 1. Why the split point is where it is
 
-```
-/tools/parity/
-  freeze-baseline.sh        # tag + hash legacy files
-  fake-llama-server.js      # stub binary; dumps argv; knobs for exit code / slow term
-  capture-legacy.sh         # records all fixtures from the running legacy app
-  extract-generators.patch  # behavior-preserving extraction of buildArgs/buildPresetIni
-  gen-goldens.js            # vectors -> goldens, records legacy sha + provenance
-  equivalence.js            # candidate vs goldens, positional diff + shrink
-  coercion-shim/            # JS-faithful parseInt/parseFloat/Number.toString/String()/||
-  fixture-tree.sh           # model dir fixtures (nested, mmproj, non-ASCII, unreadable)
-  dual-run.sh               # legacy :7837 + candidate :7838, same actions, diff
-  nvidia-smi-stub           # on PATH; removable to force simulated-metrics path
-/fixtures/
-  BASELINE.json  MANIFEST.json  http/  argv/  ini/  ws/  localstorage/  screenshots/
-  vectors/{boundary,cover,format,random}/   goldens/
-/tests/
-  L0-generators/  L1-backend/  L2-ui/  L3-seam/  L4-dualrun/
-PARITY.md      # behavior ledger
-AGENTS.md      # DO-NOT-FIX list, oracle rules
-```
+Part 1 touches **only the legacy app** and needs **no target-stack decision** — it is all analysis, recording, and harness construction. Part 2 is the only stack-dependent work. Every suite is therefore written black-box, parameterized by env (§6), so **no suite is rewritten when the stack changes** and no stack assumption can leak into a test.
+
+Part 2's job reduces to: *point the existing harness at the candidate and make it green.*
 
 ---
 
-## 3. Phases
+## 2. PART 1 — Reverse-engineer + build the oracle
+*Legacy-only. Read-only with respect to app behavior. Fully reversible. No stack decision required.*
 
-### Phase 0 — Freeze the baseline
-1. `git tag parity-baseline`; record `BASELINE.json` (sha + SHA256 of `server.js`, `public/script.js`, `public/index.html`, `public/styles.css`).
-2. `PARITY.md` ledger seeded with all rows from §7.
-3. `AGENTS.md` with the DO-NOT-FIX list and the oracle rules (C4, C5).
+### Phase 0 — Freeze baseline
+1. `git tag parity-baseline <last legacy-only commit>`; `tools/parity/freeze-baseline.sh` writes `fixtures/BASELINE.json` (sha + SHA256 of `server.js`, `public/script.js`, `public/index.html`, `public/styles.css`).
+2. Seed `PARITY.md` ledger with all 15 rows from §8, status `baseline-open`.
+3. Write `AGENTS.md`: DO-NOT-FIX list, oracle rules C4/C5/C8, tie-break ladder §4, role boundaries §5. Hash-pin it.
 
-**Exit:** baseline hashes committed; ledger rows exist.
+**Gate:** hashes committed; every §8 row exists in the ledger.
 
 ### Phase 1 — Fakes and recording harness
-1. `fake-llama-server.js`: writes exact argv array + raw command line to a file; prints startup logs in llama.cpp-like **chunk shapes**; binds `--host/--port`; exits on SIGTERM; knobs for `--exit-code`, slow termination, stderr-only output.
-2. `fixture-tree.sh`: nested dirs, `mmproj` name variants, spaces + non-ASCII + long paths, unreadable dir, empty dir, missing dir, mmproj in sibling dir (negative case).
-3. `nvidia-smi-stub` on `PATH`.
-4. `capture-legacy.sh` → `fixtures/`: HTTP responses (all endpoints + all error branches), recorded argv, real `models-preset.ini`, socket event stream (names/order/relative timestamps), `localStorage` export, screenshots. Every file records the command that produced it.
+1. `fake-llama-server.js` — writes exact argv array **and** raw command line to a file; prints startup logs in llama.cpp-like **chunk shapes**; binds `--host/--port`; exits on SIGTERM; knobs: `--exit-code`, slow termination, stderr-only.
+2. `fixture-tree.sh` — nested dirs, `mmproj` name variants, spaces + non-ASCII + long paths, unreadable dir, empty dir, missing dir, sibling-dir mmproj (negative).
+3. `nvidia-smi-stub` on `PATH`; removable to force the simulated-metrics path.
+4. `capture-legacy.sh` → `fixtures/{http,argv,ini,ws,localstorage,screenshots}/`, every file recording the command that produced it; `fixtures/MANIFEST.json` hashes everything.
 
-**Exit:** one command reproduces the full fixture set from legacy.
+**Gate:** one command regenerates the entire fixture set from legacy; `MANIFEST.json` written and hash-pinned.
 
-### Phase 2 — Pure generators: vectors + goldens + mutation  ← *highest value, do first*
-
-The two pure functions that hold most of the risk:
+### Phase 2 — Pure generators: vectors + goldens + mutation
+Two deterministic functions hold most of the risk:
 - `buildArgs(fields, settings)` — inline at `script.js:409-650`
 - `buildPresetIni(configs, settings, models)` — inline at `script.js:676-870`
 
-Both are fully deterministic — no clock, no DOM, no randomness.
-
-1. **Extract** both into `legacy/lib/` and **prove the extraction is behavior-preserving**: re-run pre-refactor live journeys and require byte-identical argv + ini. *Never skip this — otherwise every later green test validates a refactor bug.*
-2. **AST predicate inventory** → `SPEC-ROWS.csv`: every condition in `buildArgs`, `buildPresetIni`, `saveCurrentValues`, `launchServer`, `loadConfiguration`, `deleteConfiguration`, plus every route branch. This, not line coverage, is the completeness checklist.
-3. **Vector sets** (one fully-specified 41-field input each):
-   - *Boundary* — one vector per predicate flip point, targeting §7 quirks (`temp:0` emitted vs `topK:0` dropped; `minP` `"0"` vs `"0.0"` vs `"0.00"`; `fastAttention: auto`; `speculationType: draft-mtp` suppressing `-md`; legacy `disableReasoning`; `cacheRam: ""` → `NaN`; `ngld: 0`).
-   - *Combinatorial* — 2-wise covering array over all 41 fields + 3-wise over the interacting cluster `speculationType × ngramMod × draftModelPath × specDraftNMax × ngld × ctkd × ctvd`.
-   - *Format probe* — `0.1, 0.00, -0, 1e21, 1e-7, 0.30000000000000004, 9007199254740993, 1.005`, `parseInt("0x10")`, `parseFloat("0.7xyz")`, `null`, `undefined`, `true`, `"  8  "` — exists because the port is a different language.
+1. **Extract** into `legacy/lib/`. **Prove behavior preservation:** re-run pre-refactor live journeys and require byte-identical argv + ini. *Skipping this makes every later green test validate a refactor bug.*
+2. **AST predicate inventory** → `SPEC/SPEC-ROWS.csv`: every condition in `buildArgs`, `buildPresetIni`, `saveCurrentValues`, `launchServer`, `loadConfiguration`, `deleteConfiguration` + every route branch in `server.js`. This, not line coverage, is the completeness checklist.
+3. **Vector families** (each = one fully-specified 41-field input):
+   - *Boundary* — one per predicate flip, targeting each §8 quirk (`temp:0` emitted vs `topK:0` dropped; `minP` `"0"` vs `"0.0"` vs `"0.00"`; `fastAttention:auto`; `draft-mtp` suppressing `-md`; legacy `disableReasoning`; `cacheRam:""` → `NaN`; `ngld:0`).
+   - *Combinatorial* — 2-wise over all 41 fields; 3-wise over `speculationType × ngramMod × draftModelPath × specDraftNMax × ngld × ctkd × ctvd`.
+   - *Format probe* — `0.00, -0, 0.1, 1e21, 1e-7, 0.30000000000000004, 9007199254740993, 1.005`, `parseInt("0x10")`, `parseFloat("0.7xyz")`, `null`, `undefined`, `true`, `"  8  "`, `"1e3"`.
    - *Randomized* — 1–2k seeded vectors for continuous fuzzing.
-4. **Goldens**: captured by running legacy, not authored. `{vector, impl@sha, provenance, argv[], ini}`. **`argv` compared as an ordered array; ini compared as bytes** — order is part of the contract.
-5. **Equivalence harness**: run candidate generators over all vectors; emit positional diffs (`idx 14: expected "--min-p" got "--presence-penalty"`); shrink to minimal repro; promote the shrunk vector into the permanent boundary set.
-6. **Mutation score** on the legacy generators (Stryker or custom mutators: relational ops, boolean ops, string literals, numeric literals, statement removal, conditional inversion).
-   - *Killed* mutant ⇒ behavior is asserted.
-   - *Survived* mutant ⇒ **gap in the vectors** → add the killing vector. Survivors are the deliverable.
-   - Pre-declare *equivalent* mutants with justifications so the score is interpretable (e.g. `config.ngld >= 0` where `ngld = parseInt(x)||0` can never be negative — a real finding, not a test gap).
+4. **Goldens** captured by running legacy: `{vector, impl@sha, provenance, argv[], ini}`. **`argv` = ordered array; ini = bytes.** Order is part of the contract.
+5. **`equivalence.js`** — positional diff, shrink to minimal repro, promote shrunk vectors into the permanent boundary set.
+6. **Mutation testing** on the two legacy generators (relational ops, boolean ops, string literals, numeric literals, statement removal, conditional inversion).
+   - Killed ⇒ behavior is asserted. Survived ⇒ **vector gap** → synthesize the killing vector.
+   - **Equivalent-mutant classification is automated, not judged:** a survivor is equivalent iff its branch is provably unreachable in the field domain (e.g. `ngld = parseInt(x)||0` is never negative) **or** exhaustive domain probing shows output invariance. Unprovable ⇒ it is a gap, not an equivalence.
 
-**Exit:** every `SPEC-ROWS.csv` row mapped to ≥1 vector; goldens green on legacy; mutation score at ceiling with all survivors individually justified.
+**Gate:** every `SPEC-ROWS.csv` row mapped to ≥1 vector; goldens green on legacy; mutation score at ceiling with every survivor carrying a machine-generated equivalence proof.
 
-### Phase 3 — Backend E2E (UI mocked)
-Drive HTTP + `socket.io-client` against real `server.js`; fakes = stub binary, fixture tree, `nvidia-smi` stub.
+### Phase 3 — SPEC pack (triple-derived, machine-cross-checked)
+Generate three independent derivations and reconcile automatically:
+- **(a) static** — AST scan of `script.js` + `server.js`
+- **(b) runtime** — recorded behavior from Phase 1 capture
+- **(c) independent model pass** — fresh context, given the source only, not (a) or (b)
 
-Cover: all 9 endpoints and every branch (`/start` no-path 400 vs already-running **200** `success:false`; `/restart` 400 after manager restart because `lastLaunchConfig` is in-memory only); exact argv received by the stub; `models-preset.ini` written bytes; SIGTERM → 1 s → SIGKILL timing; exit-code path; `server-ended`; **raw stdout chunk forwarding — no line splitting, no server-side trim**; scan rules (`mmproj*` excluded as models, first-match association, nested/non-ASCII/unreadable/missing); `settings.json` writes **including the TDZ bug**; socket fan-out to N clients and `connectedClients` cleanup; `/metrics` shape + `vramUsage` string format; `nvidia-smi` failure → simulated values.
+Outputs in `SPEC/`: `field-manifest` (41 fields: id, type, min/max/step, defaults, full option lists, section, persisted?, CLI flag, ini key), `arg-truth-table`, `ini-map` (incl. name divergences + emission order), `api-contract` (OpenAPI regenerated) + `socket-contract`, `process-lifecycle`, `storage-schema`, `BUILD-FROM.md` (Part 2 cold-start doc).
 
-**Exit:** contract replay green; every recorded HTTP/socket fixture matched byte-for-byte.
+**Gate:** `SPEC/CONSISTENCY.md` shows zero unreconciled disagreements; any (a)/(b) conflict resolves to (b) per §4 and is logged as an auto-resolution, never as a question.
 
-### Phase 4 — UI E2E (backend mocked)
-Playwright on static `public/`; `fetch` intercepted for the 9 endpoints; Socket.IO stubbed at the `io()` boundary with a scripted emitter. Mocks are **replays of Phase 1 recordings** pinned to `MANIFEST.json`.
+### Phase 4 — Conformance suites L1–L4 + negative controls
 
-Cover: all 41 fields (defaults, `min/max/step`, full `<option>` lists, label text, section grouping and order); conditional UI (`ctkEnable` gating `-ctk/-ctv`, `speculationType`/`ngramMod` → draft section, `specDraftNMaxGroup` visibility, KVarN warning under ctk/ctv/ctkd/ctvd); config CRUD → exact `localStorage` JSON written, alphabetical `.sort()` render, active class, empty-state text; `deleteConfiguration` partial reset — assert all 41 values including those **not** reset; native `<dialog>`/`alert`/`confirm` message text; `location.reload()` after settings save; log pane ISO-timestamp shape, per-chunk `.trim()`, 1000-line cap, auto-scroll; polling cadence `/status` 5 s and `/metrics` 1 s; `restartBtn.disabled === true` in every state; charts per metric + resize + 50-point client history; DOM + a11y snapshots per state; screenshot regression per state × breakpoint.
-
-Determinism: freeze `Date`, seed `Math.random()`, fake timers for polling.
-
-**Exit:** DOM/visual ledgers green; no unexplained branch gaps in `script.js` (dead code excluded).
-
-### Phase 5 — Seam suite (real UI + real `server.js` + fake binary)
-Thin, 8–12 journeys. The only suite that sees boundary-only behavior:
-
-| Seam behavior | Why neither half sees it |
-|---|---|
-| `mmproj` resolved by matching against `window.models` from the last `/models` fetch | client cache + server data |
-| `settings.serverPort` split across `localStorage` (client) and `settings.json` (server, broken by the TDZ bug) | end-to-end only |
-| `--port` from `settings.serverPort` on `/start`, `DEFAULT_PORT` 8080 on `/launch-presets` | two clients, one setting |
-| `--chat-template-file` derived client-side by `\`-concatenating a server-returned path | derivation happens in browser |
-| ini built in browser, written verbatim by server | mocked backend only echoes success |
-
-Note: for most journeys this real-real setup is **better than mocking** (keeps Socket.IO reconnect honesty). The Phase 4 mocked suite is for fast parallel state-matrix coverage and for states hard to produce live (500s, `server-error`, slow/partial log streams, malformed payloads).
-
-**Exit:** all seam journeys green; stub-recorded argv matches legacy.
-
-### Phase 6 — Dual-run differential
-`dual-run.sh`: legacy on `:7837`, candidate on `:7838`, identical seeded state, same scripted action list, diff everything except §6-classified nondeterministic fields. Also run coverage on both sides and diff **legacy-covered lines vs candidate-covered lines** under the identical journeys — a completeness check, with dead code excluded.
-
-**Exit:** diff output empty; no unexplained coverage-set differences.
-
-### Phase 7 — Real-binary smoke + cutover
-One real `llama-server` + tiny GGUF: verify presets actually load from llama.cpp's own preset UI (out-of-app behavior the harness cannot test), then candidate takes `:7837`.
-
----
-
-## 4. The verify–fix loop (runs from Phase 3 onward)
-
-```
-1. Run tiers in order; stop at the first red tier (cheap gates first)
-2. Reduce the failure to a minimal repro (shrink vector / action script)
-3. Re-run the repro against legacy and capture its exact output  (legacy = oracle)
-4. Classify:
-   a. candidate wrong            -> fix candidate
-   b. harness/formatting/timeout/nondeterminism misclassified -> fix HARNESS, never the fixture
-   c. fixture vs BASELINE hash mismatch -> legacy changed => SCOPE VIOLATION, escalate
-5. Fix, re-run the single failing check, then the whole tier
-6. Add the repro as a permanent regression case
-7. Update PARITY.md: diff-open -> pass, with commit sha
-8. Next red check
-```
-
-**Rules given to the agent each iteration:** legacy output is correct by definition · one fix per iteration · never edit a golden to go green · never "improve" anything on the DO-NOT-FIX list · if a fix breaks a previously passing tier, revert and re-plan.
-
----
-
-## 5. Coverage policy (gap detector, not a goal)
-
-- Line coverage is **not** a gate. It measures reach, not assertion strength — a covered line can still emit `0` where legacy emits `0.00`.
-- Gate instead on: **spec-row coverage** (every AST predicate mapped to a vector) and **mutation score** on the generators.
-- Use raw coverage in two ways only: (a) audit legacy to find untested conditions and add vectors; (b) differential covered-line set, legacy vs candidate, to detect features the candidate never enters.
-- E2E is not the vehicle for coverage — the browser tier is for DOM/visual/interaction only. Generators and HTTP contract must be checked without a browser.
-
-| Surface | Metric | Target |
+| Layer | Suite | Asserts |
 |---|---|---|
-| `buildArgs`, `buildPresetIni` | spec rows mapped + mutation score | 100% rows, ceiling mutation, all survivors justified |
-| `server.js` routes reachable on win32 | branch coverage + contract replay | high; every error branch replayed |
-| `script.js` | branch coverage via journeys, dead code excluded | high; each gap listed with reason |
-| Platform/simulated metric paths | shape-only assertions | excluded from % |
-| CSS / DOM / charts | snapshot + visual ledger | 100% of enumerated states, coverage N/A |
+| **L1** | Backend E2E, UI mocked (HTTP + `socket.io-client` against a running app; fakes = stub binary, fixture tree, `nvidia-smi` stub) | all 9 endpoints + every branch (no-path 400 vs already-running **200** `success:false`; `/restart` 400 after restart since `lastLaunchConfig` is in-memory); exact argv received by stub; `models-preset.ini` bytes; SIGTERM → 1 s → SIGKILL; exit-code path; `server-ended`; **raw stdout chunk forwarding — no line splitting, no server-side trim**; scan rules incl. `mmproj*` exclusion + first-match association; `settings.json` writes **including the TDZ bug**; socket fan-out + `connectedClients` cleanup; `/metrics` shape + `vramUsage` string format |
+| **L2** | UI E2E, backend mocked (Playwright; `fetch` intercepted; `io()` stubbed with scripted emitter; mocks = replays of Phase 1 recordings) | all 41 fields (defaults, min/max/step, option lists, labels, section order); conditional UI (`ctkEnable` gating, draft section, `specDraftNMaxGroup`, KVarN warnings); config CRUD → exact `localStorage` JSON, alphabetical render, active class, empty state; `deleteConfiguration` partial reset asserting **all 41** values incl. those *not* reset; native `<dialog>`/`alert`/`confirm` text; `location.reload()` after settings save; log pane ISO shape + per-chunk `.trim()` + 1000-line cap + auto-scroll; `/status` 5 s and `/metrics` 1 s cadence; `restartBtn.disabled === true` always; charts + resize + 50-point client history; DOM + a11y snapshots per state; screenshot regression per state × breakpoint |
+| **L3** | Seam: real UI + real server + fake binary | the 5 boundary-only behaviors of §9 |
+| **L4** | Dual-run differential | candidate vs legacy under one action script; empty output diff; plus covered-line set diff (dead code excluded) |
+
+**Negative controls (mandatory):** apply a mutant patch to a *scratch copy* of legacy and prove L1–L4 each go red. A suite that stays green against a mutated app has no teeth and is rewritten. This is how the oracle is trusted before any candidate exists.
+
+**Part 1 exit condition (all machine-checked):**
+- [ ] L1–L4 **100% green against legacy** (self-test; suites are env-driven, never import legacy code)
+- [ ] every negative control goes red for the expected assertion, recorded in `fixtures/NEGATIVES.md`
+- [ ] mutation score at ceiling; all survivors machine-proven equivalent
+- [ ] `SPEC-ROWS.csv` fully mapped
+- [ ] all 15 §8 rows = `baseline-verified`
+- [ ] nightly job running L1–L4 against legacy is installed and green
 
 ---
 
-## 6. Nondeterminism ledger (prevents chasing ghosts)
+## 3. PART 2 — Rebuild and conform
+*Deferred. Stack-dependent. Starts cold from `SPEC/BUILD-FROM.md` + the ledger; requires no memory of Part 1.*
 
-| Field | Comparison mode |
+1. **Select target stack** from the constraint set (local HTTP server, spawn native exe without a shell, recursive FS walk, WebSocket, static serving). Native-window shells (Tauri/Electron windows) are excluded — they change the experience.
+2. **Implement candidate from the SPEC pack** — the pack is the reference, not the legacy source.
+3. `coercion-shim`: JS-faithful `parseInt`/`parseFloat`/`Number.toString`/`String()`/`||`, unit-tested against recorded V8 outputs (the format-probe vectors).
+4. Point L1–L4 at the candidate via env; run the §7 loop until the diff is empty.
+5. **Real-binary smoke (automated, no eyeballs):** run real `llama-server` + tiny GGUF; assert `/health`, `/props`, `/v1/models`; switch presets via llama-server's own API and assert the swap from its model list + log.
+6. **Staged cutover** — `cutover.sh` / `rollback.sh`, pre-tested against fixture copies, then executed on explicit human go (§10).
+
+**Gate:** Auditor go decision (§5) with zero `diff-open` and zero `blocked` rows.
+
+---
+
+## 4. Tie-break ladder (replaces "ask a human")
+
+Whenever a disagreement or ambiguity arises:
+1. **Recorded runtime evidence** from legacy at `parity-baseline` — always wins.
+2. **Static code read** of legacy.
+3. **Independent model derivation.**
+4. If still unresolved: re-run capture with a targeted probe generated to isolate the case. Probing legacy *is* the resolution mechanism.
+
+No step requires a human. If a case cannot be probed, the ledger row becomes `blocked` with a machine-written `ESCALATION.md` entry — it does not become a question, and it does not become `pass`.
+
+---
+
+## 5. Roles — no self-certification
+
+| Role | Owns | May not |
+|---|---|---|
+| **Builder** | candidate source | edit `/fixtures`, `/tests`, thresholds, `PARITY.md` status, `AGENTS.md` |
+| **Verifier** | harness, fixtures, ledger | write candidate feature code; hand-edit goldens (may only *re-record* from legacy) |
+| **Auditor** | final go/no-go; runs last in a fresh context | — |
+
+Auditor checks, all mechanical: all 15 quirks still reproduce · `/tests` + `MANIFEST.json` + threshold-config hashes unchanged (or each change backed by a ledger entry) · mutation suite re-run · every equivalence proof independently re-proven (unprovable ⇒ downgraded to a gap) · no `wontfix` status exists anywhere · quarantine rows resolved, not skipped.
+
+**Anti-goal-post-moving (C8):** the dominant failure mode of unattended loops is silently loosening an assertion. Immutable hashes plus the Auditor are the control, not good intentions.
+
+---
+
+## 6. Suite design rules (make suites stack-agnostic)
+
+1. Base URL, socket URL, binary path, model dir, `nvidia-smi` mode all from env. Suites never import app code.
+2. Identical suites run against legacy (Part 1 self-test, nightly) and candidate (Part 2).
+3. Comparison mode per field is declared in `fixtures/COMPARISON.json`: `exact` (default) or `shape` (§7 table). Adding a `shape` field requires a ledger entry; Builder cannot do it.
+4. Flake protocol: N-repeat; a flaky check goes to ledger status `quarantine` with captured traces and is fixed like any red. Never skipped, never deleted.
+
+---
+
+## 7. Part 2 loop: verify → fix (cheapest tier first, stop at first red)
+
+```
+1. run L0 -> L1 -> L2 -> L3 -> L4; stop at first red tier
+2. shrink the failure to a minimal repro
+3. re-run the repro against legacy, capture its exact output   (C4)
+4. classify:
+   a. candidate wrong        -> Builder fixes candidate
+   b. harness/timeout/misclassified nondeterminism -> Verifier fixes harness, never the fixture
+   c. BASELINE.json hash mismatch -> legacy changed = SCOPE VIOLATION, halt, report
+5. fix; re-run the single failing check, then the whole tier
+6. promote the repro into the permanent vector/journey set
+7. ledger: diff-open -> pass, with commit sha; checkpoint to disk
+8. next red check
+```
+
+**Escalation protocol (replaces asking):** >N consecutive failed iterations on one check, or a fix/revert oscillation ⇒ mark `blocked`, write `ESCALATION.md` with minimal repro + attempted fixes + diffs, proceed to other checks. **Never** degrade or delete an assertion. Stop when only `blocked` rows remain and emit a final report.
+
+**Everything on disk, nothing in context:** `plan.md`, `PARITY.md`, `SPEC/`, `ESCALATION.md` are the sole state. Any session resumes from the ledger's next `diff-open` row. Checkpoint after every green row.
+
+**Cadence:** nightly L1–L4 against legacy for the whole Part 1→Part 2 gap — regression guard for the old app and the thing that keeps the oracle trustworthy while nothing is happening.
+
+---
+
+## 8. Nondeterminism ledger
+
+| Field | Mode |
 |---|---|
-| ISO timestamps in log pane | regex shape only |
-| GPU/VRAM % on macOS/Linux or when `nvidia-smi` absent | range + type; must **not** be replaced by real values or zeros |
+| ISO timestamps in log pane | regex shape |
+| GPU/VRAM % off-Windows / on `nvidia-smi` failure | range + type; must **not** become real values or zeros |
 | CPU % (`os-utils` sampling window) | range + change cadence over N samples |
-| Log wall-clock ordering | relative-order alignment, not equality |
+| Log wall-clock ordering | relative-order alignment |
 | PID / port-in-use messages | pattern presence |
 | everything else | byte equality |
 
 ---
 
-## 7. DO-NOT-FIX list — quirks that are requirements
+## 9. DO-NOT-FIX list — quirks that are requirements
 
 | # | Quirk | Location | Frozen by |
 |---|---|---|---|
-| Q1 | `Restart` button rendered but permanently disabled (listener commented out) | `index.html:390`, `script.js:1186`, `script.js:1190` | UI assertion: `disabled === true` in all states |
-| Q2 | `POST /settings` TDZ bug — existing settings never read, `serverPort` falls back to `DEFAULT_PORT` 8080 | `server.js` `/settings` | POST with no `serverPort` → file says 8080 even if it said 7838 |
-| Q3 | `/start` while running → **200** `success:false`; missing path → 400 | `server.js` `/start` | contract tests both branches |
-| Q4 | `/restart` → 400 after manager restart (`lastLaunchConfig` in memory only) | `server.js` `/restart` | process integration test |
+| Q1 | `Restart` button rendered but permanently disabled (listener commented out) | `index.html:390`, `script.js:1186`, `:1190` | UI assert `disabled === true` in all states |
+| Q2 | `POST /settings` TDZ bug — existing settings never read; `serverPort` falls back to 8080 | `server.js /settings` | POST without `serverPort` → file says 8080 even if it said 7838 |
+| Q3 | `/start` while running → **200** `success:false`; missing path → 400 | `server.js /start` | contract tests both branches |
+| Q4 | `/restart` 400 after manager restart (`lastLaunchConfig` in memory only) | `server.js /restart` | process integration test |
 | Q5 | `--port` from `settings.serverPort` on `/start`, `DEFAULT_PORT` 8080 on `/launch-presets` | `server.js`, `script.js` | dual-path argv test |
 | Q6 | GPU/VRAM are `Math.random()` off-Windows / on `nvidia-smi` failure | `server.js:getSystemMetrics` | shape test |
-| Q7 | `saveCurrentValues` and `launchServer` collect different field sets; `launchServer` re-reads the DOM instead of the saved config | `script.js:213`, `script.js:409` | config-then-launch argv test |
-| Q8 | `deleteConfiguration` partial reset to a hard-coded list that diverges from HTML defaults | `script.js:1111` | snapshot all 41 values after delete |
-| Q9 | `fastAttention` is a `<select>` read via `.value`; `auto` → bare `-fa` | `index.html:266`, `script.js` | argv test auto/on/off |
-| Q10 | ini keys `spec-ngram-size-n`/`draft-min`/`draft-max` differ from CLI `--spec-ngram-mod-*`; trailing `port = ` after last section | `script.js` | byte diff of ini |
-| Q11 | `settings.serverPort` never changes the manager's own port (hard-coded 7837) | `server.js:12` | assert port stays 7837 for any `serverPort` |
+| Q7 | `saveCurrentValues` ≠ `launchServer` field sets; `launchServer` re-reads the DOM, not the saved config | `script.js:213`, `:409` | config-then-launch argv test |
+| Q8 | `deleteConfiguration` partial reset to a hard-coded list diverging from HTML defaults | `script.js:1111` | snapshot all 41 values |
+| Q9 | `fastAttention` is a `<select>` read via `.value`; `auto` → bare `-fa` | `index.html:266` | argv auto/on/off vectors |
+| Q10 | ini keys `spec-ngram-size-n`/`draft-min`/`draft-max` ≠ CLI `--spec-ngram-mod-*`; trailing `port = ` | `script.js` | ini byte diff |
+| Q11 | `settings.serverPort` never changes the manager's own port (hard-coded 7837) | `server.js:12` | port assertion |
 | Q12 | External Google Fonts `<link>`; **no** service worker | `index.html:7-8` | asset/DOM test — do not add offline support |
 | Q13 | Native `alert`/`confirm`; `location.reload()` after settings save | `script.js` | Playwright dialog handlers |
 | Q14 | `-fit off` and `--host 0.0.0.0` always appended | `script.js` | argv test |
 | Q15 | ngram-mod emits hard-coded `24/48/64` | `script.js` | argv + ini vectors |
 
-### Explicitly out of scope (dead code — C2)
-`createDefaultConfigName` (`script.js:205`, never called) · client `restartServer` (`script.js:968`, only referenced by the commented listener) — but the **`/restart` endpoint is live over HTTP and must be ported**.
+### Out of scope (dead code, C2)
+`createDefaultConfigName` (`script.js:205`, never called) · client `restartServer` (`script.js:968`, only referenced by the commented listener). The **`/restart` endpoint is live over HTTP and must be ported.**
 
-### Cross-stack semantics that must be matched (invisible in a code read)
-1. JS `parseInt`/`parseFloat`/`||` coercion + `Number.toString()` shortest round-trip → `coercion-shim`, unit-tested against V8.
-2. **Log chunk boundaries** — legacy emits one event per stdout chunk, UI does `data.toString().trim()`. Forward raw pipe chunks; no line splitting, no server-side trim.
-3. `spawn(exe, args)` **without a shell** — match Node/libuv Windows argv quoting for paths with spaces and quotes.
-4. `execSync('nvidia-smi …')` — synchronous, 1 s cadence, failure trigger = missing binary / non-zero exit / unexpected CSV shape.
-5. `os-utils` CPU sampling window, not an instantaneous read.
+### Cross-stack semantics traps (invisible in a code read)
+1. JS coercion + `Number.toString()` shortest round-trip → `coercion-shim`.
+2. **Log chunk boundaries** — one event per stdout chunk, UI does `data.toString().trim()`. Forward raw pipe chunks verbatim.
+3. `spawn(exe, args)` **without a shell** — match Node/libuv Windows argv quoting for spaces/quotes.
+4. `execSync('nvidia-smi …')` — synchronous, 1 s cadence; failure trigger = missing binary / non-zero exit / unexpected CSV shape.
+5. `os-utils` sampling window, not an instantaneous read.
 6. `Object.keys`/`Object.entries` insertion order from `JSON.parse(localStorage)` drives ini section order (render list is separately `.sort()`ed).
-7. Two independent 50-point histories exist (server-side `systemMetrics.*.history` and client-side `chartData`) — keep both.
-8. `/metrics` `vramUsage` string format `${total-free}/${total}`.
-9. 1000-line log cap computed on `textContent.split('\n')`, plus `scrollTop = scrollHeight`.
+7. Two independent 50-point histories (server `systemMetrics.*.history`, client `chartData`) — keep both.
+8. `/metrics` `vramUsage` format `${total-free}/${total}`.
+9. 1000-line log cap on `textContent.split('\n')`, plus `scrollTop = scrollHeight`.
+
+### Seam-only behaviors (only L3 sees them)
+`mmproj` matched against `window.models` from the last `/models` fetch · `settings.serverPort` split across `localStorage` (client) and `settings.json` (server, broken by Q2) · `--port` divergence between `/start` and `/launch-presets` · `--chat-template-file` derived client-side by `\`-concatenation onto a server-returned path · ini built in browser, written verbatim by server.
 
 ---
 
-## 8. Suite weighting and ordering
+## 10. What remains for a human (deliberately)
 
-| Layer | Suite | Effort | Gate |
-|---|---|---|---|
-| L0 | generators: vectors + goldens + mutation | small | spec rows mapped, mutation ceiling |
-| L1 | backend E2E, UI mocked | 35% | contract + argv + lifecycle + ini |
-| L2 | UI E2E, backend mocked | 35% | DOM + a11y + visual + journeys |
-| L3 | seam: real UI + real server + fake binary | 15% | seam behaviors §Phase 5 |
-| L4 | dual-run legacy vs candidate | 15% | empty diff |
-
-Build order: **Phase 0 → 1 → 2 → 3 (backend defines the contract the mocks replay) → 4 (mocks now come from recordings) → 5 → 6 → 7.**
+1. **The cutover.** Retiring legacy and taking `:7837` is the one irreversible, shared-state action. Everything up to a staged, atomic, pre-tested `cutover.sh` + `rollback.sh` is automated; execution needs one explicit human go.
+2. **Blast-radius boundaries.** No pushes to shared branches beyond the authorized `migration` branch; no history rewrites; no touching the real `settings.json` / `models-preset.ini` / `D:\models` — only fixture copies.
+3. **Residual risk accepted unread** (stated so it is unambiguous): pixel parity is only "as good as the frozen threshold"; simulated GPU/CPU curves are compared by shape because legacy generates them with `Math.random()`; machine-classified equivalent mutants could in principle hide an untested behavior (mitigated by Auditor re-proof).
 
 ---
 
-## 9. Exit criteria
+## 11. Repository layout
 
-- [ ] `parity all` green in one clean run across L0–L4
-- [ ] `PARITY.md` has zero `diff-open` rows; every `pass` backed by a test that produced output in the last run
-- [ ] `PARITY-DIFF.md` **empty** — there is no intentional-diff column under C1
-- [ ] Anti-regression sweep: all 15 §7 quirks still reproduced
-- [ ] Dead-code exclusions recorded so no later pass "restores" the Restart button
-- [ ] Real `llama-server` smoke test passed, then candidate takes `:7837`
+```
+/tools/parity/   freeze-baseline.sh fake-llama-server.js capture-legacy.sh fixture-tree.sh
+                 nvidia-smi-stub gen-goldens.js equivalence.js dual-run.sh
+                 coercion-shim/ mutants/            # mutant patches for negative controls
+/fixtures/       BASELINE.json MANIFEST.json COMPARISON.json NEGATIVES.md
+                 http/ argv/ ini/ ws/ localstorage/ screenshots/
+                 vectors/{boundary,cover,format,random}/ goldens/
+/SPEC/           field-manifest arg-truth-table ini-map api-contract socket-contract
+                 process-lifecycle storage-schema SPEC-ROWS.csv CONSISTENCY.md BUILD-FROM.md
+/tests/          L0-generators L1-backend L2-ui L3-seam L4-dualrun      # env-driven, stack-agnostic
+/legacy/lib/     buildArgs.js buildPresetIni.js  (goldens green)
+PARITY.md  AGENTS.md  ESCALATION.md  plan.md
+```
 
 ---
 
-## 10. Immediate next actions
+## 12. Immediate next actions
 
-1. Answer the open decision: **target stack**.
-2. Phase 0: `git tag parity-baseline` + `BASELINE.json` + seed `PARITY.md` / `AGENTS.md`.
+1. Tag `parity-baseline` on the last legacy-only commit (`c57f438`).
+2. Phase 0: `BASELINE.json`, `PARITY.md`, `AGENTS.md`, hash pinning.
 3. Phase 1: `fake-llama-server.js` + `capture-legacy.sh` (dependency for every later suite).
-4. Phase 2: extract generators (with behavior-preservation proof), emit `SPEC-ROWS.csv`, generate vectors + goldens, wire mutation testing.
+4. Phase 2: extract the two generators with the behavior-preservation proof → `SPEC-ROWS.csv` → vector families → goldens → mutation + machine equivalence proofs.
+5. Phases 3–4: SPEC pack cross-check → L1–L4 env-driven → run green against legacy → negative controls → install nightly.
+6. Part 1 ends with a machine verdict, not a review.
