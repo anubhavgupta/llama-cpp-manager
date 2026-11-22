@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "tokenRoot": "FIXTURE_ROOT",
+  "exeToken": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+  "generatedBy": "node tools/parity/load-corpus.js --emit",
+  "note": "Fixture tokens only. The real originals live in fixtures/corpus/.pathmap-local.json (gitignored, base64) on the fixture machine; originalsSha256 links each committed token back to its original for §9A real-path mode.",
+  "corpusSha256": {
+    "configs": "e33b3c41d2ce017c1964b4d2cab247a2acd3546bac22948e4401bf3479a76aff",
+    "settings": "60f64dc72222ead616252c752c5e93d2a56ccaf08c75e3f85e579caa3d40b9d6"
+  },
+  "counts": {
+    "entries": 22,
+    "distinctExePaths": 20,
+    "modelRoots": 2
+  },
+  "tokens": [
+    "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+    "FIXTURE_ROOT/models",
+    "FIXTURE_ROOT/models/lmstudio"
+  ],
+  "entries": [
+    {
+      "originalsSha256": "017e5128c6c9289714dd102af508960e1b5920fb20edadfd927ca2478040772f",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "0808edb46dee43c439156ac00e5c5d515ed3e8064e9cb35ca958da1e94ca447a",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "105d4fd53649010d51beb5be8c5898a4d6e16fe95206a991138f04fa5c2f4115",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "1917824499250402ded71ff3fcf1af8a85ed433f92b6540d7af3cf6281f3b6ec",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "1a0f9c16e36dabcf17bae348dda02fd638ebe92bc1c9ef49548e17eeba5d48d0",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "498d780807e5b7fa255ec363d8a327bc4444fd87289c1e62bc6dcda0d18a7e1e",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "6dea4078d669383594f72ce3da4013745e831cd44c4195037b39256029f55427",
+      "token": "FIXTURE_ROOT/models/lmstudio",
+      "kind": "model-root"
+    },
+    {
+      "originalsSha256": "7bb09f63264f0ac3546e6b5ce1677434ba045b4615c53be1c956d564673f8206",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "864dfade850ebfa5b9c93c23d8968b150e3c8a069b27187c77ad8086d442e994",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "90ffa8662463abd9bcc1f677c1ce888588e1e2b72696126c2e467db3a0f50377",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "96ad677269bb93dca3b93df0b151e1c5983bbd25e8d23ff4a7f45d3ed5cc3f3f",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "a7a035835ee3f4d113a29b70bc50bdc90b75081a405916fa96746661ecd20f6e",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "aae87e86304e70c869658c9b71a6bef1f8986a390a43025782eecf5ea47c7081",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "b0e112eac4b4eb21a0e90274df7a4ccb4d17e96f8f0cf741b8667c51fe318938",
+      "token": "FIXTURE_ROOT/models",
+      "kind": "model-root"
+    },
+    {
+      "originalsSha256": "b77810b33822a7c4c27bac66b047e49fae6baaced5be32d019e1a80d7c9e87ee",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "c4e8fda9e70d3ed79c28e43f83b0aca5cebdf62e05e0a2442918e07a137c09ab",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "cfad9f2385a932d72373f1e3eccac77b32d21ae2a48450dae0ffa1a78c57be3b",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "d816c2c92b497522554eb4f3699408efe1f101fbae7dd8d2915e0352881f84b8",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "d8d4ed5164ac45dfcc0ec4df1d14969bda2409dfd9091217dc85ac12d303ae8e",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "e0869256bfa555d0dedb97ab7e9c6e63ef17e2be43fd28028fc69ec19ccd74c0",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "f3bb5d1ad523ec8722bb0820dbdd951f9f8fcff53e0b85e02a6c853b1ce9c601",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    },
+    {
+      "originalsSha256": "fc523f2f77601bbf4318068f752d196562c9db4bbe3322e12741fc53af024391",
+      "token": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "kind": "exe"
+    }
+  ]
+}

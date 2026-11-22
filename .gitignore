@@ -46,5 +46,6 @@ settings.json
 
 # Parity port: real-state fixture corpus (contains personal absolute paths)
 /migration-resources/
+fixtures/corpus/.pathmap-local.json
 
 .claude/
