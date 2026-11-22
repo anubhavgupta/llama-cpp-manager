@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLaMA CPP Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#c9a227">
+    <meta name="description" content="A browser-based tool to configure and run llama-cpp server">
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <h1 class="app-title">LLaMA CPP Manager</h1>
+            <!-- Model Status in Top Bar -->
+            <div class="model-status-inline">
+                <div id="modelStatusMessage" class="status-message">Not running</div>
+            </div>
+            <!-- Settings Button in Top Right Corner -->
+            <button id="settingsBtn" class="settings-icon-btn" aria-label="Settings">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="main-layout">
+            <!-- Configuration Panel (Left) -->
+            <div class="config-panel">
+                <div class="config-header">
+                    <h2>Configurations</h2>
+                    <button id="addConfigBtn" class="btn btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="btn-text">Add</span>
+                    </button>
+                </div>
+                <dialog id="configFormContainer" class="config-form-container">
+                    <h3 id="configFormTitle">Create New Configuration</h3>
+                    <div class="form-group">
+                        <label for="configName">Configuration Name:</label>
+                        <input type="text" id="configName" class="form-control" placeholder="Enter configuration name">
+                    </div>
+                    <div class="form-actions">
+                        <button id="saveConfigBtn" class="btn btn-primary">Save</button>
+                        <button id="cancelConfigBtn" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </dialog>
+                <div id="configList" class="config-list"></div>
+                
+                <!-- System Metrics Graphs (Bottom of Left Panel) -->
+                <div class="system-metrics-container">
+                    <div class="metrics-graphs">
+                        <div class="metric-graph">
+                            <div class="graph-title">CPU Usage</div>
+                            <canvas id="cpuGraph" class="graph-canvas"></canvas>
+                            <div class="metric-value" id="cpuValue">0%</div>
+                        </div>
+                        <div class="metric-graph">
+                            <div class="graph-title">RAM Usage</div>
+                            <canvas id="ramGraph" class="graph-canvas"></canvas>
+                            <div class="metric-value" id="ramValue">0%</div>
+                        </div>
+                        <div class="metric-graph">
+                            <div class="graph-title">GPU Usage</div>
+                            <canvas id="gpuGraph" class="graph-canvas"></canvas>
+                            <div class="metric-value" id="gpuValue">0%</div>
+                        </div>
+                        <div class="metric-graph">
+                            <div class="graph-title">VRAM Usage</div>
+                            <canvas id="vramGraph" class="graph-canvas"></canvas>
+                            <div class="metric-value" id="vramValue">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content (Right) -->
+            <div class="main-content">
+                <div class="input-section">
+                    <h3>Server Configuration</h3>
+                    <div class="form-group">
+                        <label for="serverPath">LLaMA Server Path:</label>
+                        <input type="text" id="serverPath" class="form-control" placeholder="Enter path to llama-server.exe">
+                    </div>
+
+                    <h3>Model Configuration</h3>
+                    <div class="form-group">
+                        <label for="modelPath">Model Path (-m):</label>
+                        <select id="modelPath" class="form-control">
+                            <option value="">-- Select a Model --</option>
+                        </select>
+                    </div>
+
+                    <h3>GPU Configuration</h3>
+                    <div class="form-group">
+                        <label for="ngl">GPU Layers (-ngl):</label>
+                        <input type="number" id="ngl" class="form-control" min="0" value="99">
+                    </div>
+
+                    <h3>Performance Settings</h3>
+                    <div class="form-group">
+                        <label for="threads">Threads (-t):</label>
+                        <input type="number" id="threads" class="form-control" min="1" value="12">
+                    </div>
+
+                    <h3>Sampling Parameters</h3>
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="temp">Temperature (--temp):</label>
+                            <input type="number" id="temp" class="form-control" step="0.01" min="0" value="0.7">
+                        </div>
+                        <div class="form-group">
+                            <label for="topK">Top-K (--top-k):</label>
+                            <input type="number" id="topK" class="form-control" min="0" value="20">
+                        </div>
+                    </div>
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="topP">Top-P (--top-p):</label>
+                            <input type="number" id="topP" class="form-control" step="0.01" min="0" max="1" value="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label for="minP">Min-P (--min-p):</label>
+                            <input type="number" id="minP" class="form-control" step="0.01" min="0" max="1" value="0">
+                        </div>
+                    </div>
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="repeatPenalty">Repeat Penalty:</label>
+                            <input type="number" id="repeatPenalty" class="form-control" step="0.01" min="0" value="1.05" placeholder="Use 0 to disable">
+                        </div>
+                        <div class="form-group">
+                            <label for="presencePenalty">Presence Penalty:</label>
+                            <input type="number" id="presencePenalty" class="form-control" step="0.01" min="0" value="0.00">
+                        </div>
+                    </div>
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="backendSampling">Backend Sampling:</label>
+                            <input type="checkbox" id="backendSampling" class="form-control checkbox">
+                        </div>
+                    </div>
+
+                    <h3>Memory Settings</h3>
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="loadMode">Load Mode (--load-mode):</label>
+                            <select id="loadMode" class="form-control">
+                                <option value="none">none</option>
+                                <option value="mmap">mmap</option>
+                                <option value="mlock">mlock</option>
+                                <option value="mmap+mlock">mmap+mlock</option>
+                                <option value="dio">dio</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="swaFull">SWA Full:</label>
+                            <input type="checkbox" id="swaFull" class="form-control checkbox">
+                        </div>
+                    </div>
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="noKvOffload">No KV Offload:</label>
+                            <input type="checkbox" id="noKvOffload" class="form-control checkbox">
+                        </div>
+                        <div class="form-group">
+                            <label for="noMmprojOffload">No MMProj Offload:</label>
+                            <input type="checkbox" id="noMmprojOffload" class="form-control checkbox">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cacheRam">Cache RAM (--cache-ram):</label>
+                        <input type="number" id="cacheRam" class="form-control" min="-1" value="8192">
+                        <div class="hint-text">Default 8192 · -1 = no limit · 0 = disable</div>
+                    </div>
+
+                    <h3>Advanced Settings</h3>
+                    <div class="form-group">
+                        <label for="contextSize">Context Size (-c):</label>
+                        <input type="number" id="contextSize" class="form-control" min="1" value="16384">
+                    </div>
+                    <div class="form-group">
+                        <label for="nCpuMoe">CPU MoE Layers (--n-cpu-moe):</label>
+                        <input type="number" id="nCpuMoe" class="form-control" min="0" value="8">
+                    </div>
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="cpuMoe">CPU MoE (--cpu-moe):</label>
+                            <input type="checkbox" id="cpuMoe" class="form-control checkbox">
+                        </div>
+                    </div>
+
+                    <!-- New Context Token Parameters -->
+                    <h3>Context Token Parameters</h3>
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="ctkEnable">Enable -ctk/-ctv:</label>
+                            <input type="checkbox" id="ctkEnable" class="form-control checkbox">
+                        </div>
+                        <div class="form-group">
+                            <label for="reasoning">Reasoning:</label>
+                            <select id="reasoning" class="form-control">
+                                <option value="auto" selected>auto</option>
+                                <option value="on">on</option>
+                                <option value="off">off</option>
+                            </select>
+                        </div>
+                    </div>
+                                        <div class="form-group">
+                        <label for="contextTokenKey">Context Token Key (-ctk):</label>
+                        <select id="contextTokenKey" class="form-control" disabled>
+                            <option value="f32">f32</option>
+                            <option value="f16" selected>f16</option>
+                            <option value="bf16">bf16</option>
+                            <option value="q8_0">q8_0</option>
+                            <option value="q4_0">q4_0</option>
+                            <option value="q4_1">q4_1</option>
+                            <option value="iq4_nl">iq4_nl</option>
+                            <option value="q5_0">q5_0</option>
+                            <option value="q5_1">q5_1</option>
+                            <option value="kvarn2">kvarn2</option>
+                            <option value="kvarn3">kvarn3</option>
+                            <option value="kvarn4">kvarn4</option>
+                            <option value="kvarn5">kvarn5</option>
+                            <option value="kvarn6">kvarn6</option>
+                            <option value="kvarn8">kvarn8</option>
+                        </select>
+                        <div class="kvarn-warning" style="display:none;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contextTokenValue">Context Token Value (-ctv):</label>
+                        <select id="contextTokenValue" class="form-control" disabled>
+                            <option value="f32">f32</option>
+                            <option value="f16" selected>f16</option>
+                            <option value="bf16">bf16</option>
+                            <option value="q8_0">q8_0</option>
+                            <option value="q4_0">q4_0</option>
+                            <option value="q4_1">q4_1</option>
+                            <option value="iq4_nl">iq4_nl</option>
+                            <option value="q5_0">q5_0</option>
+                            <option value="q5_1">q5_1</option>
+                            <option value="kvarn2">kvarn2</option>
+                            <option value="kvarn3">kvarn3</option>
+                            <option value="kvarn4">kvarn4</option>
+                            <option value="kvarn5">kvarn5</option>
+                            <option value="kvarn6">kvarn6</option>
+                            <option value="kvarn8">kvarn8</option>
+                        </select>
+                        <div class="kvarn-warning" style="display:none;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="parallel">Parallel (--parallel):</label>
+                        <input type="number" id="parallel" class="form-control" min="0" value="1">
+                    </div>
+                    
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="fastAttention">Fast Attention (--fa):</label>
+                            <select id="fastAttention" class="form-control">
+                                <option value="auto">auto</option>
+                                <option value="on">on</option>
+                                <option value="off">off</option>
+                            </select>
+                        </div>
+                    </div>
+                     <div class="inline-checkboxes">
+                         <div class="form-group">
+                            <label for="jinja">Jinja (--jinja):</label>
+                            <input type="checkbox" id="jinja" class="form-control checkbox">
+                        </div>
+                        <div class="form-group">
+                            <label for="loadCustomChatTemplate">Load Custom Chat Template:</label>
+                            <input type="checkbox" id="loadCustomChatTemplate" class="form-control checkbox">
+                        </div>
+                    </div>
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="chatTemplateKwargs">Chat Template Kwargs (--chat-template-kwargs):</label>
+                            <input type="text" id="chatTemplateKwargs" class="form-control" placeholder='{"preserve_thinking": true}'>
+                        </div>
+                    </div>
+
+
+                    <h3>Speculation Settings</h3>
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="ngramMod">Ngram-Mod:</label>
+                            <input type="checkbox" id="ngramMod" class="form-control checkbox">
+                        </div>
+                        <div class="form-group">
+                            <label for="speculationType">Speculation Type:</label>
+                            <select id="speculationType" class="form-control">
+                                <option value="none">none</option>
+                                <option value="draft-mtp">draft-mtp</option>
+                                <option value="draft-dflash">draft-dflash</option>
+                                <option value="draft-dspark">draft-dspark</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="inline-checkboxes">
+                        <div class="form-group"></div>
+                        <div class="form-group" id="specDraftNMaxGroup" style="display: none;">
+                            <label for="specDraftNMax">Draft N-Max (--spec-draft-n-max):</label>
+                            <input type="number" id="specDraftNMax" class="form-control" min="0" value="0">
+                        </div>
+                    </div>
+
+                    <div id="draftModelSection" style="display: none;">
+                        <h3>Draft Model Settings</h3>
+                        <div class="form-group">
+                            <label for="draftModelPath">Draft Model Path (-md):</label>
+                            <select id="draftModelPath" class="form-control">
+                                <option value="">-- Select a Draft Model --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ngld">GPU Layers for Draft Model (-ngld):</label>
+                            <input type="number" id="ngld" class="form-control" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="ctkd">Context Token Key for Draft Model (-ctkd):</label>
+                            <select id="ctkd" class="form-control">
+                                <option value="f32">f32</option>
+                                <option value="f16" selected>f16</option>
+                                <option value="bf16">bf16</option>
+                                <option value="q8_0">q8_0</option>
+                                <option value="q4_0">q4_0</option>
+                                <option value="q4_1">q4_1</option>
+                                <option value="iq4_nl">iq4_nl</option>
+                                <option value="q5_0">q5_0</option>
+                                <option value="q5_1">q5_1</option>
+                                <option value="kvarn2">kvarn2</option>
+                                <option value="kvarn3">kvarn3</option>
+                                <option value="kvarn4">kvarn4</option>
+                                <option value="kvarn5">kvarn5</option>
+                                <option value="kvarn6">kvarn6</option>
+                                <option value="kvarn8">kvarn8</option>
+                            </select>
+                            <div class="kvarn-warning" style="display:none;"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ctvd">Context Token Value for Draft Model (-ctvd):</label>
+                            <select id="ctvd" class="form-control">
+                                <option value="f32">f32</option>
+                                <option value="f16" selected>f16</option>
+                                <option value="bf16">bf16</option>
+                                <option value="q8_0">q8_0</option>
+                                <option value="q4_0">q4_0</option>
+                                <option value="q4_1">q4_1</option>
+                                <option value="iq4_nl">iq4_nl</option>
+                                <option value="q5_0">q5_0</option>
+                                <option value="q5_1">q5_1</option>
+                                <option value="kvarn2">kvarn2</option>
+                                <option value="kvarn3">kvarn3</option>
+                                <option value="kvarn4">kvarn4</option>
+                                <option value="kvarn5">kvarn5</option>
+                                <option value="kvarn6">kvarn6</option>
+                                <option value="kvarn8">kvarn8</option>
+                            </select>
+                            <div class="kvarn-warning" style="display:none;"></div>
+                        </div>
+                    </div>
+
+
+                    <h3>Other</h3>
+                    <div class="inline-checkboxes">
+                        <div class="form-group">
+                            <label for="verbose">Verbose (--verbose):</label>
+                            <input type="checkbox" id="verbose" class="form-control checkbox">
+                        </div>
+                    </div>
+
+                </div>
+
+
+                
+
+                <!-- Action Buttons with Model Status -->
+                <div class="action-buttons-container">
+                    <div class="action-buttons">
+                        <button id="launchBtn" class="btn btn-primary">Launch</button>
+                        <button id="stopBtn" class="btn btn-secondary" disabled>Stop</button>
+                        <button id="restartBtn" class="btn btn-warning" disabled>Restart</button>
+                        <div class="launch-presets-combo">
+                            <select id="launchPresetsSelect" class="form-control">
+                                <option value="">-- Select Server Path --</option>
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                            <button id="launchPresetsBtn" class="btn btn-primary">Launch Presets</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Model Output Section -->
+                <div class="model-status-output-section">
+                    <div class="model-output-container">
+                        <h3>Model Output</h3>
+                        <div id="modelOutput" class="output-content">No output yet...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" type="module"></script>
+</body>
+</html>

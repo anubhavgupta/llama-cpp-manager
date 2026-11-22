@@ -4,13 +4,19 @@
 // Spawns the fake directly (node exe + script path) and exercises every knob.
 // Exit code is non-zero if any check fails.
 
-const { spawn } = require('child_process');
+const { spawn, spawnSync } = require('child_process');
 const fs = require('fs');
 const net = require('net');
 const os = require('os');
 const path = require('path');
 
 const FAKE = path.join(__dirname, 'fake-llama-server.js');
+const STANDIN_SOURCE = path.join(__dirname, 'standin-llama-server.cs');
+const CSC_CANDIDATES = [
+    process.env.PARITY_CSC,
+    'C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe',
+    'C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc.exe'
+].filter(Boolean);
 const IS_WINDOWS = process.platform === 'win32';
 const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'parity-fake-'));
 
@@ -46,10 +52,11 @@ function expectedLog(options = {}) {
     lines.push('srv    load_model: load_model: OK');
     lines.push('srv  update_slots: all slots idle');
     if (options.listenUrl !== undefined) lines.push('main: server is listening on ' + options.listenUrl);
+    for (let index = 0; index < (options.repeatCount || 0); index += 1) lines.push(options.repeatLine);
     return lines.join('\n') + '\n';
 }
 
-function spawnFake(args, env) {
+function spawnFake(args, env, exe) {
     const childEnv = { ...process.env };
     delete childEnv.PARITY_ARGV_LOG;
     delete childEnv.PARITY_BIND_LOG;
@@ -59,7 +66,8 @@ function spawnFake(args, env) {
     }
 
     const run = {
-        child: spawn(process.execPath, [FAKE, ...args], { stdio: ['ignore', 'pipe', 'pipe'], env: childEnv }),
+        child: spawn(exe || process.execPath, exe ? args : [FAKE, ...args],
+            { stdio: ['ignore', 'pipe', 'pipe'], env: childEnv }),
         out: [],
         err: [],
         closed: false,
@@ -80,7 +88,7 @@ function spawnFake(args, env) {
 async function waitFor(predicate, timeoutMs, what) {
     const deadline = Date.now() + timeoutMs;
     while (Date.now() < deadline) {
-        if (predicate()) return true;
+        if (await predicate()) return true;
         await delay(25);
     }
     return predicate();
@@ -151,6 +159,39 @@ function freePort() {
             probe.close(() => resolve(port));
         });
     });
+}
+
+function portOpen(port) {
+    return new Promise((resolve) => {
+        const probe = net.createConnection({ host: '127.0.0.1', port }, () => {
+            probe.destroy();
+            resolve(true);
+        });
+        probe.once('error', () => resolve(false));
+        probe.setTimeout(2000, () => { probe.destroy(); resolve(false); });
+    });
+}
+
+function findCsc() {
+    for (const candidate of CSC_CANDIDATES) {
+        if (candidate && fs.existsSync(candidate)) return candidate;
+    }
+    return null;
+}
+
+// tools/parity/standin-llama-server.cs is source-controlled; the exe is a scratch build artifact.
+function buildStandIn(targetExe) {
+    const csc = findCsc();
+    if (!csc) {
+        fail('no csc.exe found (looked at ' + CSC_CANDIDATES.join(', ') + ') — the stand-in exe '
+            + 'cannot be built, so the app-built-arg-vector journeys cannot be recorded');
+    }
+    const built = spawnSync(csc, ['-nologo', '-target:exe', '-out:' + targetExe, STANDIN_SOURCE],
+        { encoding: 'utf8' });
+    if (built.status !== 0 || !fs.existsSync(targetExe)) {
+        fail('csc failed for ' + STANDIN_SOURCE + ': ' + (built.stdout || '') + (built.stderr || ''));
+    }
+    return { exe: targetExe, csc };
 }
 
 async function request(port, route, method) {
@@ -380,6 +421,77 @@ async function main() {
                 'model line missing: ' + show(stdout));
         });
         return 'http://127.0.0.1:<port> and model = <value>';
+    });
+
+    await check('knob: --parity-repeat-line/--parity-repeat-count emit N extra verbatim lines', async () => {
+        const repeatLine = 'repeat: line for the 1000-line log cap';
+        const run = spawnFake(['--parity-repeat-line', repeatLine, '--parity-repeat-count', '1203',
+            '--parity-chunks', '0', '--parity-exit-code', '0'], {});
+        const result = await finish(run, 40000);
+        assert(result.code === 0, 'expected exit 0, got ' + show(result));
+        const stdout = run.out.join('');
+        const expected = expectedLog({ repeatLine, repeatCount: 1203 });
+        assert(stdout === expected, 'repeated lines mismatch: got ' + run.out.length + ' events / '
+            + stdout.split('\n').length + ' lines, expected ' + expected.split('\n').length + ' lines');
+        assert(stdout.split('\n').filter((line) => line === repeatLine).length === 1203,
+            'repeat line count mismatch');
+        return '1203 verbatim repeat lines appended, assembled stdout byte-identical to the expected log';
+    });
+
+    await check('knob: --parity-repeat-line without a count adds nothing', async () => {
+        const run = spawnFake(['--parity-repeat-line', 'unused', '--parity-exit-code', '0'], {});
+        const result = await finish(run, 20000);
+        assert(result.code === 0, 'expected exit 0, got ' + show(result));
+        assert(run.out.join('') === expectedLog(), 'unexpected lines: ' + show(run.out.join('')));
+        return 'default count 0, startup log unchanged';
+    });
+
+    await check('standin: relayed argv equals received argv and the fake knobs still work', async () => {
+        const built = buildStandIn(path.join(tmpDir, 'fake-llama-server.exe'));
+        const argvLog = path.join(tmpDir, 'standin-argv.jsonl');
+        const spaced = 'C:\\models\\dir with space\\model name.gguf';
+        const quoted = 'say-"hello"';
+        const args = ['--models-preset', 'C:\\scratch\\app\\models preset.ini', '--model', spaced, quoted,
+            '--parity-repeat-line', 'relay line', '--parity-repeat-count', '2',
+            '--parity-chunks', '0', '--parity-exit-code', '7'];
+        const run = spawnFake(args, { PARITY_ARGV_LOG: argvLog, PARITY_NODE: process.execPath,
+            PARITY_FAKE_SCRIPT: FAKE }, built.exe);
+        try {
+            const result = await finish(run, 40000);
+            assert(result.code === 7, 'exit code was not propagated through the relay: ' + show(result));
+            const lines = readLines(argvLog).map((line) => JSON.parse(line));
+            assert(lines.length === 2, 'expected one argv line from the stand-in and one from the fake, got '
+                + lines.length);
+            assert(show(lines[0].argv) === show(args), 'stand-in argv mismatch: ' + show(lines[0].argv));
+            assert(show(lines[1].argv) === show(args), 'relayed argv differs from received argv: '
+                + show(lines[1].argv));
+            assert(lines[0].pid !== lines[1].pid, 'relay did not start a separate process');
+            assert(typeof lines[0].raw === 'string' && lines[0].raw.includes('models-preset'),
+                'raw command line missing from the stand-in record: ' + show(lines[0].raw));
+            assert(run.out.join('') === expectedLog({ model: spaced, modelsPreset: 'C:\\scratch\\app\\models preset.ini',
+                repeatLine: 'relay line', repeatCount: 2 }),
+            'knob output did not survive the relay: ' + show(run.out.join('')));
+            return 'argv identical across the relay (' + args.length + ' args, spaces + quotes), exit 7 propagated';
+        } finally {
+            await killRun(run);
+        }
+    });
+
+    await check('standin: killing the relay takes the node child with it (no orphan holds the port)', async () => {
+        const built = buildStandIn(path.join(tmpDir, 'fake-llama-server.exe'));
+        const port = await freePort();
+        const run = spawnFake(['--host', '127.0.0.1', '--port', String(port), '--parity-chunks', '0'],
+            { PARITY_NODE: process.execPath, PARITY_FAKE_SCRIPT: FAKE }, built.exe);
+        try {
+            const open = await waitFor(async () => await portOpen(port), 15000, 'port ' + port);
+            assert(open, 'the relayed fake never bound port ' + port);
+            run.child.kill('SIGTERM');
+            const gone = await waitFor(async () => !(await portOpen(port)), 10000, 'port ' + port + ' closed');
+            assert(gone, 'port ' + port + ' stayed open after the stand-in was killed: the node child was orphaned');
+            return 'SIGTERM to the stand-in released port ' + port;
+        } finally {
+            await killRun(run);
+        }
     });
 
     console.log('\n' + passed + ' passed, ' + failed + ' failed  (platform ' + process.platform + ')');

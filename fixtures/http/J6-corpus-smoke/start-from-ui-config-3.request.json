@@ -1,0 +1,15 @@
+{
+  "method": "POST",
+  "url": "http://localhost:7837/start",
+  "headers": {
+    "accept": "*/*",
+    "content-type": "application/json",
+    "origin": "http://localhost:7837",
+    "referer": "http://localhost:7837/",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.8154.6 Safari/537.36",
+    "sec-ch-ua": "\"HeadlessChrome\";v=\"159\", \"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"159\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\""
+  },
+  "postData": "{\"serverPath\":\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\bin\\\\fake-llama-server.exe\",\"args\":[\"-m\",\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\fixtures\\\\models\\\\unsloth\\\\gpt-oss-20b-GGUF\\\\gpt-oss-20b-Q4_K_M.gguf\",\"-ngl\",\"99\",\"-t\",\"15\",\"--temp\",\"1\",\"--top-p\",\"1\",\"--parallel\",\"1\",\"--load-mode\",\"mlock\",\"-c\",\"100000\",\"--n-cpu-moe\",\"5\",\"-fa\",\"on\",\"--jinja\",\"--cache-ram\",\"8192\",\"--host\",\"0.0.0.0\",\"-fit\",\"off\",\"--port\",\"7838\"]}"
+}

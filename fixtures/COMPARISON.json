@@ -1,0 +1,418 @@
+{
+  "$comment": "Comparison policy for the legacy parity corpus. Everything is byte-compared by DEFAULT. A rule may only relax something plan.md §8 declares nondeterministic, every rule names the claim that stays compared, and every op used here is implemented in the NORMALIZE/ASSERT registries of tools/parity/capture-legacy.js. 'informational' means the artifact is recorded complete but its byte claim lives in the paired file named by claimedBy, which is compared byte-for-byte. Written by the recording pass; the determinism-gate output is quoted in the Phase 1 report.",
+  "defaultMode": "exact",
+  "rules": [
+    {
+      "id": "manager-console",
+      "pathGlob": "ws/**/manager*.std*.log",
+      "mode": "informational",
+      "claimedBy": "ws/**/events.json",
+      "claim": "server.js console-prints every pipe chunk it forwards, so the manager's own stdout is the interleaving of its console.log writes with those chunk writes, and the OS decides whether the text reads 'ggml_backend_c' or 'ggml_ba<newline>ckend_c'; dotenv v17 also prints one rotating marketing tip at startup (§8 'everything else'). The bytes it was printing are compared byte-for-byte in the paired ws payload traces, and the deterministic manager lines (spawn args, 'Server process exited with code N') are asserted by the capture code and by the http response goldens.",
+      "why": "§8 'everything else': an asserted claim must not depend on OS-level interleaving of two writers on one handle."
+    },
+    {
+      "id": "screenshot-pixels",
+      "pathGlob": "screenshots/**/*.png",
+      "mode": "informational",
+      "claimedBy": "screenshots/**/*.render.json",
+      "claim": "A PNG of a page whose metrics panel is driven by a 1 s sampler and whose log pane holds streamed fragments is not byte-stable (§8 'metrics/log polling cadence', 'websocket log chunk boundaries'). Every screenshot is paired with a .render.json: geometry, visibility, control state and shown text of every [id] element, the log pane reduced to its entry count, digits masked - captured with the four graph canvases display:none, animations and transitions disabled, the page clock frozen and document.fonts.ready awaited. Those fingerprints are compared byte-for-byte; the PNG stays in the corpus as the human-readable record of the state.",
+      "why": "§8 'metrics/log polling cadence': the recorded UI state is the deliverable, the PNG encoding of it is not."
+    },
+    {
+      "id": "log-pane-capped-text",
+      "pathGlob": "ws/**/log-pane.text",
+      "mode": "informational",
+      "claimedBy": "ws/J5-ui-log-cap/log-pane.json",
+      "claim": "The cap claim is asserted and compared in the paired log-pane.json: exactly 1000 entries after a 1212-line flood, oldest entries dropped, trailing split element empty, auto-scroll pinned to the bottom. Which streamed fragment shares one showOutput entry with another is pipe coalescing (§8 'websocket log chunk boundaries'), so the raw text of the capped pane is recorded complete for inspection but its character layout is not asserted.",
+      "why": "§8 'websocket log chunk boundaries'."
+    },
+    {
+      "id": "ws-partial-line-claim",
+      "pathGlob": "ws/J3-start-stop/events.json",
+      "mode": "shape",
+      "normalize": [
+        {
+          "op": "wsCollapseLogStreams",
+          "event": "log-stream",
+          "typeField": "type",
+          "payloadField": "dataBase64"
+        }
+      ],
+      "why": "§9 trap 9 requires a golden that contains a PARTIAL line (a stdout chunk with no trailing newline), which is how server.js forwards pipe chunks. Same normalisation as ws-events, plus a non-relaxing assertion that at least one log-stream payload really is a partial line.",
+      "assert": [
+        {
+          "op": "wsPartialLines",
+          "event": "log-stream",
+          "payloadField": "dataBase64",
+          "min": 1
+        }
+      ]
+    },
+    {
+      "id": "ws-events",
+      "pathGlob": "ws/**/events.json",
+      "mode": "shape",
+      "normalize": [
+        {
+          "op": "wsCollapseLogStreams",
+          "event": "log-stream",
+          "typeField": "type",
+          "payloadField": "dataBase64"
+        }
+      ],
+      "why": "Consecutive log-stream events of one stream type are collapsed to the concatenated BYTES they carried, because the pipe and socket layer coalesces writes: whether one startup line arrives in one chunk or in four is buffering, not behaviour (plan.md §9 trap 9). What the child wrote, in which stream, in what order, plus the server-ended and server-error control events and their payloads, stay compared byte-for-byte. The recorded events.json keeps every original event, its raw payload bytes and its arrival order; in the compared form the recorder's per-event seq is renumbered to position, because the raw counter grows by however many socket events the coalescing produced. Connection-scoped fields (the socket.io id, the handshake echo) are not recorded in the fixture at all, so nothing has to be relaxed for them."
+    },
+    {
+      "id": "request-cadence",
+      "pathGlob": "ws/**/request-cadence.json",
+      "mode": "shape",
+      "normalize": [
+        {
+          "op": "jsonSubstitute",
+          "fields": [
+            "windowMs",
+            "counts"
+          ],
+          "placeholder": "<WINDOW>"
+        },
+        {
+          "op": "regexReplace",
+          "pattern": "\"entries\":\\[.*\\]",
+          "flags": "gs",
+          "replacement": "\"entries\":<TIMING-TRACE>"
+        }
+      ],
+      "why": "The trace records every fetch the page issued with wall-clock gaps. A 12 s window cannot capture the same number of ~1 s polls twice, and the gaps themselves jitter, so windowMs, the per-path counts and the entries array are substituted - and replaced by an assertion that /metrics really is polled about every 1000 ms and /status about every 5000 ms (+/- 25%, at most 2 and 1 samples outside), i.e. the cadence behaviour plan.md §8 calls nondeterministic in count is still checked. The polled path set, the 'running' observation and the note stay byte-exact.",
+      "assert": [
+        {
+          "op": "cadenceTiming",
+          "entries": [
+            {
+              "path": "/metrics",
+              "minCount": 10,
+              "maxCount": 14,
+              "everyMs": 1000,
+              "tolerancePct": 25,
+              "maxOutside": 2
+            },
+            {
+              "path": "/status",
+              "minCount": 2,
+              "maxCount": 4,
+              "everyMs": 5000,
+              "tolerancePct": 25,
+              "maxOutside": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chunk-boundary",
+      "pathGlob": "ws/**/chunk-boundary.json",
+      "mode": "shape",
+      "normalize": [
+        {
+          "op": "jsonSubstitute",
+          "fields": [
+            "paneLines",
+            "paneBlankLines",
+            "blankPayloads"
+          ],
+          "placeholder": "<COALESCING>"
+        }
+      ],
+      "why": "§8 'websocket log chunk boundaries': how the OS coalesces the fake's writes decides whether a startup line arrives whole or in three pieces, so how many showOutput entries and blank filler lines the same source lines become is timing (9 source lines of roughly 50 characters carried in 7-byte chunks lands somewhere around 70 pane entries). Those counters are substituted and bounds-asserted; sourceLines, morePaneLinesThanSourceLines and somePayloadsAreWhitespaceOnly - the newline-loss and per-event .trim() claims themselves - stay byte-exact, and the payload bytes behind them are golden in the paired events.json.",
+      "assert": [
+        {
+          "op": "jsonNumberBounds",
+          "bounds": [
+            {
+              "field": "sourceLines",
+              "min": 1,
+              "max": 40
+            },
+            {
+              "field": "blankPayloads",
+              "min": 0,
+              "max": 8
+            },
+            {
+              "field": "paneLines",
+              "min": 9,
+              "max": 200
+            },
+            {
+              "field": "paneBlankLines",
+              "min": 0,
+              "max": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "log-pane-chunks7",
+      "pathGlob": "ws/**/log-pane-chunks7.text",
+      "mode": "shape",
+      "normalize": [
+        {
+          "op": "regexReplace",
+          "pattern": "\\[\\d{4}-\\d{2}-\\d{2}T[\\d:.]+Z\\]?",
+          "replacement": ""
+        },
+        {
+          "op": "regexReplace",
+          "pattern": "\\s+",
+          "replacement": ""
+        }
+      ],
+      "why": "§8 'websocket log chunk boundaries': showOutput appends one trimmed pane line per websocket event, so the character layout of the pane follows chunk boundaries. Timestamps are substituted and whitespace deleted, which leaves exactly the concatenated character stream the pane received, in order; the token sequence therefore stays compared (a timestamp that lands mid-number because a chunk boundary fell there is not behaviour), and the payload bytes behind it are golden in the paired events.json. The connection banner is asserted against the raw text.",
+      "assert": [
+        {
+          "op": "regexFullMatch",
+          "pattern": "Connected to server for real-time logging"
+        },
+        {
+          "op": "regexFullMatch",
+          "pattern": "\\[\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}"
+        }
+      ]
+    },
+    {
+      "id": "restart-settle",
+      "pathGlob": "http/**/restart-settle.json",
+      "mode": "shape",
+      "normalize": [
+        {
+          "op": "jsonSubstitute",
+          "fields": [
+            "statusImmediatelyAfterRestart",
+            "statusAfterRestartSettle",
+            "stopAfterRestart",
+            "managerExitLines",
+            "argvLines",
+            "serverEndedEvents"
+          ],
+          "placeholder": "<RACE>"
+        }
+      ],
+      "why": "§8 'process start/stop race windows': after POST /restart the killed child's close handler clears the shared runningProcess while the deferred SIGKILL timer can strike the replacement, so whether the replacement survives, how many 'exited with code' lines the manager prints and how the settle reads are a race on win32 (recordedOnPlatform says which). What is NOT relaxed: restartBody (200, success:true, 'Server restarted successfully'), the observation text, the platform, and the exactly-one-spawn claim (argvLines asserted = 2). The paired http goldens keep GET 404, POST 200 and POST /stop 200-with-success:false byte-exact.",
+      "assert": [
+        {
+          "op": "jsonNumberBounds",
+          "bounds": [
+            {
+              "field": "argvLines",
+              "min": 2,
+              "max": 2
+            },
+            {
+              "field": "managerExitLines",
+              "min": 0,
+              "max": 3
+            },
+            {
+              "field": "serverEndedEvents",
+              "min": 0,
+              "max": 2
+            }
+          ]
+        },
+        {
+          "op": "fieldRegexMatch",
+          "field": "recordedOnPlatform",
+          "pattern": "^(win32|linux|darwin)$"
+        }
+      ]
+    },
+    {
+      "id": "metrics-body-stub",
+      "pathGlob": "http/J1-settings/metrics-*.response",
+      "mode": "shape",
+      "normalize": [
+        {
+          "op": "regexReplace",
+          "pattern": "\"cpu\":[0-9.]+",
+          "replacement": "\"cpu\":\"<CPU>\""
+        },
+        {
+          "op": "regexReplace",
+          "pattern": "\"ram\":[0-9.]+",
+          "replacement": "\"ram\":\"<RAM>\""
+        }
+      ],
+      "why": "cpu and ram are real os.utils readings on the recording machine (§8 'os.utils return values'), so they are substituted. gpu 42, vram 50.23193359375 and vramUsage 12345/24576 stay byte-exact - those are the nvidia-smi stub's canned numbers, which is the Q6 claim that a stubbed nvml path reaches the response unchanged - and the raw body is asserted to carry exactly them.",
+      "assert": [
+        {
+          "op": "regexFullMatch",
+          "pattern": "^\\{\"cpu\":[0-9.]+,\"ram\":[0-9.]+,\"gpu\":42,\"vram\":50\\.23193359375,\"vramUsage\":\"12345/24576\"\\}$"
+        }
+      ]
+    },
+    {
+      "id": "metrics-body-unparsable",
+      "pathGlob": "http/J2b-metrics-garbage/metrics-*.response",
+      "mode": "shape",
+      "normalize": [
+        {
+          "op": "regexReplace",
+          "pattern": "\"cpu\":[0-9.]+",
+          "replacement": "\"cpu\":\"<CPU>\""
+        },
+        {
+          "op": "regexReplace",
+          "pattern": "\"ram\":[0-9.]+",
+          "replacement": "\"ram\":\"<RAM>\""
+        }
+      ],
+      "why": "Same cpu/ram substitution as the stub rule. With NVIDIA_SMI_STUB_MODE=garbage the legacy parser produces gpu 0, vram 0 and vramUsage '0/0' - recorded truth, which differs from plan.md's wording for this row - and that is asserted against the raw body rather than relaxed.",
+      "assert": [
+        {
+          "op": "regexFullMatch",
+          "pattern": "^\\{\"cpu\":[0-9.]+,\"ram\":[0-9.]+,\"gpu\":0,\"vram\":0,\"vramUsage\":\"0/0\"\\}$"
+        }
+      ]
+    },
+    {
+      "id": "metrics-body-simulated",
+      "pathGlob": "http/J2c-metrics-fail/metrics-*.response",
+      "mode": "shape",
+      "normalize": [
+        {
+          "op": "regexReplace",
+          "pattern": "\"cpu\":[0-9.]+",
+          "replacement": "\"cpu\":\"<CPU>\""
+        },
+        {
+          "op": "regexReplace",
+          "pattern": "\"ram\":[0-9.]+",
+          "replacement": "\"ram\":\"<RAM>\""
+        },
+        {
+          "op": "regexReplace",
+          "pattern": "\"gpu\":[0-9.]+",
+          "replacement": "\"gpu\":\"<GPU>\""
+        },
+        {
+          "op": "regexReplace",
+          "pattern": "\"vram\":[0-9.]+",
+          "replacement": "\"vram\":\"<VRAM>\""
+        },
+        {
+          "op": "regexReplace",
+          "pattern": "\"vramUsage\":\"[0-9.]+/[0-9.]+\"",
+          "replacement": "\"vramUsage\":\"<FREE>/<TOTAL>\""
+        }
+      ],
+      "why": "When nvidia-smi fails outright, server.js stops asking it and synthesises the GPU numbers from Math.random() (Q6), so gpu, vram and the free half of vramUsage differ on every single request and no byte comparison is possible (§8 'os.utils return values' / the Q6 simulated path). What is asserted against the raw body instead: the five-field shape, that the vramUsage total is the hardcoded simulated 8192, and that all four numbers are plain decimal numbers. The capture additionally asserts the random bands (0 < gpu < 50, 0 < vram < 60) and that the simulated body is not the stub body, per request.",
+      "assert": [
+        {
+          "op": "regexFullMatch",
+          "pattern": "^\\{\"cpu\":[0-9.]+,\"ram\":[0-9.]+,\"gpu\":[0-9.]+,\"vram\":[0-9.]+,\"vramUsage\":\"[0-9.]+/8192\"\\}$"
+        }
+      ]
+    },
+    {
+      "id": "argv-jsonl",
+      "pathGlob": "argv/**/*.jsonl",
+      "mode": "shape",
+      "normalize": [
+        {
+          "op": "jsonlSubstitute",
+          "field": "pid",
+          "placeholder": "<PID>"
+        },
+        {
+          "op": "jsonlSubstitute",
+          "field": "ppid",
+          "placeholder": "<PPID>"
+        }
+      ],
+      "why": "§8 'spawned child pid/pgid': the process id changes on every spawn, so the two sidecar id fields are substituted. argv, env, cwd and the raw command line are compared byte-for-byte, which is the whole Q18/Q5/Q9/Q14 claim."
+    }
+  ],
+  "nondeterminismLedger": [
+    {
+      "row": "response timings",
+      "mode": "not relaxed: *.response holds the body only and is byte-compared; the measured latency lives in the paired *.request.json sidecar and is not part of the compared body (the comparator has no latency op because none is needed)",
+      "rule": null
+    },
+    {
+      "row": "§8 'spawned child pid/pgid'",
+      "mode": "pid and ppid substituted; argv, env, cwd, raw command line byte-exact",
+      "rule": "argv-jsonl"
+    },
+    {
+      "row": "§8 'websocket log chunk boundaries' - how many writes one socket read returns",
+      "mode": "consecutive log-stream events of one stream collapsed to the bytes they carried; the byte sequence, stream type and order stay compared and the raw events with their payload bytes and arrival order stay in the fixture",
+      "rule": "ws-events"
+    },
+    {
+      "row": "§9 trap 9 - partial stdout lines reaching the UI",
+      "mode": "ASSERTED, not relaxed: at least one log-stream payload must arrive without a trailing newline, and the newline loss plus per-event .trim() are byte-exact claims in chunk-boundary.json",
+      "rules": [
+        "ws-partial-line-claim",
+        "chunk-boundary"
+      ]
+    },
+    {
+      "row": "§8 'websocket log chunk boundaries' - how many pane entries and blank filler lines the startup stream becomes",
+      "mode": "paneLines / paneBlankLines / blankPayloads substituted and bounds-asserted; sourceLines and the two newline-loss and .trim() booleans byte-exact",
+      "rule": "chunk-boundary"
+    },
+    {
+      "row": "§8 'websocket log chunk boundaries' - character layout of the chunks-7 pane text",
+      "mode": "per-entry timestamps and whitespace dropped, leaving the exact character stream the pane received in order, with a raw-text assertion that the pane really timestamps entries",
+      "rule": "log-pane-chunks7"
+    },
+    {
+      "row": "§8 'websocket log chunk boundaries' - character layout of the pane after the 1212-line flood",
+      "mode": "recorded complete, not asserted; the 1000-entry cap, oldest-drop, trailing empty split element and auto-scroll are the compared claim in the paired log-pane.json",
+      "rule": "log-pane-capped-text"
+    },
+    {
+      "row": "§8 'metrics/log polling cadence' - how many polls a 12 s window captures",
+      "mode": "windowMs, per-path counts and the gap trace substituted, and replaced by assertions that /metrics is polled ~1000 ms and /status ~5000 ms (+/- 25%) with min/max counts; the path set, running flag and note byte-exact",
+      "rule": "request-cadence"
+    },
+    {
+      "row": "§8 'metrics/log polling cadence' - pixels and digits of the metrics panel in screenshots",
+      "mode": "screenshots taken against the canned /metrics body with the graph canvases display:none, animations off and the clock frozen; the compared artifact is the paired element fingerprint",
+      "rule": "screenshot-pixels"
+    },
+    {
+      "row": "§8 'process start/stop race windows' - /restart leaves the stale runningProcess cleared and the deferred SIGKILL able to strike the replacement child (candidate ledger row Q23)",
+      "mode": "the settle reading, exit-line count and server-ended count substituted and bounds-asserted; POST /restart 200 success:true, GET 404 for the non-route, POST /stop 200 success:false and exactly one spawn stay byte-exact",
+      "rule": "restart-settle"
+    },
+    {
+      "row": "§8 'everything else' - OS write ordering on the manager's own stdout, plus the rotating dotenv v17 startup tip",
+      "mode": "manager console logs recorded complete for inspection; the forwarded bytes they print are compared in the paired ws payload traces, and the deterministic lines are asserted by the capture",
+      "rule": "manager-console"
+    },
+    {
+      "row": "§8 'fs.readdir return order' - /models order, listMetrics order and the derived #modelPath and config-list order",
+      "mode": "compared BYTE-EXACT: repeated clean runs produced identical order, so no rule relaxes it",
+      "rule": null
+    },
+    {
+      "row": "§8 'os.utils return values' - cpu and ram in every /metrics body",
+      "mode": "substituted; the body shape is asserted and, in stub mode, gpu/vram/vramUsage stay byte-exact against the stub's canned numbers",
+      "rules": [
+        "metrics-body-stub",
+        "metrics-body-unparsable"
+      ]
+    },
+    {
+      "row": "Q6 simulated metrics when nvidia-smi fails (NVIDIA_SMI_STUB_MODE=fail): gpu, vram and the free half of vramUsage come from Math.random()",
+      "mode": "all three substituted; asserted against the raw body that the five-field shape holds, the vramUsage total is the hardcoded simulated 8192, and the capture asserts 0<gpu<50, 0<vram<60 and simulated != stub on every request",
+      "rule": "metrics-body-simulated"
+    },
+    {
+      "row": "§8 'everything else' - the absolute fixture root baked into every fixture",
+      "mode": "NOT relaxed: PATH-MAP.json records the token mapping and the corpus is comparable against recordings made with the same PARITY_SCRATCH root. Re-recording with a different root is a re-record, not a diff. Disclosed as a Phase 1 limitation in the report.",
+      "rule": null
+    }
+  ]
+}

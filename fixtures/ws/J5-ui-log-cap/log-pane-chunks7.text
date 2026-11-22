@@ -1,0 +1,70 @@
+No output yet...[2026-01-01T00:00:00.000Z] Starting server: C:\Users\anubh\AppData\Local\Temp\parity-scratch\bin\fake-llama-server.exe
+[2026-01-01T00:00:00.000Z] Connecting to server for real-time logging...
+[2026-01-01T00:00:00.000Z] Command arguments: -m C:\Users\anubh\AppData\Local\Temp\parity-scratch\fixtures\models\models with spaces\spaced model Q4.gguf -ngl 99 -t 12 --temp 0.7 --top-k 20 --top-p 0 --min-p 0.05 --repeat-penalty 1.05 --parallel 1 --load-mode mmap -c 16384 --n-cpu-moe 8 -fa --jinja --chat-template-kwargs {"preserve_thinking": true} --chat-template-file C:\Users\anubh\AppData\Local\Temp\parity-scratch\fixtures\models\models with spaces\chat-template.jinja --cache-ram 8192 --reasoning off --host 0.0.0.0 -fit off --port 17841 --mmproj C:\Users\anubh\AppData\Local\Temp\parity-scratch\fixtures\models\models with spaces\mmproj-spaced model Q4.gguf
+[2026-01-01T00:00:00.000Z] Server started successfully
+[2026-01-01T00:00:00.000Z] Connected to server for real-time logging
+[2026-01-01T00:00:00.000Z] ggml_ba
+[2026-01-01T00:00:00.000Z] ckend_c
+[2026-01-01T00:00:00.000Z] pu_init
+[2026-01-01T00:00:00.000Z] : numbe
+[2026-01-01T00:00:00.000Z] r of ph
+[2026-01-01T00:00:00.000Z] ysical
+[2026-01-01T00:00:00.000Z] cores:
+[2026-01-01T00:00:00.000Z] 8
+[2026-01-01T00:00:00.000Z] ggml_ba
+[2026-01-01T00:00:00.000Z] ckend_c
+[2026-01-01T00:00:00.000Z] pu_init
+[2026-01-01T00:00:00.000Z] : numbe
+[2026-01-01T00:00:00.000Z] r of lo
+[2026-01-01T00:00:00.000Z] gical c
+[2026-01-01T00:00:00.000Z] ores: 1
+[2026-01-01T00:00:00.000Z] 6
+[2026-01-01T00:00:00.000Z] load_ba
+[2026-01-01T00:00:00.000Z] ckend:
+[2026-01-01T00:00:00.000Z] loaded
+[2026-01-01T00:00:00.000Z] CPU bac
+[2026-01-01T00:00:00.000Z] kend
+[2026-01-01T00:00:00.000Z] load_mo
+[2026-01-01T00:00:00.000Z] del: ex
+[2026-01-01T00:00:00.000Z] pecting
+[2026-01-01T00:00:00.000Z] a GGUF
+[2026-01-01T00:00:00.000Z] file i
+[2026-01-01T00:00:00.000Z] n versi
+[2026-01-01T00:00:00.000Z] on 3
+[2026-01-01T00:00:00.000Z] load_mo
+[2026-01-01T00:00:00.000Z] del: mo
+[2026-01-01T00:00:00.000Z] del = C
+[2026-01-01T00:00:00.000Z] :\Users
+[2026-01-01T00:00:00.000Z] \anubh\
+[2026-01-01T00:00:00.000Z] AppData
+[2026-01-01T00:00:00.000Z] \Local\
+[2026-01-01T00:00:00.000Z] Temp\pa
+[2026-01-01T00:00:00.000Z] rity-sc
+[2026-01-01T00:00:00.000Z] ratch\f
+[2026-01-01T00:00:00.000Z] ixtures
+[2026-01-01T00:00:00.000Z] \models
+[2026-01-01T00:00:00.000Z] \models
+[2026-01-01T00:00:00.000Z] with s
+[2026-01-01T00:00:00.000Z] paces\s
+[2026-01-01T00:00:00.000Z] paced m
+[2026-01-01T00:00:00.000Z] odel Q4
+[2026-01-01T00:00:00.000Z] .gguf
+[2026-01-01T00:00:00.000Z] print_i
+[2026-01-01T00:00:00.000Z] nfo: n_
+[2026-01-01T00:00:00.000Z] ctx = 1
+[2026-01-01T00:00:00.000Z] 6384
+[2026-01-01T00:00:00.000Z] srv
+[2026-01-01T00:00:00.000Z] load_mo
+[2026-01-01T00:00:00.000Z] del: lo
+[2026-01-01T00:00:00.000Z] ad_mode
+[2026-01-01T00:00:00.000Z] l: OK
+[2026-01-01T00:00:00.000Z] srv  up
+[2026-01-01T00:00:00.000Z] date_sl
+[2026-01-01T00:00:00.000Z] ots: al
+[2026-01-01T00:00:00.000Z] l slots
+[2026-01-01T00:00:00.000Z] idle
+[2026-01-01T00:00:00.000Z] main: server is listening on
+[2026-01-01T00:00:00.000Z] http:/
+[2026-01-01T00:00:00.000Z] /0.0.0.
+[2026-01-01T00:00:00.000Z] 0:17841
+[2026-01-01T00:00:00.000Z] 

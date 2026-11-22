@@ -1,0 +1,18 @@
+{
+  "method": "POST",
+  "url": "http://localhost:7837/start",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "*/*"
+  },
+  "body": {
+    "serverPath": "C:\\nvm4w\\nodejs\\node.exe",
+    "args": [
+      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js",
+      "-m",
+      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+      "--parity-chunks",
+      "0"
+    ]
+  }
+}

@@ -1,0 +1,1145 @@
+{
+  "capturedAt": "2026-11-22T23:00:27.255Z",
+  "legacyTag": "parity-baseline",
+  "legacyCommit": "c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "capturedBy": {
+    "script": "tools/parity/capture-legacy.js",
+    "command": "C:\\nvm4w\\nodejs\\node.exe C:\\projects\\Cline-demo\\tools\\parity\\capture-legacy.js --capture --repo C:/projects/Cline-demo --scratch C:/Users/anubh/AppData/Local/Temp/parity-scratch --out C:/projects/Cline-demo/fixtures --standin C:/Users/anubh/AppData/Local/Temp/parity-scratch/bin/fake-llama-server.exe --stub C:/projects/Cline-demo/tools/parity/nvidia-smi-stub --csc \"MSYS_NO_PATHCONV=1 C:\\\\Windows\\\\Microsoft.NET\\\\Framework64\\\\v4.0.30319\\\\csc.exe -nologo -target:exe -out:C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\bin\\\\fake-llama-server.exe C:\\\\projects\\\\Cline-demo\\\\tools\\\\parity\\\\standin-llama-server.cs\"",
+    "node": "v24.6.0",
+    "platform": "win32",
+    "arch": "x64"
+  },
+  "sandbox": {
+    "scratch": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch",
+    "app": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app",
+    "fixtureTree": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures",
+    "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+    "extraction": "git -C C:\\projects\\Cline-demo archive parity-baseline | tar -x -C C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app",
+    "nodeModules": "cmd //c mklink /J C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\node_modules C:\\projects\\Cline-demo\\node_modules"
+  },
+  "standIn": {
+    "source": "tools/parity/standin-llama-server.cs",
+    "sourceSha256": "ac4a938fb522de2aa0bc05680043a7a69bc8b8fc881549cafbdfbfff887a4379",
+    "exe": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe",
+    "exeSha256": "43479ed021214a091c0f7739c27356f7a048772d48676fe733a56ee639d79a8e",
+    "rebuildCommand": "MSYS_NO_PATHCONV=1 C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe -nologo -target:exe -out:C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe C:\\projects\\Cline-demo\\tools\\parity\\standin-llama-server.cs",
+    "note": "rebuilt from source on every capture run; the exe lives in the scratch sandbox only. Killing the relay also kills the relayed node child (kill-on-close job object), so /stop and manager teardown cannot leave a grandchild on the llama-server port; measured in fixtures/argv/J5-ui-launch/probe-stand-in.json."
+  },
+  "nvidiaSmiStub": {
+    "dir": "C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub",
+    "modes": [
+      "ok",
+      "garbage",
+      "fail"
+    ]
+  },
+  "pathMap": {
+    "file": "fixtures/PATH-MAP.json",
+    "llamaServerExe": "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+    "resolvedTo": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe",
+    "note": "PATH-MAP.json still carries the .cmd token from the earlier probe harness. Node 24 cannot spawn a .cmd without a shell (CVE-2024-27980), which would change how argv reaches the child, so the capture resolves that token to a compiled .exe stand-in with the same name. The .cmd shim is still probed and its EINVAL recorded in fixtures/argv/J5-ui-launch/probe-stand-in.json."
+  },
+  "comparisonModes": "fixtures/COMPARISON.json",
+  "complete": true,
+  "journeys": {
+    "J0-baseline": 9,
+    "J1-settings": 16,
+    "J2-models": 2,
+    "J2b-metrics-garbage": 7,
+    "J2c-metrics-fail": 6,
+    "J3-start-stop": 15,
+    "J3b-exit-code": 6,
+    "J3c-start-missing-path": 4,
+    "J3d-restart": 22,
+    "J4-launch-presets": 18,
+    "J5-ui-states": 22,
+    "J5-ui-log-cap": 14,
+    "J5-ui-cadence": 5,
+    "J5-ui-launch": 16,
+    "J5-ui-dialogs": 3,
+    "J6-corpus-smoke": 15
+  },
+  "fileCount": 180,
+  "files": [
+    {
+      "path": "fixtures/http/J0-baseline/root.request.json",
+      "sha256": "eb9ac369ad01e0f1c9a7d92718f7bf8cf5d734f34be1102d0e413a41a93afc77",
+      "journey": "J0-baseline",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /"
+    },
+    {
+      "path": "fixtures/http/J0-baseline/root.response",
+      "sha256": "79ebec8dc79da50ea35e69ea927961d137c17f6b16eed7e7406ec18674dd0356",
+      "journey": "J0-baseline",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET / -> 200"
+    },
+    {
+      "path": "fixtures/http/J0-baseline/swagger.request.json",
+      "sha256": "2b803d406c60b0d6fe161e2aff80f3478d222106cd8d8cc3f29d90a4153f9720",
+      "journey": "J0-baseline",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /swagger"
+    },
+    {
+      "path": "fixtures/http/J0-baseline/swagger.response",
+      "sha256": "5eab87af15d448b843c6e327f8457ef61a8f47cc0b158a616c728daa5fc8fb97",
+      "journey": "J0-baseline",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /swagger -> 200"
+    },
+    {
+      "path": "fixtures/http/J0-baseline/swagger-json.request.json",
+      "sha256": "8bf2a30a6696efd80c02e2761384af09f70908e8b3c15b351f9a06971a6c82f8",
+      "journey": "J0-baseline",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /swagger.json"
+    },
+    {
+      "path": "fixtures/http/J0-baseline/swagger-json.response",
+      "sha256": "79a00dbda0af45ecf82886463e256c75741d3c4f4d99e7ee6cd0b1318de74854",
+      "journey": "J0-baseline",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /swagger.json -> 200"
+    },
+    {
+      "path": "fixtures/http/J0-baseline/settings-first-run.request.json",
+      "sha256": "ff34a5cca5f2a8fcb2afe3f51023463185a51a5d584ffaab403e52ad2cd492b1",
+      "journey": "J0-baseline",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /settings"
+    },
+    {
+      "path": "fixtures/http/J0-baseline/settings-first-run.response",
+      "sha256": "1ab4205136dbe29945ddc098d9baf07d40ea1f73aea3efadc2e0ad7dfa468acf",
+      "journey": "J0-baseline",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /settings -> 200"
+    },
+    {
+      "path": "fixtures/http/J0-baseline/first-run-note.json",
+      "sha256": "f92cba719eae7d58483b8b67225ef64941ddd2e16ba694eae911f04c00d2236e",
+      "journey": "J0-baseline",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | first-run default branch note"
+    },
+    {
+      "path": "fixtures/http/J1-settings/settings-post-with-port.request.json",
+      "sha256": "9369beef375d2b30b230b7bffa4e38bea1ece20d5d8b29c71c75d36cbb968353",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /settings"
+    },
+    {
+      "path": "fixtures/http/J1-settings/settings-post-with-port.response",
+      "sha256": "48b8ca215afdea86aaab6d15966308b9f1a765850676713296d6245023d6d114",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /settings -> 200"
+    },
+    {
+      "path": "fixtures/ini/J1-settings/settings.after-with-port.json",
+      "sha256": "a8d848aa904de16056fa3f39ea221a4a871f491a9be326cde88bdd0d1799106b",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | bytes of C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\settings.json after POST /settings {modelsDirectory, serverPort:7838}"
+    },
+    {
+      "path": "fixtures/http/J1-settings/settings-read.request.json",
+      "sha256": "ff34a5cca5f2a8fcb2afe3f51023463185a51a5d584ffaab403e52ad2cd492b1",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /settings"
+    },
+    {
+      "path": "fixtures/http/J1-settings/settings-read.response",
+      "sha256": "d05d82c4bb8f8de697f927dc1f578f49cd3e26eca68f7cddcbb64c59b7570a48",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /settings -> 200"
+    },
+    {
+      "path": "fixtures/http/J1-settings/settings-post-without-port.request.json",
+      "sha256": "5f33ed8ad197944bac2fe56aee0dd9d3cdb4bc051f19be4d7a5dd12f7dceb079",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /settings"
+    },
+    {
+      "path": "fixtures/http/J1-settings/settings-post-without-port.response",
+      "sha256": "48b8ca215afdea86aaab6d15966308b9f1a765850676713296d6245023d6d114",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /settings -> 200"
+    },
+    {
+      "path": "fixtures/ini/J1-settings/settings.after-without-port.json",
+      "sha256": "7f727d0b221b87bf751a42338d3d119517da9a823abf41e2a80608f1258f15fe",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | bytes of C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\settings.json after POST /settings WITHOUT serverPort — Q2: the file must say 8080 even though it said 7838"
+    },
+    {
+      "path": "fixtures/http/J1-settings/metrics-1.request.json",
+      "sha256": "53d232b3fbcd583e3d128af4928b49fb9ac658240db94400a7d10e3c03fbc051",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics"
+    },
+    {
+      "path": "fixtures/http/J1-settings/metrics-1.response",
+      "sha256": "3a035a75aba24de85960516a39616471440208c3ab1c08378ff67d37a092441f",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics -> 200"
+    },
+    {
+      "path": "fixtures/http/J1-settings/metrics-2.request.json",
+      "sha256": "53d232b3fbcd583e3d128af4928b49fb9ac658240db94400a7d10e3c03fbc051",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics"
+    },
+    {
+      "path": "fixtures/http/J1-settings/metrics-2.response",
+      "sha256": "3a035a75aba24de85960516a39616471440208c3ab1c08378ff67d37a092441f",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics -> 200"
+    },
+    {
+      "path": "fixtures/http/J1-settings/metrics-3.request.json",
+      "sha256": "53d232b3fbcd583e3d128af4928b49fb9ac658240db94400a7d10e3c03fbc051",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics"
+    },
+    {
+      "path": "fixtures/http/J1-settings/metrics-3.response",
+      "sha256": "3a035a75aba24de85960516a39616471440208c3ab1c08378ff67d37a092441f",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics -> 200"
+    },
+    {
+      "path": "fixtures/http/J1-settings/status.request.json",
+      "sha256": "cd086cef46f8bbe990aa0086737d632df18429730600df6ca3b4550c56c99692",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status"
+    },
+    {
+      "path": "fixtures/http/J1-settings/status.response",
+      "sha256": "a0b2bcfcde77298349b21b9b370bd3b13cd9608caed352fe73a9101af84f7dd9",
+      "journey": "J1-settings",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J0-baseline env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J0-baseline.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status -> 200"
+    },
+    {
+      "path": "fixtures/http/J2-models/models.request.json",
+      "sha256": "2a3d8876244f4038cb74f32e863599c572bceff5bc15ea591301552bd00e25dd",
+      "journey": "J2-models",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2-models env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2-models.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /models"
+    },
+    {
+      "path": "fixtures/http/J2-models/models.response",
+      "sha256": "4f349fe6a14db475be2a825999a979d5e65a5991353e42962e122ca64e6200c9",
+      "journey": "J2-models",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2-models env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2-models.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /models -> 200"
+    },
+    {
+      "path": "fixtures/http/J2b-metrics-garbage/metrics-1.request.json",
+      "sha256": "53d232b3fbcd583e3d128af4928b49fb9ac658240db94400a7d10e3c03fbc051",
+      "journey": "J2b-metrics-garbage",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2b-metrics-garbage env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=garbage,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2b-metrics-garbage.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics"
+    },
+    {
+      "path": "fixtures/http/J2b-metrics-garbage/metrics-1.response",
+      "sha256": "ce6a4a6e66ed1d071230720cedab0b30acf8829297fa3a74d1a16cedc9061708",
+      "journey": "J2b-metrics-garbage",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2b-metrics-garbage env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=garbage,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2b-metrics-garbage.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics -> 200"
+    },
+    {
+      "path": "fixtures/http/J2b-metrics-garbage/metrics-2.request.json",
+      "sha256": "53d232b3fbcd583e3d128af4928b49fb9ac658240db94400a7d10e3c03fbc051",
+      "journey": "J2b-metrics-garbage",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2b-metrics-garbage env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=garbage,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2b-metrics-garbage.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics"
+    },
+    {
+      "path": "fixtures/http/J2b-metrics-garbage/metrics-2.response",
+      "sha256": "ce6a4a6e66ed1d071230720cedab0b30acf8829297fa3a74d1a16cedc9061708",
+      "journey": "J2b-metrics-garbage",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2b-metrics-garbage env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=garbage,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2b-metrics-garbage.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics -> 200"
+    },
+    {
+      "path": "fixtures/http/J2b-metrics-garbage/metrics-3.request.json",
+      "sha256": "53d232b3fbcd583e3d128af4928b49fb9ac658240db94400a7d10e3c03fbc051",
+      "journey": "J2b-metrics-garbage",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2b-metrics-garbage env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=garbage,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2b-metrics-garbage.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics"
+    },
+    {
+      "path": "fixtures/http/J2b-metrics-garbage/metrics-3.response",
+      "sha256": "ce6a4a6e66ed1d071230720cedab0b30acf8829297fa3a74d1a16cedc9061708",
+      "journey": "J2b-metrics-garbage",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2b-metrics-garbage env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=garbage,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2b-metrics-garbage.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics -> 200"
+    },
+    {
+      "path": "fixtures/http/J2b-metrics-garbage/shape-note.json",
+      "sha256": "860da93546b6c5be39901d0f5a1dbcc568ab7b20330036206810dc0b6dd1cb10",
+      "journey": "J2b-metrics-garbage",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2b-metrics-garbage env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=garbage,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2b-metrics-garbage.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | garbage-stub shape note"
+    },
+    {
+      "path": "fixtures/http/J2c-metrics-fail/metrics-1.request.json",
+      "sha256": "53d232b3fbcd583e3d128af4928b49fb9ac658240db94400a7d10e3c03fbc051",
+      "journey": "J2c-metrics-fail",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2c-metrics-fail env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=fail,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2c-metrics-fail.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics"
+    },
+    {
+      "path": "fixtures/http/J2c-metrics-fail/metrics-1.response",
+      "sha256": "738a7c40d12867c943189a0859ff0c14fae2250418cb539fc83c7c8c2890f179",
+      "journey": "J2c-metrics-fail",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2c-metrics-fail env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=fail,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2c-metrics-fail.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics -> 200"
+    },
+    {
+      "path": "fixtures/http/J2c-metrics-fail/metrics-2.request.json",
+      "sha256": "53d232b3fbcd583e3d128af4928b49fb9ac658240db94400a7d10e3c03fbc051",
+      "journey": "J2c-metrics-fail",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2c-metrics-fail env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=fail,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2c-metrics-fail.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics"
+    },
+    {
+      "path": "fixtures/http/J2c-metrics-fail/metrics-2.response",
+      "sha256": "738a7c40d12867c943189a0859ff0c14fae2250418cb539fc83c7c8c2890f179",
+      "journey": "J2c-metrics-fail",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2c-metrics-fail env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=fail,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2c-metrics-fail.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics -> 200"
+    },
+    {
+      "path": "fixtures/http/J2c-metrics-fail/metrics-3.request.json",
+      "sha256": "53d232b3fbcd583e3d128af4928b49fb9ac658240db94400a7d10e3c03fbc051",
+      "journey": "J2c-metrics-fail",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2c-metrics-fail env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=fail,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2c-metrics-fail.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics"
+    },
+    {
+      "path": "fixtures/http/J2c-metrics-fail/metrics-3.response",
+      "sha256": "738a7c40d12867c943189a0859ff0c14fae2250418cb539fc83c7c8c2890f179",
+      "journey": "J2c-metrics-fail",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J2c-metrics-fail env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=fail,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J2c-metrics-fail.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /metrics -> 200"
+    },
+    {
+      "path": "fixtures/http/J3-start-stop/status-before.request.json",
+      "sha256": "cd086cef46f8bbe990aa0086737d632df18429730600df6ca3b4550c56c99692",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status"
+    },
+    {
+      "path": "fixtures/http/J3-start-stop/status-before.response",
+      "sha256": "a0b2bcfcde77298349b21b9b370bd3b13cd9608caed352fe73a9101af84f7dd9",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status -> 200"
+    },
+    {
+      "path": "fixtures/http/J3-start-stop/start.request.json",
+      "sha256": "9a7f15f86de436811642b77664a697c58c562b8894f885e016fde606fd1ecde3",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start"
+    },
+    {
+      "path": "fixtures/http/J3-start-stop/start.response",
+      "sha256": "3e4f0e9c890d83a3de68c33ef9608e7bb208977d198aca881d8294ac43be24c1",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start -> 200"
+    },
+    {
+      "path": "fixtures/http/J3-start-stop/status-running.request.json",
+      "sha256": "cd086cef46f8bbe990aa0086737d632df18429730600df6ca3b4550c56c99692",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status"
+    },
+    {
+      "path": "fixtures/http/J3-start-stop/status-running.response",
+      "sha256": "5359579cc62de8b34114eaf670858967b53735fc1ec16d4ceb55f237a19708c1",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status -> 200"
+    },
+    {
+      "path": "fixtures/http/J3-start-stop/start-while-running.request.json",
+      "sha256": "9a7f15f86de436811642b77664a697c58c562b8894f885e016fde606fd1ecde3",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start"
+    },
+    {
+      "path": "fixtures/http/J3-start-stop/start-while-running.response",
+      "sha256": "3f07a2761b49ee3e6336b3751a30b1a3493b570c923306d1be52fc4077565266",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start -> 200"
+    },
+    {
+      "path": "fixtures/http/J3-start-stop/stop.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J3-start-stop/stop.response",
+      "sha256": "571f88a1d7034c60c40b2213aa7b97805944c86b68aa66be7331e3712bced3b8",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/ws/J3-start-stop/stream-lines.json",
+      "sha256": "4f89fba5c73067676848f05a36eed772aac28d09dc23d8949aa900a0dd8a350a",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | concatenated log-stream payloads of J3-start-stop-c1"
+    },
+    {
+      "path": "fixtures/ws/J3-start-stop/events.json",
+      "sha256": "be67e45469e010a50a897aecfd282fc3bf4a714e63870bc4be7e65fd35d2db86",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | socket.io-client (default transports) on http://localhost:7837, every event via socket.onAny, log payloads base64 of the received string"
+    },
+    {
+      "path": "fixtures/argv/J3-start-stop/launch.jsonl",
+      "sha256": "ae1275319d66ec1fdabc23265aaeea3e696c06472006ef8a44c8e749074ddabd",
+      "journey": "J3-start-stop",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3-start-stop env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | argv + raw command line appended to C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3-start-stop.jsonl by tools/parity/standin-llama-server.exe relaying to tools/parity/fake-llama-server.js"
+    },
+    {
+      "path": "fixtures/ws/J3-start-stop/manager.stdout.log",
+      "sha256": "60e48110709034dd4821a66906f262575af4c893699f219dc46f7fb2ccc8612c",
+      "journey": "J3-start-stop",
+      "producedBy": "stdout of no manager session"
+    },
+    {
+      "path": "fixtures/ws/J3-start-stop/manager.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "journey": "J3-start-stop",
+      "producedBy": "stderr of no manager session"
+    },
+    {
+      "path": "fixtures/http/J3b-exit-code/start.request.json",
+      "sha256": "1eada84ba621824d79a8129f5d0bbcc1830751a8e7e3d916418740559efde742",
+      "journey": "J3b-exit-code",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3b-exit-code env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3b-exit-code.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start"
+    },
+    {
+      "path": "fixtures/http/J3b-exit-code/start.response",
+      "sha256": "3e4f0e9c890d83a3de68c33ef9608e7bb208977d198aca881d8294ac43be24c1",
+      "journey": "J3b-exit-code",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3b-exit-code env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3b-exit-code.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start -> 200"
+    },
+    {
+      "path": "fixtures/ws/J3b-exit-code/events.json",
+      "sha256": "5f0ceb7f8b3acae249adcd2fa6732dbd0405ea01271f7cdef098e26c2fa3ea94",
+      "journey": "J3b-exit-code",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3b-exit-code env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3b-exit-code.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | socket.io-client event trace of the child-exit path (exit code 3 via --parity-exit-code)"
+    },
+    {
+      "path": "fixtures/argv/J3b-exit-code/launch.jsonl",
+      "sha256": "c5477dbdecba84ec8175566cd4852c995de6603158126589895daf7d097c714f",
+      "journey": "J3b-exit-code",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3b-exit-code env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3b-exit-code.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | argv + raw command line appended to C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3b-exit-code.jsonl by tools/parity/standin-llama-server.exe relaying to tools/parity/fake-llama-server.js"
+    },
+    {
+      "path": "fixtures/ws/J3b-exit-code/manager.stdout.log",
+      "sha256": "5aee7a34f4a6f310cde319b6e0b0de033b890c76f5c7cc18e23ac77a3ee3f89e",
+      "journey": "J3b-exit-code",
+      "producedBy": "stdout of no manager session"
+    },
+    {
+      "path": "fixtures/ws/J3b-exit-code/manager.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "journey": "J3b-exit-code",
+      "producedBy": "stderr of no manager session"
+    },
+    {
+      "path": "fixtures/http/J3c-start-missing-path/start-without-serverpath.request.json",
+      "sha256": "3120adb6b3c2fb78c1fea765d2d52a830b89f3baead2ea5b2bbafe91fc288d1b",
+      "journey": "J3c-start-missing-path",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3c-start-missing-path env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3c-start-missing-path.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start"
+    },
+    {
+      "path": "fixtures/http/J3c-start-missing-path/start-without-serverpath.response",
+      "sha256": "b4db3a0687ca567268d9935b57e703d99a1b889d05693c4351bd62824d620a96",
+      "journey": "J3c-start-missing-path",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3c-start-missing-path env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3c-start-missing-path.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start -> 400"
+    },
+    {
+      "path": "fixtures/http/J3c-start-missing-path/stop-while-idle.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J3c-start-missing-path",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3c-start-missing-path env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3c-start-missing-path.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J3c-start-missing-path/stop-while-idle.response",
+      "sha256": "5047e5907b36c1aa008d36d6c96eb7ededa9b76bda5bd5f7ce700059ed951378",
+      "journey": "J3c-start-missing-path",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3c-start-missing-path env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3c-start-missing-path.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/restart-before-any-launch.request.json",
+      "sha256": "41c4b27bb750d5ae81935cf8d59541ca32f24111fb08f19e6a9d0931369fa877",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /restart"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/restart-before-any-launch.response",
+      "sha256": "6bab83078910f061bf76ed378f20fff19691378413ff86b8077e6290451fa0cb",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /restart -> 400"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/start.request.json",
+      "sha256": "0985003dafd932e1a4eaf6789e58c14a2753306b36939385057cdecddd6e37af",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/start.response",
+      "sha256": "3e4f0e9c890d83a3de68c33ef9608e7bb208977d198aca881d8294ac43be24c1",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start -> 200"
+    },
+    {
+      "path": "fixtures/argv/J3d-restart/after-start.jsonl",
+      "sha256": "712e639465ade519de65d90037f1e3d7f93b95adc9af5424c3b64a8b481b687b",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | argv + raw command line appended to C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl by tools/parity/standin-llama-server.exe relaying to tools/parity/fake-llama-server.js"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/restart-get-not-a-route.request.json",
+      "sha256": "19fe948c791abba0eaf9c3b3a41a19dfd9e33c2e9ff4e8561801aa260eb184db",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /restart"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/restart-get-not-a-route.response",
+      "sha256": "d14f1df796ba7ebb5002e36d34b1f8a8bee21ffff9e713af1362d3a691d257d6",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /restart -> 404"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/restart.request.json",
+      "sha256": "41c4b27bb750d5ae81935cf8d59541ca32f24111fb08f19e6a9d0931369fa877",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /restart"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/restart.response",
+      "sha256": "a1cafb93310c4c0acd1a3cd0c18fc1e0d44d51412aa2377c9fabe3836698dd99",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /restart -> 200"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/status-immediately-after-restart.request.json",
+      "sha256": "cd086cef46f8bbe990aa0086737d632df18429730600df6ca3b4550c56c99692",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/status-immediately-after-restart.response",
+      "sha256": "a0b2bcfcde77298349b21b9b370bd3b13cd9608caed352fe73a9101af84f7dd9",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status -> 200"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/status-after-restart-settle.request.json",
+      "sha256": "cd086cef46f8bbe990aa0086737d632df18429730600df6ca3b4550c56c99692",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/status-after-restart-settle.response",
+      "sha256": "a0b2bcfcde77298349b21b9b370bd3b13cd9608caed352fe73a9101af84f7dd9",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status -> 200"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/stop-after-restart.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/stop-after-restart.response",
+      "sha256": "5047e5907b36c1aa008d36d6c96eb7ededa9b76bda5bd5f7ce700059ed951378",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/restart-settle.json",
+      "sha256": "61fc9e307a122464bbbd1708d859de383bd4dcf0e9d506de8f42a5636d33d3f0",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | shape-mode settle snapshot of the /restart race (COMPARISON rule restart-settle)"
+    },
+    {
+      "path": "fixtures/ws/J3d-restart/event-identity.json",
+      "sha256": "a5e86821d69f69da289d559e97a67f2d5f93050339db1e4e2eb1ec70210363b7",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | socket.io event identity across /start -> /restart -> settle; log-stream payload bytes are golden in ws/J3-start-stop/events.json"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/restart-after-manager-restart.request.json",
+      "sha256": "41c4b27bb750d5ae81935cf8d59541ca32f24111fb08f19e6a9d0931369fa877",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /restart"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/restart-after-manager-restart.response",
+      "sha256": "6bab83078910f061bf76ed378f20fff19691378413ff86b8077e6290451fa0cb",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /restart -> 400"
+    },
+    {
+      "path": "fixtures/http/J3d-restart/restart-after-manager-restart.json",
+      "sha256": "3d52e7332ec457e0274d16ecaea2bfe2cb01133d0b12e806cf1e95284d80db59",
+      "journey": "J3d-restart",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J3d-restart env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J3d-restart.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Q4: lastLaunchConfig is in-memory state, so a restarted manager answers 400 and spawns nothing (the argv log gained no line)"
+    },
+    {
+      "path": "fixtures/ws/J3d-restart/manager-2.stdout.log",
+      "sha256": "b935f35e75f75fffbc378b4092e8b7d9985ba95ec210e0315f4d2716a01a3d34",
+      "journey": "J3d-restart",
+      "producedBy": "stdout of no manager session"
+    },
+    {
+      "path": "fixtures/ws/J3d-restart/manager-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "journey": "J3d-restart",
+      "producedBy": "stderr of no manager session"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/settings-server-port-7838.request.json",
+      "sha256": "9369beef375d2b30b230b7bffa4e38bea1ece20d5d8b29c71c75d36cbb968353",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /settings"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/settings-server-port-7838.response",
+      "sha256": "48b8ca215afdea86aaab6d15966308b9f1a765850676713296d6245023d6d114",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /settings -> 200"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/launch-presets-default-port.request.json",
+      "sha256": "6dfa6349ce4daa3d76fd039d49a78a7760026b59caa3585d5f6a559925fd040e",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /launch-presets"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/launch-presets-default-port.response",
+      "sha256": "25db53511ac1f95acfa9113a18a9128690c6fd22166be8d9a4292b200d26b43a",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /launch-presets -> 200"
+    },
+    {
+      "path": "fixtures/ini/J4-launch-presets/presets-direct.ini",
+      "sha256": "2c25c87dcc493dc776488e8ffa85d3e691f297cfde9cd9ffeeff5e92bb14cc04",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | bytes of C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini written by POST /launch-presets (verbatim copy of the request presets field)"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/stop-after-default-port.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/stop-after-default-port.response",
+      "sha256": "571f88a1d7034c60c40b2213aa7b97805944c86b68aa66be7331e3712bced3b8",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/launch-presets-explicit-port.request.json",
+      "sha256": "92bfcc8e81638c0566d7b30371fe4d2956303d1c006bdb340210f862a49edc6d",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /launch-presets"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/launch-presets-explicit-port.response",
+      "sha256": "25db53511ac1f95acfa9113a18a9128690c6fd22166be8d9a4292b200d26b43a",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /launch-presets -> 200"
+    },
+    {
+      "path": "fixtures/ini/J4-launch-presets/presets-direct-with-port.ini",
+      "sha256": "2c25c87dcc493dc776488e8ffa85d3e691f297cfde9cd9ffeeff5e92bb14cc04",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | bytes of C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini written by the second POST /launch-presets"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/restart-after-presets.request.json",
+      "sha256": "41c4b27bb750d5ae81935cf8d59541ca32f24111fb08f19e6a9d0931369fa877",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /restart"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/restart-after-presets.response",
+      "sha256": "6bab83078910f061bf76ed378f20fff19691378413ff86b8077e6290451fa0cb",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /restart -> 400"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/stop-after-explicit-port.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J4-launch-presets/stop-after-explicit-port.response",
+      "sha256": "571f88a1d7034c60c40b2213aa7b97805944c86b68aa66be7331e3712bced3b8",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/argv/J4-launch-presets/port-source-evidence.json",
+      "sha256": "678625724ab2d90ba1ca2078bca5512a7155c6a151069ef6cc043b3fa0b7612e",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Q5 dual-path summary derived from the argv lines in this journey"
+    },
+    {
+      "path": "fixtures/argv/J4-launch-presets/launch.jsonl",
+      "sha256": "2f9a0adaf41a20496a9a7d955fc1eabad92757d68ff863c228dadbfdd0e23e8d",
+      "journey": "J4-launch-presets",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J4-launch-presets env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | argv + raw command line appended to C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J4-launch-presets.jsonl by tools/parity/standin-llama-server.exe relaying to tools/parity/fake-llama-server.js"
+    },
+    {
+      "path": "fixtures/ws/J4-launch-presets/manager.stdout.log",
+      "sha256": "cc08d81161b24949a7e3029541da6293cdd41d9e17ee3af522723306280325f6",
+      "journey": "J4-launch-presets",
+      "producedBy": "stdout of no manager session"
+    },
+    {
+      "path": "fixtures/ws/J4-launch-presets/manager.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "journey": "J4-launch-presets",
+      "producedBy": "stderr of no manager session"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/default-1280x800.render.json",
+      "sha256": "3dac0f389953b67500c62c341b8caaebdfa02c2c9b86667ee38afa0ad56adace",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | render fingerprint of the same page state as default-1280x800.png"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/default-1280x800.png",
+      "sha256": "05d2c11a0c17c3fd835331621984d979dd70d7740654284620a9fd18dd8cd1a4",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Playwright chromium page.screenshot({fullPage:true}) viewport={\"width\":1280,\"height\":800}, canvases hidden, animations disabled, document.fonts.ready awaited"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/default-1920x1080.render.json",
+      "sha256": "d49963020131acf8320ea99477172fa5a78b93493178b44fb93f00f9a407a08d",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | render fingerprint of the same page state as default-1920x1080.png"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/default-1920x1080.png",
+      "sha256": "91b8c3c796343d3e05d5da275779697eeddee1c798cb3775cc68b20721934354",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Playwright chromium page.screenshot({fullPage:true}) viewport={\"width\":1920,\"height\":1080}, canvases hidden, animations disabled, document.fonts.ready awaited"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/config-selected-1280x800.render.json",
+      "sha256": "ec1f238fb70c839a44333bdb1c2c34bf09f7874c961def4a31aee28d4b223ecb",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | render fingerprint of the same page state as config-selected-1280x800.png"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/config-selected-1280x800.png",
+      "sha256": "d4848df3715b082b87363497fe97013b344d0eb3562ba263454aef612e1d194b",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Playwright chromium page.screenshot({fullPage:true}) viewport={\"width\":1280,\"height\":800}, canvases hidden, animations disabled, document.fonts.ready awaited"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/settings-dialog-1280x800.render.json",
+      "sha256": "f97fb6e260a04f9069c2994286b1f4fe484601c814010818fc99fcb8db86be77",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | render fingerprint of the same page state as settings-dialog-1280x800.png"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/settings-dialog-1280x800.png",
+      "sha256": "d2973d2be58b52268074824d31343993bced636d2aedfe4224d26b5a8e95124d",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Playwright chromium page.screenshot({fullPage:true}) viewport={\"width\":1280,\"height\":800}, canvases hidden, animations disabled, document.fonts.ready awaited"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/delete-confirm-1280x800.render.json",
+      "sha256": "f62eca18680d3bbdb3a79c34786ab89a320f0cae435c915719344ba1bb39f230",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | render fingerprint of the same page state as delete-confirm-1280x800.png"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/delete-confirm-1280x800.png",
+      "sha256": "b929a18d529d2542e300eb0f323daad35abddd92f02bf38fd1d5f2f2009be25d",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Playwright chromium page.screenshot({fullPage:true}) viewport={\"width\":1280,\"height\":800}, canvases hidden, animations disabled, document.fonts.ready awaited"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/config-selected-1920x1080.render.json",
+      "sha256": "538183b9d3a9aca711bc64c29a575db9ec351d03d49bd05cf64afa00daee8f02",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | render fingerprint of the same page state as config-selected-1920x1080.png"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/config-selected-1920x1080.png",
+      "sha256": "be4efe87b08051487b6f88a042c14cf4c66c3de33a545988f61933db5e7df7ce",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Playwright chromium page.screenshot({fullPage:true}) viewport={\"width\":1920,\"height\":1080}, canvases hidden, animations disabled, document.fonts.ready awaited"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/settings-dialog-1920x1080.render.json",
+      "sha256": "71202443f675ecfc331d44a0357d2dc94d6e48135e8087ae0dc9f0f96df50af3",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | render fingerprint of the same page state as settings-dialog-1920x1080.png"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/settings-dialog-1920x1080.png",
+      "sha256": "90cf8aaa476e1d490f063d46d14cf8081b77379505573405388e720640e60597",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Playwright chromium page.screenshot({fullPage:true}) viewport={\"width\":1920,\"height\":1080}, canvases hidden, animations disabled, document.fonts.ready awaited"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/delete-confirm-1920x1080.render.json",
+      "sha256": "a0c135441803e3fbde6051af37b95aacd2c817be0abd54fa8d6591efbe472229",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | render fingerprint of the same page state as delete-confirm-1920x1080.png"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/delete-confirm-1920x1080.png",
+      "sha256": "0c4d314d25a44a6195b6e7f510d42ca7c8e0939e9873a980af624128519ea320",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Playwright chromium page.screenshot({fullPage:true}) viewport={\"width\":1920,\"height\":1080}, canvases hidden, animations disabled, document.fonts.ready awaited"
+    },
+    {
+      "path": "fixtures/localstorage/J5-ui-states/fresh.json",
+      "sha256": "b3521a2daedca428cc47534eb6c9a7bbc23fc61aab6f90c438c1f8b04fcebd14",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | localStorage (insertion order) + every form control value, state fresh"
+    },
+    {
+      "path": "fixtures/localstorage/J5-ui-states/after-corpus-seed.json",
+      "sha256": "467f6eecc2e00a710a681a702b98399c9eeacf9ed4b82f3755040e6382019f43",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | localStorage (insertion order) + every form control value, state after-corpus-seed"
+    },
+    {
+      "path": "fixtures/localstorage/J5-ui-states/after-save-config.json",
+      "sha256": "1b5323e4d6c9d878152cdef8847f84ae1fdf0769130f55ae64331d45248668ae",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | localStorage (insertion order) + every form control value, state after-save-config"
+    },
+    {
+      "path": "fixtures/localstorage/J5-ui-states/after-delete.json",
+      "sha256": "f91b7782800017770ae42fbbf24c6b7e9f938087c4661ac531c798159906b6c7",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | localStorage (insertion order) + every form control value, state after-delete"
+    },
+    {
+      "path": "fixtures/localstorage/J5-ui-states/q8-delete-reset.json",
+      "sha256": "e3d0b5fcad202aa289ffb13391b0da064d3cd62376db0d8b771aeae21f8a59b9",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | per-control diff of after-save-config vs after-delete vs fresh defaults"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-states/state-notes.json",
+      "sha256": "60c28369211f00c90214cb5aaf7cce950b8d5686217995094aebecf6b1b11fd9",
+      "journey": "J5-ui-states",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-states env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-states.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | screenshot provenance: viewport, storage seed, font load state, blocked non-localhost requests, frozen page clock, canned /metrics body"
+    },
+    {
+      "path": "fixtures/ws/J5-ui-log-cap/chunk-boundary.json",
+      "sha256": "dda4de2e9af5ec69ef530bffe562ad0a20b7ec90df8617c74ad41e05c521942c",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | chunk-boundary effect of data.trim() per log-stream event (chunks=7)"
+    },
+    {
+      "path": "fixtures/ws/J5-ui-log-cap/log-pane-chunks7.text",
+      "sha256": "02338924702338d0227de17176c3853a92fa7bb09fc1ba59d8319d5a3dd7084d",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | #modelOutput.textContent after the UI-launched child streamed in 7-byte chunks"
+    },
+    {
+      "path": "fixtures/ws/J5-ui-log-cap/events.json",
+      "sha256": "078694d3c8d107d176b663a71cb1ad286446754171f798e13de382ba6ac4e791",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | socket.io trace of the chunks=7 startup stream, log payloads base64 of the received string (partial-line assert in COMPARISON rule ws-events)"
+    },
+    {
+      "path": "fixtures/http/J5-ui-log-cap/stop-from-driver.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J5-ui-log-cap/stop-from-driver.response",
+      "sha256": "571f88a1d7034c60c40b2213aa7b97805944c86b68aa66be7331e3712bced3b8",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/http/J5-ui-log-cap/start-log-flood.request.json",
+      "sha256": "01c1696f30b7aba91ee847c1de1c9fece02dd5ed7906bb6c948347c662184a42",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start"
+    },
+    {
+      "path": "fixtures/http/J5-ui-log-cap/start-log-flood.response",
+      "sha256": "3e4f0e9c890d83a3de68c33ef9608e7bb208977d198aca881d8294ac43be24c1",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /start -> 200"
+    },
+    {
+      "path": "fixtures/ws/J5-ui-log-cap/log-pane.json",
+      "sha256": "a29a81d40b09dc469cff26ae7de012c0c58935ac721c9c47395a5508204c18fc",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page.evaluate on #modelOutput after the 1212-line flood was capped"
+    },
+    {
+      "path": "fixtures/ws/J5-ui-log-cap/log-pane.text",
+      "sha256": "6a357f78b5ec338eb7c267121a4d8996dba2d4a271e37b47c0e9a5732eb3b7a4",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | raw #modelOutput.textContent after the flood was capped at 1000 lines"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-log-cap/log-pane-1280x800.render.json",
+      "sha256": "5e95e30acc3376e476e3584709dd1c314502f88fc2270a497c94cdf58b94ba14",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | render fingerprint of the same page state as log-pane-1280x800.png"
+    },
+    {
+      "path": "fixtures/screenshots/J5-ui-log-cap/log-pane-1280x800.png",
+      "sha256": "93322f1a4629c25b2bf928719ba2036cce6823ed735068846fe725e11bd81b59",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Playwright chromium page.screenshot({fullPage:true}) viewport={\"width\":1280,\"height\":800}, canvases hidden, animations disabled, document.fonts.ready awaited"
+    },
+    {
+      "path": "fixtures/argv/J5-ui-log-cap/launches.jsonl",
+      "sha256": "57d06d92a11fc193f3a5f53c2f802474237bbceaeb5669f4aaba7252b667e4f0",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | argv + raw command line appended to C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl by tools/parity/standin-llama-server.exe relaying to tools/parity/fake-llama-server.js"
+    },
+    {
+      "path": "fixtures/http/J5-ui-log-cap/stop-after-log-flood.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J5-ui-log-cap/stop-after-log-flood.response",
+      "sha256": "571f88a1d7034c60c40b2213aa7b97805944c86b68aa66be7331e3712bced3b8",
+      "journey": "J5-ui-log-cap",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-log-cap env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-log-cap.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/http/J5-ui-cadence/status-while-running.request.json",
+      "sha256": "cd086cef46f8bbe990aa0086737d632df18429730600df6ca3b4550c56c99692",
+      "journey": "J5-ui-cadence",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-cadence env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-cadence.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status"
+    },
+    {
+      "path": "fixtures/http/J5-ui-cadence/status-while-running.response",
+      "sha256": "5359579cc62de8b34114eaf670858967b53735fc1ec16d4ceb55f237a19708c1",
+      "journey": "J5-ui-cadence",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-cadence env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-cadence.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status -> 200"
+    },
+    {
+      "path": "fixtures/ws/J5-ui-cadence/request-cadence.json",
+      "sha256": "21a7ad8e52a470af6481dc63d41b1d3d3577e83fea892fc0a7bd7e16c6210dc4",
+      "journey": "J5-ui-cadence",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-cadence env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-cadence.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Playwright page.on(request) for 12000 ms with NVIDIA_SMI_STUB_MODE=ok"
+    },
+    {
+      "path": "fixtures/http/J5-ui-cadence/stop-after-cadence.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J5-ui-cadence",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-cadence env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-cadence.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J5-ui-cadence/stop-after-cadence.response",
+      "sha256": "571f88a1d7034c60c40b2213aa7b97805944c86b68aa66be7331e3712bced3b8",
+      "journey": "J5-ui-cadence",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-cadence env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-cadence.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/argv/J5-ui-launch/probe-stand-in.json",
+      "sha256": "bf3f2c5b8182c07516ceda3c2c0ce249d6732e03b6b91fd17014902170d67ed0",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | spawn probes run by capture-legacy.js against a copy of C:\\nvm4w\\nodejs\\node.exe and a .cmd shim in C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/start-from-ui.request.json",
+      "sha256": "5255cf2f3b11587b3d8a3accc144a2aa2abe5cb28e20a90b267bed372f7bedf1",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/start (Playwright chromium, response observed via CDP)"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/start-from-ui.response",
+      "sha256": "3e4f0e9c890d83a3de68c33ef9608e7bb208977d198aca881d8294ac43be24c1",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/start -> 200"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/start-from-ui-status.request.json",
+      "sha256": "cd086cef46f8bbe990aa0086737d632df18429730600df6ca3b4550c56c99692",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/start-from-ui-status.response",
+      "sha256": "5359579cc62de8b34114eaf670858967b53735fc1ec16d4ceb55f237a19708c1",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status -> 200"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/start-from-ui-draft-mtp-stop-first.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/start-from-ui-draft-mtp-stop-first.response",
+      "sha256": "571f88a1d7034c60c40b2213aa7b97805944c86b68aa66be7331e3712bced3b8",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/start-from-ui-draft-mtp.request.json",
+      "sha256": "75c5fddd9062abc55d7bedfdf1be30245dcdeba885f35fce1f0055c024b6f31f",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/start (Playwright chromium, response observed via CDP)"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/start-from-ui-draft-mtp.response",
+      "sha256": "3e4f0e9c890d83a3de68c33ef9608e7bb208977d198aca881d8294ac43be24c1",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/start -> 200"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/start-from-ui-draft-mtp-status.request.json",
+      "sha256": "cd086cef46f8bbe990aa0086737d632df18429730600df6ca3b4550c56c99692",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/start-from-ui-draft-mtp-status.response",
+      "sha256": "5359579cc62de8b34114eaf670858967b53735fc1ec16d4ceb55f237a19708c1",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | GET /status -> 200"
+    },
+    {
+      "path": "fixtures/ws/J5-ui-launch/launch-attempts.json",
+      "sha256": "c8047dce617db2f017ecc44743f3b710cc5a84903139b1553bf583b9736b1c8c",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | per-click record of form state, page request, dialog text and argv growth"
+    },
+    {
+      "path": "fixtures/localstorage/J5-ui-launch/after-ui-launch.json",
+      "sha256": "eaf433b783a40e32894d46f022cdb86cb715303a0f88051daf52841ee4c07884",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | localStorage after the UI-launch-driven POST /start calls"
+    },
+    {
+      "path": "fixtures/argv/J5-ui-launch/launch.jsonl",
+      "sha256": "27ee63350629e2f04f7f50eadbee9eb49dd2814c4cc38f505acb1941ae31145d",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | argv + raw command line appended to C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl by tools/parity/standin-llama-server.exe relaying to tools/parity/fake-llama-server.js"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/stop-after-ui-launch.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J5-ui-launch/stop-after-ui-launch.response",
+      "sha256": "571f88a1d7034c60c40b2213aa7b97805944c86b68aa66be7331e3712bced3b8",
+      "journey": "J5-ui-launch",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-launch env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/http/J5-ui-dialogs/settings-from-ui.request.json",
+      "sha256": "dc8c1efa0b254f4259f7d785d1882e8a034e602ab6e8ccb2e133cba4883ef446",
+      "journey": "J5-ui-dialogs",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-dialogs env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-dialogs.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/settings (Playwright chromium, response observed via CDP)"
+    },
+    {
+      "path": "fixtures/http/J5-ui-dialogs/settings-from-ui.response",
+      "sha256": "48b8ca215afdea86aaab6d15966308b9f1a765850676713296d6245023d6d114",
+      "journey": "J5-ui-dialogs",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-dialogs env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-dialogs.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/settings -> 200"
+    },
+    {
+      "path": "fixtures/ws/J5-ui-dialogs/dialogs.json",
+      "sha256": "733a5531a32b8d56e527760ed6c9c9d56f301fe2f27a0bde3f1fc997c59bc817",
+      "journey": "J5-ui-dialogs",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J5-ui-dialogs env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-dialogs.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | Playwright dialog handler + framenavigated counters"
+    },
+    {
+      "path": "fixtures/localstorage/J6-corpus-smoke/config-list.json",
+      "sha256": "272b6246e6a19ea898c4c007e6e8d9faaba7b74e9480665315847c076b88c0ec",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | rendered #configList order after seeding the remapped corpus via addInitScript"
+    },
+    {
+      "path": "fixtures/localstorage/J6-corpus-smoke/model-path-select-survey.json",
+      "sha256": "e5e417a3eb8ba705021ec9708a73dbf7840a09de1e9b15d690029ce0b575e82a",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | direct <select>.value membership probe against the /models option set"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+      "sha256": "2b11c083a52e9da2fc3556999b20114c53d793365f49f8d4861213ba11d75f1e",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/start (Playwright chromium, response observed via CDP)"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/start-from-ui-config-1.response",
+      "sha256": "3e4f0e9c890d83a3de68c33ef9608e7bb208977d198aca881d8294ac43be24c1",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/start -> 200"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/stop-between-corpus-launches-1.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/stop-between-corpus-launches-1.response",
+      "sha256": "571f88a1d7034c60c40b2213aa7b97805944c86b68aa66be7331e3712bced3b8",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+      "sha256": "497d9b0abe46405ae344504dba4cfcdc3cc87931366c4a75125e423adb700bde",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/start (Playwright chromium, response observed via CDP)"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/start-from-ui-config-2.response",
+      "sha256": "3e4f0e9c890d83a3de68c33ef9608e7bb208977d198aca881d8294ac43be24c1",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/start -> 200"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/stop-between-corpus-launches-2.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/stop-between-corpus-launches-2.response",
+      "sha256": "571f88a1d7034c60c40b2213aa7b97805944c86b68aa66be7331e3712bced3b8",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/start-from-ui-config-3.request.json",
+      "sha256": "4c624aba1b1835375efa48d1628f772ad1c43251d105a3b3540d5a73687f959c",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/start (Playwright chromium, response observed via CDP)"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/start-from-ui-config-3.response",
+      "sha256": "3e4f0e9c890d83a3de68c33ef9608e7bb208977d198aca881d8294ac43be24c1",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | page POST http://localhost:7837/start -> 200"
+    },
+    {
+      "path": "fixtures/argv/J6-corpus-smoke/launch.jsonl",
+      "sha256": "4e2e9ef6cb6cf64bb6a1fd49d081880a6e01a6165715a4223d7cf45598eafcba",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | argv + raw command line appended to C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl by tools/parity/standin-llama-server.exe relaying to tools/parity/fake-llama-server.js"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/stop-after-corpus-launches.request.json",
+      "sha256": "0380c0b2d113bd45d8825ec696f86a16e84b9b3bbdc4bca926a6c8b3ecb8d871",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop"
+    },
+    {
+      "path": "fixtures/http/J6-corpus-smoke/stop-after-corpus-launches.response",
+      "sha256": "571f88a1d7034c60c40b2213aa7b97805944c86b68aa66be7331e3712bced3b8",
+      "journey": "J6-corpus-smoke",
+      "producedBy": "node C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\server.js (cwd C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app, legacy copy: git archive parity-baseline -> C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch/app) session=J6-corpus-smoke env{PATH=C:\\projects\\Cline-demo\\tools\\parity\\nvidia-smi-stub;<PATH>,NVIDIA_SMI_STUB_MODE=ok,PARITY_ARGV_LOG=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J6-corpus-smoke.jsonl,PARITY_NODE=C:\\nvm4w\\nodejs\\node.exe,PARITY_FAKE_SCRIPT=C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js,MODEL_PATH=<unset>} | POST /stop -> 200"
+    }
+  ]
+}

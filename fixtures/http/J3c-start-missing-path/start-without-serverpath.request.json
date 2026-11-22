@@ -1,0 +1,14 @@
+{
+  "method": "POST",
+  "url": "http://localhost:7837/start",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "*/*"
+  },
+  "body": {
+    "args": [
+      "-m",
+      "x.gguf"
+    ]
+  }
+}

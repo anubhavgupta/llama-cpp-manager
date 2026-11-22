@@ -1,0 +1,95 @@
+{
+  "connection": "J3b-exit-code-c1",
+  "url": "http://localhost:7837",
+  "events": [
+    {
+      "seq": 1,
+      "event": "connect",
+      "payload": null
+    },
+    {
+      "seq": 2,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Z2dtbF9iYWNrZW5kX2NwdV9pbml0OiBudW1iZXIgb2YgcGh5c2ljYWwgY29yZXM6IDgK",
+        "dataLength": 51
+      }
+    },
+    {
+      "seq": 3,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Z2dtbF9iYWNrZW5kX2NwdV9pbml0OiBudW1iZXIgb2YgbG9naWNhbCBjb3JlczogMTYK",
+        "dataLength": 51
+      }
+    },
+    {
+      "seq": 4,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bG9hZF9iYWNrZW5kOiBsb2FkZWQgQ1BVIGJhY2tlbmQK",
+        "dataLength": 33
+      }
+    },
+    {
+      "seq": 5,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bG9hZF9tb2RlbDogZXhwZWN0aW5nIGEgR0dVRiBmaWxlIGluIHZlcnNpb24gMwo=",
+        "dataLength": 47
+      }
+    },
+    {
+      "seq": 6,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bG9hZF9tb2RlbDogbW9kZWwgPSBDOlxVc2Vyc1xhbnViaFxBcHBEYXRhXExvY2FsXFRlbXBccGFyaXR5LXNjcmF0Y2hcZml4dHVyZXNcbW9kZWxzXGFcbW9kZWwtYS5nZ3VmCg==",
+        "dataLength": 100
+      }
+    },
+    {
+      "seq": 7,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "c3J2ICAgIGxvYWRfbW9kZWw6IGxvYWRfbW9kZWw6IE9LCg==",
+        "dataLength": 34
+      }
+    },
+    {
+      "seq": 8,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "c3J2ICB1cGRhdGVfc2xvdHM6IGFsbCBzbG90cyBpZGxlCg==",
+        "dataLength": 34
+      }
+    },
+    {
+      "seq": 9,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bWFpbjogc2VydmVyIGlzIGxpc3RlbmluZyBvbiBodHRwOi8vMTI3LjAuMC4xOjE3ODM5Cg==",
+        "dataLength": 52
+      }
+    },
+    {
+      "seq": 10,
+      "event": "server-ended",
+      "payload": {
+        "message": "Server process has ended"
+      }
+    },
+    {
+      "seq": 11,
+      "event": "disconnect",
+      "payload": "io client disconnect"
+    }
+  ]
+}

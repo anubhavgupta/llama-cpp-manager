@@ -1,0 +1,11 @@
+{
+  "method": "POST",
+  "url": "http://localhost:7837/settings",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "*/*"
+  },
+  "body": {
+    "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "connection": "J3d-restart-c1",
+  "url": "http://localhost:7837",
+  "firstEvent": "connect",
+  "lastEvent": "disconnect",
+  "eventNames": [
+    "connect",
+    "disconnect",
+    "log-stream",
+    "server-ended"
+  ]
+}

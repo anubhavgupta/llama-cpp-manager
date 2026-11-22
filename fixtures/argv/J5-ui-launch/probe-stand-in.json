@@ -1,0 +1,65 @@
+{
+  "why": "server.js spawns serverPath without a shell. A copy of node.exe renamed to the app path parses the app-built arg vector as its own CLI options and dies before any preload; node refuses to spawn .cmd/.bat without shell:true. The compiled relay in tools/parity/standin-llama-server.cs is the only stand-in either path can launch.",
+  "nodeExeCopyWithAppArgVector": {
+    "exe": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\probe-node-copy.exe",
+    "args": [
+      "--models-preset",
+      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+      "--host",
+      "0.0.0.0",
+      "--port",
+      "8080"
+    ],
+    "code": 9,
+    "signal": null,
+    "stdout": "",
+    "stderr": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\probe-node-copy.exe: bad option: --models-preset\r\n",
+    "spawnError": null
+  },
+  "nodeExeCopyWithFakeKnob": {
+    "exe": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\probe-node-copy.exe",
+    "args": [
+      "--parity-exit-code",
+      "0"
+    ],
+    "code": 9,
+    "signal": null,
+    "stdout": "",
+    "stderr": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\probe-node-copy.exe: bad option: --parity-exit-code\r\n",
+    "spawnError": null
+  },
+  "cmdShim": {
+    "exe": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\probe-shim.cmd",
+    "args": [
+      "--models-preset",
+      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+      "--host",
+      "0.0.0.0",
+      "--port",
+      "8080"
+    ],
+    "code": null,
+    "signal": null,
+    "stdout": "",
+    "stderr": "",
+    "spawnError": {
+      "code": "EINVAL",
+      "message": "spawn EINVAL",
+      "thrownBySpawn": true
+    }
+  },
+  "relayUsedInstead": {
+    "exe": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe",
+    "fakeScript": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js"
+  },
+  "relayKillSemantics": {
+    "port": 17899,
+    "relayBound": true,
+    "portReleasedAfterKill": true,
+    "relayExit": {
+      "code": null,
+      "signal": "SIGTERM"
+    },
+    "mechanism": "JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE wraps the relayed node child, so terminating the relay terminates the tree (a real llama-server.exe is a single process)"
+  }
+}

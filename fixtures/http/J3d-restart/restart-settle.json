@@ -1,0 +1,21 @@
+{
+  "observation": "POST /restart answers 200 success:true, but /status settles on running:false: the killed child's close handler clears runningProcess after /restart assigned the replacement (server.js:459-470), and POST /stop then returns success:false while the replacement may still be running. The deferred SIGKILL at server.js:437-445 reads the same module-level variable, so the replacement surviving is a race - the counts below differ between runs and are compared through the restart-settle shape rule.",
+  "recordedOnPlatform": "win32",
+  "restartBody": {
+    "success": true,
+    "message": "Server restarted successfully"
+  },
+  "statusImmediatelyAfterRestart": {
+    "running": false
+  },
+  "statusAfterRestartSettle": {
+    "running": false
+  },
+  "stopAfterRestart": {
+    "success": false,
+    "error": "No server is currently running"
+  },
+  "managerExitLines": 1,
+  "argvLines": 2,
+  "serverEndedEvents": 1
+}

@@ -1,0 +1,8 @@
+{
+  "method": "POST",
+  "url": "http://localhost:7837/stop",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "*/*"
+  }
+}

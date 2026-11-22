@@ -1,0 +1,26 @@
+{
+  "settingsJsonServerPort": 7838,
+  "launchPresetsWithoutServerPort": {
+    "argv": [
+      "--models-preset",
+      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+      "--host",
+      "0.0.0.0",
+      "--port",
+      "8080"
+    ],
+    "port": "8080"
+  },
+  "launchPresetsWithServerPort": {
+    "argv": [
+      "--models-preset",
+      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+      "--host",
+      "0.0.0.0",
+      "--port",
+      "7838"
+    ],
+    "port": "7838"
+  },
+  "startJourneyPort": "7838 (see argv/J3-start-stop/launch.jsonl, client-supplied --port)"
+}

@@ -1,0 +1,5 @@
+{
+  "observation": "GET /settings with no settings.json in the sandbox answers from server.js own default branch. The personal path in the recorded response is the string hardcoded in server.js at parity-baseline, recorded from the app (C5) — it is not corpus data.",
+  "recordedDefaultModelsDirectory": "C:\\Users\\anubh\\.lmstudio\\models",
+  "serverPort": 8080
+}

@@ -1,0 +1,15 @@
+{
+  "method": "POST",
+  "url": "http://localhost:7837/settings",
+  "headers": {
+    "accept": "*/*",
+    "content-type": "application/json",
+    "origin": "http://localhost:7837",
+    "referer": "http://localhost:7837/",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.8154.6 Safari/537.36",
+    "sec-ch-ua": "\"HeadlessChrome\";v=\"159\", \"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"159\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\""
+  },
+  "postData": "{\"modelsDirectory\":\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\fixtures\\\\models\",\"serverPort\":7838}"
+}

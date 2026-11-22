@@ -1,0 +1,5 @@
+{
+  "stdoutSourceLines": 9,
+  "stderrSourceLines": 0,
+  "note": "Line counts of the concatenated log-stream payload bytes, recorded after the fake finished streaming and before POST /stop: this journey writes every startup line to stdout, and the listening notification is the last of them. The pane side of the §9 trap 9 claim - newline loss and the per-event .trim() - is recorded by J5-ui-log-cap."
+}

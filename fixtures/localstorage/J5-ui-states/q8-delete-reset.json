@@ -1,0 +1,19 @@
+{
+  "note": "deleteConfiguration resets a hard-coded list that diverges from the HTML defaults (Q8). Every control in the document is compared, not just the 36 persisted fields.",
+  "controlCount": 38,
+  "rows": [
+    {
+      "id": "loadMode",
+      "before": {
+        "value": "none",
+        "checked": null
+      },
+      "after": {
+        "value": "mmap",
+        "checked": null
+      },
+      "changed": true,
+      "equalsHtmlDefault": false
+    }
+  ]
+}

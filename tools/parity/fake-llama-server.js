@@ -24,7 +24,9 @@ const VALUE_FLAGS = {
     '-c': 'ctxSize',
     '--parity-chunks': 'parityChunks',
     '--parity-exit-code': 'parityExitCode',
-    '--parity-slow-exit': 'paritySlowExitMs'
+    '--parity-slow-exit': 'paritySlowExitMs',
+    '--parity-repeat-line': 'parityRepeatLine',
+    '--parity-repeat-count': 'parityRepeatCount'
 };
 const BOOL_FLAGS = new Set(['--parity-stderr-only']);
 
@@ -38,7 +40,9 @@ function parseArgs(argv) {
         parityChunks: DEFAULT_CHUNK_BYTES,
         parityExitCode: null,
         parityStderrOnly: false,
-        paritySlowExitMs: 0
+        paritySlowExitMs: 0,
+        parityRepeatLine: null,
+        parityRepeatCount: 0
     };
 
     for (let i = 0; i < argv.length; i += 1) {
@@ -73,6 +77,8 @@ function parseArgs(argv) {
     if (parsed.parityChunks === null || parsed.parityChunks < 0) parsed.parityChunks = DEFAULT_CHUNK_BYTES;
     parsed.parityExitCode = toInteger(parsed.parityExitCode);
     parsed.paritySlowExitMs = toInteger(parsed.paritySlowExitMs) || 0;
+    parsed.parityRepeatCount = toInteger(parsed.parityRepeatCount);
+    if (parsed.parityRepeatCount === null || parsed.parityRepeatCount < 0) parsed.parityRepeatCount = 0;
     return parsed;
 }
 
@@ -124,6 +130,14 @@ function startupLines(parsed, listenUrl) {
     lines.push('srv    load_model: load_model: OK');
     lines.push('srv  update_slots: all slots idle');
     if (listenUrl) lines.push('main: server is listening on ' + listenUrl);
+    // --parity-repeat-line/--parity-repeat-count exist to overflow the UI's 1000-line log cap
+    // (plan.md §9 trap 9) through the real socket path; the text is repeated verbatim so the
+    // post-cap pane content is the same string whatever the chunk coalescing did.
+    if (parsed.parityRepeatLine !== null) {
+        for (let index = 0; index < parsed.parityRepeatCount; index += 1) {
+            lines.push(parsed.parityRepeatLine);
+        }
+    }
     return lines;
 }
 

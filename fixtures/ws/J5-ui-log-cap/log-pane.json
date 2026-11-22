@@ -1,0 +1,12 @@
+{
+  "elementId": "modelOutput",
+  "lineCount": 1000,
+  "repeatLine": "slot request: generated 1 token in 42 ms — parity log-cap probe line",
+  "capEvidence": {
+    "heldExactlyOneThousandEntries": true,
+    "oldestEntriesDropped": true,
+    "trailingSplitElementEmpty": true,
+    "pinnedToBottom": true
+  },
+  "note": "showOutput caps the pane at the last 1000 entries of textContent.split(\"\n\") and then pins scrollTop to scrollHeight (plan.md §9 trap 9). The page clock was frozen for the pixels, and every entry is the same --parity-repeat-line text."
+}

@@ -1,0 +1,6 @@
+{
+  "observation": "With nvidia-smi replying \"not a csv\", getSystemMetrics() parses the line, finds fewer than 3 comma fields, and returns WITHOUT throwing — so the Math.random() catch branch never runs and /metrics reports gpu=0, vram=0, vramUsage=\"0/0\" alongside real cpu/ram. plan.md §9 trap 4 lists the unexpected CSV shape as a simulated-path trigger; recorded legacy runtime evidence (plan §4 step 1) says it is a silent-zero path.",
+  "stubMode": "garbage",
+  "stubReply": "not a csv",
+  "simulatedPathRequires": "an execSync throw: missing binary or non-zero exit (see J2c-metrics-fail)"
+}

@@ -1,0 +1,22 @@
+{
+  "method": "POST",
+  "url": "http://localhost:7837/start",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "*/*"
+  },
+  "body": {
+    "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe",
+    "args": [
+      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js",
+      "-m",
+      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+      "--parity-chunks",
+      "0",
+      "--parity-repeat-line",
+      "slot request: generated 1 token in 42 ms — parity log-cap probe line",
+      "--parity-repeat-count",
+      "1203"
+    ]
+  }
+}

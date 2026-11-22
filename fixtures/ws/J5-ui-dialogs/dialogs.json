@@ -1,0 +1,43 @@
+{
+  "dialogs": [
+    {
+      "type": "alert",
+      "message": "Please enter the path to llama-server.exe"
+    },
+    {
+      "type": "alert",
+      "message": "Please enter a models directory path"
+    },
+    {
+      "type": "alert",
+      "message": "Please enter a configuration name"
+    },
+    {
+      "type": "confirm",
+      "message": "Are you sure you want to delete the configuration \"capture-alpha\"?"
+    }
+  ],
+  "settingsSave": {
+    "requestRecordedAs": "http/J5-ui-dialogs/settings-from-ui.request.json",
+    "mainFrameNavigationsBefore": 1,
+    "mainFrameNavigationsAfter": 2,
+    "reloadObserved": true
+  },
+  "configNameAlert": [
+    {
+      "type": "alert",
+      "message": "Please enter a configuration name"
+    }
+  ],
+  "deleteConfirm": {
+    "dialogs": [
+      {
+        "type": "confirm",
+        "message": "Are you sure you want to delete the configuration \"capture-alpha\"?"
+      }
+    ],
+    "configsBefore": 2,
+    "configsAfter": 1
+  },
+  "note": "Native alert/confirm dialogs are OS windows outside the page surface, so they are recorded as type + message text here (Q13). The handler dismissed them unless the journey set accept."
+}

@@ -1,0 +1,362 @@
+{
+  "storage": {
+    "order": [
+      "llamaCppSettings",
+      "llamaCppConfigs"
+    ],
+    "entries": [
+      [
+        "llamaCppSettings",
+        "{\"serverPort\":17852,\"modelsDirectory\":\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\fixtures\\\\models\"}"
+      ],
+      [
+        "llamaCppConfigs",
+        "{\"capture-alpha\":{\"serverPath\":\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\bin\\\\fake-llama-server.exe\",\"modelPath\":\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\fixtures\\\\models\\\\models with spaces\\\\spaced model Q4.gguf\",\"ngl\":99,\"threads\":12,\"temp\":0.7,\"topK\":20,\"topP\":0,\"minP\":0.05,\"repeatPenalty\":\"1.05\",\"presencePenalty\":0,\"parallel\":1,\"loadMode\":\"mmap\",\"swaFull\":false,\"backendSampling\":false,\"contextSize\":16384,\"nCpuMoe\":8,\"cpuMoe\":false,\"ctkEnable\":false,\"contextTokenKey\":\"f16\",\"contextTokenValue\":\"f16\",\"fastAttention\":\"auto\",\"jinja\":true,\"verbose\":false,\"noKvOffload\":false,\"noMmprojOffload\":false,\"cacheRam\":8192,\"speculationType\":\"none\",\"ngramMod\":false,\"specDraftNMax\":0,\"reasoning\":\"off\",\"loadCustomChatTemplate\":true,\"chatTemplateKwargs\":\"{\\\"preserve_thinking\\\": true}\",\"draftModelPath\":\"\",\"ngld\":0,\"ctkd\":\"f16\",\"ctvd\":\"f16\"}}"
+      ]
+    ]
+  },
+  "fields": [
+    {
+      "id": "configName",
+      "tag": "input",
+      "type": "text",
+      "value": "",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "serverPath",
+      "tag": "input",
+      "type": "text",
+      "value": "",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "modelPath",
+      "tag": "select",
+      "type": null,
+      "value": "",
+      "checked": null,
+      "disabled": false,
+      "text": 11
+    },
+    {
+      "id": "ngl",
+      "tag": "input",
+      "type": "number",
+      "value": "99",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "threads",
+      "tag": "input",
+      "type": "number",
+      "value": "12",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "temp",
+      "tag": "input",
+      "type": "number",
+      "value": "0.7",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "topK",
+      "tag": "input",
+      "type": "number",
+      "value": "20",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "topP",
+      "tag": "input",
+      "type": "number",
+      "value": "0.00",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "minP",
+      "tag": "input",
+      "type": "number",
+      "value": "0",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "repeatPenalty",
+      "tag": "input",
+      "type": "number",
+      "value": "1.05",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "presencePenalty",
+      "tag": "input",
+      "type": "number",
+      "value": "0.00",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "backendSampling",
+      "tag": "input",
+      "type": "checkbox",
+      "value": null,
+      "checked": false,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "loadMode",
+      "tag": "select",
+      "type": null,
+      "value": "mmap",
+      "checked": null,
+      "disabled": false,
+      "text": 5
+    },
+    {
+      "id": "swaFull",
+      "tag": "input",
+      "type": "checkbox",
+      "value": null,
+      "checked": false,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "noKvOffload",
+      "tag": "input",
+      "type": "checkbox",
+      "value": null,
+      "checked": false,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "noMmprojOffload",
+      "tag": "input",
+      "type": "checkbox",
+      "value": null,
+      "checked": false,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "cacheRam",
+      "tag": "input",
+      "type": "number",
+      "value": "8192",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "contextSize",
+      "tag": "input",
+      "type": "number",
+      "value": "16384",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "nCpuMoe",
+      "tag": "input",
+      "type": "number",
+      "value": "8",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "cpuMoe",
+      "tag": "input",
+      "type": "checkbox",
+      "value": null,
+      "checked": false,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "ctkEnable",
+      "tag": "input",
+      "type": "checkbox",
+      "value": null,
+      "checked": false,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "reasoning",
+      "tag": "select",
+      "type": null,
+      "value": "auto",
+      "checked": null,
+      "disabled": false,
+      "text": 3
+    },
+    {
+      "id": "contextTokenKey",
+      "tag": "select",
+      "type": null,
+      "value": "f16",
+      "checked": null,
+      "disabled": true,
+      "text": 15
+    },
+    {
+      "id": "contextTokenValue",
+      "tag": "select",
+      "type": null,
+      "value": "f16",
+      "checked": null,
+      "disabled": true,
+      "text": 15
+    },
+    {
+      "id": "parallel",
+      "tag": "input",
+      "type": "number",
+      "value": "1",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "fastAttention",
+      "tag": "select",
+      "type": null,
+      "value": "auto",
+      "checked": null,
+      "disabled": false,
+      "text": 3
+    },
+    {
+      "id": "jinja",
+      "tag": "input",
+      "type": "checkbox",
+      "value": null,
+      "checked": false,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "loadCustomChatTemplate",
+      "tag": "input",
+      "type": "checkbox",
+      "value": null,
+      "checked": false,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "chatTemplateKwargs",
+      "tag": "input",
+      "type": "text",
+      "value": "",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "ngramMod",
+      "tag": "input",
+      "type": "checkbox",
+      "value": null,
+      "checked": false,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "speculationType",
+      "tag": "select",
+      "type": null,
+      "value": "none",
+      "checked": null,
+      "disabled": false,
+      "text": 4
+    },
+    {
+      "id": "specDraftNMax",
+      "tag": "input",
+      "type": "number",
+      "value": "0",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "draftModelPath",
+      "tag": "select",
+      "type": null,
+      "value": "",
+      "checked": null,
+      "disabled": false,
+      "text": 11
+    },
+    {
+      "id": "ngld",
+      "tag": "input",
+      "type": "number",
+      "value": "0",
+      "checked": null,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "ctkd",
+      "tag": "select",
+      "type": null,
+      "value": "f16",
+      "checked": null,
+      "disabled": false,
+      "text": 15
+    },
+    {
+      "id": "ctvd",
+      "tag": "select",
+      "type": null,
+      "value": "f16",
+      "checked": null,
+      "disabled": false,
+      "text": 15
+    },
+    {
+      "id": "verbose",
+      "tag": "input",
+      "type": "checkbox",
+      "value": null,
+      "checked": false,
+      "disabled": false,
+      "text": null
+    },
+    {
+      "id": "launchPresetsSelect",
+      "tag": "select",
+      "type": null,
+      "value": "",
+      "checked": null,
+      "disabled": false,
+      "text": 2
+    }
+  ]
+}

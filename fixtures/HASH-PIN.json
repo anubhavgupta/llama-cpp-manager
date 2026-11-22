@@ -1,10 +1,16 @@
 {
-  "pinnedAt": "2026-11-22T15:58:37Z",
+  "pinnedAt": "2026-11-22T23:09:47Z",
   "files": {
     "AGENTS.md": "aa28b1cf5f36785135c9399de856ab9cc407ac2b96cf7f272c0d3eec608cf518",
-    "PARITY.md": "59cc409ccb89a63201a9cc5ea771b6e2ff536c98740ce2626e2caf8176d6b84e",
+    "PARITY.md": "e5cdc314943b6fb211be00e052819b49c43fb4cd4800eb2ce98057929ddb7261",
     "plan.md": "1e48b2c66d7a4b82c6a31207360c16b7bfc26b9d651391697e3425433f950e00",
     "fixtures/BASELINE.json": "1cbaff26a50dc3ecf1e82bfc1087a354a252937539c55ad5d9a32e49625bd991",
-    "fixtures/HASH-PIN.json": "07049eef68d6c4820b52326524763d76773df1eefcd4a742a28bed5731f464fc"
+    "fixtures/COMPARISON.json": "49d894777f5216a7f6e0e19b057c986ea866a2b88397b4ef20c19559401d9f16",
+    "fixtures/HASH-PIN.json": "bfc6d15c611890fca77ef60d6bdddf51808191908d1d4261ce3cd7aad0cfaf23",
+    "fixtures/MANIFEST.json": "a789aef28b80fcabbd3bcbc5f64dd84fc6787b75a13b8a26f1cac3457680e2ed",
+    "fixtures/PATH-MAP.json": "451183bed9711f8a0d3a3d6cc4b18b608b80f9c6e3c0eaf7a056127376acd981",
+    "fixtures/corpus/.pathmap-local.json": "58191b8fd73d9af0a714b6e6327545112bc8355f93e672a09eeb7a147e2dbe77",
+    "fixtures/corpus/configs.remapped.json": "fafa46437241f826afa8c76ef363d4c0af9b11a7b3d2a201b0222d95a6338999",
+    "fixtures/corpus/settings.remapped.json": "62e4dabf387875fac23045ffdf1707bfff017a1e188a440bc3ce21d30949540e"
   }
 }

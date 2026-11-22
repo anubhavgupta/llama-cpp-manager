@@ -1,0 +1,109 @@
+{
+  "windowMs": 12017,
+  "running": true,
+  "counts": {
+    "/metrics": 12,
+    "/status": 2
+  },
+  "note": "fetch URLs the page issued while a server was running, in arrival order, with wall-clock gaps. public/script.js polls /status every 5 s (init) and /metrics every 1 s (startMetricUpdates).",
+  "entries": [
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388390565,
+      "gapFromAnyMs": null,
+      "gapFromSamePathMs": null
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388391565,
+      "gapFromAnyMs": 1000,
+      "gapFromSamePathMs": 1000
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388392571,
+      "gapFromAnyMs": 1006,
+      "gapFromSamePathMs": 1006
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388393571,
+      "gapFromAnyMs": 1000,
+      "gapFromSamePathMs": 1000
+    },
+    {
+      "url": "http://localhost:7837/status",
+      "path": "/status",
+      "tMs": 1795388393572,
+      "gapFromAnyMs": 1,
+      "gapFromSamePathMs": null
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388394566,
+      "gapFromAnyMs": 994,
+      "gapFromSamePathMs": 995
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388395568,
+      "gapFromAnyMs": 1002,
+      "gapFromSamePathMs": 1002
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388396570,
+      "gapFromAnyMs": 1002,
+      "gapFromSamePathMs": 1002
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388397570,
+      "gapFromAnyMs": 1000,
+      "gapFromSamePathMs": 1000
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388398563,
+      "gapFromAnyMs": 993,
+      "gapFromSamePathMs": 993
+    },
+    {
+      "url": "http://localhost:7837/status",
+      "path": "/status",
+      "tMs": 1795388398569,
+      "gapFromAnyMs": 6,
+      "gapFromSamePathMs": 4997
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388399568,
+      "gapFromAnyMs": 999,
+      "gapFromSamePathMs": 1005
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388400566,
+      "gapFromAnyMs": 998,
+      "gapFromSamePathMs": 998
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795388401569,
+      "gapFromAnyMs": 1003,
+      "gapFromSamePathMs": 1003
+    }
+  ]
+}

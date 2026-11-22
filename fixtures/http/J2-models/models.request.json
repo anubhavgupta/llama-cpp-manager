@@ -1,0 +1,8 @@
+{
+  "method": "GET",
+  "url": "http://localhost:7837/models",
+  "headers": {
+    "Accept": "*/*"
+  },
+  "body": null
+}

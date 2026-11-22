@@ -32,5 +32,11 @@ Rows seeded from plan §8 (Q1–Q15) and §9A (Q16–Q22). `frozen-by` names the
 | Q21 | Truthy-but-broken paths emitted as-is (e.g. trailing `\undefined`), no validation | corpus (1 draft path) | corpus argv test | baseline-open | |
 | Q22 | topK:-1, ngl:0, ngl:100, topP:0 occur in real data; emission follows predicates, not sanity | corpus | corpus argv tests | baseline-open | |
 
+| Q23 | POST /restart returns 200 success:true, but the killed child's close handler nulls module-level `runningProcess` after the replacement is assigned ⇒ /status settles `running:false`, next /stop returns 200 success:false, and the deferred SIGTERM→1s→SIGKILL timer (server.js:437-445) reads the same variable — replacement survival is a win32 race. GET /restart is Express 404, not app JSON. Recorded on win32 | server.js /restart | fixtures/ws/J3d-restart/* + argv/J3d-restart/* (shape: race ordering; bytes: all else) | baseline-open | captured 2026-11-23 |
+
+| Q24 | /stop arms SIGTERM→1s→SIGKILL on the module-level `runningProcess`, so a relaunch within ~1 s can be killed by the stale timer (harness waits 1.5 s where relaunch follows stop — legacy behavior recorded, not worked around) | server.js /stop | fixtures/http/J3* relaunch pair + ws order trace | baseline-open | captured 2026-11-23 |
+
+Non-determinism addenda discovered during capture (beyond §8): dotenv v17 prints a rotating marketing tip into manager stdout; manager stdout interleaves its own console.log with forwarded child chunks in OS write order ⇒ manager console logs recorded complete, byte claims live in paired ws payload traces. Corpus recordings are comparable only with the same `PARITY_SCRATCH` root (documented in MANIFEST).
+
 Out of scope (C2 dead code, recorded not ported): `createDefaultConfigName` (script.js:205),
 client `restartServer` (script.js:968). `/restart` HTTP endpoint IS live and must be ported.

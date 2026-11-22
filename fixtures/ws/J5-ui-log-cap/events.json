@@ -1,0 +1,601 @@
+{
+  "connection": "J5-ui-log-cap-c1",
+  "url": "http://localhost:7837",
+  "events": [
+    {
+      "seq": 1,
+      "event": "connect",
+      "payload": null
+    },
+    {
+      "seq": 2,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Z2dtbF9iYQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 3,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Y2tlbmRfYw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 4,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "cHVfaW5pdA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 5,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "OiBudW1iZQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 6,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "ciBvZiBwaA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 7,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "eXNpY2FsIA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 8,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Y29yZXM6IA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 9,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "OAo=",
+        "dataLength": 2
+      }
+    },
+    {
+      "seq": 10,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Z2dtbF9iYQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 11,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Y2tlbmRfYw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 12,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "cHVfaW5pdA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 13,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "OiBudW1iZQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 14,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "ciBvZiBsbw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 15,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Z2ljYWwgYw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 16,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "b3JlczogMQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 17,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Ngo=",
+        "dataLength": 2
+      }
+    },
+    {
+      "seq": 18,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bG9hZF9iYQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 19,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Y2tlbmQ6IA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 20,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bG9hZGVkIA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 21,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Q1BVIGJhYw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 22,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "a2VuZAo=",
+        "dataLength": 5
+      }
+    },
+    {
+      "seq": 23,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bG9hZF9tbw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 24,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "ZGVsOiBleA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 25,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "cGVjdGluZw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 26,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "IGEgR0dVRg==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 27,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "IGZpbGUgaQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 28,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "biB2ZXJzaQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 29,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "b24gMwo=",
+        "dataLength": 5
+      }
+    },
+    {
+      "seq": 30,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bG9hZF9tbw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 31,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "ZGVsOiBtbw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 32,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "ZGVsID0gQw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 33,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "OlxVc2Vycw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 34,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "XGFudWJoXA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 35,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "QXBwRGF0YQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 36,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "XExvY2FsXA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 37,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "VGVtcFxwYQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 38,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "cml0eS1zYw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 39,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "cmF0Y2hcZg==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 40,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "aXh0dXJlcw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 41,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "XG1vZGVscw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 42,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "XG1vZGVscw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 43,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "IHdpdGggcw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 44,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "cGFjZXNccw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 45,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "cGFjZWQgbQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 46,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "b2RlbCBRNA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 47,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "LmdndWYK",
+        "dataLength": 6
+      }
+    },
+    {
+      "seq": 48,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "cHJpbnRfaQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 49,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bmZvOiBuXw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 50,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Y3R4ID0gMQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 51,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "NjM4NAo=",
+        "dataLength": 5
+      }
+    },
+    {
+      "seq": 52,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "c3J2ICAgIA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 53,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bG9hZF9tbw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 54,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "ZGVsOiBsbw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 55,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "YWRfbW9kZQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 56,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bDogT0sK",
+        "dataLength": 6
+      }
+    },
+    {
+      "seq": 57,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "c3J2ICB1cA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 58,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "ZGF0ZV9zbA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 59,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "b3RzOiBhbA==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 60,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bCBzbG90cw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 61,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "IGlkbGUK",
+        "dataLength": 6
+      }
+    },
+    {
+      "seq": 62,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bWFpbjogc2VydmVyIGlzIGxpc3RlbmluZyBvbg==",
+        "dataLength": 28
+      }
+    },
+    {
+      "seq": 63,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "IGh0dHA6Lw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 64,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "LzAuMC4wLg==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 65,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "MDoxNzg0MQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 66,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "Cg==",
+        "dataLength": 1
+      }
+    },
+    {
+      "seq": 67,
+      "event": "disconnect",
+      "payload": "io client disconnect"
+    }
+  ]
+}

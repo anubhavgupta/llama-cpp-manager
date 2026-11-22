@@ -1,0 +1,8 @@
+{
+  "method": "GET",
+  "url": "http://localhost:7837/status",
+  "headers": {
+    "Accept": "*/*"
+  },
+  "body": null
+}

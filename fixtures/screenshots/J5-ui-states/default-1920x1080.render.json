@@ -1,0 +1,879 @@
+{
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "focus": null,
+  "elements": [
+    {
+      "id": "modelStatusMessage",
+      "tag": "div",
+      "visible": true,
+      "rect": [
+        38,
+        22,
+        95.53,
+        23
+      ],
+      "text": "Not running"
+    },
+    {
+      "id": "settingsBtn",
+      "tag": "button",
+      "visible": true,
+      "rect": [
+        1859,
+        21,
+        40,
+        40
+      ],
+      "value": "",
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "addConfigBtn",
+      "tag": "button",
+      "visible": true,
+      "rect": [
+        225.55,
+        106,
+        85.45,
+        40
+      ],
+      "value": "",
+      "disabled": false,
+      "text": "Add"
+    },
+    {
+      "id": "configFormContainer",
+      "tag": "dialog",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "text": "Create New Configuration Configuration Name: Save Cancel"
+    },
+    {
+      "id": "configFormTitle",
+      "tag": "h3",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "text": "Create New Configuration"
+    },
+    {
+      "id": "configName",
+      "tag": "input",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "value": "",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "saveConfigBtn",
+      "tag": "button",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "value": "",
+      "disabled": false,
+      "text": "Save"
+    },
+    {
+      "id": "cancelConfigBtn",
+      "tag": "button",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "value": "",
+      "disabled": false,
+      "text": "Cancel"
+    },
+    {
+      "id": "configList",
+      "tag": "div",
+      "visible": true,
+      "rect": [
+        21,
+        186,
+        309,
+        631
+      ],
+      "text": "No configurations saved"
+    },
+    {
+      "id": "cpuGraph",
+      "tag": "canvas",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "text": ""
+    },
+    {
+      "id": "cpuValue",
+      "tag": "div",
+      "visible": true,
+      "rect": [
+        100.77,
+        917,
+        21.45,
+        15
+      ],
+      "text": "<n><n>%"
+    },
+    {
+      "id": "ramGraph",
+      "tag": "canvas",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "text": ""
+    },
+    {
+      "id": "ramValue",
+      "tag": "div",
+      "visible": true,
+      "rect": [
+        228.77,
+        917,
+        21.45,
+        15
+      ],
+      "text": "<n><n>%"
+    },
+    {
+      "id": "gpuGraph",
+      "tag": "canvas",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "text": ""
+    },
+    {
+      "id": "gpuValue",
+      "tag": "div",
+      "visible": true,
+      "rect": [
+        100.77,
+        994,
+        21.45,
+        15
+      ],
+      "text": "<n><n>%"
+    },
+    {
+      "id": "vramGraph",
+      "tag": "canvas",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "text": ""
+    },
+    {
+      "id": "vramValue",
+      "tag": "div",
+      "visible": true,
+      "rect": [
+        228.77,
+        994,
+        21.45,
+        15
+      ],
+      "text": "<n><n>%"
+    },
+    {
+      "id": "serverPath",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        376,
+        173.44,
+        1510,
+        41
+      ],
+      "value": "",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "modelPath",
+      "tag": "select",
+      "visible": true,
+      "rect": [
+        376,
+        295.88,
+        1510,
+        41
+      ],
+      "value": "",
+      "disabled": false,
+      "text": "-- Select a Model --a\\b\\deep-b-model.ggufa\\model-a.ggufBench\\llama-bench-benchmarks.gguflongdir-xxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    {
+      "id": "ngl",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        376,
+        418.31,
+        1510,
+        41
+      ],
+      "value": "99",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "threads",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        376,
+        540.75,
+        1510,
+        41
+      ],
+      "value": "12",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "temp",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        533.06,
+        641.19,
+        591.94,
+        41
+      ],
+      "value": "0.7",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "topK",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        1258.56,
+        641.19,
+        627.44,
+        41
+      ],
+      "value": "20",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "topP",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        497.56,
+        694.19,
+        627.44,
+        41
+      ],
+      "value": "0.00",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "minP",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        1258.56,
+        694.19,
+        627.44,
+        41
+      ],
+      "value": "0",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "repeatPenalty",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        490.47,
+        747.19,
+        634.53,
+        41
+      ],
+      "value": "1.05",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "presencePenalty",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        1265.67,
+        747.19,
+        620.33,
+        41
+      ],
+      "value": "0.00",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "backendSampling",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        508.67,
+        803.19,
+        18,
+        18
+      ],
+      "value": "on",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "loadMode",
+      "tag": "select",
+      "visible": true,
+      "rect": [
+        554.34,
+        883.63,
+        570.66,
+        41
+      ],
+      "value": "none",
+      "disabled": false,
+      "text": "none mmap mlock mmap+mlock dio"
+    },
+    {
+      "id": "swaFull",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        1212.89,
+        895.13,
+        18,
+        18
+      ],
+      "value": "on",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "noKvOffload",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        487.38,
+        939.63,
+        18,
+        18
+      ],
+      "value": "on",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "noMmprojOffload",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        1276.77,
+        939.63,
+        18,
+        18
+      ],
+      "value": "on",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "cacheRam",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        376,
+        994.63,
+        1510,
+        41
+      ],
+      "value": "8192",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "contextSize",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        376,
+        1136.06,
+        1510,
+        41
+      ],
+      "value": "16384",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "nCpuMoe",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        376,
+        1215.06,
+        1510,
+        41
+      ],
+      "value": "8",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "cpuMoe",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        529.95,
+        1275.06,
+        18,
+        18
+      ],
+      "value": "on",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "ctkEnable",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        508.67,
+        1367,
+        18,
+        18
+      ],
+      "value": "on",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "reasoning",
+      "tag": "select",
+      "visible": true,
+      "rect": [
+        1215.98,
+        1355.5,
+        670.02,
+        41
+      ],
+      "value": "auto",
+      "disabled": false,
+      "text": "auto on off"
+    },
+    {
+      "id": "contextTokenKey",
+      "tag": "select",
+      "visible": true,
+      "rect": [
+        376,
+        1430.5,
+        1510,
+        41
+      ],
+      "value": "f16",
+      "disabled": true,
+      "text": "f<n><n> f<n><n> bf<n><n> q<n>_<n> q<n>_<n> q<n>_<n> iq<n>_nl q<n>_<n> q<n>_<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n>"
+    },
+    {
+      "id": "contextTokenValue",
+      "tag": "select",
+      "visible": true,
+      "rect": [
+        376,
+        1509.5,
+        1510,
+        41
+      ],
+      "value": "f16",
+      "disabled": true,
+      "text": "f<n><n> f<n><n> bf<n><n> q<n>_<n> q<n>_<n> q<n>_<n> iq<n>_nl q<n>_<n> q<n>_<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n>"
+    },
+    {
+      "id": "parallel",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        376,
+        1588.5,
+        1510,
+        41
+      ],
+      "value": "1",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "fastAttention",
+      "tag": "select",
+      "visible": true,
+      "rect": [
+        540.16,
+        1645.5,
+        1345.84,
+        41
+      ],
+      "value": "auto",
+      "disabled": false,
+      "text": "auto on off"
+    },
+    {
+      "id": "jinja",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        501.56,
+        1701.5,
+        18,
+        18
+      ],
+      "value": "on",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "loadCustomChatTemplate",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        1333.55,
+        1701.5,
+        18,
+        18
+      ],
+      "value": "on",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "chatTemplateKwargs",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        710.5,
+        1734.5,
+        1175.5,
+        41
+      ],
+      "value": "",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "ngramMod",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        458.98,
+        1846.44,
+        18,
+        18
+      ],
+      "value": "on",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "speculationType",
+      "tag": "select",
+      "visible": true,
+      "rect": [
+        1265.67,
+        1834.94,
+        620.33,
+        41
+      ],
+      "value": "none",
+      "disabled": false,
+      "text": "none draft-mtp draft-dflash draft-dspark"
+    },
+    {
+      "id": "specDraftNMaxGroup",
+      "tag": "div",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "text": "Draft N-Max (--spec-draft-n-max):"
+    },
+    {
+      "id": "specDraftNMax",
+      "tag": "input",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "value": "0",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "draftModelSection",
+      "tag": "div",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "text": "Draft Model Settings Draft Model Path (-md): -- Select a Draft Model --a\\b\\deep-b-model.ggufa\\model-a.ggufBench\\llama-be"
+    },
+    {
+      "id": "draftModelPath",
+      "tag": "select",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "value": "",
+      "disabled": false,
+      "text": "-- Select a Draft Model --a\\b\\deep-b-model.ggufa\\model-a.ggufBench\\llama-bench-benchmarks.gguflongdir-xxxxxxxxxxxxxxxxxx"
+    },
+    {
+      "id": "ngld",
+      "tag": "input",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "value": "0",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "ctkd",
+      "tag": "select",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "value": "f16",
+      "disabled": false,
+      "text": "f<n><n> f<n><n> bf<n><n> q<n>_<n> q<n>_<n> q<n>_<n> iq<n>_nl q<n>_<n> q<n>_<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n>"
+    },
+    {
+      "id": "ctvd",
+      "tag": "select",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "value": "f16",
+      "disabled": false,
+      "text": "f<n><n> f<n><n> bf<n><n> q<n>_<n> q<n>_<n> q<n>_<n> iq<n>_nl q<n>_<n> q<n>_<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n> kvarn<n>"
+    },
+    {
+      "id": "verbose",
+      "tag": "input",
+      "visible": true,
+      "rect": [
+        529.95,
+        1950.38,
+        18,
+        18
+      ],
+      "value": "on",
+      "checked": false,
+      "disabled": false,
+      "text": ""
+    },
+    {
+      "id": "launchBtn",
+      "tag": "button",
+      "visible": true,
+      "rect": [
+        400,
+        855.06,
+        82.89,
+        41
+      ],
+      "value": "",
+      "disabled": false,
+      "text": "Launch"
+    },
+    {
+      "id": "stopBtn",
+      "tag": "button",
+      "visible": true,
+      "rect": [
+        500.89,
+        855.06,
+        70.59,
+        41
+      ],
+      "value": "",
+      "disabled": true,
+      "text": "Stop"
+    },
+    {
+      "id": "restartBtn",
+      "tag": "button",
+      "visible": true,
+      "rect": [
+        589.48,
+        855.06,
+        90.05,
+        41
+      ],
+      "value": "",
+      "disabled": true,
+      "text": "Restart"
+    },
+    {
+      "id": "launchPresetsSelect",
+      "tag": "select",
+      "visible": true,
+      "rect": [
+        693.53,
+        851.06,
+        1022.39,
+        49
+      ],
+      "value": "",
+      "disabled": false,
+      "text": "-- Select Server Path --"
+    },
+    {
+      "id": "launchPresetsBtn",
+      "tag": "button",
+      "visible": true,
+      "rect": [
+        1729.92,
+        855.06,
+        140.08,
+        41
+      ],
+      "value": "",
+      "disabled": false,
+      "text": "Launch Presets"
+    },
+    {
+      "id": "modelOutput",
+      "tag": "div",
+      "visible": true,
+      "rect": [
+        392,
+        995.5,
+        1486,
+        42.5
+      ],
+      "text": "<log-pane:1-entries>"
+    },
+    {
+      "id": "settingsDialog",
+      "tag": "dialog",
+      "visible": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "text": ""
+    }
+  ],
+  "logPane": {
+    "lineCount": 1,
+    "startsWithTimestamp": false
+  },
+  "title": "LLaMA CPP Manager",
+  "scrollHeight": 1080,
+  "note": "Compared artifact behind default-1920x1080.png: geometry and control state of every [id] element, with the log pane reduced to its entry count because streamed text depends on pipe coalescing. Canvases were display:none for the shot."
+}
