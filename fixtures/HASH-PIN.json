@@ -1,0 +1,10 @@
+{
+  "pinnedAt": "2026-11-22T15:58:37Z",
+  "files": {
+    "AGENTS.md": "aa28b1cf5f36785135c9399de856ab9cc407ac2b96cf7f272c0d3eec608cf518",
+    "PARITY.md": "59cc409ccb89a63201a9cc5ea771b6e2ff536c98740ce2626e2caf8176d6b84e",
+    "plan.md": "1e48b2c66d7a4b82c6a31207360c16b7bfc26b9d651391697e3425433f950e00",
+    "fixtures/BASELINE.json": "1cbaff26a50dc3ecf1e82bfc1087a354a252937539c55ad5d9a32e49625bd991",
+    "fixtures/HASH-PIN.json": "07049eef68d6c4820b52326524763d76773df1eefcd4a742a28bed5731f464fc"
+  }
+}

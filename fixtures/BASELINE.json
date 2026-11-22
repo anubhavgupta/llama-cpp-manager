@@ -1,0 +1,11 @@
+{
+  "tag": "parity-baseline",
+  "commit": "c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "recordedAt": "2026-11-22T15:58:36Z",
+  "files": {
+    "server.js": "aad4000f55f086fd1fbfd843df67c291348aa01e47b43c21c5d76b964385c210",
+    "public/script.js": "cc866fbbffafb80f960587fb617a36340124766dd77effb9e40992cc73f8e678",
+    "public/index.html": "79ebec8dc79da50ea35e69ea927961d137c17f6b16eed7e7406ec18674dd0356",
+    "public/styles.css": "e98de83ee015a7eaa3665c21fa0d2df607b5da4e411c4eb8a28d2cfd2d823e81"
+  }
+}
