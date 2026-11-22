@@ -47,8 +47,9 @@ Part 2's job reduces to: *point the existing harness at the candidate and make i
 2. `fixture-tree.sh` — nested dirs, `mmproj` name variants, spaces + non-ASCII + long paths, unreadable dir, empty dir, missing dir, sibling-dir mmproj (negative).
 3. `nvidia-smi-stub` on `PATH`; removable to force the simulated-metrics path.
 4. `capture-legacy.sh` → `fixtures/{http,argv,ini,ws,localstorage,screenshots}/`, every file recording the command that produced it; `fixtures/MANIFEST.json` hashes everything.
+5. **Ingest the real-state corpus** (§9A) from `migration-resources/` → `fixtures/corpus/`: normalize the `.txt` dumps (first line is the localStorage key name; JSON begins at the first `{`), then derive corpus vectors, the corpus ini golden, and `fixtures/PATH-MAP.json`.
 
-**Gate:** one command regenerates the entire fixture set from legacy; `MANIFEST.json` written and hash-pinned.
+**Gate:** one command regenerates the entire fixture set from legacy; `MANIFEST.json` written and hash-pinned; corpus parses and its derived goldens reproduce on legacy.
 
 ### Phase 2 — Pure generators: vectors + goldens + mutation
 Two deterministic functions hold most of the risk:
@@ -62,6 +63,7 @@ Two deterministic functions hold most of the risk:
    - *Combinatorial* — 2-wise over all 41 fields; 3-wise over `speculationType × ngramMod × draftModelPath × specDraftNMax × ngld × ctkd × ctvd`.
    - *Format probe* — `0.00, -0, 0.1, 1e21, 1e-7, 0.30000000000000004, 9007199254740993, 1.005`, `parseInt("0x10")`, `parseFloat("0.7xyz")`, `null`, `undefined`, `true`, `"  8  "`, `"1e3"`.
    - *Randomized* — 1–2k seeded vectors for continuous fuzzing.
+   - *Corpus-derived* — the 48 real saved configs of §9A, taken verbatim. These supply input shapes no synthetic set would produce (numeric-vs-string type drift, orphan keys, enum values no longer in the dropdowns, mixed path separators, garbage-but-truthy paths).
 4. **Goldens** captured by running legacy: `{vector, impl@sha, provenance, argv[], ini}`. **`argv` = ordered array; ini = bytes.** Order is part of the contract.
 5. **`equivalence.js`** — positional diff, shrink to minimal repro, promote shrunk vectors into the permanent boundary set.
 6. **Mutation testing** on the two legacy generators (relational ops, boolean ops, string literals, numeric literals, statement removal, conditional inversion).
@@ -86,8 +88,16 @@ Outputs in `SPEC/`: `field-manifest` (41 fields: id, type, min/max/step, default
 |---|---|---|
 | **L1** | Backend E2E, UI mocked (HTTP + `socket.io-client` against a running app; fakes = stub binary, fixture tree, `nvidia-smi` stub) | all 9 endpoints + every branch (no-path 400 vs already-running **200** `success:false`; `/restart` 400 after restart since `lastLaunchConfig` is in-memory); exact argv received by stub; `models-preset.ini` bytes; SIGTERM → 1 s → SIGKILL; exit-code path; `server-ended`; **raw stdout chunk forwarding — no line splitting, no server-side trim**; scan rules incl. `mmproj*` exclusion + first-match association; `settings.json` writes **including the TDZ bug**; socket fan-out + `connectedClients` cleanup; `/metrics` shape + `vramUsage` string format |
 | **L2** | UI E2E, backend mocked (Playwright; `fetch` intercepted; `io()` stubbed with scripted emitter; mocks = replays of Phase 1 recordings) | all 41 fields (defaults, min/max/step, option lists, labels, section order); conditional UI (`ctkEnable` gating, draft section, `specDraftNMaxGroup`, KVarN warnings); config CRUD → exact `localStorage` JSON, alphabetical render, active class, empty state; `deleteConfiguration` partial reset asserting **all 41** values incl. those *not* reset; native `<dialog>`/`alert`/`confirm` text; `location.reload()` after settings save; log pane ISO shape + per-chunk `.trim()` + 1000-line cap + auto-scroll; `/status` 5 s and `/metrics` 1 s cadence; `restartBtn.disabled === true` always; charts + resize + 50-point client history; DOM + a11y snapshots per state; screenshot regression per state × breakpoint |
-| **L3** | Seam: real UI + real server + fake binary | the 5 boundary-only behaviors of §9 |
+| **L3** | Seam: real UI + real server + fake binary | the 5 boundary-only behaviors of §9, plus the corpus round-trip against a real backend |
 | **L4** | Dual-run differential | candidate vs legacy under one action script; empty output diff; plus covered-line set diff (dead code excluded) |
+
+**Corpus round-trip (the single highest-value test in the project):** seed the app's `localStorage` from `migration-resources/` (Playwright `addInitScript`), then, with the fake binary standing in for every `serverPath`:
+- assert the rendered config list = 48 names, legacy sort order;
+- for **each** of the 48 configs: load it, then launch — compare the stub-recorded **argv** positionally against legacy's;
+- generate `models-preset.ini` from all 48 and compare **bytes**;
+- re-save each config and compare the **exact** `localStorage` JSON written, orphan keys included (§9A Q16).
+
+It runs unchanged in L2 (mocked backend), L3 (real backend), and L4 (legacy vs candidate). It is the one test that exercises the whole field matrix against real data instead of synthetic guesses.
 
 **Negative controls (mandatory):** apply a mutant patch to a *scratch copy* of legacy and prove L1–L4 each go red. A suite that stays green against a mutated app has no teeth and is rewritten. This is how the oracle is trusted before any candidate exists.
 
@@ -96,7 +106,8 @@ Outputs in `SPEC/`: `field-manifest` (41 fields: id, type, min/max/step, default
 - [ ] every negative control goes red for the expected assertion, recorded in `fixtures/NEGATIVES.md`
 - [ ] mutation score at ceiling; all survivors machine-proven equivalent
 - [ ] `SPEC-ROWS.csv` fully mapped
-- [ ] all 15 §8 rows = `baseline-verified`
+- [ ] all §8 rows = `baseline-verified`
+- [ ] corpus round-trip green against legacy for all 48 configs (argv + ini bytes + localStorage bytes)
 - [ ] nightly job running L1–L4 against legacy is installed and green
 
 ---
@@ -207,6 +218,18 @@ Auditor checks, all mechanical: all 15 quirks still reproduce · `/tests` + `MAN
 | Q14 | `-fit off` and `--host 0.0.0.0` always appended | `script.js` | argv test |
 | Q15 | ngram-mod emits hard-coded `24/48/64` | `script.js` | argv + ini vectors |
 
+### Additional rows discovered from the real-state corpus (§9A)
+
+| # | Quirk | Evidence in corpus | Frozen by |
+|---|---|---|---|
+| Q16 | Orphan keys (`mlock`, `noMmap`, `ndio`, `dio`, `draftMin`, `draftMax`, `draftPMin`, `disableReasoning`) persist in `localStorage`, are **never read** by the current field set, and are **dropped on re-save** (`saveCurrentValues` builds a fresh object). Candidate must neither migrate them nor clean them on load | 8 keys across 28/48 configs | corpus re-save byte test, both states |
+| Q17 | ini generation reads legacy `disableReasoning` when `reasoning` is absent → emits `reasoning = off/on`; the launch path ignores it entirely, so **`--reasoning` is omitted for these configs while the ini contains it** | 15 configs have `disableReasoning`, no `reasoning` | corpus ini + argv pair |
+| Q18 | A saved enum value missing from the current `<option>` list silently blanks on load (`select.value=` non-existent → `""`), so the flag is dropped from argv on launch — e.g. `loadMode` saved as `dio`/`mlock`/`none` never yields `--load-mode` | `loadMode` values `dio`, `mlock`, `none`; no `mmap` in the corpus | per-config argv corpus test |
+| Q19 | `repeatPenalty`/`presencePenalty` are stored as **both numbers and strings**, and the loose `!= "0"` predicate treats `0`, `"0"`, `"0.0"`, `"0.00"` as four different cases | 22 number + 26 string instances; all four zero forms present | corpus vectors + format probes |
+| Q20 | `serverPath`/`modelPath` mix `\` and `/` and are stored verbatim; the client-side `--chat-template-file` derivation regex handles both, so output differs by input style | 11 paths with mixed separators | argv vectors both styles |
+| Q21 | Truthy-but-broken paths are emitted as-is (e.g. `draftModelPath` ending in `\undefined`) — no validation anywhere | 1 such draft path | corpus argv test |
+| Q22 | `topK: -1`, `ngl: 0`, `ngl: 100`, `topP: 0` occur in real data; emission follows the §9 predicates, not sanity | present in corpus | corpus argv tests |
+
 ### Out of scope (dead code, C2)
 `createDefaultConfigName` (`script.js:205`, never called) · client `restartServer` (`script.js:968`, only referenced by the commented listener). The **`/restart` endpoint is live over HTTP and must be ported.**
 
@@ -226,6 +249,32 @@ Auditor checks, all mechanical: all 15 quirks still reproduce · `/tests` + `MAN
 
 ---
 
+## 9A. Real-state corpus — `migration-resources/`
+
+User-supplied dumps of a real install. Treated as **golden fixtures**, never edited, never cleaned.
+
+| File | Contents |
+|---|---|
+| `llamaCppConfigs.txt` | 48 saved configs; **9 distinct key sets** = 9 schema generations; 36 distinct models; 20 distinct `llama-server.exe` paths |
+| `llamaCppSettings.txt` | `{"serverPort":7838,"modelsDirectory":"D:\\models\\"}` |
+
+**Parse convention:** line 1 is the literal localStorage key name; JSON starts at the first `{`. Codify in `tools/parity/load-corpus.js`.
+
+**Two execution modes** (the corpus references `D:\models\` and `C:\projects\...exe`, which may not exist on a test machine):
+1. **Remapped mode** (default, everywhere in Part 1 and Part 2) — `PATH-MAP.json` rewrites model/binary roots to a fixture tree, applied to the corpus **and** to the recorded legacy expected output, so byte equality remains meaningful. Both apps receive the identical rewritten corpus.
+2. **Real-path mode** — unmodified corpus on the original machine, as the final pre-cutover acceptance run.
+
+**Why it matters more than the synthetic sets:** it is the only source of genuine schema drift, type drift, orphan keys, retired enum values, and malformed-but-truthy paths. Synthetic vectors will never invent `"0.00"` next to number `0`, or a `loadMode` of `dio`.
+
+**Handling rules:** read-only; hashed into `MANIFEST.json`; never auto-formatted (key order and whitespace are compared byte-for-byte in the re-save test); if the user refreshes it, that is a fixture refresh requiring re-recording of corpus goldens, logged as such.
+
+**Location:** `/migration-resources/` is **gitignored** (personal absolute paths + Windows username, public remote). It lives only on the fixture machine, so it can never be reconstructed from the repo. Consequences:
+- derived artifacts **are** committed — but only in **remapped form** (`fixtures/corpus/` with `PATH-MAP.json` roots), so the repo never carries personal paths while Part 2 stays reproducible anywhere;
+- real-path mode (§9A) is machine-bound and must record the machine + corpus SHA256 in its run manifest;
+- `capture-legacy.sh` fails loudly, not silently, if the corpus is absent, and any run without it marks corpus-dependent ledger rows `blocked`, never `pass`.
+
+---
+
 ## 10. What remains for a human (deliberately)
 
 1. **The cutover.** Retiring legacy and taking `:7837` is the one irreversible, shared-state action. Everything up to a staged, atomic, pre-tested `cutover.sh` + `rollback.sh` is automated; execution needs one explicit human go.
@@ -240,9 +289,10 @@ Auditor checks, all mechanical: all 15 quirks still reproduce · `/tests` + `MAN
 /tools/parity/   freeze-baseline.sh fake-llama-server.js capture-legacy.sh fixture-tree.sh
                  nvidia-smi-stub gen-goldens.js equivalence.js dual-run.sh
                  coercion-shim/ mutants/            # mutant patches for negative controls
-/fixtures/       BASELINE.json MANIFEST.json COMPARISON.json NEGATIVES.md
-                 http/ argv/ ini/ ws/ localstorage/ screenshots/
-                 vectors/{boundary,cover,format,random}/ goldens/
+/migration-resources/  real-state corpus — gitignored, local to the fixture machine (read-only, hashed)
+/fixtures/       BASELINE.json MANIFEST.json COMPARISON.json NEGATIVES.md PATH-MAP.json
+                 http/ argv/ ini/ ws/ localstorage/ screenshots/ corpus/
+                 vectors/{boundary,cover,format,random,corpus}/ goldens/
 /SPEC/           field-manifest arg-truth-table ini-map api-contract socket-contract
                  process-lifecycle storage-schema SPEC-ROWS.csv CONSISTENCY.md BUILD-FROM.md
 /tests/          L0-generators L1-backend L2-ui L3-seam L4-dualrun      # env-driven, stack-agnostic
@@ -257,6 +307,7 @@ PARITY.md  AGENTS.md  ESCALATION.md  plan.md
 1. Tag `parity-baseline` on the last legacy-only commit (`c57f438`).
 2. Phase 0: `BASELINE.json`, `PARITY.md`, `AGENTS.md`, hash pinning.
 3. Phase 1: `fake-llama-server.js` + `capture-legacy.sh` (dependency for every later suite).
-4. Phase 2: extract the two generators with the behavior-preservation proof → `SPEC-ROWS.csv` → vector families → goldens → mutation + machine equivalence proofs.
-5. Phases 3–4: SPEC pack cross-check → L1–L4 env-driven → run green against legacy → negative controls → install nightly.
-6. Part 1 ends with a machine verdict, not a review.
+4. Corpus (gitignored, local): `load-corpus.js` + `PATH-MAP.json` + corpus vectors + corpus ini/localStorage goldens, committed in remapped form only.
+5. Phase 2: extract the two generators with the behavior-preservation proof → `SPEC-ROWS.csv` → vector families (incl. corpus) → goldens → mutation + machine equivalence proofs.
+6. Phases 3–4: SPEC pack cross-check → L1–L4 env-driven → corpus round-trip → run green against legacy → negative controls → install nightly.
+7. Part 1 ends with a machine verdict, not a review.
