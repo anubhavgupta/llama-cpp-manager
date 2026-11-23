@@ -1,0 +1,111 @@
+{
+  "what": "plan.md §2 Phase 2.1: legacy/lib/buildArgs.js and legacy/lib/buildPresetIni.js are the inline argv/ini blocks of public/script.js at parity-baseline — proved byte-for-byte wherever the bytes are observable. Recorded by tools/parity/preservation-proof.sh.",
+  "proof": "byte-identical",
+  "recordedAt": "2026-11-23T04:50:53Z",
+  "branch": "migration",
+  "commit": "d4ccf00ccce1ce787a6be633696f79f16cf4d805",
+  "baseline": {
+    "tag": "parity-baseline",
+    "commit": "c57f4381425a97a0ef1b830a8314f126e5971c0f"
+  },
+  "command": "bash tools/parity/preservation-proof.sh",
+  "journeys": [
+    "J3-start-stop",
+    "J3b-exit-code",
+    "J3c-start-missing-path",
+    "J3d-restart",
+    "J4-launch-presets",
+    "J4b-ui-presets-launch",
+    "J5-ui-launch",
+    "J5-ui-log-cap",
+    "J6-corpus-smoke"
+  ],
+  "journeyNote": "J0-baseline is out of the proof on purpose: it records GET / (index.html), and the refactor legitimately adds two <script src=\"/lib/...\"> tags. Every other default-set journey that records app-built argv or app-built ini bytes is included.",
+  "liveAbRecording": {
+    "runA": {
+      "ref": "parity-baseline",
+      "sha256OfProofManifest": "468f90072a0bd1997edbe34977c14d49b2564725da6d3a2c8721bd0ff65a9b21",
+      "fileCount": 123
+    },
+    "runB": {
+      "ref": "worktree",
+      "commit": "d4ccf00ccce1ce787a6be633696f79f16cf4d805",
+      "sha256OfProofManifest": "36b5de02704514323ae2a95fe821556dc56eda717184b32fa199217f220becba",
+      "fileCount": 123
+    },
+    "fileSetsIdentical": true,
+    "comparedByteForByte": 96,
+    "identical": 96,
+    "relaxedByComparisonJson": 27,
+    "relaxedNote": "the relaxed set is exactly what fixtures/COMPARISON.json declares nondeterministic; capture-legacy.js --compare re-checked the same two trees under those same rules and reported DETERMINISM OK.",
+    "appBuiltIni": {
+      "path": "ini/J4b-ui-presets-launch/presets-from-ui.ini",
+      "bytes": 2432,
+      "sha256": "c2e2cb598e11ae96586c9bf3acdc5d919c963d7d35db77a83e1526fd63cae46f",
+      "identicalAcrossRuns": true,
+      "note": "J4b-ui-presets-launch is new in this phase: #launchPresetsBtn is the only control that runs launchModelPresets, so before it no recorded byte anywhere came from the ini generator. The recorded file carries the mmproj association, the Q15 ngram keys, the Q17 legacy-disableReasoning pair and the Q10 trailing port line."
+    },
+    "appBuiltArgvRequestBodies": [
+      {
+        "path": "http/J5-ui-launch/start-from-ui.request.json",
+        "sha256": "5255cf2f3b11587b3d8a3accc144a2aa2abe5cb28e20a90b267bed372f7bedf1",
+        "identicalAcrossRuns": true
+      },
+      {
+        "path": "http/J5-ui-log-cap/start-log-flood.request.json",
+        "sha256": "01c1696f30b7aba91ee847c1de1c9fece02dd5ed7906bb6c948347c662184a42",
+        "identicalAcrossRuns": true
+      },
+      {
+        "path": "http/J4b-ui-presets-launch/launch-presets-from-ui.request.json",
+        "sha256": "048096bdf1ddaf667625c2ca68cb212f759c59645b670755132ed18bc34f2615",
+        "identicalAcrossRuns": true
+      }
+    ]
+  },
+  "slicedDifferential": {
+    "command": "node tools/parity/preservation-proof.js --differential",
+    "result": "byte-identical",
+    "staticChecks": [
+      "argv block: 143 normalised lines identical to legacy/lib/buildArgs.js",
+      "ini block: 132 normalised lines identical to legacy/lib/buildPresetIni.js",
+      "ini block reads no settings — the only settings read in launchModelPresets is the inline `port = ${settings.serverPort}` append, which runs after showOutput",
+      "fields map: 35/35 entries read the same element and property as the baseline literal, in the same order, with every coercion moved verbatim into buildArgs.js"
+    ],
+    "vectors": {
+      "fieldsVectors": 404,
+      "iniConfigVectors": 56,
+      "modelsVectors": 1,
+      "settingsVectors": 3,
+      "argvCompared": 1212,
+      "iniCompared": 168,
+      "distinctArgv": 417,
+      "distinctIni": 159
+    },
+    "coverageClaims": {
+      "mmproj": 36,
+      "bareFa": 54,
+      "ngramIni": 87,
+      "legacyReasoning": 126,
+      "cacheRamNaN": 0,
+      "minPZeroForms": 510
+    },
+    "claimsNotCoveredByRecordedInputs": [
+      "cacheRamNaN"
+    ],
+    "recordedInputs": [
+      "fixtures/screenshots/J5-ui-states/state-notes.json — 4 recorded form states (every control value/checked, i.e. fields maps in exactly the shape buildArgs takes, including the Q8 partial-reset state)",
+      "fixtures/localstorage/** — recorded llamaCppConfigs / llamaCppSettings blobs",
+      "fixtures/corpus/configs.remapped.json — the 48 real saved configs, per-config and all-48 in one map (the corpus ini)",
+      "fixtures/http/**/models*.response — recorded /models payloads (the mmproj pass)",
+      "fixtures/http/**/settings*.response — recorded serverPort values (the --port split)"
+    ],
+    "originals": "git show parity-baseline:public/script.js sliced by unique anchors at proof time (never re-typed): the config literal, the argv block, the ini block. The static checks compare the sliced text with the lib text; the runtime checks evaluate the sliced text in the same process as the lib and compare outputs."
+  },
+  "knownFlake": {
+    "field": "screenshots/J5-ui-log-cap/log-pane-1280x800.render.json → logPane.startsWithTimestamp",
+    "observed": "1 of 5 legacy-side recordings taken during this phase read false (the committed golden and recordings A1, A2, B read true); the one proof attempt that went red showed legacy Run A false against worktree Run B true.",
+    "why": "the pane text is read after the 1000-entry cap drops the oldest entries, so the surviving head line is whatever the 7-byte flood chunks left behind — plan.md §8 \"websocket log chunk boundaries\". Nothing on the refactor path reaches it: the paired argv and ws byte traces are identical across those recordings, and the same field also flips between two legacy-only runs.",
+    "action": "NOT relaxed here: fixtures/COMPARISON.json is a pinned gate (AGENTS.md C8) and a new shape rule needs a ledger entry, which the Verifier owns. Reported for the ledger; re-running the proof reproduces green."
+  }
+}

@@ -645,11 +645,27 @@ function compareManifests(aRoot, bRoot, comparisonFile) {
     if (missing.length + failures.length > 0) {
         console.error('PROOF MANIFEST COMPARE FAIL: ' + missing.length + ' file-set diff(s), '
             + failures.length + ' byte diff(s)');
+        writeSummary(aRoot, all, exact, relaxed, failures, missing);
         return 1;
     }
     console.log('PROOF MANIFEST COMPARE OK: identical file set, ' + exact.length
         + ' files byte-for-byte identical');
+    writeSummary(aRoot, all, exact, relaxed, failures, missing);
     return 0;
+}
+
+// The recorded evidence file quotes these numbers, so they are written out rather than re-derived.
+function writeSummary(aRoot, all, exact, relaxed, failures, missing) {
+    const summary = {
+        writtenBy: 'tools/parity/preservation-proof.js --compare-manifests',
+        files: all.length,
+        comparedByteForByte: exact.length,
+        identical: exact.length - failures.length,
+        relaxedByComparisonJson: relaxed.length,
+        byteDiffs: failures.length,
+        fileSetDiffs: missing.length
+    };
+    fs.writeFileSync(path.join(aRoot, 'COMPARE-SUMMARY.json'), JSON.stringify(summary, null, 2) + '\n');
 }
 
 // A green comparison of an empty or partial recording would prove nothing: these artifacts have to
