@@ -1,0 +1,146 @@
+{
+  "artifact": "process-lifecycle",
+  "derivation": "static",
+  "generatedBy": "tools/parity/spec-static.js",
+  "handlers": [
+    {
+      "body": "(code) => { console.log(`Server process exited with code ${code}`); runningProcess = null; // Notify clients that the process has ended connectedClients.forEach(client => { client.emit('server-ended', { message: 'Server process has ended' }); }); }",
+      "event": "close",
+      "line": 303,
+      "target": "runningProcess.null"
+    },
+    {
+      "body": "(error) => { console.error(`Failed to start process: ${error}`); runningProcess = null; // Notify clients of error connectedClients.forEach(client => { client.emit('server-error', { message: 'Failed to start server: ' + error.message }); }); }",
+      "event": "error",
+      "line": 312,
+      "target": "runningProcess.null"
+    },
+    {
+      "body": "(code) => { console.log(`Server process exited with code ${code}`); runningProcess = null; // Notify clients that the process has ended connectedClients.forEach(client => { client.emit('server-ended', { message: 'Server process has ended' }); }); }",
+      "event": "close",
+      "line": 463,
+      "target": "runningProcess.null"
+    },
+    {
+      "body": "(error) => { console.error(`Failed to start process: ${error}`); runningProcess = null; // Notify clients of error connectedClients.forEach(client => { client.emit('server-error', { message: 'Failed to start server: ' + error.message }); }); }",
+      "event": "error",
+      "line": 472,
+      "target": "runningProcess.null"
+    },
+    {
+      "body": "(code) => { console.log(`Server process exited with code ${code}`); runningProcess = null; // Notify clients that the process has ended connectedClients.forEach(client => { client.emit('server-ended', { message: 'Server process has ended' }); }); }",
+      "event": "close",
+      "line": 628,
+      "target": "runningProcess.null"
+    },
+    {
+      "body": "(error) => { console.error(`Failed to start process: ${error}`); runningProcess = null; // Notify clients of error connectedClients.forEach(client => { client.emit('server-error', { message: 'Failed to start server: ' + error.message }); }); }",
+      "event": "error",
+      "line": 637,
+      "target": "runningProcess.null"
+    }
+  ],
+  "kill": [
+    {
+      "insideTimer": false,
+      "line": 369,
+      "signal": "SIGTERM",
+      "target": "runningProcess"
+    },
+    {
+      "insideTimer": true,
+      "line": 372,
+      "signal": "SIGKILL",
+      "target": "runningProcess"
+    },
+    {
+      "insideTimer": false,
+      "line": 439,
+      "signal": "SIGTERM",
+      "target": "runningProcess"
+    },
+    {
+      "insideTimer": true,
+      "line": 442,
+      "signal": "SIGKILL",
+      "target": "runningProcess"
+    }
+  ],
+  "metricsInterval": [
+    {
+      "callback": "updateSystemMetricsHistory",
+      "delay": 1000,
+      "line": 191
+    }
+  ],
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "file": "git:parity-baseline:server.js",
+      "sha256": "aad4000f55f086fd1fbfd843df67c291348aa01e47b43c21c5d76b964385c210"
+    }
+  ],
+  "spawn": [
+    {
+      "args": "args",
+      "executable": "serverPath",
+      "line": 300,
+      "options": "{ stdio: 'pipe' }",
+      "shell": false
+    },
+    {
+      "args": "args",
+      "executable": "serverPath",
+      "line": 460,
+      "options": "{ stdio: 'pipe' }",
+      "shell": false
+    },
+    {
+      "args": "args",
+      "executable": "serverPath",
+      "line": 625,
+      "options": "{ stdio: 'pipe' }",
+      "shell": false
+    }
+  ],
+  "stateVariables": [
+    {
+      "line": 22,
+      "name": "runningProcess",
+      "writtenAt": [
+        300,
+        305,
+        314,
+        376,
+        446,
+        460,
+        465,
+        474,
+        625,
+        630,
+        639
+      ]
+    },
+    {
+      "line": 24,
+      "name": "lastLaunchConfig",
+      "writtenAt": [
+        295
+      ]
+    },
+    {
+      "line": 23,
+      "name": "connectedClients",
+      "writtenAt": []
+    },
+    {
+      "line": 35,
+      "name": "systemMetrics",
+      "writtenAt": []
+    }
+  ],
+  "statusExpression": {
+    "expression": "{ running: !!runningProcess && !runningProcess.killed }",
+    "line": 419
+  }
+}

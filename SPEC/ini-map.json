@@ -1,0 +1,3046 @@
+{
+  "artifact": "ini-map",
+  "claimsFromTheApp": {
+    "claims": {
+      "legacyReasoningOff": "[capture-legacy-disable-true]",
+      "legacyReasoningOn": "[capture-legacy-disable-false]",
+      "mmproj": "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+      "ngramKeys": "spec-ngram-size-n = 24\ndraft-min = 48\ndraft-max = 64\n",
+      "trailingPort": "port = 17844\n",
+      "versionHeader": "version = 1\n\n[capture-alpha]\n"
+    },
+    "existedBefore": true,
+    "fileByteLength": 2432,
+    "note": "launchModelPresets prints the sections to the log pane BEFORE appending the trailing port line, so the pane and the POST body differ by that line; the posted bytes and the file bytes are identical (recorded here). The two capture-legacy-disable-* sections are the Q17 legacy-disableReasoning pair, the mmproj line comes from window.models. Section order is Object.entries(localStorage) insertion order (§9 trap 6).",
+    "postedByteLength": 2432,
+    "sectionOrder": [
+      "[capture-alpha]",
+      "[capture-beta]",
+      "[capture-legacy-disable-false]",
+      "[capture-legacy-disable-true]"
+    ]
+  },
+  "cliOnlyFlags": [
+    "--swa-full",
+    "-ctk",
+    "-ctv"
+  ],
+  "gaps": [
+    {
+      "__gap": true,
+      "reason": "a section with no stored config behind it is invisible: every recorded section name matches a stored config in the same recording, so nothing shows what happens to an unsaved form"
+    },
+    {
+      "__gap": true,
+      "reason": "whether an ini key is emitted when its field holds a retired enum value is not recorded; no recording writes an ini while a control holds a retired value"
+    },
+    {
+      "__gap": true,
+      "reason": "the key order inside a section is only observable per recorded document; the three recordings agree but a key that never appears in them has no position"
+    }
+  ],
+  "generatedBy": "tools/parity/spec-reconcile.js",
+  "insertionOrderRule": {
+    "evidence": [
+      "SPEC/from-static/ini-map.json#structure.sectionOrder",
+      "SPEC/from-runtime/ini-map.json#documents"
+    ],
+    "fact": "section order is JSON.parse(localStorage.llamaCppConfigs) insertion order, not alphabetical; the rendered config list is sorted separately (§9 trap 6)",
+    "sources": [
+      "a",
+      "c"
+    ]
+  },
+  "keys": [
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--backend-sampling (bare flag)",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "backendSampling"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.backendSampling !== undefined && config.backendSampling)"
+      },
+      "key": "backend-sampling",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 23
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "true (literal)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "true\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 3 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "-c"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "contextSize"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.contextSize > 0)"
+      },
+      "key": "c",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 4
+      },
+      "value": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.contextSize.toString()}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.contextSize.toString()}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--cache-ram"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "cacheRam"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam))"
+      },
+      "key": "cache-ram",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 18
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.cacheRam}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.cacheRam}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--chat-template-file",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "modelPath"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.loadCustomChatTemplate !== undefined && config.loadCustomChatTemplate)"
+      },
+      "key": "chat-template-file",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 21
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.modelPath.replace(/[/\\\\][^/\\\\]*$/, '')}\\\\chat-template.jinja",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.modelPath.replace(/[/\\\\][^/\\\\]*$/, '')}\\chat-template.jinja\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--chat-template-kwargs"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "chatTemplateKwargs"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.chatTemplateKwargs)"
+      },
+      "key": "chat-template-kwargs",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 20
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.chatTemplateKwargs}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.chatTemplateKwargs}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--cpu-moe (bare flag)",
+          "static": "--cpu-moe"
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "cpuMoe"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.cpuMoe)"
+      },
+      "key": "cpu-moe",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 13
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "true (literal)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "true"
+      }
+    },
+    {
+      "always": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "-ctkd"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ctkd"
+        ]
+      },
+      "guard": {
+        "resolution": "definitional-split",
+        "rule": "static quotes the source guard expression verbatim; the model paraphrases the same condition",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "draft guard + if (config.ctkd)",
+          "static": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ctkd)"
+        }
+      },
+      "key": "ctkd",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 27
+      },
+      "value": {
+        "modelWording": "${config.ctkd}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.ctkd}\n"
+      }
+    },
+    {
+      "always": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "-ctvd"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ctvd"
+        ]
+      },
+      "guard": {
+        "resolution": "definitional-split",
+        "rule": "static quotes the source guard expression verbatim; the model paraphrases the same condition",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "draft guard + if (config.ctvd)",
+          "static": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ctvd)"
+        }
+      },
+      "key": "ctvd",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 28
+      },
+      "value": {
+        "modelWording": "${config.ctvd}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.ctvd}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 3 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--spec-ngram-mod-n-max"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngramMod"
+        ]
+      },
+      "guard": {
+        "resolution": "definitional-split",
+        "rule": "static quotes the source guard expression verbatim; the model paraphrases the same condition",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "speculation guard + if (config.ngramMod)",
+          "static": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)"
+        }
+      },
+      "key": "draft-max",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": true
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 32
+      },
+      "value": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "64 (literal)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "64\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 3 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--spec-ngram-mod-n-min"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngramMod"
+        ]
+      },
+      "guard": {
+        "resolution": "definitional-split",
+        "rule": "static quotes the source guard expression verbatim; the model paraphrases the same condition",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "speculation guard + if (config.ngramMod)",
+          "static": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)"
+        }
+      },
+      "key": "draft-min",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": true
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 31
+      },
+      "value": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "48 (literal)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "48\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "-fa [value]",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "fastAttention"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.fastAttention)"
+      },
+      "key": "fa",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": true,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 24
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.fastAttention ?? 'auto'}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.fastAttention ?? 'auto'}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--jinja (bare flag)",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "jinja"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.jinja !== undefined && config.jinja)"
+      },
+      "key": "jinja",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 19
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "true (literal)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "true\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--load-mode",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "loadMode"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.loadMode !== undefined)"
+      },
+      "key": "load-mode",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 15
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.loadMode}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.loadMode}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--min-p"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "minP"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if ((!isNaN(parseFloat(config.minP)) && config.minP != \"0\") || config.minP == \"0.00\")"
+      },
+      "key": "min-p",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 7
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.minP}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.minP}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 3 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--mmproj"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "modelPath"
+        ]
+      },
+      "guard": {
+        "resolution": "definitional-split",
+        "rule": "static quotes the source guard expression verbatim; the model paraphrases the same condition",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "window.models.forEach: model.path === config.modelPath && model.mmprojFile",
+          "static": "if (model.path === modelPath && model.mmprojFile)"
+        }
+      },
+      "key": "mmproj",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": true,
+          "static": false
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 2
+      },
+      "value": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${model.mmprojFile}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${model.mmprojFile}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 3 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "-m"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "modelPath"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.modelPath)"
+      },
+      "key": "model",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": true
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "value": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.modelPath}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.modelPath}\n"
+      }
+    },
+    {
+      "always": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "-md"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "draftModelPath"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp')"
+      },
+      "key": "model-draft",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": true
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 25
+      },
+      "value": {
+        "modelWording": "${config.draftModelPath}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.draftModelPath}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--n-cpu-moe",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "nCpuMoe"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.nCpuMoe !== undefined && config.nCpuMoe > 0)"
+      },
+      "key": "n-cpu-moe",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 12
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.nCpuMoe}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.nCpuMoe}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "-ngl",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngl"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.ngl !== undefined && config.ngl > 0)"
+      },
+      "key": "ngl",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 10
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.ngl}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.ngl}\n"
+      }
+    },
+    {
+      "always": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "-ngld",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngld"
+        ]
+      },
+      "guard": {
+        "resolution": "definitional-split",
+        "rule": "static quotes the source guard expression verbatim; the model paraphrases the same condition",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "draft guard + if (config.ngld !== undefined && config.ngld >= 0)",
+          "static": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ngld !== undefined && config.ngld >= 0)"
+        }
+      },
+      "key": "ngld",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 26
+      },
+      "value": {
+        "modelWording": "${config.ngld}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.ngld}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--no-kv-offload (bare flag)",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "noKvOffload"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.noKvOffload !== undefined && config.noKvOffload)"
+      },
+      "key": "no-kv-offload",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 16
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "true (literal)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "true\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--no-mmproj-offload (bare flag)",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "noMmprojOffload"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.noMmprojOffload !== undefined && config.noMmprojOffload)"
+      },
+      "key": "no-mmproj-offload",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 17
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "true (literal)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "true\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--parallel"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "parallel"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.parallel > 0)"
+      },
+      "key": "parallel",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 14
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.parallel}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.parallel}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 3 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": true
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--port"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "serverPort"
+        ]
+      },
+      "guard": {
+        "resolution": "definitional-split",
+        "rule": "static quotes the source guard expression verbatim; the model paraphrases the same condition",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "none - appended unconditionally after the loop",
+          "static": null
+        }
+      },
+      "key": "port",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "definitional-split",
+        "rule": "static numbers emit statements (the reasoning key is written by two branches); model numbers distinct ini keys",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": 35,
+          "static": 36
+        }
+      },
+      "value": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${settings.serverPort}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${settings.serverPort}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--presence-penalty"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "presencePenalty"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != \"0\") || config.presencePenalty == \"0.00\")"
+      },
+      "key": "presence-penalty",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 9
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.presencePenalty}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.presencePenalty}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 3 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--reasoning off|on",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 2
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "reasoning"
+        ]
+      },
+      "guard": {
+        "resolution": "definitional-split",
+        "rule": "static quotes the source guard expression verbatim; the model paraphrases the same condition",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "if (config.reasoning !== undefined && config.reasoning !== 'auto') else if (config.disableReasoning !== undefined)",
+          "static": "if (config.reasoning !== undefined && config.reasoning !== 'auto')"
+        }
+      },
+      "key": "reasoning",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 34
+      },
+      "value": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.reasoning} OR ${config.disableReasoning ? 'off' : 'on'}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.reasoning}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--repeat-penalty"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "repeatPenalty"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != \"0\") || config.repeatPenalty == \"0.00\")"
+      },
+      "key": "repeat-penalty",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 8
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.repeatPenalty}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.repeatPenalty}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--spec-draft-n-max"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "specDraftNMax"
+        ]
+      },
+      "guard": {
+        "resolution": "definitional-split",
+        "rule": "static quotes the source guard expression verbatim; the model paraphrases the same condition",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "speculation guard + if (config.specDraftNMax > 0 && config.speculationType !== 'none')",
+          "static": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.specDraftNMax > 0 && config.speculationType !== 'none')"
+        }
+      },
+      "key": "spec-draft-n-max",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 33
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.specDraftNMax}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.specDraftNMax}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 3 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--spec-ngram-mod-n-match"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngramMod"
+        ]
+      },
+      "guard": {
+        "resolution": "definitional-split",
+        "rule": "static quotes the source guard expression verbatim; the model paraphrases the same condition",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "speculation guard + if (config.ngramMod)",
+          "static": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)"
+        }
+      },
+      "key": "spec-ngram-size-n",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": true
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 30
+      },
+      "value": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "24 (literal)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "24\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 3 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "--spec-type"
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngramMod",
+          "speculationType"
+        ]
+      },
+      "guard": {
+        "resolution": "definitional-split",
+        "rule": "static quotes the source guard expression verbatim; the model paraphrases the same condition",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "outer: if (config.speculationType !== 'none' || config.ngramMod); inner: if (specTypes.length > 0)",
+          "static": "if (config.speculationType !== 'none' || config.ngramMod) { if (specTypes.length > 0)"
+        }
+      },
+      "key": "spec-type",
+      "nameDivergence": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 29
+      },
+      "value": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${specTypes.join(',')}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${specTypes.join(',')}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 3 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--temp",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "temp"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.temp !== undefined && config.temp >= 0)"
+      },
+      "key": "temp",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 3
+      },
+      "value": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.temp}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.temp}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "-t",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "threads"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.threads !== undefined && config.threads > 0)"
+      },
+      "key": "threads",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 11
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.threads}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.threads}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 3 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--top-k",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "topK"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.topK !== undefined && config.topK > 0)"
+      },
+      "key": "top-k",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 5
+      },
+      "value": {
+        "evidence": [
+          "ini/J4-launch-presets/presets-direct-with-port.ini",
+          "ini/J4-launch-presets/presets-direct.ini",
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.topK}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.topK}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--top-p",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "topP"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.topP !== undefined && config.topP >= 0)"
+      },
+      "key": "top-p",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 6
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "${config.topP}",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "${config.topP}\n"
+      }
+    },
+    {
+      "always": {
+        "note": "present in 1 recorded section(s)",
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": false
+      },
+      "cliCounterpart": {
+        "resolution": "definitional-split",
+        "rule": "static names the argv push paired with this ini emit by guard chain; model names any flag with the same meaning",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": "--verbose (bare flag)",
+          "static": null
+        }
+      },
+      "emissionSites": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "verbose"
+        ]
+      },
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.verbose !== undefined && config.verbose)"
+      },
+      "key": "verbose",
+      "nameDivergence": {
+        "resolution": "definitional-split",
+        "rule": "static calls it a divergence only when the ini key differs from the flag after stripping dashes; model also counts dash-only differences",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": {
+          "model": false,
+          "static": null
+        }
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 22
+      },
+      "value": {
+        "evidence": [
+          "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+        ],
+        "modelWording": "true (literal)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "true\n"
+      }
+    }
+  ],
+  "notEmittedToIni": [
+    "swaFull (--swa-full has no ini key)",
+    "contextTokenKey (-ctk has no ini key)",
+    "contextTokenValue (-ctv has no ini key)",
+    "ctkEnable",
+    "serverPath",
+    "configName except as the section name",
+    "launchPresetsSelect"
+  ],
+  "recordedDocuments": [
+    {
+      "afterLastSection": [],
+      "fixture": "ini/J4-launch-presets/presets-direct-with-port.ini",
+      "sections": [
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "temp = 0.7",
+            "c = 16384",
+            "spec-type = ngram-mod",
+            "spec-ngram-size-n = 24",
+            "draft-min = 48",
+            "draft-max = 64"
+          ],
+          "name": "capture-alpha"
+        },
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "top-k = 20",
+            "reasoning = off",
+            "port = 7838"
+          ],
+          "name": "capture-beta"
+        }
+      ],
+      "unparsedLines": [],
+      "versionHeader": "version = 1"
+    },
+    {
+      "afterLastSection": [],
+      "fixture": "ini/J4-launch-presets/presets-direct.ini",
+      "sections": [
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "temp = 0.7",
+            "c = 16384",
+            "spec-type = ngram-mod",
+            "spec-ngram-size-n = 24",
+            "draft-min = 48",
+            "draft-max = 64"
+          ],
+          "name": "capture-alpha"
+        },
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "top-k = 20",
+            "reasoning = off",
+            "port = 7838"
+          ],
+          "name": "capture-beta"
+        }
+      ],
+      "unparsedLines": [],
+      "versionHeader": "version = 1"
+    },
+    {
+      "afterLastSection": [],
+      "fixture": "ini/J4b-ui-presets-launch/presets-from-ui.ini",
+      "sections": [
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "temp = 0.7",
+            "c = 16384",
+            "top-k = 20",
+            "top-p = 0",
+            "min-p = 0.05",
+            "repeat-penalty = 1.05",
+            "presence-penalty = 0",
+            "ngl = 99",
+            "threads = 12",
+            "n-cpu-moe = 8",
+            "parallel = 1",
+            "load-mode = mmap",
+            "cache-ram = 8192",
+            "jinja = true",
+            "chat-template-kwargs = {\"preserve_thinking\": true}",
+            "chat-template-file = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+            "fa = auto",
+            "reasoning = off"
+          ],
+          "name": "capture-alpha"
+        },
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf",
+            "temp = 0",
+            "c = 1",
+            "top-p = 0",
+            "min-p = 0.00",
+            "repeat-penalty = 0",
+            "presence-penalty = 0.0",
+            "threads = 4",
+            "cpu-moe = true",
+            "load-mode = mmap",
+            "no-kv-offload = true",
+            "no-mmproj-offload = true",
+            "cache-ram = -1",
+            "verbose = true",
+            "backend-sampling = true",
+            "fa = on",
+            "spec-type = ngram-mod,draft-mtp",
+            "spec-ngram-size-n = 24",
+            "draft-min = 48",
+            "draft-max = 64",
+            "spec-draft-n-max = 8"
+          ],
+          "name": "capture-beta"
+        },
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf",
+            "temp = 0.7",
+            "c = 16384",
+            "top-k = 20",
+            "top-p = 0",
+            "min-p = 0.05",
+            "repeat-penalty = 1.05",
+            "presence-penalty = 0",
+            "ngl = 99",
+            "threads = 12",
+            "n-cpu-moe = 8",
+            "parallel = 1",
+            "load-mode = mmap",
+            "cache-ram = 8192",
+            "jinja = true",
+            "chat-template-kwargs = {\"preserve_thinking\": true}",
+            "chat-template-file = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\chat-template.jinja",
+            "fa = auto",
+            "reasoning = on"
+          ],
+          "name": "capture-legacy-disable-false"
+        },
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "temp = 0",
+            "c = 1",
+            "top-p = 0",
+            "min-p = 0.00",
+            "repeat-penalty = 0",
+            "presence-penalty = 0.0",
+            "threads = 4",
+            "cpu-moe = true",
+            "load-mode = mmap",
+            "no-kv-offload = true",
+            "no-mmproj-offload = true",
+            "cache-ram = -1",
+            "verbose = true",
+            "backend-sampling = true",
+            "fa = on",
+            "spec-type = ngram-mod,draft-mtp",
+            "spec-ngram-size-n = 24",
+            "draft-min = 48",
+            "draft-max = 64",
+            "spec-draft-n-max = 8",
+            "reasoning = off",
+            "port = 17844"
+          ],
+          "name": "capture-legacy-disable-true"
+        }
+      ],
+      "unparsedLines": [],
+      "versionHeader": "version = 1"
+    }
+  ],
+  "rule": "one row per `key = value` line emitted by launchModelPresets, in emission order; the trailing port line is Q10",
+  "schemaVersion": 1,
+  "structure": {
+    "lineFormat": {
+      "modelWording": "<key> = <value> with single spaces around '=', each line terminated by \\n; nothing is quoted or escaped",
+      "resolution": "static-wording",
+      "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+      "sources": [
+        "a"
+      ],
+      "value": "<key> = <value>, single spaces around =, each line terminated by \\n; nothing quoted or escaped"
+    },
+    "nameDivergences": {
+      "resolution": "definitional-split",
+      "rule": "static lists dash-stripped name differences only; model also lists mmproj<->--mmproj and fa<->-fa",
+      "sources": [
+        "a",
+        "c"
+      ],
+      "value": {
+        "model": [
+          "draft-max<->--spec-ngram-mod-n-max",
+          "draft-min<->--spec-ngram-mod-n-min",
+          "fa<->-fa",
+          "mmproj<->--mmproj",
+          "model-draft<->-md",
+          "model<->-m",
+          "spec-ngram-size-n<->--spec-ngram-mod-n-match"
+        ],
+        "static": [
+          "draft-max<->--spec-ngram-mod-n-max",
+          "draft-min<->--spec-ngram-mod-n-min",
+          "model-draft<->-md",
+          "model<->-m",
+          "spec-ngram-size-n<->--spec-ngram-mod-n-match"
+        ]
+      }
+    },
+    "sectionOrder": {
+      "modelWording": "Object.entries(configs) insertion order from JSON.parse(localStorage.llamaCppConfigs) - insertion order is contractual; the rendered config LIST is separately sorted alphabetically, the ini is not",
+      "resolution": "static-wording",
+      "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+      "sources": [
+        "a"
+      ],
+      "value": "sections iterate Object.entries(parsed llamaCppConfigs), so localStorage insertion order is the section order (§9 trap 6)"
+    },
+    "trailingLine": {
+      "note": "not observable in the recordings: port",
+      "resolution": "agree+runtime-confirmed",
+      "sources": [
+        "a",
+        "c",
+        "b"
+      ],
+      "value": [
+        "port"
+      ]
+    },
+    "versionHeader": {
+      "modelWording": "version = 1 followed by a blank line, before the first section",
+      "resolution": "static-wording",
+      "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+      "sources": [
+        "a"
+      ],
+      "value": "'version = 1\\n\\n'"
+    }
+  },
+  "trailingQuirk": {
+    "evidence": [
+      "SPEC/from-runtime/ini-map.json#keysAfterLastSection",
+      "fixtures/ini/J4-launch-presets/presets-direct.ini"
+    ],
+    "fact": "Q10: the last line is \"port = <settings.serverPort>\" and it is appended after the loop with no section header after it, so the file ends with an orphan key",
+    "sources": [
+      "a",
+      "c",
+      "b"
+    ]
+  }
+}

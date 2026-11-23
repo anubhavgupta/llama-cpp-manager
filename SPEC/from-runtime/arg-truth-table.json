@@ -1,0 +1,1435 @@
+{
+  "alwaysEmitted": {
+    "flags": [
+      "--cache-ram",
+      "--host",
+      "--load-mode",
+      "--port",
+      "--temp",
+      "--top-p",
+      "-c",
+      "-fa",
+      "-fit",
+      "-m",
+      "-t"
+    ],
+    "launches": 5
+  },
+  "driverAuthoredBodies": {
+    "bodies": [
+      {
+        "fixture": "http/J3-start-stop/start-while-running.request.json",
+        "flags": [
+          "-m",
+          "-ngl",
+          "-t",
+          "--temp",
+          "--top-k",
+          "--top-p",
+          "--min-p",
+          "--repeat-penalty",
+          "--parallel",
+          "--load-mode",
+          "-c",
+          "--n-cpu-moe",
+          "-ctk",
+          "-ctv",
+          "-fa",
+          "--jinja",
+          "--chat-template-kwargs",
+          "--chat-template-file",
+          "--verbose",
+          "--backend-sampling",
+          "--no-kv-offload",
+          "--no-mmproj-offload",
+          "--cache-ram",
+          "--spec-type",
+          "--spec-ngram-mod-n-match",
+          "--spec-ngram-mod-n-min",
+          "--spec-ngram-mod-n-max",
+          "--reasoning",
+          "--host",
+          "-fit",
+          "--port"
+        ]
+      },
+      {
+        "fixture": "http/J3-start-stop/start.request.json",
+        "flags": [
+          "-m",
+          "-ngl",
+          "-t",
+          "--temp",
+          "--top-k",
+          "--top-p",
+          "--min-p",
+          "--repeat-penalty",
+          "--parallel",
+          "--load-mode",
+          "-c",
+          "--n-cpu-moe",
+          "-ctk",
+          "-ctv",
+          "-fa",
+          "--jinja",
+          "--chat-template-kwargs",
+          "--chat-template-file",
+          "--verbose",
+          "--backend-sampling",
+          "--no-kv-offload",
+          "--no-mmproj-offload",
+          "--cache-ram",
+          "--spec-type",
+          "--spec-ngram-mod-n-match",
+          "--spec-ngram-mod-n-min",
+          "--spec-ngram-mod-n-max",
+          "--reasoning",
+          "--host",
+          "-fit",
+          "--port"
+        ]
+      },
+      {
+        "fixture": "http/J3b-exit-code/start.request.json",
+        "flags": [
+          "-m",
+          "--port",
+          "--parity-chunks",
+          "--parity-exit-code"
+        ]
+      },
+      {
+        "fixture": "http/J3c-start-missing-path/start-without-serverpath.request.json",
+        "flags": [
+          "-m"
+        ]
+      },
+      {
+        "fixture": "http/J3d-restart/start.request.json",
+        "flags": [
+          "-m",
+          "--parity-chunks"
+        ]
+      },
+      {
+        "fixture": "http/J5-ui-log-cap/start-log-flood.request.json",
+        "flags": [
+          "-m",
+          "--parity-chunks",
+          "--parity-repeat-line",
+          "--parity-repeat-count"
+        ]
+      }
+    ],
+    "note": "these /start bodies were written by the capture harness, not by the page, so they are listed but never paired (C5)"
+  },
+  "emissionOrder": {
+    "evidence": [
+      "ws/J5-ui-launch/launch-attempts.json",
+      "localstorage/J5-ui-launch/after-ui-launch.json",
+      "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+      "corpus/configs.remapped.json",
+      "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+      "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+    ],
+    "launches": {
+      "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke": [
+        {
+          "flag": "-m",
+          "position": 0,
+          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf"
+        },
+        {
+          "flag": "-ngl",
+          "position": 1,
+          "value": "99"
+        },
+        {
+          "flag": "-t",
+          "position": 2,
+          "value": "15"
+        },
+        {
+          "flag": "--temp",
+          "position": 3,
+          "value": "1"
+        },
+        {
+          "flag": "--top-p",
+          "position": 4,
+          "value": "1"
+        },
+        {
+          "flag": "--parallel",
+          "position": 5,
+          "value": "1"
+        },
+        {
+          "flag": "--load-mode",
+          "position": 6,
+          "value": "mlock"
+        },
+        {
+          "flag": "-c",
+          "position": 7,
+          "value": "100000"
+        },
+        {
+          "flag": "--n-cpu-moe",
+          "position": 8,
+          "value": "5"
+        },
+        {
+          "flag": "-fa",
+          "position": 9,
+          "value": "on"
+        },
+        {
+          "flag": "--jinja",
+          "position": 10,
+          "value": {
+            "__gap": true,
+            "reason": "flag emitted with no value token"
+          }
+        },
+        {
+          "flag": "--cache-ram",
+          "position": 11,
+          "value": "8192"
+        },
+        {
+          "flag": "--host",
+          "position": 12,
+          "value": "0.0.0.0"
+        },
+        {
+          "flag": "-fit",
+          "position": 13,
+          "value": "off"
+        },
+        {
+          "flag": "--port",
+          "position": 14,
+          "value": "7838"
+        }
+      ],
+      "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke": [
+        {
+          "flag": "-m",
+          "position": 0,
+          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf"
+        },
+        {
+          "flag": "-ngl",
+          "position": 1,
+          "value": "99"
+        },
+        {
+          "flag": "-t",
+          "position": 2,
+          "value": "15"
+        },
+        {
+          "flag": "--temp",
+          "position": 3,
+          "value": "0.7"
+        },
+        {
+          "flag": "--top-k",
+          "position": 4,
+          "value": "20"
+        },
+        {
+          "flag": "--top-p",
+          "position": 5,
+          "value": "0.01"
+        },
+        {
+          "flag": "--repeat-penalty",
+          "position": 6,
+          "value": "1.05"
+        },
+        {
+          "flag": "--parallel",
+          "position": 7,
+          "value": "1"
+        },
+        {
+          "flag": "--load-mode",
+          "position": 8,
+          "value": "mlock"
+        },
+        {
+          "flag": "-c",
+          "position": 9,
+          "value": "64000"
+        },
+        {
+          "flag": "--n-cpu-moe",
+          "position": 10,
+          "value": "26"
+        },
+        {
+          "flag": "-ctk",
+          "position": 11,
+          "value": "q8_0"
+        },
+        {
+          "flag": "-ctv",
+          "position": 12,
+          "value": "q8_0"
+        },
+        {
+          "flag": "-fa",
+          "position": 13,
+          "value": "on"
+        },
+        {
+          "flag": "--jinja",
+          "position": 14,
+          "value": {
+            "__gap": true,
+            "reason": "flag emitted with no value token"
+          }
+        },
+        {
+          "flag": "--cache-ram",
+          "position": 15,
+          "value": "8192"
+        },
+        {
+          "flag": "--reasoning",
+          "position": 16,
+          "value": "on"
+        },
+        {
+          "flag": "--host",
+          "position": 17,
+          "value": "0.0.0.0"
+        },
+        {
+          "flag": "-fit",
+          "position": 18,
+          "value": "off"
+        },
+        {
+          "flag": "--port",
+          "position": 19,
+          "value": "7838"
+        }
+      ],
+      "capture-alpha@J5-ui-launch": [
+        {
+          "flag": "-m",
+          "position": 0,
+          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf"
+        },
+        {
+          "flag": "-ngl",
+          "position": 1,
+          "value": "99"
+        },
+        {
+          "flag": "-t",
+          "position": 2,
+          "value": "12"
+        },
+        {
+          "flag": "--temp",
+          "position": 3,
+          "value": "0.7"
+        },
+        {
+          "flag": "--top-k",
+          "position": 4,
+          "value": "20"
+        },
+        {
+          "flag": "--top-p",
+          "position": 5,
+          "value": "0"
+        },
+        {
+          "flag": "--min-p",
+          "position": 6,
+          "value": "0.05"
+        },
+        {
+          "flag": "--repeat-penalty",
+          "position": 7,
+          "value": "1.05"
+        },
+        {
+          "flag": "--parallel",
+          "position": 8,
+          "value": "1"
+        },
+        {
+          "flag": "--load-mode",
+          "position": 9,
+          "value": "mmap"
+        },
+        {
+          "flag": "-c",
+          "position": 10,
+          "value": "16384"
+        },
+        {
+          "flag": "--n-cpu-moe",
+          "position": 11,
+          "value": "8"
+        },
+        {
+          "flag": "-fa",
+          "position": 12,
+          "value": {
+            "__gap": true,
+            "reason": "flag emitted with no value token"
+          }
+        },
+        {
+          "flag": "--jinja",
+          "position": 13,
+          "value": {
+            "__gap": true,
+            "reason": "flag emitted with no value token"
+          }
+        },
+        {
+          "flag": "--chat-template-kwargs",
+          "position": 14,
+          "value": "{\"preserve_thinking\": true}"
+        },
+        {
+          "flag": "--chat-template-file",
+          "position": 15,
+          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja"
+        },
+        {
+          "flag": "--cache-ram",
+          "position": 16,
+          "value": "8192"
+        },
+        {
+          "flag": "--reasoning",
+          "position": 17,
+          "value": "off"
+        },
+        {
+          "flag": "--host",
+          "position": 18,
+          "value": "0.0.0.0"
+        },
+        {
+          "flag": "-fit",
+          "position": 19,
+          "value": "off"
+        },
+        {
+          "flag": "--port",
+          "position": 20,
+          "value": "7838"
+        },
+        {
+          "flag": "--mmproj",
+          "position": 21,
+          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+        }
+      ],
+      "capture-beta@J5-ui-launch": [
+        {
+          "flag": "-m",
+          "position": 0,
+          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf"
+        },
+        {
+          "flag": "-t",
+          "position": 1,
+          "value": "4"
+        },
+        {
+          "flag": "--temp",
+          "position": 2,
+          "value": "0"
+        },
+        {
+          "flag": "--top-p",
+          "position": 3,
+          "value": "0"
+        },
+        {
+          "flag": "--min-p",
+          "position": 4,
+          "value": "0.00"
+        },
+        {
+          "flag": "--presence-penalty",
+          "position": 5,
+          "value": "0.0"
+        },
+        {
+          "flag": "--load-mode",
+          "position": 6,
+          "value": "mmap"
+        },
+        {
+          "flag": "--swa-full",
+          "position": 7,
+          "value": {
+            "__gap": true,
+            "reason": "flag emitted with no value token"
+          }
+        },
+        {
+          "flag": "-c",
+          "position": 8,
+          "value": "1"
+        },
+        {
+          "flag": "--cpu-moe",
+          "position": 9,
+          "value": {
+            "__gap": true,
+            "reason": "flag emitted with no value token"
+          }
+        },
+        {
+          "flag": "-ctk",
+          "position": 10,
+          "value": "q8_0"
+        },
+        {
+          "flag": "-ctv",
+          "position": 11,
+          "value": "q8_0"
+        },
+        {
+          "flag": "-fa",
+          "position": 12,
+          "value": "on"
+        },
+        {
+          "flag": "--backend-sampling",
+          "position": 13,
+          "value": {
+            "__gap": true,
+            "reason": "flag emitted with no value token"
+          }
+        },
+        {
+          "flag": "--no-kv-offload",
+          "position": 14,
+          "value": {
+            "__gap": true,
+            "reason": "flag emitted with no value token"
+          }
+        },
+        {
+          "flag": "--no-mmproj-offload",
+          "position": 15,
+          "value": {
+            "__gap": true,
+            "reason": "flag emitted with no value token"
+          }
+        },
+        {
+          "flag": "--cache-ram",
+          "position": 16,
+          "value": "-1"
+        },
+        {
+          "flag": "--spec-type",
+          "position": 17,
+          "value": "ngram-mod,draft-mtp"
+        },
+        {
+          "flag": "--spec-ngram-mod-n-match",
+          "position": 18,
+          "value": "24"
+        },
+        {
+          "flag": "--spec-ngram-mod-n-min",
+          "position": 19,
+          "value": "48"
+        },
+        {
+          "flag": "--spec-ngram-mod-n-max",
+          "position": 20,
+          "value": "64"
+        },
+        {
+          "flag": "--spec-draft-n-max",
+          "position": 21,
+          "value": "8"
+        },
+        {
+          "flag": "--host",
+          "position": 22,
+          "value": "0.0.0.0"
+        },
+        {
+          "flag": "-fit",
+          "position": 23,
+          "value": "off"
+        },
+        {
+          "flag": "--port",
+          "position": 24,
+          "value": "7838"
+        },
+        {
+          "flag": "--mmproj",
+          "position": 25,
+          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+        }
+      ]
+    },
+    "note": "the order below is the order the page itself POSTed, recorded on the wire; it is the only order the recordings can show"
+  },
+  "flags": {
+    "--backend-sampling": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": []
+    },
+    "--cache-ram": {
+      "absentIn": [],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": "cacheRam",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": "recorded value identity, every recorded launch agrees",
+      "valuesObserved": [
+        "8192",
+        "-1"
+      ]
+    },
+    "--chat-template-file": {
+      "absentIn": [
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-alpha@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja"
+      ]
+    },
+    "--chat-template-kwargs": {
+      "absentIn": [
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": "chatTemplateKwargs",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch"
+      ],
+      "pairedBy": "recorded value identity, every recorded launch agrees",
+      "valuesObserved": [
+        "{\"preserve_thinking\": true}"
+      ]
+    },
+    "--cpu-moe": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": []
+    },
+    "--host": {
+      "absentIn": [],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "0.0.0.0"
+      ]
+    },
+    "--jinja": {
+      "absentIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": "jinja",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": "presence vector over 4 recorded launches",
+      "valuesObserved": []
+    },
+    "--load-mode": {
+      "absentIn": [],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": "loadMode",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": "recorded value identity, every recorded launch agrees",
+      "valuesObserved": [
+        "mmap",
+        "mlock"
+      ]
+    },
+    "--min-p": {
+      "absentIn": [
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": "minP",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": "recorded value identity, every recorded launch agrees",
+      "valuesObserved": [
+        "0.05",
+        "0.00"
+      ]
+    },
+    "--mmproj": {
+      "absentIn": [
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+      ]
+    },
+    "--n-cpu-moe": {
+      "absentIn": [
+        "capture-beta@J5-ui-launch",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: candidates nCpuMoe"
+      },
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "8",
+        "26",
+        "5"
+      ]
+    },
+    "--no-kv-offload": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": []
+    },
+    "--no-mmproj-offload": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": []
+    },
+    "--parallel": {
+      "absentIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "1"
+      ]
+    },
+    "--port": {
+      "absentIn": [],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": "serverPort",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": "settings value identity",
+      "valuesObserved": [
+        "7838"
+      ]
+    },
+    "--presence-penalty": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "0.0"
+      ]
+    },
+    "--reasoning": {
+      "absentIn": [
+        "capture-beta@J5-ui-launch",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "off",
+        "on"
+      ]
+    },
+    "--repeat-penalty": {
+      "absentIn": [
+        "capture-beta@J5-ui-launch",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json"
+      ],
+      "field": "repeatPenalty",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke"
+      ],
+      "pairedBy": "recorded value identity, every recorded launch agrees",
+      "valuesObserved": [
+        "1.05"
+      ]
+    },
+    "--spec-draft-n-max": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "8"
+      ]
+    },
+    "--spec-ngram-mod-n-match": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: candidates nCpuMoe; pairing with nCpuMoe is contradicted by another recording"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "24"
+      ]
+    },
+    "--spec-ngram-mod-n-max": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "64"
+      ]
+    },
+    "--spec-ngram-mod-n-min": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "48"
+      ]
+    },
+    "--spec-type": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "ngram-mod,draft-mtp"
+      ]
+    },
+    "--swa-full": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "pairedBy": null,
+      "valuesObserved": []
+    },
+    "--temp": {
+      "absentIn": [],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": "temp",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": "recorded value identity, every recorded launch agrees",
+      "valuesObserved": [
+        "0.7",
+        "0",
+        "1"
+      ]
+    },
+    "--top-k": {
+      "absentIn": [
+        "capture-beta@J5-ui-launch",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json"
+      ],
+      "field": "topK",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke"
+      ],
+      "pairedBy": "recorded value identity, every recorded launch agrees",
+      "valuesObserved": [
+        "20"
+      ]
+    },
+    "--top-p": {
+      "absentIn": [],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": "topP",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": "recorded value identity, every recorded launch agrees",
+      "valuesObserved": [
+        "0",
+        "0.01",
+        "1"
+      ]
+    },
+    "-c": {
+      "absentIn": [],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": "contextSize",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": "recorded value identity, every recorded launch agrees",
+      "valuesObserved": [
+        "16384",
+        "1",
+        "64000",
+        "100000"
+      ]
+    },
+    "-ctk": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "q8_0"
+      ]
+    },
+    "-ctv": {
+      "absentIn": [
+        "capture-alpha@J5-ui-launch",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "q8_0"
+      ]
+    },
+    "-fa": {
+      "absentIn": [],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "on",
+        "off"
+      ]
+    },
+    "-fit": {
+      "absentIn": [],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "off"
+      ]
+    },
+    "-m": {
+      "absentIn": [],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": "modelPath",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": "recorded value identity, every recorded launch agrees",
+      "valuesObserved": [
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf"
+      ]
+    },
+    "-ngl": {
+      "absentIn": [
+        "capture-beta@J5-ui-launch"
+      ],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "99"
+      ]
+    },
+    "-t": {
+      "absentIn": [],
+      "evidence": [
+        "ws/J5-ui-launch/launch-attempts.json",
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "corpus/configs.remapped.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "field": "threads",
+      "observedIn": [
+        "capture-alpha@J5-ui-launch",
+        "capture-beta@J5-ui-launch",
+        "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+        "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke"
+      ],
+      "pairedBy": "recorded value identity, every recorded launch agrees",
+      "valuesObserved": [
+        "12",
+        "4",
+        "15"
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "__gap": true,
+      "reason": "a flag that every recorded launch emits has no negative observation, so the condition that gates it is invisible (see alwaysEmitted and flags[].absentIn)"
+    },
+    {
+      "__gap": true,
+      "reason": "the order of flags that no recorded launch emitted cannot be derived; only flags present in the recordings are listed"
+    }
+  ],
+  "generatedBy": "tools/parity/spec-runtime.js",
+  "rule": "derived from fixtures/** recordings only; no app source was read (plan.md §2 Phase 3 (b))"
+}

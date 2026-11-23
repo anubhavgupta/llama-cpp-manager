@@ -1,0 +1,1607 @@
+{
+  "artifact": "field-manifest",
+  "derivation": "static",
+  "fieldCount": 41,
+  "fieldUniverseRule": "every <input>/<select>/<textarea> carrying an id in public/index.html (document order), plus the 2 controls openSettingsDialog writes into the generated settings dialog, plus disableReasoning — the legacy key the preset-ini generator still reads although no control owns it (Q17)",
+  "fields": [
+    {
+      "cliFlags": [],
+      "coercion": null,
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "",
+      "disabledAttr": false,
+      "domRead": null,
+      "evidence": [
+        "public/index.html:48",
+        "public/script.js: not in the saveCurrentValues key set"
+      ],
+      "htmlType": "text",
+      "id": "configName",
+      "iniKeys": [],
+      "label": "Configuration Name:",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 1,
+      "persistKey": null,
+      "persisted": false,
+      "persistedIn": null,
+      "placeholder": "Enter configuration name",
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Create New Configuration",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [],
+      "coercion": "serverPathInput.value",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "",
+      "disabledAttr": false,
+      "domRead": "#serverPath.value",
+      "evidence": [
+        "public/index.html:90",
+        "public/script.js:217"
+      ],
+      "htmlType": "text",
+      "id": "serverPath",
+      "iniKeys": [],
+      "label": "LLaMA Server Path:",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 2,
+      "persistKey": "serverPath",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": "Enter path to llama-server.exe",
+      "resetOnDelete": true,
+      "resetValue": "",
+      "section": "Server Configuration",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "-m",
+        "--chat-template-file",
+        "--mmproj"
+      ],
+      "coercion": "modelPathSelect.value.trim()",
+      "defaultChecked": null,
+      "defaultOption": "",
+      "defaultValue": "",
+      "disabledAttr": false,
+      "domRead": "#modelPath.value",
+      "evidence": [
+        "public/index.html:96",
+        "public/script.js:218"
+      ],
+      "htmlType": "select",
+      "id": "modelPath",
+      "iniKeys": [
+        "model",
+        "mmproj",
+        "chat-template-file"
+      ],
+      "label": "Model Path (-m):",
+      "max": null,
+      "min": null,
+      "options": [
+        ""
+      ],
+      "optionsDynamic": true,
+      "order": 3,
+      "persistKey": "modelPath",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "",
+      "section": "Model Configuration",
+      "step": null,
+      "tag": "select"
+    },
+    {
+      "cliFlags": [
+        "-ngl"
+      ],
+      "coercion": "parseInt(nglInput.value) || 0",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "99",
+      "disabledAttr": false,
+      "domRead": "#ngl.value",
+      "evidence": [
+        "public/index.html:104",
+        "public/script.js:219"
+      ],
+      "htmlType": "number",
+      "id": "ngl",
+      "iniKeys": [
+        "ngl"
+      ],
+      "label": "GPU Layers (-ngl):",
+      "max": null,
+      "min": "0",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 4,
+      "persistKey": "ngl",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "99",
+      "section": "GPU Configuration",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "-t"
+      ],
+      "coercion": "parseInt(threadsInput.value) || 1",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "12",
+      "disabledAttr": false,
+      "domRead": "#threads.value",
+      "evidence": [
+        "public/index.html:110",
+        "public/script.js:220"
+      ],
+      "htmlType": "number",
+      "id": "threads",
+      "iniKeys": [
+        "threads"
+      ],
+      "label": "Threads (-t):",
+      "max": null,
+      "min": "1",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 5,
+      "persistKey": "threads",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "12",
+      "section": "Performance Settings",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--temp"
+      ],
+      "coercion": "parseFloat(tempInput.value) || 0",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "0.7",
+      "disabledAttr": false,
+      "domRead": "#temp.value",
+      "evidence": [
+        "public/index.html:117",
+        "public/script.js:221"
+      ],
+      "htmlType": "number",
+      "id": "temp",
+      "iniKeys": [
+        "temp"
+      ],
+      "label": "Temperature (--temp):",
+      "max": null,
+      "min": "0",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 6,
+      "persistKey": "temp",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "0.7",
+      "section": "Sampling Parameters",
+      "step": "0.01",
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--top-k"
+      ],
+      "coercion": "parseInt(topKInput.value) || 0",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "20",
+      "disabledAttr": false,
+      "domRead": "#topK.value",
+      "evidence": [
+        "public/index.html:121",
+        "public/script.js:222"
+      ],
+      "htmlType": "number",
+      "id": "topK",
+      "iniKeys": [
+        "top-k"
+      ],
+      "label": "Top-K (--top-k):",
+      "max": null,
+      "min": "0",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 7,
+      "persistKey": "topK",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "20",
+      "section": "Sampling Parameters",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--top-p"
+      ],
+      "coercion": "parseFloat(topPInput.value) || 0",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "0.00",
+      "disabledAttr": false,
+      "domRead": "#topP.value",
+      "evidence": [
+        "public/index.html:127",
+        "public/script.js:223"
+      ],
+      "htmlType": "number",
+      "id": "topP",
+      "iniKeys": [
+        "top-p"
+      ],
+      "label": "Top-P (--top-p):",
+      "max": "1",
+      "min": "0",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 8,
+      "persistKey": "topP",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "0.00",
+      "section": "Sampling Parameters",
+      "step": "0.01",
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--min-p"
+      ],
+      "coercion": "minPInput.value || 0",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "0",
+      "disabledAttr": false,
+      "domRead": "#minP.value",
+      "evidence": [
+        "public/index.html:131",
+        "public/script.js:224"
+      ],
+      "htmlType": "number",
+      "id": "minP",
+      "iniKeys": [
+        "min-p"
+      ],
+      "label": "Min-P (--min-p):",
+      "max": "1",
+      "min": "0",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 9,
+      "persistKey": "minP",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Sampling Parameters",
+      "step": "0.01",
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--repeat-penalty"
+      ],
+      "coercion": "repeatPenaltyInput.value || 0",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "1.05",
+      "disabledAttr": false,
+      "domRead": "#repeatPenalty.value",
+      "evidence": [
+        "public/index.html:137",
+        "public/script.js:225"
+      ],
+      "htmlType": "number",
+      "id": "repeatPenalty",
+      "iniKeys": [
+        "repeat-penalty"
+      ],
+      "label": "Repeat Penalty:",
+      "max": null,
+      "min": "0",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 10,
+      "persistKey": "repeatPenalty",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": "Use 0 to disable",
+      "resetOnDelete": true,
+      "resetValue": "1.05",
+      "section": "Sampling Parameters",
+      "step": "0.01",
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--presence-penalty"
+      ],
+      "coercion": "presencePenaltyInput.value || 0",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "0.00",
+      "disabledAttr": false,
+      "domRead": "#presencePenalty.value",
+      "evidence": [
+        "public/index.html:141",
+        "public/script.js:226"
+      ],
+      "htmlType": "number",
+      "id": "presencePenalty",
+      "iniKeys": [
+        "presence-penalty"
+      ],
+      "label": "Presence Penalty:",
+      "max": null,
+      "min": "0",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 11,
+      "persistKey": "presencePenalty",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Sampling Parameters",
+      "step": "0.01",
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--backend-sampling"
+      ],
+      "coercion": "backendSamplingCheckbox.checked",
+      "defaultChecked": false,
+      "defaultOption": null,
+      "defaultValue": null,
+      "disabledAttr": false,
+      "domRead": "#backendSampling.checked",
+      "evidence": [
+        "public/index.html:147",
+        "public/script.js:230"
+      ],
+      "htmlType": "checkbox",
+      "id": "backendSampling",
+      "iniKeys": [
+        "backend-sampling"
+      ],
+      "label": "Backend Sampling:",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 12,
+      "persistKey": "backendSampling",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Sampling Parameters",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--load-mode"
+      ],
+      "coercion": "loadModeSelect.value",
+      "defaultChecked": null,
+      "defaultOption": "none",
+      "defaultValue": "none",
+      "disabledAttr": false,
+      "domRead": "#loadMode.value",
+      "evidence": [
+        "public/index.html:155",
+        "public/script.js:228"
+      ],
+      "htmlType": "select",
+      "id": "loadMode",
+      "iniKeys": [
+        "load-mode"
+      ],
+      "label": "Load Mode (--load-mode):",
+      "max": null,
+      "min": null,
+      "options": [
+        "none",
+        "mmap",
+        "mlock",
+        "mmap+mlock",
+        "dio"
+      ],
+      "optionsDynamic": false,
+      "order": 13,
+      "persistKey": "loadMode",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "mmap",
+      "section": "Memory Settings",
+      "step": null,
+      "tag": "select"
+    },
+    {
+      "cliFlags": [
+        "--swa-full"
+      ],
+      "coercion": "swaFullCheckbox.checked",
+      "defaultChecked": false,
+      "defaultOption": null,
+      "defaultValue": null,
+      "disabledAttr": false,
+      "domRead": "#swaFull.checked",
+      "evidence": [
+        "public/index.html:165",
+        "public/script.js:229"
+      ],
+      "htmlType": "checkbox",
+      "id": "swaFull",
+      "iniKeys": [],
+      "label": "SWA Full:",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 14,
+      "persistKey": "swaFull",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": false,
+      "section": "Memory Settings",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--no-kv-offload"
+      ],
+      "coercion": "noKvOffloadCheckbox.checked",
+      "defaultChecked": false,
+      "defaultOption": null,
+      "defaultValue": null,
+      "disabledAttr": false,
+      "domRead": "#noKvOffload.checked",
+      "evidence": [
+        "public/index.html:171",
+        "public/script.js:240"
+      ],
+      "htmlType": "checkbox",
+      "id": "noKvOffload",
+      "iniKeys": [
+        "no-kv-offload"
+      ],
+      "label": "No KV Offload:",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 15,
+      "persistKey": "noKvOffload",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Memory Settings",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--no-mmproj-offload"
+      ],
+      "coercion": "noMmprojOffloadCheckbox.checked",
+      "defaultChecked": false,
+      "defaultOption": null,
+      "defaultValue": null,
+      "disabledAttr": false,
+      "domRead": "#noMmprojOffload.checked",
+      "evidence": [
+        "public/index.html:175",
+        "public/script.js:241"
+      ],
+      "htmlType": "checkbox",
+      "id": "noMmprojOffload",
+      "iniKeys": [
+        "no-mmproj-offload"
+      ],
+      "label": "No MMProj Offload:",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 16,
+      "persistKey": "noMmprojOffload",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": false,
+      "section": "Memory Settings",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--cache-ram"
+      ],
+      "coercion": "parseInt(cacheRamInput.value)",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "8192",
+      "disabledAttr": false,
+      "domRead": "#cacheRam.value",
+      "evidence": [
+        "public/index.html:180",
+        "public/script.js:242"
+      ],
+      "htmlType": "number",
+      "id": "cacheRam",
+      "iniKeys": [
+        "cache-ram"
+      ],
+      "label": "Cache RAM (--cache-ram):",
+      "max": null,
+      "min": "-1",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 17,
+      "persistKey": "cacheRam",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "8192",
+      "section": "Memory Settings",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "-c"
+      ],
+      "coercion": "parseInt(contextSizeInput.value) || 1",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "16384",
+      "disabledAttr": false,
+      "domRead": "#contextSize.value",
+      "evidence": [
+        "public/index.html:187",
+        "public/script.js:231"
+      ],
+      "htmlType": "number",
+      "id": "contextSize",
+      "iniKeys": [
+        "c"
+      ],
+      "label": "Context Size (-c):",
+      "max": null,
+      "min": "1",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 18,
+      "persistKey": "contextSize",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "16384",
+      "section": "Advanced Settings",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--n-cpu-moe"
+      ],
+      "coercion": "parseInt(nCpuMoeInput.value) || 0",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "8",
+      "disabledAttr": false,
+      "domRead": "#nCpuMoe.value",
+      "evidence": [
+        "public/index.html:191",
+        "public/script.js:232"
+      ],
+      "htmlType": "number",
+      "id": "nCpuMoe",
+      "iniKeys": [
+        "n-cpu-moe"
+      ],
+      "label": "CPU MoE Layers (--n-cpu-moe):",
+      "max": null,
+      "min": "0",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 19,
+      "persistKey": "nCpuMoe",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "8",
+      "section": "Advanced Settings",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--cpu-moe"
+      ],
+      "coercion": "cpuMoeCheckbox.checked",
+      "defaultChecked": false,
+      "defaultOption": null,
+      "defaultValue": null,
+      "disabledAttr": false,
+      "domRead": "#cpuMoe.checked",
+      "evidence": [
+        "public/index.html:196",
+        "public/script.js:233"
+      ],
+      "htmlType": "checkbox",
+      "id": "cpuMoe",
+      "iniKeys": [
+        "cpu-moe"
+      ],
+      "label": "CPU MoE (--cpu-moe):",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 20,
+      "persistKey": "cpuMoe",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": false,
+      "section": "Advanced Settings",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [],
+      "coercion": "ctkEnableCheckbox.checked",
+      "defaultChecked": false,
+      "defaultOption": null,
+      "defaultValue": null,
+      "disabledAttr": false,
+      "domRead": "#ctkEnable.checked",
+      "evidence": [
+        "public/index.html:205",
+        "public/script.js:234"
+      ],
+      "htmlType": "checkbox",
+      "id": "ctkEnable",
+      "iniKeys": [],
+      "label": "Enable -ctk/-ctv:",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 21,
+      "persistKey": "ctkEnable",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": false,
+      "section": "Context Token Parameters",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--reasoning"
+      ],
+      "coercion": "reasoningSelect.value",
+      "defaultChecked": null,
+      "defaultOption": "auto",
+      "defaultValue": "auto",
+      "disabledAttr": false,
+      "domRead": "#reasoning.value",
+      "evidence": [
+        "public/index.html:209",
+        "public/script.js:246"
+      ],
+      "htmlType": "select",
+      "id": "reasoning",
+      "iniKeys": [
+        "reasoning"
+      ],
+      "label": "Reasoning:",
+      "max": null,
+      "min": null,
+      "options": [
+        "auto",
+        "on",
+        "off"
+      ],
+      "optionsDynamic": false,
+      "order": 22,
+      "persistKey": "reasoning",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Context Token Parameters",
+      "step": null,
+      "tag": "select"
+    },
+    {
+      "cliFlags": [
+        "-ctk"
+      ],
+      "coercion": "contextTokenKeySelect.value",
+      "defaultChecked": null,
+      "defaultOption": "f16",
+      "defaultValue": "f16",
+      "disabledAttr": true,
+      "domRead": "#contextTokenKey.value",
+      "evidence": [
+        "public/index.html:218",
+        "public/script.js:235"
+      ],
+      "htmlType": "select",
+      "id": "contextTokenKey",
+      "iniKeys": [],
+      "label": "Context Token Key (-ctk):",
+      "max": null,
+      "min": null,
+      "options": [
+        "f32",
+        "f16",
+        "bf16",
+        "q8_0",
+        "q4_0",
+        "q4_1",
+        "iq4_nl",
+        "q5_0",
+        "q5_1",
+        "kvarn2",
+        "kvarn3",
+        "kvarn4",
+        "kvarn5",
+        "kvarn6",
+        "kvarn8"
+      ],
+      "optionsDynamic": false,
+      "order": 23,
+      "persistKey": "contextTokenKey",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Context Token Parameters",
+      "step": null,
+      "tag": "select"
+    },
+    {
+      "cliFlags": [
+        "-ctv"
+      ],
+      "coercion": "contextTokenValueSelect.value",
+      "defaultChecked": null,
+      "defaultOption": "f16",
+      "defaultValue": "f16",
+      "disabledAttr": true,
+      "domRead": "#contextTokenValue.value",
+      "evidence": [
+        "public/index.html:239",
+        "public/script.js:236"
+      ],
+      "htmlType": "select",
+      "id": "contextTokenValue",
+      "iniKeys": [],
+      "label": "Context Token Value (-ctv):",
+      "max": null,
+      "min": null,
+      "options": [
+        "f32",
+        "f16",
+        "bf16",
+        "q8_0",
+        "q4_0",
+        "q4_1",
+        "iq4_nl",
+        "q5_0",
+        "q5_1",
+        "kvarn2",
+        "kvarn3",
+        "kvarn4",
+        "kvarn5",
+        "kvarn6",
+        "kvarn8"
+      ],
+      "optionsDynamic": false,
+      "order": 24,
+      "persistKey": "contextTokenValue",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Context Token Parameters",
+      "step": null,
+      "tag": "select"
+    },
+    {
+      "cliFlags": [
+        "--parallel"
+      ],
+      "coercion": "parseInt(document.getElementById('parallel').value) || 0",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "1",
+      "disabledAttr": false,
+      "domRead": "#parallel.value",
+      "evidence": [
+        "public/index.html:260",
+        "public/script.js:227"
+      ],
+      "htmlType": "number",
+      "id": "parallel",
+      "iniKeys": [
+        "parallel"
+      ],
+      "label": "Parallel (--parallel):",
+      "max": null,
+      "min": "0",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 25,
+      "persistKey": "parallel",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Context Token Parameters",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "-fa"
+      ],
+      "coercion": "fastAttentionCheckbox.value",
+      "defaultChecked": null,
+      "defaultOption": "auto",
+      "defaultValue": "auto",
+      "disabledAttr": false,
+      "domRead": "#fastAttention.value",
+      "evidence": [
+        "public/index.html:266",
+        "public/script.js:237"
+      ],
+      "htmlType": "select",
+      "id": "fastAttention",
+      "iniKeys": [
+        "fa"
+      ],
+      "label": "Fast Attention (--fa):",
+      "max": null,
+      "min": null,
+      "options": [
+        "auto",
+        "on",
+        "off"
+      ],
+      "optionsDynamic": false,
+      "order": 26,
+      "persistKey": "fastAttention",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "auto",
+      "section": "Context Token Parameters",
+      "step": null,
+      "tag": "select"
+    },
+    {
+      "cliFlags": [
+        "--jinja"
+      ],
+      "coercion": "jinjaCheckbox.checked",
+      "defaultChecked": false,
+      "defaultOption": null,
+      "defaultValue": null,
+      "disabledAttr": false,
+      "domRead": "#jinja.checked",
+      "evidence": [
+        "public/index.html:276",
+        "public/script.js:238"
+      ],
+      "htmlType": "checkbox",
+      "id": "jinja",
+      "iniKeys": [
+        "jinja"
+      ],
+      "label": "Jinja (--jinja):",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 27,
+      "persistKey": "jinja",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Context Token Parameters",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [],
+      "coercion": "loadCustomChatTemplateCheckbox.checked",
+      "defaultChecked": false,
+      "defaultOption": null,
+      "defaultValue": null,
+      "disabledAttr": false,
+      "domRead": "#loadCustomChatTemplate.checked",
+      "evidence": [
+        "public/index.html:280",
+        "public/script.js:247"
+      ],
+      "htmlType": "checkbox",
+      "id": "loadCustomChatTemplate",
+      "iniKeys": [],
+      "label": "Load Custom Chat Template:",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 28,
+      "persistKey": "loadCustomChatTemplate",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": false,
+      "section": "Context Token Parameters",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--chat-template-kwargs"
+      ],
+      "coercion": "chatTemplateKwargsInput.value.trim()",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "",
+      "disabledAttr": false,
+      "domRead": "#chatTemplateKwargs.value",
+      "evidence": [
+        "public/index.html:286",
+        "public/script.js:248"
+      ],
+      "htmlType": "text",
+      "id": "chatTemplateKwargs",
+      "iniKeys": [
+        "chat-template-kwargs"
+      ],
+      "label": "Chat Template Kwargs (--chat-template-kwargs):",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 29,
+      "persistKey": "chatTemplateKwargs",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": "{\"preserve_thinking\": true}",
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Context Token Parameters",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--spec-type",
+        "--spec-ngram-mod-n-match",
+        "--spec-ngram-mod-n-min",
+        "--spec-ngram-mod-n-max"
+      ],
+      "coercion": "ngramModCheckbox.checked",
+      "defaultChecked": false,
+      "defaultOption": null,
+      "defaultValue": null,
+      "disabledAttr": false,
+      "domRead": "#ngramMod.checked",
+      "evidence": [
+        "public/index.html:295",
+        "public/script.js:244"
+      ],
+      "htmlType": "checkbox",
+      "id": "ngramMod",
+      "iniKeys": [
+        "spec-type",
+        "spec-ngram-size-n",
+        "draft-min",
+        "draft-max"
+      ],
+      "label": "Ngram-Mod:",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 30,
+      "persistKey": "ngramMod",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": false,
+      "section": "Speculation Settings",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--spec-type"
+      ],
+      "coercion": "speculationTypeSelect.value",
+      "defaultChecked": null,
+      "defaultOption": "none",
+      "defaultValue": "none",
+      "disabledAttr": false,
+      "domRead": "#speculationType.value",
+      "evidence": [
+        "public/index.html:299",
+        "public/script.js:243"
+      ],
+      "htmlType": "select",
+      "id": "speculationType",
+      "iniKeys": [
+        "spec-type"
+      ],
+      "label": "Speculation Type:",
+      "max": null,
+      "min": null,
+      "options": [
+        "none",
+        "draft-mtp",
+        "draft-dflash",
+        "draft-dspark"
+      ],
+      "optionsDynamic": false,
+      "order": 31,
+      "persistKey": "speculationType",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "none",
+      "section": "Speculation Settings",
+      "step": null,
+      "tag": "select"
+    },
+    {
+      "cliFlags": [
+        "--spec-draft-n-max"
+      ],
+      "coercion": "parseInt(specDraftNMaxInput.value) || 0",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "0",
+      "disabledAttr": false,
+      "domRead": "#specDraftNMax.value",
+      "evidence": [
+        "public/index.html:311",
+        "public/script.js:245"
+      ],
+      "htmlType": "number",
+      "id": "specDraftNMax",
+      "iniKeys": [
+        "spec-draft-n-max"
+      ],
+      "label": "Draft N-Max (--spec-draft-n-max):",
+      "max": null,
+      "min": "0",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 32,
+      "persistKey": "specDraftNMax",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "0",
+      "section": "Speculation Settings",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "-md"
+      ],
+      "coercion": "draftModelPathSelect.value.trim()",
+      "defaultChecked": null,
+      "defaultOption": "",
+      "defaultValue": "",
+      "disabledAttr": false,
+      "domRead": "#draftModelPath.value",
+      "evidence": [
+        "public/index.html:319",
+        "public/script.js:249"
+      ],
+      "htmlType": "select",
+      "id": "draftModelPath",
+      "iniKeys": [
+        "model-draft"
+      ],
+      "label": "Draft Model Path (-md):",
+      "max": null,
+      "min": null,
+      "options": [
+        ""
+      ],
+      "optionsDynamic": true,
+      "order": 33,
+      "persistKey": "draftModelPath",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "",
+      "section": "Draft Model Settings",
+      "step": null,
+      "tag": "select"
+    },
+    {
+      "cliFlags": [
+        "-ngld"
+      ],
+      "coercion": "parseInt(ngldInput.value) || 0",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": "0",
+      "disabledAttr": false,
+      "domRead": "#ngld.value",
+      "evidence": [
+        "public/index.html:325",
+        "public/script.js:250"
+      ],
+      "htmlType": "number",
+      "id": "ngld",
+      "iniKeys": [
+        "ngld"
+      ],
+      "label": "GPU Layers for Draft Model (-ngld):",
+      "max": null,
+      "min": "0",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 34,
+      "persistKey": "ngld",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "0",
+      "section": "Draft Model Settings",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "-ctkd"
+      ],
+      "coercion": "ctkdSelect.value",
+      "defaultChecked": null,
+      "defaultOption": "f16",
+      "defaultValue": "f16",
+      "disabledAttr": false,
+      "domRead": "#ctkd.value",
+      "evidence": [
+        "public/index.html:329",
+        "public/script.js:251"
+      ],
+      "htmlType": "select",
+      "id": "ctkd",
+      "iniKeys": [
+        "ctkd"
+      ],
+      "label": "Context Token Key for Draft Model (-ctkd):",
+      "max": null,
+      "min": null,
+      "options": [
+        "f32",
+        "f16",
+        "bf16",
+        "q8_0",
+        "q4_0",
+        "q4_1",
+        "iq4_nl",
+        "q5_0",
+        "q5_1",
+        "kvarn2",
+        "kvarn3",
+        "kvarn4",
+        "kvarn5",
+        "kvarn6",
+        "kvarn8"
+      ],
+      "optionsDynamic": false,
+      "order": 35,
+      "persistKey": "ctkd",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "f16",
+      "section": "Draft Model Settings",
+      "step": null,
+      "tag": "select"
+    },
+    {
+      "cliFlags": [
+        "-ctvd"
+      ],
+      "coercion": "ctvdSelect.value",
+      "defaultChecked": null,
+      "defaultOption": "f16",
+      "defaultValue": "f16",
+      "disabledAttr": false,
+      "domRead": "#ctvd.value",
+      "evidence": [
+        "public/index.html:350",
+        "public/script.js:252"
+      ],
+      "htmlType": "select",
+      "id": "ctvd",
+      "iniKeys": [
+        "ctvd"
+      ],
+      "label": "Context Token Value for Draft Model (-ctvd):",
+      "max": null,
+      "min": null,
+      "options": [
+        "f32",
+        "f16",
+        "bf16",
+        "q8_0",
+        "q4_0",
+        "q4_1",
+        "iq4_nl",
+        "q5_0",
+        "q5_1",
+        "kvarn2",
+        "kvarn3",
+        "kvarn4",
+        "kvarn5",
+        "kvarn6",
+        "kvarn8"
+      ],
+      "optionsDynamic": false,
+      "order": 36,
+      "persistKey": "ctvd",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": true,
+      "resetValue": "f16",
+      "section": "Draft Model Settings",
+      "step": null,
+      "tag": "select"
+    },
+    {
+      "cliFlags": [
+        "--verbose"
+      ],
+      "coercion": "verboseCheckbox.checked",
+      "defaultChecked": false,
+      "defaultOption": null,
+      "defaultValue": null,
+      "disabledAttr": false,
+      "domRead": "#verbose.checked",
+      "evidence": [
+        "public/index.html:376",
+        "public/script.js:239"
+      ],
+      "htmlType": "checkbox",
+      "id": "verbose",
+      "iniKeys": [
+        "verbose"
+      ],
+      "label": "Verbose (--verbose):",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 37,
+      "persistKey": "verbose",
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Other",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [],
+      "coercion": null,
+      "defaultChecked": null,
+      "defaultOption": "",
+      "defaultValue": "",
+      "disabledAttr": false,
+      "domRead": null,
+      "evidence": [
+        "public/index.html:392",
+        "public/script.js: not in the saveCurrentValues key set"
+      ],
+      "htmlType": "select",
+      "id": "launchPresetsSelect",
+      "iniKeys": [],
+      "label": null,
+      "max": null,
+      "min": null,
+      "options": [
+        ""
+      ],
+      "optionsDynamic": true,
+      "order": 38,
+      "persistKey": null,
+      "persisted": false,
+      "persistedIn": null,
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Other",
+      "step": null,
+      "tag": "select"
+    },
+    {
+      "cliFlags": [],
+      "coercion": "modelsDirectoryInput.value.trim()",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": null,
+      "defaultValueNote": null,
+      "disabledAttr": false,
+      "domRead": "#modelsDirectory.value.trim()",
+      "evidence": [
+        "public/script.js:1549",
+        "public/script.js:180"
+      ],
+      "htmlType": "text",
+      "id": "modelsDirectory",
+      "iniKeys": [],
+      "label": "Models Directory:",
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 39,
+      "persistKey": "modelsDirectory",
+      "persisted": true,
+      "persistedIn": "llamaCppSettings",
+      "placeholder": "Enter models directory path",
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Settings dialog (built by openSettingsDialog)",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [
+        "--port"
+      ],
+      "coercion": "parseInt(settingsDialog.querySelector('#serverPort').value) || DEFAULT_PORT",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": null,
+      "defaultValueNote": null,
+      "disabledAttr": false,
+      "domRead": "#serverPort.value",
+      "evidence": [
+        "public/script.js:1555",
+        "public/script.js:180"
+      ],
+      "htmlType": "number",
+      "id": "serverPort",
+      "iniKeys": [
+        "port"
+      ],
+      "label": "Server Port (--port):",
+      "max": "65535",
+      "min": "1",
+      "options": null,
+      "optionsDynamic": null,
+      "order": 40,
+      "persistKey": "serverPort",
+      "persisted": true,
+      "persistedIn": "llamaCppSettings",
+      "placeholder": "${DEFAULT_PORT}",
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "Settings dialog (built by openSettingsDialog)",
+      "step": null,
+      "tag": "input"
+    },
+    {
+      "cliFlags": [],
+      "coercion": "read from the parsed config object only",
+      "defaultChecked": null,
+      "defaultOption": null,
+      "defaultValue": null,
+      "disabledAttr": null,
+      "domRead": null,
+      "evidence": [
+        "public/script.js:851",
+        "public/script.js: not in the saveCurrentValues key set"
+      ],
+      "htmlType": null,
+      "id": "disableReasoning",
+      "iniKeys": [
+        "reasoning"
+      ],
+      "label": null,
+      "max": null,
+      "min": null,
+      "options": null,
+      "optionsDynamic": null,
+      "order": 41,
+      "persistKey": null,
+      "persisted": false,
+      "persistedIn": null,
+      "placeholder": null,
+      "resetOnDelete": false,
+      "resetValue": null,
+      "section": "none - no control (legacy localStorage key)",
+      "step": null,
+      "tag": null
+    }
+  ],
+  "generatedBy": "tools/parity/spec-static.js",
+  "launchServerKeySet": {
+    "count": 35,
+    "keys": [
+      "modelPath",
+      "ngl",
+      "threads",
+      "temp",
+      "topK",
+      "topP",
+      "minP",
+      "repeatPenalty",
+      "presencePenalty",
+      "parallel",
+      "loadMode",
+      "swaFull",
+      "backendSampling",
+      "contextSize",
+      "nCpuMoe",
+      "cpuMoe",
+      "noKvOffload",
+      "noMmprojOffload",
+      "cacheRam",
+      "speculationType",
+      "ngramMod",
+      "specDraftNMax",
+      "ctkEnable",
+      "contextTokenKey",
+      "contextTokenValue",
+      "fastAttention",
+      "jinja",
+      "verbose",
+      "reasoning",
+      "loadCustomChatTemplate",
+      "chatTemplateKwargs",
+      "draftModelPath",
+      "ngld",
+      "ctkd",
+      "ctvd"
+    ],
+    "source": "launchServer config literal"
+  },
+  "persistedKeySet": {
+    "count": 36,
+    "keys": [
+      "serverPath",
+      "modelPath",
+      "ngl",
+      "threads",
+      "temp",
+      "topK",
+      "topP",
+      "minP",
+      "repeatPenalty",
+      "presencePenalty",
+      "parallel",
+      "loadMode",
+      "swaFull",
+      "backendSampling",
+      "contextSize",
+      "nCpuMoe",
+      "cpuMoe",
+      "ctkEnable",
+      "contextTokenKey",
+      "contextTokenValue",
+      "fastAttention",
+      "jinja",
+      "verbose",
+      "noKvOffload",
+      "noMmprojOffload",
+      "cacheRam",
+      "speculationType",
+      "ngramMod",
+      "specDraftNMax",
+      "reasoning",
+      "loadCustomChatTemplate",
+      "chatTemplateKwargs",
+      "draftModelPath",
+      "ngld",
+      "ctkd",
+      "ctvd"
+    ],
+    "source": "saveCurrentValues config literal"
+  },
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "file": "git:parity-baseline:public/index.html",
+      "sha256": "79ebec8dc79da50ea35e69ea927961d137c17f6b16eed7e7406ec18674dd0356"
+    },
+    {
+      "file": "git:parity-baseline:public/script.js",
+      "sha256": "cc866fbbffafb80f960587fb617a36340124766dd77effb9e40992cc73f8e678"
+    }
+  ]
+}

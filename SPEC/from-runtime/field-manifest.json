@@ -1,0 +1,2378 @@
+{
+  "deleteReset": {
+    "changedIds": [
+      "loadMode"
+    ],
+    "controlsCompared": 38,
+    "deletedConfig": "capture-beta",
+    "deletedValues": {
+      "backendSampling": false,
+      "cacheRam": 8192,
+      "chatTemplateKwargs": "",
+      "contextSize": 16384,
+      "contextTokenKey": "f16",
+      "contextTokenValue": "f16",
+      "cpuMoe": false,
+      "ctkEnable": false,
+      "ctkd": "f16",
+      "ctvd": "f16",
+      "draftModelPath": "",
+      "fastAttention": "auto",
+      "jinja": false,
+      "loadCustomChatTemplate": false,
+      "loadMode": "none",
+      "minP": "0",
+      "modelPath": "",
+      "nCpuMoe": 8,
+      "ngl": 99,
+      "ngld": 0,
+      "ngramMod": false,
+      "noKvOffload": false,
+      "noMmprojOffload": false,
+      "parallel": 1,
+      "presencePenalty": "0.00",
+      "reasoning": "auto",
+      "repeatPenalty": "1.05",
+      "serverPath": "",
+      "specDraftNMax": 0,
+      "speculationType": "none",
+      "swaFull": false,
+      "temp": 0.7,
+      "threads": 12,
+      "topK": 20,
+      "topP": 0,
+      "verbose": false
+    },
+    "fixture": "localstorage/J5-ui-states/q8-delete-reset.json",
+    "note": "q8-delete-reset.json records every control it compared in controlCount and lists only the rows that changed, so an absent row means \"compared and unchanged\"",
+    "q8": {
+      "changed": [
+        {
+          "after": {
+            "checked": null,
+            "value": "mmap"
+          },
+          "equalsHtmlDefault": false,
+          "id": "loadMode"
+        }
+      ],
+      "controlCount": 38,
+      "fixture": "localstorage/J5-ui-states/q8-delete-reset.json"
+    },
+    "survivors": [
+      "capture-alpha"
+    ]
+  },
+  "fieldUniverse": {
+    "domControlIds": {
+      "count": 40,
+      "ids": [
+        "configName",
+        "serverPath",
+        "modelPath",
+        "ngl",
+        "threads",
+        "temp",
+        "topK",
+        "topP",
+        "minP",
+        "repeatPenalty",
+        "presencePenalty",
+        "backendSampling",
+        "loadMode",
+        "swaFull",
+        "noKvOffload",
+        "noMmprojOffload",
+        "cacheRam",
+        "contextSize",
+        "nCpuMoe",
+        "cpuMoe",
+        "ctkEnable",
+        "reasoning",
+        "contextTokenKey",
+        "contextTokenValue",
+        "parallel",
+        "fastAttention",
+        "jinja",
+        "loadCustomChatTemplate",
+        "chatTemplateKwargs",
+        "ngramMod",
+        "speculationType",
+        "specDraftNMax",
+        "draftModelPath",
+        "ngld",
+        "ctkd",
+        "ctvd",
+        "verbose",
+        "launchPresetsSelect",
+        "modelsDirectory",
+        "serverPort"
+      ],
+      "source": [
+        "localstorage/J5-ui-states/after-corpus-seed.json",
+        "localstorage/J5-ui-states/after-delete.json",
+        "localstorage/J5-ui-states/after-save-config.json",
+        "localstorage/J5-ui-states/fresh.json"
+      ]
+    },
+    "note": "the settings dialog inputs modelsDirectory and serverPort appear in the screenshot DOM dumps, not in the localStorage field dumps",
+    "storedConfigKeys": {
+      "count": 44,
+      "keys": [
+        "backendSampling",
+        "cacheRam",
+        "chatTemplateKwargs",
+        "contextSize",
+        "contextTokenKey",
+        "contextTokenValue",
+        "cpuMoe",
+        "ctkEnable",
+        "ctkd",
+        "ctvd",
+        "dio",
+        "disableReasoning",
+        "draftMax",
+        "draftMin",
+        "draftModelPath",
+        "draftPMin",
+        "fastAttention",
+        "jinja",
+        "loadCustomChatTemplate",
+        "loadMode",
+        "minP",
+        "mlock",
+        "modelPath",
+        "nCpuMoe",
+        "ndio",
+        "ngl",
+        "ngld",
+        "ngramMod",
+        "noKvOffload",
+        "noMmap",
+        "noMmprojOffload",
+        "parallel",
+        "presencePenalty",
+        "reasoning",
+        "repeatPenalty",
+        "serverPath",
+        "specDraftNMax",
+        "speculationType",
+        "swaFull",
+        "temp",
+        "threads",
+        "topK",
+        "topP",
+        "verbose"
+      ],
+      "source": [
+        "localstorage/J5-ui-launch/after-ui-launch.json",
+        "localstorage/J5-ui-states/after-corpus-seed.json",
+        "localstorage/J5-ui-states/after-delete.json",
+        "localstorage/J5-ui-states/after-save-config.json"
+      ]
+    },
+    "storedKeysWithoutControl": [
+      "dio",
+      "disableReasoning",
+      "draftMax",
+      "draftMin",
+      "draftPMin",
+      "mlock",
+      "ndio",
+      "noMmap"
+    ]
+  },
+  "fields": {
+    "backendSampling": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "false"
+        ],
+        "tag": "input",
+        "type": "checkbox"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": false
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "cacheRam": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json",
+            "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+            "corpus/configs.remapped.json",
+            "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+            "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+          ],
+          "key": "--cache-ram",
+          "pairedBy": "recorded value identity, every recorded launch agrees"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "8192"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": [
+        {
+          "evidence": [
+            "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+          ],
+          "key": "cache-ram",
+          "pairedBy": "recorded value identity, every recorded section agrees"
+        }
+      ],
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": 8192
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "-1",
+          "20000",
+          "8192"
+        ]
+      }
+    },
+    "chatTemplateKwargs": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json"
+          ],
+          "key": "--chat-template-kwargs",
+          "pairedBy": "recorded value identity, every recorded launch agrees"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          ""
+        ],
+        "tag": "input",
+        "type": "text"
+      },
+      "iniKeys": [
+        {
+          "evidence": [
+            "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+          ],
+          "key": "chat-template-kwargs",
+          "pairedBy": "recorded value identity, every recorded section agrees"
+        }
+      ],
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": ""
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "",
+          "{\"preserve_thinking\": true, \"reasoning_effort\": \"xhigh\"}",
+          "{\"preserve_thinking\": true}"
+        ]
+      }
+    },
+    "configName": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          ""
+        ],
+        "tag": "input",
+        "type": "text"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": null
+      },
+      "stored": {
+        "__gap": true,
+        "reason": "no recorded llamaCppConfigs or llamaCppSettings value carries this key"
+      }
+    },
+    "contextSize": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json",
+            "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+            "corpus/configs.remapped.json",
+            "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+            "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+          ],
+          "key": "-c",
+          "pairedBy": "recorded value identity, every recorded launch agrees"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "16384"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": [
+        {
+          "evidence": [
+            "ini/J4-launch-presets/presets-direct-with-port.ini",
+            "ini/J4-launch-presets/presets-direct.ini",
+            "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+          ],
+          "key": "c",
+          "pairedBy": "recorded value identity, every recorded section agrees"
+        }
+      ],
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": 16384
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "1",
+          "10000",
+          "100000",
+          "120000",
+          "131072",
+          "140000",
+          "146000",
+          "150000",
+          "16384",
+          "200000",
+          "262144",
+          "32768",
+          "37000",
+          "380000",
+          "400000",
+          "40960",
+          "48000",
+          "600000",
+          "64000",
+          "7000",
+          "80000",
+          "89000"
+        ]
+      }
+    },
+    "contextTokenKey": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "f16"
+        ],
+        "tag": "select",
+        "type": "select"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": "f16"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "f16",
+          "kvarn4",
+          "kvarn5",
+          "q4_0",
+          "q8_0"
+        ]
+      }
+    },
+    "contextTokenValue": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "f16"
+        ],
+        "tag": "select",
+        "type": "select"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": "f16"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "f16",
+          "kvarn4",
+          "kvarn5",
+          "q4_0",
+          "q5_1",
+          "q8_0"
+        ]
+      }
+    },
+    "cpuMoe": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "false"
+        ],
+        "tag": "input",
+        "type": "checkbox"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": false
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "ctkEnable": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "false"
+        ],
+        "tag": "input",
+        "type": "checkbox"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": false
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "ctkd": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "f16"
+        ],
+        "tag": "select",
+        "type": "select"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": "f16"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "f16",
+          "q4_0",
+          "q8_0"
+        ]
+      }
+    },
+    "ctvd": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "f16"
+        ],
+        "tag": "select",
+        "type": "select"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": "f16"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "f16",
+          "q4_0",
+          "q5_1",
+          "q8_0"
+        ]
+      }
+    },
+    "dio": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "__gap": true,
+        "reason": "no recording captured a control with id \"dio\"; it is only visible as a stored config key"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "__gap": true,
+        "reason": "no control recorded for this key, so a delete cannot be observed on it"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-states/after-corpus-seed.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "disableReasoning": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "__gap": true,
+        "reason": "no recording captured a control with id \"disableReasoning\"; it is only visible as a stored config key"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "__gap": true,
+        "reason": "no control recorded for this key, so a delete cannot be observed on it"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-states/after-corpus-seed.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "draftMax": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "__gap": true,
+        "reason": "no recording captured a control with id \"draftMax\"; it is only visible as a stored config key"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "__gap": true,
+        "reason": "no control recorded for this key, so a delete cannot be observed on it"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-states/after-corpus-seed.json"
+        ],
+        "values": [
+          "0",
+          "10",
+          "16"
+        ]
+      }
+    },
+    "draftMin": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "__gap": true,
+        "reason": "no recording captured a control with id \"draftMin\"; it is only visible as a stored config key"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "__gap": true,
+        "reason": "no control recorded for this key, so a delete cannot be observed on it"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-states/after-corpus-seed.json"
+        ],
+        "values": [
+          "0",
+          "2",
+          "5"
+        ]
+      }
+    },
+    "draftModelPath": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          ""
+        ],
+        "tag": "select",
+        "type": "select"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": ""
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\qwen35-9b-dflash-Q2_K.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-DFlash2-Q2_K_S-MIX.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-DSpark-Q2_K.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmstudio\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-DSpark-Q8_0.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmstudio\\undefined",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-DFlash-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.8-flash-next\\mtp-Qwen3.8-Flash-Next-shared-Q4_K_M.gguf"
+        ]
+      }
+    },
+    "draftPMin": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "__gap": true,
+        "reason": "no recording captured a control with id \"draftPMin\"; it is only visible as a stored config key"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "__gap": true,
+        "reason": "no control recorded for this key, so a delete cannot be observed on it"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-states/after-corpus-seed.json"
+        ],
+        "values": [
+          "0",
+          "0.1",
+          "0.9"
+        ]
+      }
+    },
+    "fastAttention": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "auto"
+        ],
+        "tag": "select",
+        "type": "select"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": "auto"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "auto",
+          "off",
+          "on"
+        ]
+      }
+    },
+    "jinja": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json",
+            "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+            "corpus/configs.remapped.json",
+            "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+            "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+          ],
+          "key": "--jinja",
+          "pairedBy": "presence vector over 4 recorded launches"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "false"
+        ],
+        "tag": "input",
+        "type": "checkbox"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": false
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "launchPresetsSelect": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          ""
+        ],
+        "tag": "select",
+        "type": "select"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": null
+      },
+      "stored": {
+        "__gap": true,
+        "reason": "no recorded llamaCppConfigs or llamaCppSettings value carries this key"
+      }
+    },
+    "loadCustomChatTemplate": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "false"
+        ],
+        "tag": "input",
+        "type": "checkbox"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": false
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "loadMode": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json",
+            "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+            "corpus/configs.remapped.json",
+            "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+            "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+          ],
+          "key": "--load-mode",
+          "pairedBy": "recorded value identity, every recorded launch agrees"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "none"
+        ],
+        "tag": "select",
+        "type": "select"
+      },
+      "iniKeys": [
+        {
+          "evidence": [
+            "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+          ],
+          "key": "load-mode",
+          "pairedBy": "recorded value identity, every recorded section agrees"
+        }
+      ],
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control changed when the config was deleted",
+        "valueBeforeDelete": "none"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "dio",
+          "mlock",
+          "mmap",
+          "none"
+        ]
+      }
+    },
+    "minP": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json"
+          ],
+          "key": "--min-p",
+          "pairedBy": "recorded value identity, every recorded launch agrees"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "0"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": [
+        {
+          "evidence": [
+            "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+          ],
+          "key": "min-p",
+          "pairedBy": "recorded value identity, every recorded section agrees"
+        }
+      ],
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": "0"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "0",
+          "0.0",
+          "0.00",
+          "0.05"
+        ]
+      }
+    },
+    "mlock": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "__gap": true,
+        "reason": "no recording captured a control with id \"mlock\"; it is only visible as a stored config key"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "__gap": true,
+        "reason": "no control recorded for this key, so a delete cannot be observed on it"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-states/after-corpus-seed.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "modelPath": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json",
+            "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+            "corpus/configs.remapped.json",
+            "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+            "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+          ],
+          "key": "-m",
+          "pairedBy": "recorded value identity, every recorded launch agrees"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          ""
+        ],
+        "tag": "select",
+        "type": "select"
+      },
+      "iniKeys": [
+        {
+          "evidence": [
+            "ini/J4-launch-presets/presets-direct-with-port.ini",
+            "ini/J4-launch-presets/presets-direct.ini",
+            "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+          ],
+          "key": "model",
+          "pairedBy": "recorded value identity, every recorded section agrees"
+        }
+      ],
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": ""
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Inkling-2-Mini-UD-Q4_K_M\\Inkling-2-Mini-UD-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Nemotron\\Nemotron-3-Nano-30B-A3B-Q4_0.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Nemotron\\nvidia_Nemotron-Cascade-14B-Thinking-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Ornith-1.5-35B-Q4_K_M\\Ornith-1.5-35B-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwe3-Coder-480B\\Qwen3-Coder-30B-A3B-Instruct-480B-Distill-V2-Fp32.i1-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3-coder-80b\\Qwen3-Coder-Next-MXFP4_MOE.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\Qwen3.5-9B-Q6_K.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S-mtp.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_XS.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Ternary-Bonsai-2-27B-PQ2_0.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\bartowski\\nvidia_Orchestrator-8B-GGUF\\nvidia_Orchestrator-8B-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\glm7.5 flash\\GLM-4.7-Flash-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmf-2.5\\LFM2.5-230M-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmstudio-community\\Ministral-3-14B-Reasoning-2512-GGUF\\Ministral-3-14B-Reasoning-2512-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmstudio-community\\Qwen3-0.6B-GGUF\\Qwen3-0.6B-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\ornith-35b\\ornith-1.0-35b-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\ornith-9b\\Ornith-1.5-9B-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-IQ2_S-2.17bpw.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-UD-Q4_K_M-MTP-unsloth.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.8-flash-next\\Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\spark-x2.5\\Spark-X2.5-4B-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-4B-Instruct-2507-GGUF\\Qwen3-4B-Instruct-2507-Q6_K.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-4B-Thinking-2507-GGUF\\Qwen3-4B-Thinking-2507-Q6_K.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-2B-Instruct-GGUF\\Qwen3-VL-2B-Instruct-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-2B-Thinking-GGUF\\Qwen3-VL-2B-Thinking-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-30B-A3B-Instruct-GGUF\\Qwen3-VL-30B-A3B-Instruct-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-30B-A3B-Thinking-GGUF\\Qwen3-VL-30B-A3B-Thinking-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-4B-Instruct-GGUF\\Qwen3-VL-4B-Instruct-Q4_K_S.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-8B-Instruct-GGUF\\Qwen3-VL-8B-Instruct-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\qwen3.5-0.8b\\Qwen3.5-0.8B-Q4_K_M-MTP.gguf"
+        ]
+      }
+    },
+    "modelsDirectory": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "screenshots/J5-ui-states/delete-confirm-1280x800.render.json"
+        ],
+        "observedValues": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models"
+        ],
+        "tag": "input",
+        "type": null
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": null
+      },
+      "stored": {
+        "container": "llamaCppSettings",
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\"
+        ]
+      }
+    },
+    "nCpuMoe": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "8"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": 8
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "0",
+          "19",
+          "23",
+          "24",
+          "25",
+          "26",
+          "27",
+          "29",
+          "31",
+          "36",
+          "41",
+          "42",
+          "43",
+          "5",
+          "7",
+          "8"
+        ]
+      }
+    },
+    "ndio": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "__gap": true,
+        "reason": "no recording captured a control with id \"ndio\"; it is only visible as a stored config key"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "__gap": true,
+        "reason": "no control recorded for this key, so a delete cannot be observed on it"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-states/after-corpus-seed.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "ngl": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "99"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": 99
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "0",
+          "100",
+          "97",
+          "99"
+        ]
+      }
+    },
+    "ngld": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "0"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": 0
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "0",
+          "99"
+        ]
+      }
+    },
+    "ngramMod": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "false"
+        ],
+        "tag": "input",
+        "type": "checkbox"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": false
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "noKvOffload": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "false"
+        ],
+        "tag": "input",
+        "type": "checkbox"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": false
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "noMmap": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "__gap": true,
+        "reason": "no recording captured a control with id \"noMmap\"; it is only visible as a stored config key"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "__gap": true,
+        "reason": "no control recorded for this key, so a delete cannot be observed on it"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-states/after-corpus-seed.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "noMmprojOffload": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "false"
+        ],
+        "tag": "input",
+        "type": "checkbox"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": false
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "parallel": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "1"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": 1
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "0",
+          "1",
+          "2",
+          "8"
+        ]
+      }
+    },
+    "presencePenalty": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "0.00"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": "0.00"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "0",
+          "0.0",
+          "0.00",
+          "1.5"
+        ]
+      }
+    },
+    "reasoning": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "auto"
+        ],
+        "tag": "select",
+        "type": "select"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": "auto"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "auto",
+          "off",
+          "on"
+        ]
+      }
+    },
+    "repeatPenalty": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json",
+            "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+            "corpus/configs.remapped.json"
+          ],
+          "key": "--repeat-penalty",
+          "pairedBy": "recorded value identity, every recorded launch agrees"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "1.05"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": [
+        {
+          "evidence": [
+            "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+          ],
+          "key": "repeat-penalty",
+          "pairedBy": "recorded value identity, every recorded section agrees"
+        }
+      ],
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": "1.05"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "0",
+          "1",
+          "1.0",
+          "1.05"
+        ]
+      }
+    },
+    "serverPath": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          ""
+        ],
+        "tag": "input",
+        "type": "text"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": ""
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+        ]
+      }
+    },
+    "serverPort": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json",
+            "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+            "corpus/configs.remapped.json",
+            "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+            "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+          ],
+          "key": "--port",
+          "pairedBy": "settings value identity"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "screenshots/J5-ui-states/delete-confirm-1280x800.render.json"
+        ],
+        "observedValues": [
+          "7838"
+        ],
+        "tag": "input",
+        "type": null
+      },
+      "iniKeys": [
+        {
+          "evidence": [
+            "ini/J4-launch-presets/presets-direct-with-port.ini",
+            "ini/J4-launch-presets/presets-direct.ini",
+            "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+          ],
+          "key": "port",
+          "pairedBy": "recorded value identity, every recorded section agrees"
+        }
+      ],
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": null
+      },
+      "stored": {
+        "container": "llamaCppSettings",
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "17852",
+          "7838"
+        ]
+      }
+    },
+    "specDraftNMax": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "0"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": 0
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    "speculationType": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "none"
+        ],
+        "tag": "select",
+        "type": "select"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": "none"
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "draft-dflash",
+          "draft-mtp",
+          "none"
+        ]
+      }
+    },
+    "swaFull": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "false"
+        ],
+        "tag": "input",
+        "type": "checkbox"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": false
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "false",
+          "true"
+        ]
+      }
+    },
+    "temp": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json",
+            "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+            "corpus/configs.remapped.json",
+            "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+            "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+          ],
+          "key": "--temp",
+          "pairedBy": "recorded value identity, every recorded launch agrees"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "0.7"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": [
+        {
+          "evidence": [
+            "ini/J4-launch-presets/presets-direct-with-port.ini",
+            "ini/J4-launch-presets/presets-direct.ini",
+            "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+          ],
+          "key": "temp",
+          "pairedBy": "recorded value identity, every recorded section agrees"
+        }
+      ],
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": 0.7
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "0",
+          "0.1",
+          "0.6",
+          "0.7",
+          "1"
+        ]
+      }
+    },
+    "threads": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json",
+            "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+            "corpus/configs.remapped.json",
+            "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+            "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+          ],
+          "key": "-t",
+          "pairedBy": "recorded value identity, every recorded launch agrees"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "12"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": [
+        {
+          "evidence": [
+            "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+          ],
+          "key": "threads",
+          "pairedBy": "recorded value identity, every recorded section agrees"
+        }
+      ],
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": 12
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "12",
+          "15",
+          "4"
+        ]
+      }
+    },
+    "topK": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json",
+            "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+            "corpus/configs.remapped.json"
+          ],
+          "key": "--top-k",
+          "pairedBy": "recorded value identity, every recorded launch agrees"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "20"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": 20
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "-1",
+          "0",
+          "20",
+          "40",
+          "50"
+        ]
+      }
+    },
+    "topP": {
+      "cliFlags": [
+        {
+          "evidence": [
+            "ws/J5-ui-launch/launch-attempts.json",
+            "localstorage/J5-ui-launch/after-ui-launch.json",
+            "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+            "corpus/configs.remapped.json",
+            "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+            "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+          ],
+          "key": "--top-p",
+          "pairedBy": "recorded value identity, every recorded launch agrees"
+        }
+      ],
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "0.00"
+        ],
+        "tag": "input",
+        "type": "number"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": 0
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "0",
+          "0.01",
+          "0.8",
+          "0.95",
+          "1"
+        ]
+      }
+    },
+    "verbose": {
+      "cliFlags": {
+        "__gap": true,
+        "reason": "no recorded /start body lets a flag be paired with this field by value identity"
+      },
+      "control": {
+        "fixtures": [
+          "localstorage/J5-ui-states/fresh.json"
+        ],
+        "observedValues": [
+          "false"
+        ],
+        "tag": "input",
+        "type": "checkbox"
+      },
+      "iniKeys": {
+        "__gap": true,
+        "reason": "no recorded models-preset.ini section lets a key be paired with this field by value identity"
+      },
+      "resetEvidence": {
+        "deletedConfig": "capture-beta",
+        "fixtures": [
+          "localstorage/J5-ui-states/q8-delete-reset.json",
+          "localstorage/J5-ui-states/after-save-config.json",
+          "localstorage/J5-ui-states/after-delete.json"
+        ],
+        "observed": "control did not change when the config was deleted",
+        "valueBeforeDelete": false
+      },
+      "stored": {
+        "fixtures": [
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "localstorage/J5-ui-states/after-corpus-seed.json",
+          "localstorage/J5-ui-states/after-delete.json",
+          "localstorage/J5-ui-states/after-save-config.json"
+        ],
+        "values": [
+          "false"
+        ]
+      }
+    }
+  },
+  "gaps": [
+    {
+      "__gap": true,
+      "reason": "field ordering inside the emitted arg vector and ini section is a property of the builder, not of the field list; see arg-truth-table.json and ini-map.json"
+    },
+    {
+      "__gap": true,
+      "reason": "which control feeds which stored key is only visible through value identity; every field whose value never differs from another field's value is unpaired here"
+    }
+  ],
+  "generatedBy": "tools/parity/spec-runtime.js",
+  "rule": "derived from fixtures/** recordings only; no app source was read (plan.md §2 Phase 3 (b))"
+}

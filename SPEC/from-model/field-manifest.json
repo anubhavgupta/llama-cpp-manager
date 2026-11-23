@@ -1,0 +1,1508 @@
+{
+  "artifact": "field-manifest",
+  "schemaVersion": 1,
+  "derivation": "model",
+  "derivedBy": "independent model pass (c): fresh-context read of the parity-baseline source text only (git show server.js, public/script.js, public/index.html). Neither tools/parity/spec-static.js (a) nor tools/parity/spec-runtime.js (b) output existed when this file was written, and no fixture was consulted.",
+  "sources": [
+    "git:parity-baseline:public/index.html",
+    "git:parity-baseline:public/script.js",
+    "git:parity-baseline:server.js"
+  ],
+  "fieldUniverseRule": "Every input-bearing control the user can type into or select: the 38 <input>/<select> elements with an id in public/index.html (document order), plus the 2 controls that script.js builds inside openSettingsDialog (modelsDirectory, serverPort), plus disableReasoning - the one legacy key the preset-ini generator still reads although it has no control (Q17). 38 + 2 + 1 = 41.",
+  "fieldCount": 41,
+  "attributeNotes": {
+    "order": "document order for index.html controls; 39-40 follow the markup string order inside openSettingsDialog; 41 is last because it has no control",
+    "section": "text of the nearest preceding <h3> in index.html (configName's is the config dialog title); the two dialog controls are in the generated settings dialog",
+    "defaultValue": "value attribute as written in the markup (string); for a <select> the value of the option carrying selected, else the first option's value",
+    "options": "option VALUES in markup order; the labels are identical to the values everywhere except the three placeholder options",
+    "optionsDynamic": "true when script.js rewrites the option list at runtime (modelPath/draftModelPath from /models, launchPresetsSelect from saved serverPaths)",
+    "cliFlags": "flag literals this field feeds in the launchServer arg block, in source emission order",
+    "iniKeys": "preset-ini key literals this field feeds in the launchModelPresets block, in source emission order; the global emission order lives in ini-map",
+    "resetOnDelete": "true when deleteConfiguration assigns to the control (Q8 partial reset); resetValue is the hard-coded literal it assigns"
+  },
+  "fields": [
+    {
+      "id": "configName",
+      "order": 1,
+      "tag": "input",
+      "htmlType": "text",
+      "section": "Create New Configuration",
+      "label": "Configuration Name:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": "Enter configuration name",
+      "defaultValue": "",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": false,
+      "persistedIn": null,
+      "persistKey": null,
+      "domRead": "#configName.value (trimmed)",
+      "coercion": "String.prototype.trim()",
+      "cliFlags": [],
+      "iniKeys": [],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "the trimmed value is the localStorage key name under llamaCppConfigs, not a config field; empty name alerts instead of saving"
+      ]
+    },
+    {
+      "id": "serverPath",
+      "order": 2,
+      "tag": "input",
+      "htmlType": "text",
+      "section": "Server Configuration",
+      "label": "LLaMA Server Path:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": "Enter path to llama-server.exe",
+      "defaultValue": "",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "serverPath",
+      "domRead": "#serverPath.value (trimmed in launchServer)",
+      "coercion": "String.prototype.trim()",
+      "cliFlags": [],
+      "iniKeys": [],
+      "resetOnDelete": true,
+      "resetValue": "",
+      "quirks": [
+        "not a llama arg: it is POST /start body.serverPath and the spawn executable",
+        "launchServer alerts 'Please enter the path to llama-server.exe' and returns when blank"
+      ]
+    },
+    {
+      "id": "modelPath",
+      "order": 3,
+      "tag": "select",
+      "htmlType": "select",
+      "section": "Model Configuration",
+      "label": "Model Path (-m):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": [
+        ""
+      ],
+      "defaultOption": "",
+      "optionsDynamic": true,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "modelPath",
+      "domRead": "#modelPath.value (trimmed)",
+      "coercion": "String.prototype.trim()",
+      "cliFlags": [
+        "-m",
+        "--chat-template-file",
+        "--mmproj"
+      ],
+      "iniKeys": [
+        "model",
+        "mmproj",
+        "chat-template-file"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "",
+      "quirks": [
+        "options come from /models (path as value, relativePath||name as label) and the same list is cloned into #draftModelPath",
+        "--chat-template-file is derived client-side by stripping the file name and appending \\chat-template.jinja",
+        "--mmproj comes from the window.models entry whose path equals the selected path"
+      ]
+    },
+    {
+      "id": "ngl",
+      "order": 4,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "GPU Configuration",
+      "label": "GPU Layers (-ngl):",
+      "min": "0",
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "99",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "ngl",
+      "domRead": "#ngl.value",
+      "coercion": "parseInt(nglInput.value) || 0",
+      "cliFlags": [
+        "-ngl"
+      ],
+      "iniKeys": [
+        "ngl"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "99",
+      "quirks": []
+    },
+    {
+      "id": "threads",
+      "order": 5,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Performance Settings",
+      "label": "Threads (-t):",
+      "min": "1",
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "12",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "threads",
+      "domRead": "#threads.value",
+      "coercion": "parseInt(threadsInput.value) || 1",
+      "cliFlags": [
+        "-t"
+      ],
+      "iniKeys": [
+        "threads"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "12",
+      "quirks": []
+    },
+    {
+      "id": "temp",
+      "order": 6,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Sampling Parameters",
+      "label": "Temperature (--temp):",
+      "min": "0",
+      "max": null,
+      "step": "0.01",
+      "placeholder": null,
+      "defaultValue": "0.7",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "temp",
+      "domRead": "#temp.value",
+      "coercion": "parseFloat(tempInput.value) || 0",
+      "cliFlags": [
+        "--temp"
+      ],
+      "iniKeys": [
+        "temp"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "0.7",
+      "quirks": [
+        "guard is >= 0, so 0 is emitted, unlike the > 0 fields"
+      ]
+    },
+    {
+      "id": "topK",
+      "order": 7,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Sampling Parameters",
+      "label": "Top-K (--top-k):",
+      "min": "0",
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "20",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "topK",
+      "domRead": "#topK.value",
+      "coercion": "parseInt(topKInput.value) || 0",
+      "cliFlags": [
+        "--top-k"
+      ],
+      "iniKeys": [
+        "top-k"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "20",
+      "quirks": [
+        "guard is > 0, so topK 0 is dropped while temp 0 is emitted"
+      ]
+    },
+    {
+      "id": "topP",
+      "order": 8,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Sampling Parameters",
+      "label": "Top-P (--top-p):",
+      "min": "0",
+      "max": "1",
+      "step": "0.01",
+      "placeholder": null,
+      "defaultValue": "0.00",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "topP",
+      "domRead": "#topP.value",
+      "coercion": "parseFloat(topPInput.value) || 0",
+      "cliFlags": [
+        "--top-p"
+      ],
+      "iniKeys": [
+        "top-p"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "not reset by deleteConfiguration (Q8): after a delete of the active config it keeps the previous value",
+        "HTML default is the string 0.00 but parseFloat() stores number 0, so the saved JSON and the control text differ"
+      ]
+    },
+    {
+      "id": "minP",
+      "order": 9,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Sampling Parameters",
+      "label": "Min-P (--min-p):",
+      "min": "0",
+      "max": "1",
+      "step": "0.01",
+      "placeholder": null,
+      "defaultValue": "0",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "minP",
+      "domRead": "#minP.value",
+      "coercion": "minPInput.value || 0 (stored raw, no numeric coercion)",
+      "cliFlags": [
+        "--min-p"
+      ],
+      "iniKeys": [
+        "min-p"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "stored as the raw control string, so \"0\", \"0.0\" and \"0.00\" are distinguishable in localStorage (Q19)",
+        "guard: (!isNaN(parseFloat(v)) && v != \"0\") || v == \"0.00\" - so 0 and \"0\" drop, \"0.00\" emits"
+      ]
+    },
+    {
+      "id": "repeatPenalty",
+      "order": 10,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Sampling Parameters",
+      "label": "Repeat Penalty:",
+      "min": "0",
+      "max": null,
+      "step": "0.01",
+      "placeholder": "Use 0 to disable",
+      "defaultValue": "1.05",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "repeatPenalty",
+      "domRead": "#repeatPenalty.value",
+      "coercion": "repeatPenaltyInput.value || 0 (stored raw, no numeric coercion)",
+      "cliFlags": [
+        "--repeat-penalty"
+      ],
+      "iniKeys": [
+        "repeat-penalty"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "1.05",
+      "quirks": [
+        "label names no flag, unlike its neighbours",
+        "stored raw: the corpus contains both numbers and strings (Q19)"
+      ]
+    },
+    {
+      "id": "presencePenalty",
+      "order": 11,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Sampling Parameters",
+      "label": "Presence Penalty:",
+      "min": "0",
+      "max": null,
+      "step": "0.01",
+      "placeholder": null,
+      "defaultValue": "0.00",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "presencePenalty",
+      "domRead": "#presencePenalty.value",
+      "coercion": "presencePenaltyInput.value || 0 (stored raw, no numeric coercion)",
+      "cliFlags": [
+        "--presence-penalty"
+      ],
+      "iniKeys": [
+        "presence-penalty"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "not reset by deleteConfiguration (Q8)",
+        "same loose zero predicate as minP/repeatPenalty (Q19)"
+      ]
+    },
+    {
+      "id": "backendSampling",
+      "order": 12,
+      "tag": "input",
+      "htmlType": "checkbox",
+      "section": "Sampling Parameters",
+      "label": "Backend Sampling:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "backendSampling",
+      "domRead": "#backendSampling.checked",
+      "coercion": "boolean, stored as-is",
+      "cliFlags": [
+        "--backend-sampling"
+      ],
+      "iniKeys": [
+        "backend-sampling"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "ini writes the literal string true, argv pushes the bare flag"
+      ]
+    },
+    {
+      "id": "loadMode",
+      "order": 13,
+      "tag": "select",
+      "htmlType": "select",
+      "section": "Memory Settings",
+      "label": "Load Mode (--load-mode):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "none",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": [
+        "none",
+        "mmap",
+        "mlock",
+        "mmap+mlock",
+        "dio"
+      ],
+      "defaultOption": "none",
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "loadMode",
+      "domRead": "#loadMode.value",
+      "coercion": "string, stored as-is",
+      "cliFlags": [
+        "--load-mode"
+      ],
+      "iniKeys": [
+        "load-mode"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "mmap",
+      "quirks": [
+        "no selected attribute: the markup default is the first option, none, but deleteConfiguration resets to mmap and loadConfiguration falls back to mmap for legacy configs - the reset value diverges from the HTML default (Q8)",
+        "ini guard is !== undefined, so a blanked retired value still emits 'load-mode = ' with an empty value while argv drops the flag (Q18)",
+        "retired saved values (dio/mlock/none in the corpus) blank the select on load (Q18)"
+      ]
+    },
+    {
+      "id": "swaFull",
+      "order": 14,
+      "tag": "input",
+      "htmlType": "checkbox",
+      "section": "Memory Settings",
+      "label": "SWA Full:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "swaFull",
+      "domRead": "#swaFull.checked",
+      "coercion": "boolean, stored as-is",
+      "cliFlags": [
+        "--swa-full"
+      ],
+      "iniKeys": [],
+      "resetOnDelete": true,
+      "resetValue": false,
+      "quirks": [
+        "argv-only field: launchModelPresets never emits it to the ini"
+      ]
+    },
+    {
+      "id": "noKvOffload",
+      "order": 15,
+      "tag": "input",
+      "htmlType": "checkbox",
+      "section": "Memory Settings",
+      "label": "No KV Offload:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "noKvOffload",
+      "domRead": "#noKvOffload.checked",
+      "coercion": "loadConfiguration stores !!config.noKvOffload",
+      "cliFlags": [
+        "--no-kv-offload"
+      ],
+      "iniKeys": [
+        "no-kv-offload"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "not reset by deleteConfiguration (Q8)"
+      ]
+    },
+    {
+      "id": "noMmprojOffload",
+      "order": 16,
+      "tag": "input",
+      "htmlType": "checkbox",
+      "section": "Memory Settings",
+      "label": "No MMProj Offload:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "noMmprojOffload",
+      "domRead": "#noMmprojOffload.checked",
+      "coercion": "loadConfiguration stores !!config.noMmprojOffload",
+      "cliFlags": [
+        "--no-mmproj-offload"
+      ],
+      "iniKeys": [
+        "no-mmproj-offload"
+      ],
+      "resetOnDelete": true,
+      "resetValue": false,
+      "quirks": []
+    },
+    {
+      "id": "cacheRam",
+      "order": 17,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Memory Settings",
+      "label": "Cache RAM (--cache-ram):",
+      "min": "-1",
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "8192",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "cacheRam",
+      "domRead": "#cacheRam.value",
+      "coercion": "parseInt(cacheRamInput.value) - the only numeric field with no || fallback, so an empty control stores NaN",
+      "cliFlags": [
+        "--cache-ram"
+      ],
+      "iniKeys": [
+        "cache-ram"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "8192",
+      "quirks": [
+        "parseInt(\"\") is NaN: saveCurrentValues writes null to JSON for NaN while the arg guard !Number.isNaN() drops the flag",
+        "loadConfiguration uses config.cacheRam ?? 8192, so a saved null stays null in the control"
+      ]
+    },
+    {
+      "id": "contextSize",
+      "order": 18,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Advanced Settings",
+      "label": "Context Size (-c):",
+      "min": "1",
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "16384",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "contextSize",
+      "domRead": "#contextSize.value",
+      "coercion": "parseInt(contextSizeInput.value) || 1",
+      "cliFlags": [
+        "-c"
+      ],
+      "iniKeys": [
+        "c"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "16384",
+      "quirks": []
+    },
+    {
+      "id": "nCpuMoe",
+      "order": 19,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Advanced Settings",
+      "label": "CPU MoE Layers (--n-cpu-moe):",
+      "min": "0",
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "8",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "nCpuMoe",
+      "domRead": "#nCpuMoe.value",
+      "coercion": "parseInt(nCpuMoeInput.value) || 0",
+      "cliFlags": [
+        "--n-cpu-moe"
+      ],
+      "iniKeys": [
+        "n-cpu-moe"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "8",
+      "quirks": []
+    },
+    {
+      "id": "cpuMoe",
+      "order": 20,
+      "tag": "input",
+      "htmlType": "checkbox",
+      "section": "Advanced Settings",
+      "label": "CPU MoE (--cpu-moe):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "cpuMoe",
+      "domRead": "#cpuMoe.checked",
+      "coercion": "boolean, stored as-is",
+      "cliFlags": [
+        "--cpu-moe"
+      ],
+      "iniKeys": [
+        "cpu-moe"
+      ],
+      "resetOnDelete": true,
+      "resetValue": false,
+      "quirks": []
+    },
+    {
+      "id": "ctkEnable",
+      "order": 21,
+      "tag": "input",
+      "htmlType": "checkbox",
+      "section": "Context Token Parameters",
+      "label": "Enable -ctk/-ctv:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "ctkEnable",
+      "domRead": "#ctkEnable.checked",
+      "coercion": "boolean, stored as-is",
+      "cliFlags": [],
+      "iniKeys": [],
+      "resetOnDelete": true,
+      "resetValue": false,
+      "quirks": [
+        "gates -ctk/-ctv and the disabled state of #contextTokenKey/#contextTokenValue, but is never emitted itself and never appears in the ini"
+      ]
+    },
+    {
+      "id": "reasoning",
+      "order": 22,
+      "tag": "select",
+      "htmlType": "select",
+      "section": "Context Token Parameters",
+      "label": "Reasoning:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "auto",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": [
+        "auto",
+        "on",
+        "off"
+      ],
+      "defaultOption": "auto",
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "reasoning",
+      "domRead": "#reasoning.value",
+      "coercion": "string, stored as-is",
+      "cliFlags": [
+        "--reasoning"
+      ],
+      "iniKeys": [
+        "reasoning"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "auto emits nothing in either output",
+        "not reset by deleteConfiguration (Q8)",
+        "loadConfiguration reads the retired disableReasoning key when reasoning is absent: true -> off, false -> on (Q17/Q18)"
+      ]
+    },
+    {
+      "id": "contextTokenKey",
+      "order": 23,
+      "tag": "select",
+      "htmlType": "select",
+      "section": "Context Token Parameters",
+      "label": "Context Token Key (-ctk):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "f16",
+      "defaultChecked": false,
+      "disabledAttr": true,
+      "options": [
+        "f32",
+        "f16",
+        "bf16",
+        "q8_0",
+        "q4_0",
+        "q4_1",
+        "iq4_nl",
+        "q5_0",
+        "q5_1",
+        "kvarn2",
+        "kvarn3",
+        "kvarn4",
+        "kvarn5",
+        "kvarn6",
+        "kvarn8"
+      ],
+      "defaultOption": "f16",
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "contextTokenKey",
+      "domRead": "#contextTokenKey.value",
+      "coercion": "string, stored as-is",
+      "cliFlags": [
+        "-ctk"
+      ],
+      "iniKeys": [],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "argv-only: the ini generator never emits ctk/ctv",
+        "starts disabled and is enabled only by #ctkEnable; a disabled select still posts its value",
+        "a kvarn* value shows the beellama.cpp warning element"
+      ]
+    },
+    {
+      "id": "contextTokenValue",
+      "order": 24,
+      "tag": "select",
+      "htmlType": "select",
+      "section": "Context Token Parameters",
+      "label": "Context Token Value (-ctv):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "f16",
+      "defaultChecked": false,
+      "disabledAttr": true,
+      "options": [
+        "f32",
+        "f16",
+        "bf16",
+        "q8_0",
+        "q4_0",
+        "q4_1",
+        "iq4_nl",
+        "q5_0",
+        "q5_1",
+        "kvarn2",
+        "kvarn3",
+        "kvarn4",
+        "kvarn5",
+        "kvarn6",
+        "kvarn8"
+      ],
+      "defaultOption": "f16",
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "contextTokenValue",
+      "domRead": "#contextTokenValue.value",
+      "coercion": "string, stored as-is",
+      "cliFlags": [
+        "-ctv"
+      ],
+      "iniKeys": [],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "pushed immediately after -ctk by the same branch"
+      ]
+    },
+    {
+      "id": "parallel",
+      "order": 25,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Context Token Parameters",
+      "label": "Parallel (--parallel):",
+      "min": "0",
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "1",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "parallel",
+      "domRead": "#parallel.value (read through document.getElementById inline, no cached variable)",
+      "coercion": "parseInt(...) || 0",
+      "cliFlags": [
+        "--parallel"
+      ],
+      "iniKeys": [
+        "parallel"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "not reset by deleteConfiguration (Q8)",
+        "lives under the Context Token Parameters heading although it is unrelated"
+      ]
+    },
+    {
+      "id": "fastAttention",
+      "order": 26,
+      "tag": "select",
+      "htmlType": "select",
+      "section": "Context Token Parameters",
+      "label": "Fast Attention (--fa):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "auto",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": [
+        "auto",
+        "on",
+        "off"
+      ],
+      "defaultOption": "auto",
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "fastAttention",
+      "domRead": "#fastAttention.value - the element variable is named fastAttentionCheckbox but the markup is a <select> and both read sites use .value",
+      "coercion": "string, stored as-is; loadConfiguration coerces boolean true to 'on'",
+      "cliFlags": [
+        "-fa"
+      ],
+      "iniKeys": [
+        "fa"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "auto",
+      "quirks": [
+        "Q9: auto -> bare -fa, on/off -> -fa <value>",
+        "ini emits 'fa = <value>' whenever the value is truthy, so auto is written to the ini but not to argv as a value"
+      ]
+    },
+    {
+      "id": "jinja",
+      "order": 27,
+      "tag": "input",
+      "htmlType": "checkbox",
+      "section": "Context Token Parameters",
+      "label": "Jinja (--jinja):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "jinja",
+      "domRead": "#jinja.checked",
+      "coercion": "boolean, stored as-is",
+      "cliFlags": [
+        "--jinja"
+      ],
+      "iniKeys": [
+        "jinja"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "not reset by deleteConfiguration (Q8)"
+      ]
+    },
+    {
+      "id": "loadCustomChatTemplate",
+      "order": 28,
+      "tag": "input",
+      "htmlType": "checkbox",
+      "section": "Context Token Parameters",
+      "label": "Load Custom Chat Template:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "loadCustomChatTemplate",
+      "domRead": "#loadCustomChatTemplate.checked",
+      "coercion": "loadConfiguration stores !!config.loadCustomChatTemplate",
+      "cliFlags": [],
+      "iniKeys": [],
+      "resetOnDelete": true,
+      "resetValue": false,
+      "quirks": [
+        "gates --chat-template-file / chat-template-file, which are attributed to modelPath because their value is derived from it",
+        "the ini branch calls config.modelPath.replace(...) without a modelPath guard, unlike the argv branch"
+      ]
+    },
+    {
+      "id": "chatTemplateKwargs",
+      "order": 29,
+      "tag": "input",
+      "htmlType": "text",
+      "section": "Context Token Parameters",
+      "label": "Chat Template Kwargs (--chat-template-kwargs):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": "{\"preserve_thinking\": true}",
+      "defaultValue": "",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "chatTemplateKwargs",
+      "domRead": "#chatTemplateKwargs.value.trim()",
+      "coercion": "String.prototype.trim()",
+      "cliFlags": [
+        "--chat-template-kwargs"
+      ],
+      "iniKeys": [
+        "chat-template-kwargs"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "saveCurrentValues guards the element with a ternary that can never be false because the markup is static"
+      ]
+    },
+    {
+      "id": "ngramMod",
+      "order": 30,
+      "tag": "input",
+      "htmlType": "checkbox",
+      "section": "Speculation Settings",
+      "label": "Ngram-Mod:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "ngramMod",
+      "domRead": "#ngramMod.checked",
+      "coercion": "boolean, stored as-is",
+      "cliFlags": [
+        "--spec-type",
+        "--spec-ngram-mod-n-match",
+        "--spec-ngram-mod-n-min",
+        "--spec-ngram-mod-n-max"
+      ],
+      "iniKeys": [
+        "spec-type",
+        "spec-ngram-size-n",
+        "draft-min",
+        "draft-max"
+      ],
+      "resetOnDelete": true,
+      "resetValue": false,
+      "quirks": [
+        "Q15: the three ngram values are hard-coded 24/48/64 in both outputs",
+        "Q10: ini keys spec-ngram-size-n / draft-min / draft-max do not match the CLI names",
+        "checked with speculationType none still emits --spec-type ngram-mod"
+      ]
+    },
+    {
+      "id": "speculationType",
+      "order": 31,
+      "tag": "select",
+      "htmlType": "select",
+      "section": "Speculation Settings",
+      "label": "Speculation Type:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "none",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": [
+        "none",
+        "draft-mtp",
+        "draft-dflash",
+        "draft-dspark"
+      ],
+      "defaultOption": "none",
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "speculationType",
+      "domRead": "#speculationType.value",
+      "coercion": "string, stored as-is",
+      "cliFlags": [
+        "--spec-type",
+        "--spec-draft-n-max",
+        "-md"
+      ],
+      "iniKeys": [
+        "model-draft",
+        "spec-type",
+        "spec-draft-n-max"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "none",
+      "quirks": [
+        "draft-mtp suppresses -md / model-draft even when a draft path is set",
+        "drives the visibility of #draftModelSection (dflash/dspark only) and #specDraftNMaxGroup (anything but none)"
+      ]
+    },
+    {
+      "id": "specDraftNMax",
+      "order": 32,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Speculation Settings",
+      "label": "Draft N-Max (--spec-draft-n-max):",
+      "min": "0",
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "0",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "specDraftNMax",
+      "domRead": "#specDraftNMax.value",
+      "coercion": "parseInt(specDraftNMaxInput.value) || 0",
+      "cliFlags": [
+        "--spec-draft-n-max"
+      ],
+      "iniKeys": [
+        "spec-draft-n-max"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "0",
+      "quirks": [
+        "emitted only inside the speculation guard, so speculationType none drops it even with ngramMod checked (guard needs speculationType !== none)"
+      ]
+    },
+    {
+      "id": "draftModelPath",
+      "order": 33,
+      "tag": "select",
+      "htmlType": "select",
+      "section": "Draft Model Settings",
+      "label": "Draft Model Path (-md):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": [
+        ""
+      ],
+      "defaultOption": "",
+      "optionsDynamic": true,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "draftModelPath",
+      "domRead": "#draftModelPath.value.trim()",
+      "coercion": "String.prototype.trim()",
+      "cliFlags": [
+        "-md"
+      ],
+      "iniKeys": [
+        "model-draft"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "",
+      "quirks": [
+        "option list is a clone of the main model dropdown",
+        "the whole draft block is gated on speculationType being neither none nor draft-mtp"
+      ]
+    },
+    {
+      "id": "ngld",
+      "order": 34,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Draft Model Settings",
+      "label": "GPU Layers for Draft Model (-ngld):",
+      "min": "0",
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "0",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "ngld",
+      "domRead": "#ngld.value",
+      "coercion": "parseInt(ngldInput.value) || 0",
+      "cliFlags": [
+        "-ngld"
+      ],
+      "iniKeys": [
+        "ngld"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "0",
+      "quirks": [
+        "guard is >= 0, so 0 is emitted whenever the draft block runs; because of the || 0 coercion a negative or garbage value can never reach the guard as negative"
+      ]
+    },
+    {
+      "id": "ctkd",
+      "order": 35,
+      "tag": "select",
+      "htmlType": "select",
+      "section": "Draft Model Settings",
+      "label": "Context Token Key for Draft Model (-ctkd):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "f16",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": [
+        "f32",
+        "f16",
+        "bf16",
+        "q8_0",
+        "q4_0",
+        "q4_1",
+        "iq4_nl",
+        "q5_0",
+        "q5_1",
+        "kvarn2",
+        "kvarn3",
+        "kvarn4",
+        "kvarn5",
+        "kvarn6",
+        "kvarn8"
+      ],
+      "defaultOption": "f16",
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "ctkd",
+      "domRead": "#ctkd.value",
+      "coercion": "string, stored as-is",
+      "cliFlags": [
+        "-ctkd"
+      ],
+      "iniKeys": [
+        "ctkd"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "f16",
+      "quirks": [
+        "the guard is a bare truthiness test: it can only be false when a retired saved value blanks the select (Q18)"
+      ]
+    },
+    {
+      "id": "ctvd",
+      "order": 36,
+      "tag": "select",
+      "htmlType": "select",
+      "section": "Draft Model Settings",
+      "label": "Context Token Value for Draft Model (-ctvd):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "f16",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": [
+        "f32",
+        "f16",
+        "bf16",
+        "q8_0",
+        "q4_0",
+        "q4_1",
+        "iq4_nl",
+        "q5_0",
+        "q5_1",
+        "kvarn2",
+        "kvarn3",
+        "kvarn4",
+        "kvarn5",
+        "kvarn6",
+        "kvarn8"
+      ],
+      "defaultOption": "f16",
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "ctvd",
+      "domRead": "#ctvd.value",
+      "coercion": "string, stored as-is",
+      "cliFlags": [
+        "-ctvd"
+      ],
+      "iniKeys": [
+        "ctvd"
+      ],
+      "resetOnDelete": true,
+      "resetValue": "f16",
+      "quirks": [
+        "same blanked-select dependency as ctkd (Q18)"
+      ]
+    },
+    {
+      "id": "verbose",
+      "order": 37,
+      "tag": "input",
+      "htmlType": "checkbox",
+      "section": "Other",
+      "label": "Verbose (--verbose):",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppConfigs",
+      "persistKey": "verbose",
+      "domRead": "#verbose.checked",
+      "coercion": "boolean, stored as-is",
+      "cliFlags": [
+        "--verbose"
+      ],
+      "iniKeys": [
+        "verbose"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "not reset by deleteConfiguration (Q8)"
+      ]
+    },
+    {
+      "id": "launchPresetsSelect",
+      "order": 38,
+      "tag": "select",
+      "htmlType": "select",
+      "section": "Other",
+      "label": null,
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": "",
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": [
+        ""
+      ],
+      "defaultOption": "",
+      "optionsDynamic": true,
+      "persisted": false,
+      "persistedIn": null,
+      "persistKey": null,
+      "domRead": "#launchPresetsSelect.value (read through querySelector)",
+      "coercion": "string, sent as-is",
+      "cliFlags": [],
+      "iniKeys": [],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "no <label for=...>; its options are the deduplicated saved serverPath values, rebuilt only at DOMContentLoaded",
+        "its value is POST /launch-presets body.serverPath, which becomes the spawn executable"
+      ]
+    },
+    {
+      "id": "modelsDirectory",
+      "order": 39,
+      "tag": "input",
+      "htmlType": "text",
+      "section": "Settings dialog (built by openSettingsDialog)",
+      "label": "Models Directory:",
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": "Enter models directory path",
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppSettings",
+      "persistKey": "modelsDirectory",
+      "domRead": "#modelsDirectory.value (trimmed, inside the generated dialog)",
+      "coercion": "String.prototype.trim()",
+      "cliFlags": [],
+      "iniKeys": [],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "prefilled from GET /settings merged over the localStorage settings object",
+        "empty value alerts 'Please enter a models directory path' instead of saving",
+        "server-side fs.access() validates it and a failure answers 500",
+        "POST /settings body only - never an argv value"
+      ]
+    },
+    {
+      "id": "serverPort",
+      "order": 40,
+      "tag": "input",
+      "htmlType": "number",
+      "section": "Settings dialog (built by openSettingsDialog)",
+      "label": "Server Port (--port):",
+      "min": "1",
+      "max": "65535",
+      "step": null,
+      "placeholder": "${DEFAULT_PORT}",
+      "defaultValue": null,
+      "defaultChecked": false,
+      "disabledAttr": false,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": true,
+      "persistedIn": "llamaCppSettings",
+      "persistKey": "serverPort",
+      "domRead": "#serverPort.value (read inline by querySelector when Save is clicked)",
+      "coercion": "parseInt(...) || DEFAULT_PORT (8080)",
+      "cliFlags": [
+        "--port"
+      ],
+      "iniKeys": [
+        "port"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "the value is written to localStorage by the client and appended to argv as --port, but the manager itself always listens on 7837 (Q11)",
+        "the ini trailing 'port = ' line is appended after the log-pane print, so the pane and the file differ by that line (Q10)",
+        "NaN/garbage falls back to 8080 client-side; POST /settings with no serverPort writes 8080 because of the TDZ bug (Q2)",
+        "defaultValue is a template literal of settings.serverPort ?? 8080, so there is no fixed markup default"
+      ]
+    },
+    {
+      "id": "disableReasoning",
+      "order": 41,
+      "tag": null,
+      "htmlType": null,
+      "section": "none - no control (legacy localStorage key)",
+      "label": null,
+      "min": null,
+      "max": null,
+      "step": null,
+      "placeholder": null,
+      "defaultValue": null,
+      "defaultChecked": null,
+      "disabledAttr": null,
+      "options": null,
+      "defaultOption": null,
+      "optionsDynamic": false,
+      "persisted": false,
+      "persistedIn": null,
+      "persistKey": null,
+      "domRead": "none - read only from the parsed config object",
+      "coercion": "read as a raw truthy value",
+      "cliFlags": [],
+      "iniKeys": [
+        "reasoning"
+      ],
+      "resetOnDelete": false,
+      "resetValue": null,
+      "quirks": [
+        "Q17: launchModelPresets emits 'reasoning = off|on' from this key when reasoning is absent, while launchServer ignores it entirely, so argv has no --reasoning while the ini does",
+        "Q16: saveCurrentValues never writes it, so re-saving a config drops it",
+        "loadConfiguration maps it onto #reasoning (true -> off, false -> on)"
+      ]
+    }
+  ]
+}

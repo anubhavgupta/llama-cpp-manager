@@ -1,0 +1,66 @@
+{
+  "artifact": "storage-schema",
+  "schemaVersion": 1,
+  "derivation": "model",
+  "derivedBy": "independent model pass (c): fresh-context read of git:parity-baseline:public/script.js only. No fixture and no other derivation was consulted.",
+  "sources": ["git:parity-baseline:public/script.js"],
+  "backend": "window.localStorage, origin-scoped — which is why the candidate must serve on http://localhost:7837 or every existing user config is orphaned (C3)",
+  "keys": [
+    {
+      "key": "llamaCppSettings",
+      "writtenBy": ["saveSettingsLocally (settings.serverPort is set by the settings dialog Save handler, before the POST /settings round-trip)"],
+      "readBy": ["loadSettings (init)", "openSettingsDialog merges GET /settings over the parsed object", "loadSettings().serverPort feeds --port and the ini port line"],
+      "shape": { "serverPort": "number, defaulted to DEFAULT_PORT 8080 by loadSettings when falsy", "modelsDirectory": "string, present only after a GET /settings response has been merged into the object" },
+      "serialization": "JSON.stringify(settings) with no spacing; key order follows insertion into the object, so a fresh browser writes serverPort first and modelsDirectory second"
+    },
+    {
+      "key": "llamaCppConfigs",
+      "writtenBy": ["saveConfigurations, called by saveCurrentValues and by deleteConfiguration"],
+      "readBy": ["loadConfigurations (init)", "launchModelPresets (re-reads localStorage directly rather than using the module state)", "populateLaunchPresetsDropdown (also re-reads localStorage, only at DOMContentLoaded)"],
+      "shape": "a plain object keyed by configuration name; each value is the saveCurrentValues literal — see persistedFields",
+      "serialization": "JSON.stringify(configurations) with no spacing; the object's own key order is the order in which names were first saved (or the order the previous JSON had, since parsing preserves it and deleting a key does not reorder the rest)"
+    }
+  ],
+  "persistedFieldCount": 36,
+  "persistedFields": [
+    "serverPath", "modelPath", "ngl", "threads", "temp", "topK", "topP", "minP", "repeatPenalty", "presencePenalty",
+    "parallel", "loadMode", "swaFull", "backendSampling", "contextSize", "nCpuMoe", "cpuMoe", "ctkEnable",
+    "contextTokenKey", "contextTokenValue", "fastAttention", "jinja", "verbose", "noKvOffload", "noMmprojOffload",
+    "cacheRam", "speculationType", "ngramMod", "specDraftNMax", "reasoning", "loadCustomChatTemplate",
+    "chatTemplateKwargs", "draftModelPath", "ngld", "ctkd", "ctvd"
+  ],
+  "valueTypes": {
+    "number": ["ngl", "threads", "temp", "topK", "topP", "contextSize", "nCpuMoe", "specDraftNMax", "ngld"],
+    "numberOrNaN": { "cacheRam": "parseInt(cacheRamInput.value) with no || fallback: NaN serializes to null in JSON, which is how a cleared control is stored" },
+    "rawControlStringOrFallback": ["minP", "repeatPenalty", "presencePenalty"],
+    "boolean": ["swaFull", "backendSampling", "cpuMoe", "ctkEnable", "jinja", "verbose", "noKvOffload", "noMmprojOffload", "ngramMod", "loadCustomChatTemplate"],
+    "string": ["serverPath", "modelPath", "loadMode", "contextTokenKey", "contextTokenValue", "fastAttention", "speculationType", "reasoning", "chatTemplateKwargs", "draftModelPath", "ctkd", "ctvd"]
+  },
+  "rawStringTrap": "minP/repeatPenalty/presencePenalty store value || 0, so a control holding '0.00' stores the STRING '0.00' while a control holding '0' stores number 0 — the three zero spellings coexist in real data (Q19) and the loose != \"0\" guards treat them differently",
+  "orphanKeys": {
+    "fact": "saveCurrentValues builds a brand-new object literal, so any key that is not one of the 36 is dropped the next time that configuration is saved (Q16). Reading never migrates or cleans them: loadConfiguration only looks at the 36 names plus the legacy branches below, and launchServer reads the DOM.",
+    "observedInCorpus": "8 orphan keys across 28 of 48 configs: mlock, noMmap, ndio, dio, draftMin, draftMax, draftPMin, disableReasoning",
+    "legacyBranchesThatStillReadTwoOfThem": [
+      "loadConfiguration: when config.loadMode is undefined it infers the value from mlock/noMmap/dio (dio > mmap+mlock > mlock > none > mmap)",
+      "loadConfiguration: when config.reasoning is undefined it maps disableReasoning true -> 'off', false -> 'on'",
+      "launchModelPresets: emits 'reasoning = off|on' from disableReasoning when reasoning is undefined (Q17)",
+      "loadConfiguration/launchModelPresets: config.specDraftNMax and config.ngramMod are consulted when speculationType is undefined"
+    ],
+    "candidateRule": "neither migrate nor clean on load; only a user-initiated save may drop them, byte-for-byte as legacy does"
+  },
+  "insertionOrder": {
+    "significant": true,
+    "because": "launchModelPresets iterates Object.entries(configs), so ini section order is localStorage insertion order, not alphabetical; the rendered list in #configList is separately .sort()ed, so list order and ini order legitimately differ (§9 trap 6)",
+    "preservedBy": "JSON.parse preserves document order and JSON.stringify re-emits it; delete + re-save of a DIFFERENT config keeps the remaining order, re-saving an existing name keeps its original position (assignment to an existing key does not move it)"
+  },
+  "readWriteSites": {
+    "getItem": ["llamaCppSettings in loadSettings", "llamaCppConfigs in loadConfigurations", "llamaCppConfigs in launchModelPresets", "llamaCppConfigs in populateLaunchPresetsDropdown"],
+    "setItem": ["llamaCppSettings in saveSettingsLocally (settings dialog Save, and nowhere else)", "llamaCppConfigs in saveConfigurations (saveCurrentValues, deleteConfiguration)"],
+    "removeItem": []
+  },
+  "configNameRules": {
+    "nameSource": "configNameInput.value.trim(); an empty name alerts 'Please enter a configuration name' and saves nothing",
+    "overwrite": "saving an existing name overwrites it and, because saveCurrentValues assigns into the parsed object, keeps its position in the insertion order",
+    "delete": "confirm(`Are you sure you want to delete the configuration \"<name>\"?`) then delete + saveConfigurations + renderConfigList; if the deleted name was current, the hard-coded Q8 field reset runs"
+  }
+}

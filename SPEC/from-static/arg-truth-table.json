@@ -1,0 +1,1278 @@
+{
+  "alwaysAppended": [
+    "--host",
+    "-fit",
+    "--port"
+  ],
+  "artifact": "arg-truth-table",
+  "derivation": "static",
+  "generatedBy": "tools/parity/spec-static.js",
+  "orderSemantics": "args.push runs in source order in one flat array; argv order is part of the contract",
+  "region": "launchServer (the inline buildArgs region); the vector is built client-side and POSTed to /start as body.args",
+  "rows": [
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:475"
+      ],
+      "fields": [
+        "modelPath"
+      ],
+      "flag": "-m",
+      "guard": "if (config.modelPath)",
+      "guardFields": [
+        "modelPath"
+      ],
+      "guardKeys": [
+        "modelPath"
+      ],
+      "line": 475,
+      "order": 1,
+      "specRowIds": [
+        "BA-32"
+      ],
+      "specRowPredicates": [
+        "if (config.modelPath)"
+      ],
+      "value": "config.modelPath"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:479"
+      ],
+      "fields": [
+        "ngl"
+      ],
+      "flag": "-ngl",
+      "guard": "if (config.ngl > 0)",
+      "guardFields": [
+        "ngl"
+      ],
+      "guardKeys": [
+        "ngl"
+      ],
+      "line": 479,
+      "order": 2,
+      "specRowIds": [
+        "BA-33"
+      ],
+      "specRowPredicates": [
+        "if (config.ngl > 0)"
+      ],
+      "value": "config.ngl.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:483"
+      ],
+      "fields": [
+        "threads"
+      ],
+      "flag": "-t",
+      "guard": "if (config.threads > 0)",
+      "guardFields": [
+        "threads"
+      ],
+      "guardKeys": [
+        "threads"
+      ],
+      "line": 483,
+      "order": 3,
+      "specRowIds": [
+        "BA-34"
+      ],
+      "specRowPredicates": [
+        "if (config.threads > 0)"
+      ],
+      "value": "config.threads.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:487"
+      ],
+      "fields": [
+        "temp"
+      ],
+      "flag": "--temp",
+      "guard": "if (config.temp >= 0)",
+      "guardFields": [
+        "temp"
+      ],
+      "guardKeys": [
+        "temp"
+      ],
+      "line": 487,
+      "order": 4,
+      "specRowIds": [
+        "BA-35"
+      ],
+      "specRowPredicates": [
+        "if (config.temp >= 0)"
+      ],
+      "value": "config.temp.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:491"
+      ],
+      "fields": [
+        "topK"
+      ],
+      "flag": "--top-k",
+      "guard": "if (config.topK > 0)",
+      "guardFields": [
+        "topK"
+      ],
+      "guardKeys": [
+        "topK"
+      ],
+      "line": 491,
+      "order": 5,
+      "specRowIds": [
+        "BA-36"
+      ],
+      "specRowPredicates": [
+        "if (config.topK > 0)"
+      ],
+      "value": "config.topK.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:495"
+      ],
+      "fields": [
+        "topP"
+      ],
+      "flag": "--top-p",
+      "guard": "if (config.topP >= 0)",
+      "guardFields": [
+        "topP"
+      ],
+      "guardKeys": [
+        "topP"
+      ],
+      "line": 495,
+      "order": 6,
+      "specRowIds": [
+        "BA-37"
+      ],
+      "specRowPredicates": [
+        "if (config.topP >= 0)"
+      ],
+      "value": "config.topP.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:499"
+      ],
+      "fields": [
+        "minP"
+      ],
+      "flag": "--min-p",
+      "guard": "if ((!isNaN(parseFloat(config.minP)) && config.minP != \"0\") || config.minP == \"0.00\")",
+      "guardFields": [
+        "minP"
+      ],
+      "guardKeys": [
+        "minP"
+      ],
+      "line": 499,
+      "order": 7,
+      "specRowIds": [
+        "BA-38",
+        "BA-39",
+        "BA-40",
+        "BA-41",
+        "BA-42"
+      ],
+      "specRowPredicates": [
+        "if ((!isNaN(parseFloat(config.minP)) && config.minP != \"0\") || config.minP == \"0.00\")",
+        "!isNaN(parseFloat(config.minP)) && config.minP != \"0\"",
+        "isNaN(parseFloat(config.minP))",
+        "config.minP != \"0\"",
+        "config.minP == \"0.00\""
+      ],
+      "value": "config.minP.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:503"
+      ],
+      "fields": [
+        "repeatPenalty"
+      ],
+      "flag": "--repeat-penalty",
+      "guard": "if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != \"0\") || config.repeatPenalty == \"0.00\")",
+      "guardFields": [
+        "repeatPenalty"
+      ],
+      "guardKeys": [
+        "repeatPenalty"
+      ],
+      "line": 503,
+      "order": 8,
+      "specRowIds": [
+        "BA-43",
+        "BA-44",
+        "BA-45",
+        "BA-46",
+        "BA-47"
+      ],
+      "specRowPredicates": [
+        "if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != \"0\") || config.repeatPenalty == \"0.00\")",
+        "!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != \"0\"",
+        "isNaN(parseFloat(config.repeatPenalty))",
+        "config.repeatPenalty != \"0\"",
+        "config.repeatPenalty == \"0.00\""
+      ],
+      "value": "config.repeatPenalty.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:507"
+      ],
+      "fields": [
+        "presencePenalty"
+      ],
+      "flag": "--presence-penalty",
+      "guard": "if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != \"0\") || config.presencePenalty == \"0.00\")",
+      "guardFields": [
+        "presencePenalty"
+      ],
+      "guardKeys": [
+        "presencePenalty"
+      ],
+      "line": 507,
+      "order": 9,
+      "specRowIds": [
+        "BA-48",
+        "BA-49",
+        "BA-50",
+        "BA-51",
+        "BA-52"
+      ],
+      "specRowPredicates": [
+        "if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != \"0\") || config.presencePenalty == \"0.00\")",
+        "!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != \"0\"",
+        "isNaN(parseFloat(config.presencePenalty))",
+        "config.presencePenalty != \"0\"",
+        "config.presencePenalty == \"0.00\""
+      ],
+      "value": "config.presencePenalty.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:512"
+      ],
+      "fields": [
+        "parallel"
+      ],
+      "flag": "--parallel",
+      "guard": "if (config.parallel > 0)",
+      "guardFields": [
+        "parallel"
+      ],
+      "guardKeys": [
+        "parallel"
+      ],
+      "line": 512,
+      "order": 10,
+      "specRowIds": [
+        "BA-53"
+      ],
+      "specRowPredicates": [
+        "if (config.parallel > 0)"
+      ],
+      "value": "config.parallel.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:516"
+      ],
+      "fields": [
+        "loadMode"
+      ],
+      "flag": "--load-mode",
+      "guard": "if (config.loadMode)",
+      "guardFields": [
+        "loadMode"
+      ],
+      "guardKeys": [
+        "loadMode"
+      ],
+      "line": 516,
+      "order": 11,
+      "specRowIds": [
+        "BA-54"
+      ],
+      "specRowPredicates": [
+        "if (config.loadMode)"
+      ],
+      "value": "config.loadMode"
+    },
+    {
+      "always": false,
+      "arity": 0,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:520"
+      ],
+      "fields": [
+        "swaFull"
+      ],
+      "flag": "--swa-full",
+      "guard": "if (config.swaFull)",
+      "guardFields": [
+        "swaFull"
+      ],
+      "guardKeys": [
+        "swaFull"
+      ],
+      "line": 520,
+      "order": 12,
+      "specRowIds": [
+        "BA-55"
+      ],
+      "specRowPredicates": [
+        "if (config.swaFull)"
+      ],
+      "value": "'--swa-full'"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:524"
+      ],
+      "fields": [
+        "contextSize"
+      ],
+      "flag": "-c",
+      "guard": "if (config.contextSize > 0)",
+      "guardFields": [
+        "contextSize"
+      ],
+      "guardKeys": [
+        "contextSize"
+      ],
+      "line": 524,
+      "order": 13,
+      "specRowIds": [
+        "BA-56"
+      ],
+      "specRowPredicates": [
+        "if (config.contextSize > 0)"
+      ],
+      "value": "config.contextSize.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:528"
+      ],
+      "fields": [
+        "nCpuMoe"
+      ],
+      "flag": "--n-cpu-moe",
+      "guard": "if (config.nCpuMoe > 0)",
+      "guardFields": [
+        "nCpuMoe"
+      ],
+      "guardKeys": [
+        "nCpuMoe"
+      ],
+      "line": 528,
+      "order": 14,
+      "specRowIds": [
+        "BA-57"
+      ],
+      "specRowPredicates": [
+        "if (config.nCpuMoe > 0)"
+      ],
+      "value": "config.nCpuMoe.toString()"
+    },
+    {
+      "always": false,
+      "arity": 0,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:532"
+      ],
+      "fields": [
+        "cpuMoe"
+      ],
+      "flag": "--cpu-moe",
+      "guard": "if (config.cpuMoe)",
+      "guardFields": [
+        "cpuMoe"
+      ],
+      "guardKeys": [
+        "cpuMoe"
+      ],
+      "line": 532,
+      "order": 15,
+      "specRowIds": [
+        "BA-58"
+      ],
+      "specRowPredicates": [
+        "if (config.cpuMoe)"
+      ],
+      "value": "'--cpu-moe'"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:537"
+      ],
+      "fields": [
+        "contextTokenKey"
+      ],
+      "flag": "-ctk",
+      "guard": "if (config.ctkEnable && config.contextTokenKey && config.contextTokenValue)",
+      "guardFields": [
+        "ctkEnable",
+        "contextTokenKey",
+        "contextTokenValue"
+      ],
+      "guardKeys": [
+        "ctkEnable",
+        "contextTokenKey",
+        "contextTokenValue"
+      ],
+      "line": 537,
+      "order": 16,
+      "specRowIds": [
+        "BA-59",
+        "BA-60",
+        "BA-61",
+        "BA-62",
+        "BA-63"
+      ],
+      "specRowPredicates": [
+        "if (config.ctkEnable && config.contextTokenKey && config.contextTokenValue)",
+        "config.ctkEnable",
+        "config.ctkEnable && config.contextTokenKey",
+        "config.contextTokenKey",
+        "config.contextTokenValue"
+      ],
+      "value": "config.contextTokenKey"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:538"
+      ],
+      "fields": [
+        "contextTokenValue"
+      ],
+      "flag": "-ctv",
+      "guard": "if (config.ctkEnable && config.contextTokenKey && config.contextTokenValue)",
+      "guardFields": [
+        "ctkEnable",
+        "contextTokenKey",
+        "contextTokenValue"
+      ],
+      "guardKeys": [
+        "ctkEnable",
+        "contextTokenKey",
+        "contextTokenValue"
+      ],
+      "line": 538,
+      "order": 17,
+      "specRowIds": [
+        "BA-59",
+        "BA-60",
+        "BA-61",
+        "BA-62",
+        "BA-63"
+      ],
+      "specRowPredicates": [
+        "if (config.ctkEnable && config.contextTokenKey && config.contextTokenValue)",
+        "config.ctkEnable",
+        "config.ctkEnable && config.contextTokenKey",
+        "config.contextTokenKey",
+        "config.contextTokenValue"
+      ],
+      "value": "config.contextTokenValue"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:543"
+      ],
+      "fields": [
+        "fastAttention"
+      ],
+      "flag": "-fa",
+      "guard": "if (config.fastAttention && config.fastAttention !== 'auto')",
+      "guardFields": [
+        "fastAttention"
+      ],
+      "guardKeys": [
+        "fastAttention"
+      ],
+      "line": 543,
+      "order": 18,
+      "specRowIds": [
+        "BA-64",
+        "BA-65",
+        "BA-66",
+        "BA-67"
+      ],
+      "specRowPredicates": [
+        "if (config.fastAttention && config.fastAttention !== 'auto')",
+        "config.fastAttention",
+        "config.fastAttention !== 'auto'",
+        "else if (config.fastAttention === 'auto')"
+      ],
+      "value": "config.fastAttention"
+    },
+    {
+      "always": false,
+      "arity": 0,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:547"
+      ],
+      "fields": [
+        "fastAttention"
+      ],
+      "flag": "-fa",
+      "guard": "else if (config.fastAttention && config.fastAttention !== 'auto') { if (config.fastAttention === 'auto')",
+      "guardFields": [
+        "fastAttention"
+      ],
+      "guardKeys": [
+        "fastAttention"
+      ],
+      "line": 547,
+      "order": 19,
+      "specRowIds": [
+        "BA-64",
+        "BA-65",
+        "BA-66",
+        "BA-67"
+      ],
+      "specRowPredicates": [
+        "if (config.fastAttention && config.fastAttention !== 'auto')",
+        "config.fastAttention",
+        "config.fastAttention !== 'auto'",
+        "else if (config.fastAttention === 'auto')"
+      ],
+      "value": "'-fa'"
+    },
+    {
+      "always": false,
+      "arity": 0,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:552"
+      ],
+      "fields": [
+        "jinja"
+      ],
+      "flag": "--jinja",
+      "guard": "if (config.jinja)",
+      "guardFields": [
+        "jinja"
+      ],
+      "guardKeys": [
+        "jinja"
+      ],
+      "line": 552,
+      "order": 20,
+      "specRowIds": [
+        "BA-68"
+      ],
+      "specRowPredicates": [
+        "if (config.jinja)"
+      ],
+      "value": "'--jinja'"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:557"
+      ],
+      "fields": [
+        "chatTemplateKwargs"
+      ],
+      "flag": "--chat-template-kwargs",
+      "guard": "if (config.chatTemplateKwargs)",
+      "guardFields": [
+        "chatTemplateKwargs"
+      ],
+      "guardKeys": [
+        "chatTemplateKwargs"
+      ],
+      "line": 557,
+      "order": 21,
+      "specRowIds": [
+        "BA-69"
+      ],
+      "specRowPredicates": [
+        "if (config.chatTemplateKwargs)"
+      ],
+      "value": "config.chatTemplateKwargs"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:564"
+      ],
+      "fields": [
+        "modelPath"
+      ],
+      "flag": "--chat-template-file",
+      "guard": "if (config.loadCustomChatTemplate && config.modelPath)",
+      "guardFields": [
+        "loadCustomChatTemplate",
+        "modelPath"
+      ],
+      "guardKeys": [
+        "loadCustomChatTemplate",
+        "modelPath"
+      ],
+      "line": 564,
+      "order": 22,
+      "specRowIds": [
+        "BA-70",
+        "BA-71",
+        "BA-72"
+      ],
+      "specRowPredicates": [
+        "if (config.loadCustomChatTemplate && config.modelPath)",
+        "config.loadCustomChatTemplate",
+        "config.modelPath"
+      ],
+      "value": "modelDir + '\\\\chat-template.jinja'"
+    },
+    {
+      "always": false,
+      "arity": 0,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:569"
+      ],
+      "fields": [
+        "verbose"
+      ],
+      "flag": "--verbose",
+      "guard": "if (config.verbose)",
+      "guardFields": [
+        "verbose"
+      ],
+      "guardKeys": [
+        "verbose"
+      ],
+      "line": 569,
+      "order": 23,
+      "specRowIds": [
+        "BA-73"
+      ],
+      "specRowPredicates": [
+        "if (config.verbose)"
+      ],
+      "value": "'--verbose'"
+    },
+    {
+      "always": false,
+      "arity": 0,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:574"
+      ],
+      "fields": [
+        "backendSampling"
+      ],
+      "flag": "--backend-sampling",
+      "guard": "if (config.backendSampling)",
+      "guardFields": [
+        "backendSampling"
+      ],
+      "guardKeys": [
+        "backendSampling"
+      ],
+      "line": 574,
+      "order": 24,
+      "specRowIds": [
+        "BA-74"
+      ],
+      "specRowPredicates": [
+        "if (config.backendSampling)"
+      ],
+      "value": "'--backend-sampling'"
+    },
+    {
+      "always": false,
+      "arity": 0,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:579"
+      ],
+      "fields": [
+        "noKvOffload"
+      ],
+      "flag": "--no-kv-offload",
+      "guard": "if (config.noKvOffload)",
+      "guardFields": [
+        "noKvOffload"
+      ],
+      "guardKeys": [
+        "noKvOffload"
+      ],
+      "line": 579,
+      "order": 25,
+      "specRowIds": [
+        "BA-75"
+      ],
+      "specRowPredicates": [
+        "if (config.noKvOffload)"
+      ],
+      "value": "'--no-kv-offload'"
+    },
+    {
+      "always": false,
+      "arity": 0,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:584"
+      ],
+      "fields": [
+        "noMmprojOffload"
+      ],
+      "flag": "--no-mmproj-offload",
+      "guard": "if (config.noMmprojOffload)",
+      "guardFields": [
+        "noMmprojOffload"
+      ],
+      "guardKeys": [
+        "noMmprojOffload"
+      ],
+      "line": 584,
+      "order": 26,
+      "specRowIds": [
+        "BA-76"
+      ],
+      "specRowPredicates": [
+        "if (config.noMmprojOffload)"
+      ],
+      "value": "'--no-mmproj-offload'"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:589"
+      ],
+      "fields": [
+        "cacheRam"
+      ],
+      "flag": "--cache-ram",
+      "guard": "if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam))",
+      "guardFields": [
+        "cacheRam"
+      ],
+      "guardKeys": [
+        "cacheRam"
+      ],
+      "line": 589,
+      "order": 27,
+      "specRowIds": [
+        "BA-77",
+        "BA-78",
+        "BA-79"
+      ],
+      "specRowPredicates": [
+        "if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam))",
+        "config.cacheRam !== undefined",
+        "Number.isNaN(config.cacheRam)"
+      ],
+      "value": "String(config.cacheRam)"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:598"
+      ],
+      "fields": [
+        "speculationType",
+        "ngramMod"
+      ],
+      "flag": "--spec-type",
+      "guard": "if (config.speculationType !== 'none' || config.ngramMod) { if (specTypes.length > 0)",
+      "guardFields": [
+        "speculationType",
+        "ngramMod"
+      ],
+      "guardKeys": [],
+      "line": 598,
+      "order": 28,
+      "specRowIds": [
+        "BA-85"
+      ],
+      "specRowPredicates": [
+        "if (specTypes.length > 0)"
+      ],
+      "value": "specTypes.join(',')"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:602"
+      ],
+      "fields": [
+        "ngramMod"
+      ],
+      "flag": "--spec-ngram-mod-n-match",
+      "guard": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)",
+      "guardFields": [
+        "speculationType",
+        "ngramMod"
+      ],
+      "guardKeys": [
+        "ngramMod"
+      ],
+      "line": 602,
+      "order": 29,
+      "specRowIds": [
+        "BA-86"
+      ],
+      "specRowPredicates": [
+        "if (config.ngramMod)"
+      ],
+      "value": "'24'"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:603"
+      ],
+      "fields": [
+        "ngramMod"
+      ],
+      "flag": "--spec-ngram-mod-n-min",
+      "guard": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)",
+      "guardFields": [
+        "speculationType",
+        "ngramMod"
+      ],
+      "guardKeys": [
+        "ngramMod"
+      ],
+      "line": 603,
+      "order": 30,
+      "specRowIds": [
+        "BA-86"
+      ],
+      "specRowPredicates": [
+        "if (config.ngramMod)"
+      ],
+      "value": "'48'"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:604"
+      ],
+      "fields": [
+        "ngramMod"
+      ],
+      "flag": "--spec-ngram-mod-n-max",
+      "guard": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)",
+      "guardFields": [
+        "speculationType",
+        "ngramMod"
+      ],
+      "guardKeys": [
+        "ngramMod"
+      ],
+      "line": 604,
+      "order": 31,
+      "specRowIds": [
+        "BA-86"
+      ],
+      "specRowPredicates": [
+        "if (config.ngramMod)"
+      ],
+      "value": "'64'"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:608"
+      ],
+      "fields": [
+        "specDraftNMax"
+      ],
+      "flag": "--spec-draft-n-max",
+      "guard": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.specDraftNMax > 0 && config.speculationType !== 'none')",
+      "guardFields": [
+        "speculationType",
+        "ngramMod",
+        "specDraftNMax"
+      ],
+      "guardKeys": [
+        "specDraftNMax",
+        "speculationType"
+      ],
+      "line": 608,
+      "order": 32,
+      "specRowIds": [
+        "BA-87",
+        "BA-88",
+        "BA-89"
+      ],
+      "specRowPredicates": [
+        "if (config.specDraftNMax > 0 && config.speculationType !== 'none')",
+        "config.specDraftNMax > 0",
+        "config.speculationType !== 'none'"
+      ],
+      "value": "config.specDraftNMax.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:614"
+      ],
+      "fields": [
+        "reasoning"
+      ],
+      "flag": "--reasoning",
+      "guard": "if (config.reasoning === 'off')",
+      "guardFields": [
+        "reasoning"
+      ],
+      "guardKeys": [
+        "reasoning"
+      ],
+      "line": 614,
+      "order": 33,
+      "specRowIds": [
+        "BA-90",
+        "BA-91"
+      ],
+      "specRowPredicates": [
+        "if (config.reasoning === 'off')",
+        "else if (config.reasoning === 'on')"
+      ],
+      "value": "'off'"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:616"
+      ],
+      "fields": [
+        "reasoning"
+      ],
+      "flag": "--reasoning",
+      "guard": "else if (config.reasoning === 'off') { if (config.reasoning === 'on')",
+      "guardFields": [
+        "reasoning"
+      ],
+      "guardKeys": [
+        "reasoning"
+      ],
+      "line": 616,
+      "order": 34,
+      "specRowIds": [
+        "BA-90",
+        "BA-91"
+      ],
+      "specRowPredicates": [
+        "if (config.reasoning === 'off')",
+        "else if (config.reasoning === 'on')"
+      ],
+      "value": "'on'"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:621"
+      ],
+      "fields": [
+        "draftModelPath"
+      ],
+      "flag": "-md",
+      "guard": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp')",
+      "guardFields": [
+        "draftModelPath",
+        "speculationType"
+      ],
+      "guardKeys": [
+        "draftModelPath",
+        "speculationType"
+      ],
+      "line": 621,
+      "order": 35,
+      "specRowIds": [
+        "BA-92",
+        "BA-93",
+        "BA-94",
+        "BA-95",
+        "BA-96"
+      ],
+      "specRowPredicates": [
+        "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp')",
+        "config.draftModelPath",
+        "config.draftModelPath && config.speculationType !== 'none'",
+        "config.speculationType !== 'none'",
+        "config.speculationType !== 'draft-mtp'"
+      ],
+      "value": "config.draftModelPath"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:623"
+      ],
+      "fields": [
+        "ngld"
+      ],
+      "flag": "-ngld",
+      "guard": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ngld >= 0)",
+      "guardFields": [
+        "draftModelPath",
+        "speculationType",
+        "ngld"
+      ],
+      "guardKeys": [
+        "ngld"
+      ],
+      "line": 623,
+      "order": 36,
+      "specRowIds": [
+        "BA-97"
+      ],
+      "specRowPredicates": [
+        "if (config.ngld >= 0)"
+      ],
+      "value": "config.ngld.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:626"
+      ],
+      "fields": [
+        "ctkd"
+      ],
+      "flag": "-ctkd",
+      "guard": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ctkd)",
+      "guardFields": [
+        "draftModelPath",
+        "speculationType",
+        "ctkd"
+      ],
+      "guardKeys": [
+        "ctkd"
+      ],
+      "line": 626,
+      "order": 37,
+      "specRowIds": [
+        "BA-98"
+      ],
+      "specRowPredicates": [
+        "if (config.ctkd)"
+      ],
+      "value": "config.ctkd"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:629"
+      ],
+      "fields": [
+        "ctvd"
+      ],
+      "flag": "-ctvd",
+      "guard": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ctvd)",
+      "guardFields": [
+        "draftModelPath",
+        "speculationType",
+        "ctvd"
+      ],
+      "guardKeys": [
+        "ctvd"
+      ],
+      "line": 629,
+      "order": 38,
+      "specRowIds": [
+        "BA-99"
+      ],
+      "specRowPredicates": [
+        "if (config.ctvd)"
+      ],
+      "value": "config.ctvd"
+    },
+    {
+      "always": true,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:633"
+      ],
+      "fields": [],
+      "flag": "--host",
+      "guard": null,
+      "guardFields": [],
+      "guardKeys": [],
+      "line": 633,
+      "order": 39,
+      "specRowIds": [],
+      "specRowPredicates": [],
+      "value": "\"0.0.0.0\""
+    },
+    {
+      "always": true,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:634"
+      ],
+      "fields": [],
+      "flag": "-fit",
+      "guard": null,
+      "guardFields": [],
+      "guardKeys": [],
+      "line": 634,
+      "order": 40,
+      "specRowIds": [],
+      "specRowPredicates": [],
+      "value": "\"off\""
+    },
+    {
+      "always": true,
+      "arity": 1,
+      "attribution": "value",
+      "evidence": [
+        "public/script.js:635"
+      ],
+      "fields": [
+        "serverPort"
+      ],
+      "flag": "--port",
+      "guard": null,
+      "guardFields": [],
+      "guardKeys": [],
+      "line": 635,
+      "order": 41,
+      "specRowIds": [],
+      "specRowPredicates": [],
+      "value": "settings.serverPort.toString()"
+    },
+    {
+      "always": false,
+      "arity": 1,
+      "attribution": "guard",
+      "evidence": [
+        "public/script.js:641"
+      ],
+      "fields": [
+        "modelPath"
+      ],
+      "flag": "--mmproj",
+      "guard": "if (model.path === modelPath && model.mmprojFile)",
+      "guardFields": [
+        "modelPath"
+      ],
+      "guardKeys": [
+        "modelPath"
+      ],
+      "line": 641,
+      "order": 42,
+      "specRowIds": [
+        "BA-100",
+        "BA-101",
+        "BA-102"
+      ],
+      "specRowPredicates": [
+        "if (model.path === modelPath && model.mmprojFile)",
+        "model.path === modelPath",
+        "model.mmprojFile"
+      ],
+      "value": "model.mmprojFile"
+    }
+  ],
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "file": "git:parity-baseline:public/script.js",
+      "sha256": "cc866fbbffafb80f960587fb617a36340124766dd77effb9e40992cc73f8e678"
+    },
+    {
+      "file": "SPEC/SPEC-ROWS.csv",
+      "sha256": "471c60f051d5dbf81cb48e078839aa718047e35f49270459ee72a218804885e2"
+    }
+  ],
+  "specRowsJoin": "SPEC-ROWS.csv rows whose targets name args.push:<flag> supply the predicate per flag (66 guarded push sites); flags with no such row are the always-appended ones"
+}

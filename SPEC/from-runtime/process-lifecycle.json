@@ -1,0 +1,1052 @@
+{
+  "exitCodeEvidence": {
+    "fixtures": [
+      "argv/J3b-exit-code/launch.jsonl",
+      "ws/J3b-exit-code/events.json",
+      "ws/J3b-exit-code/manager.stdout.log"
+    ],
+    "note": "the exit-code journey records the child argv, the socket events and the manager log; nothing records the signal the manager sent"
+  },
+  "gaps": [
+    {
+      "__gap": true,
+      "reason": "which signal is sent, and whether a second signal is scheduled: nothing in the recordings observes the manager-to-child signal"
+    },
+    {
+      "__gap": true,
+      "reason": "spawn options (cwd, env, detached, stdio pipes) are not recorded; only the program path and its argument vector are"
+    },
+    {
+      "__gap": true,
+      "reason": "the manager process own port binding and restart handling are only visible through the recorded HTTP responses"
+    }
+  ],
+  "generatedBy": "tools/parity/spec-runtime.js",
+  "pollCadence": {
+    "counts": {
+      "/metrics": 12,
+      "/status": 2
+    },
+    "entries": [
+      {
+        "gapFromAnyMs": null,
+        "gapFromSamePathMs": null,
+        "path": "/metrics",
+        "tMs": 1795407885327,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 987,
+        "gapFromSamePathMs": 987,
+        "path": "/metrics",
+        "tMs": 1795407886314,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 1002,
+        "gapFromSamePathMs": 1002,
+        "path": "/metrics",
+        "tMs": 1795407887316,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 1002,
+        "gapFromSamePathMs": 1002,
+        "path": "/metrics",
+        "tMs": 1795407888318,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 18,
+        "gapFromSamePathMs": null,
+        "path": "/status",
+        "tMs": 1795407888336,
+        "url": "http://localhost:7837/status"
+      },
+      {
+        "gapFromAnyMs": 986,
+        "gapFromSamePathMs": 1004,
+        "path": "/metrics",
+        "tMs": 1795407889322,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 996,
+        "gapFromSamePathMs": 996,
+        "path": "/metrics",
+        "tMs": 1795407890318,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 999,
+        "gapFromSamePathMs": 999,
+        "path": "/metrics",
+        "tMs": 1795407891317,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 1002,
+        "gapFromSamePathMs": 1002,
+        "path": "/metrics",
+        "tMs": 1795407892319,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 996,
+        "gapFromSamePathMs": 996,
+        "path": "/metrics",
+        "tMs": 1795407893315,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 19,
+        "gapFromSamePathMs": 4998,
+        "path": "/status",
+        "tMs": 1795407893334,
+        "url": "http://localhost:7837/status"
+      },
+      {
+        "gapFromAnyMs": 986,
+        "gapFromSamePathMs": 1005,
+        "path": "/metrics",
+        "tMs": 1795407894320,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 1001,
+        "gapFromSamePathMs": 1001,
+        "path": "/metrics",
+        "tMs": 1795407895321,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 997,
+        "gapFromSamePathMs": 997,
+        "path": "/metrics",
+        "tMs": 1795407896318,
+        "url": "http://localhost:7837/metrics"
+      }
+    ],
+    "note": "fetch URLs the page issued while a server was running, in arrival order, with wall-clock gaps. public/script.js polls /status every 5 s (init) and /metrics every 1 s (startMetricUpdates).",
+    "running": true,
+    "windowMs": 12018
+  },
+  "restartEffect": {
+    "bodies": [
+      {
+        "body": "{\"success\":false,\"error\":\"No previous configuration found to restart from\"}",
+        "fixture": "http/J3d-restart/restart-after-manager-restart.request.json",
+        "method": "POST",
+        "status": 400
+      },
+      {
+        "body": "{\"success\":false,\"error\":\"No previous configuration found to restart from\"}",
+        "fixture": "http/J3d-restart/restart-before-any-launch.request.json",
+        "method": "POST",
+        "status": null
+      },
+      {
+        "body": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /restart</pre>\n</body>\n</html>",
+        "fixture": "http/J3d-restart/restart-get-not-a-route.request.json",
+        "method": "GET",
+        "status": null
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server restarted successfully\"}",
+        "fixture": "http/J3d-restart/restart.request.json",
+        "method": "POST",
+        "status": null
+      },
+      {
+        "body": "{\"success\":false,\"error\":\"No previous configuration found to restart from\"}",
+        "fixture": "http/J4-launch-presets/restart-after-presets.request.json",
+        "method": "POST",
+        "status": null
+      }
+    ],
+    "settleNote": "POST /restart answers 200 success:true, but /status settles on running:false: the killed child's close handler clears runningProcess after /restart assigned the replacement (server.js:459-470), and POST /stop then returns success:false while the replacement may still be running. The deferred SIGKILL at server.js:437-445 reads the same module-level variable, so the replacement surviving is a race - the counts below differ between runs and are compared through the restart-settle shape rule."
+  },
+  "rule": "derived from fixtures/** recordings only; no app source was read (plan.md §2 Phase 3 (b))",
+  "spawns": {
+    "count": 23,
+    "journeys": {
+      "argv/J3-start-stop/launch.jsonl": 1,
+      "argv/J3b-exit-code/launch.jsonl": 1,
+      "argv/J3d-restart/after-start.jsonl": 1,
+      "argv/J4-launch-presets/launch.jsonl": 4,
+      "argv/J4b-ui-presets-launch/launch.jsonl": 2,
+      "argv/J5-ui-launch/launch.jsonl": 4,
+      "argv/J5-ui-log-cap/launches.jsonl": 4,
+      "argv/J6-corpus-smoke/launch.jsonl": 6
+    },
+    "note": "every recorded child process launch, in file order; the recorder is the stand-in program named in argv/J5-ui-launch/probe-stand-in.json",
+    "records": [
+      {
+        "argCount": 55,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "-ngl",
+          "99",
+          "-t",
+          "12",
+          "--temp",
+          "0.7",
+          "--top-k",
+          "20",
+          "--top-p",
+          "0.00",
+          "--min-p",
+          "0.05",
+          "--repeat-penalty",
+          "1.05",
+          "--parallel",
+          "1",
+          "--load-mode",
+          "mmap",
+          "-c",
+          "16384",
+          "--n-cpu-moe",
+          "8",
+          "-ctk",
+          "q8_0",
+          "-ctv",
+          "q8_0",
+          "-fa",
+          "--jinja",
+          "--chat-template-kwargs",
+          "{\"preserve_thinking\": true}",
+          "--chat-template-file",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+          "--verbose",
+          "--backend-sampling",
+          "--no-kv-offload",
+          "--no-mmproj-offload",
+          "--cache-ram",
+          "8192",
+          "--spec-type",
+          "ngram-mod,draft-mtp",
+          "--spec-ngram-mod-n-match",
+          "24",
+          "--spec-ngram-mod-n-min",
+          "48",
+          "--spec-ngram-mod-n-max",
+          "64",
+          "--reasoning",
+          "off",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "7838"
+        ],
+        "fixture": "argv/J3-start-stop/launch.jsonl",
+        "line": 1,
+        "pid": 24096,
+        "program": "-m"
+      },
+      {
+        "argCount": 7,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "--port",
+          "17839",
+          "--parity-chunks",
+          "0",
+          "--parity-exit-code",
+          "3"
+        ],
+        "fixture": "argv/J3b-exit-code/launch.jsonl",
+        "line": 1,
+        "pid": 32120,
+        "program": "-m"
+      },
+      {
+        "argCount": 3,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "--parity-chunks",
+          "0"
+        ],
+        "fixture": "argv/J3d-restart/after-start.jsonl",
+        "line": 1,
+        "pid": 30816,
+        "program": "-m"
+      },
+      {
+        "argCount": 5,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "--host",
+          "0.0.0.0",
+          "--port",
+          "8080"
+        ],
+        "fixture": "argv/J4-launch-presets/launch.jsonl",
+        "line": 1,
+        "pid": 34032,
+        "program": "--models-preset"
+      },
+      {
+        "argCount": 5,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "--host",
+          "0.0.0.0",
+          "--port",
+          "8080"
+        ],
+        "fixture": "argv/J4-launch-presets/launch.jsonl",
+        "line": 2,
+        "pid": 24000,
+        "program": "--models-preset"
+      },
+      {
+        "argCount": 5,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "--host",
+          "0.0.0.0",
+          "--port",
+          "7838"
+        ],
+        "fixture": "argv/J4-launch-presets/launch.jsonl",
+        "line": 3,
+        "pid": 31308,
+        "program": "--models-preset"
+      },
+      {
+        "argCount": 5,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "--host",
+          "0.0.0.0",
+          "--port",
+          "7838"
+        ],
+        "fixture": "argv/J4-launch-presets/launch.jsonl",
+        "line": 4,
+        "pid": 30828,
+        "program": "--models-preset"
+      },
+      {
+        "argCount": 5,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "--host",
+          "0.0.0.0",
+          "--port",
+          "17844"
+        ],
+        "fixture": "argv/J4b-ui-presets-launch/launch.jsonl",
+        "line": 1,
+        "pid": 27660,
+        "program": "--models-preset"
+      },
+      {
+        "argCount": 5,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "--host",
+          "0.0.0.0",
+          "--port",
+          "17844"
+        ],
+        "fixture": "argv/J4b-ui-presets-launch/launch.jsonl",
+        "line": 2,
+        "pid": 1696,
+        "program": "--models-preset"
+      },
+      {
+        "argCount": 41,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "-ngl",
+          "99",
+          "-t",
+          "12",
+          "--temp",
+          "0.7",
+          "--top-k",
+          "20",
+          "--top-p",
+          "0",
+          "--min-p",
+          "0.05",
+          "--repeat-penalty",
+          "1.05",
+          "--parallel",
+          "1",
+          "--load-mode",
+          "mmap",
+          "-c",
+          "16384",
+          "--n-cpu-moe",
+          "8",
+          "-fa",
+          "--jinja",
+          "--chat-template-kwargs",
+          "{\"preserve_thinking\": true}",
+          "--chat-template-file",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+          "--cache-ram",
+          "8192",
+          "--reasoning",
+          "off",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "7838",
+          "--mmproj",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+        ],
+        "fixture": "argv/J5-ui-launch/launch.jsonl",
+        "line": 1,
+        "pid": 712,
+        "program": "-m"
+      },
+      {
+        "argCount": 41,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "-ngl",
+          "99",
+          "-t",
+          "12",
+          "--temp",
+          "0.7",
+          "--top-k",
+          "20",
+          "--top-p",
+          "0",
+          "--min-p",
+          "0.05",
+          "--repeat-penalty",
+          "1.05",
+          "--parallel",
+          "1",
+          "--load-mode",
+          "mmap",
+          "-c",
+          "16384",
+          "--n-cpu-moe",
+          "8",
+          "-fa",
+          "--jinja",
+          "--chat-template-kwargs",
+          "{\"preserve_thinking\": true}",
+          "--chat-template-file",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+          "--cache-ram",
+          "8192",
+          "--reasoning",
+          "off",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "7838",
+          "--mmproj",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+        ],
+        "fixture": "argv/J5-ui-launch/launch.jsonl",
+        "line": 2,
+        "pid": 3256,
+        "program": "-m"
+      },
+      {
+        "argCount": 46,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "-t",
+          "4",
+          "--temp",
+          "0",
+          "--top-p",
+          "0",
+          "--min-p",
+          "0.00",
+          "--presence-penalty",
+          "0.0",
+          "--load-mode",
+          "mmap",
+          "--swa-full",
+          "-c",
+          "1",
+          "--cpu-moe",
+          "-ctk",
+          "q8_0",
+          "-ctv",
+          "q8_0",
+          "-fa",
+          "on",
+          "--backend-sampling",
+          "--no-kv-offload",
+          "--no-mmproj-offload",
+          "--cache-ram",
+          "-1",
+          "--spec-type",
+          "ngram-mod,draft-mtp",
+          "--spec-ngram-mod-n-match",
+          "24",
+          "--spec-ngram-mod-n-min",
+          "48",
+          "--spec-ngram-mod-n-max",
+          "64",
+          "--spec-draft-n-max",
+          "8",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "7838",
+          "--mmproj",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+        ],
+        "fixture": "argv/J5-ui-launch/launch.jsonl",
+        "line": 3,
+        "pid": 31812,
+        "program": "-m"
+      },
+      {
+        "argCount": 46,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "-t",
+          "4",
+          "--temp",
+          "0",
+          "--top-p",
+          "0",
+          "--min-p",
+          "0.00",
+          "--presence-penalty",
+          "0.0",
+          "--load-mode",
+          "mmap",
+          "--swa-full",
+          "-c",
+          "1",
+          "--cpu-moe",
+          "-ctk",
+          "q8_0",
+          "-ctv",
+          "q8_0",
+          "-fa",
+          "on",
+          "--backend-sampling",
+          "--no-kv-offload",
+          "--no-mmproj-offload",
+          "--cache-ram",
+          "-1",
+          "--spec-type",
+          "ngram-mod,draft-mtp",
+          "--spec-ngram-mod-n-match",
+          "24",
+          "--spec-ngram-mod-n-min",
+          "48",
+          "--spec-ngram-mod-n-max",
+          "64",
+          "--spec-draft-n-max",
+          "8",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "7838",
+          "--mmproj",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+        ],
+        "fixture": "argv/J5-ui-launch/launch.jsonl",
+        "line": 4,
+        "pid": 30164,
+        "program": "-m"
+      },
+      {
+        "argCount": 41,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "-ngl",
+          "99",
+          "-t",
+          "12",
+          "--temp",
+          "0.7",
+          "--top-k",
+          "20",
+          "--top-p",
+          "0",
+          "--min-p",
+          "0.05",
+          "--repeat-penalty",
+          "1.05",
+          "--parallel",
+          "1",
+          "--load-mode",
+          "mmap",
+          "-c",
+          "16384",
+          "--n-cpu-moe",
+          "8",
+          "-fa",
+          "--jinja",
+          "--chat-template-kwargs",
+          "{\"preserve_thinking\": true}",
+          "--chat-template-file",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+          "--cache-ram",
+          "8192",
+          "--reasoning",
+          "off",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "17841",
+          "--mmproj",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+        ],
+        "fixture": "argv/J5-ui-log-cap/launches.jsonl",
+        "line": 1,
+        "pid": 34340,
+        "program": "-m"
+      },
+      {
+        "argCount": 41,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "-ngl",
+          "99",
+          "-t",
+          "12",
+          "--temp",
+          "0.7",
+          "--top-k",
+          "20",
+          "--top-p",
+          "0",
+          "--min-p",
+          "0.05",
+          "--repeat-penalty",
+          "1.05",
+          "--parallel",
+          "1",
+          "--load-mode",
+          "mmap",
+          "-c",
+          "16384",
+          "--n-cpu-moe",
+          "8",
+          "-fa",
+          "--jinja",
+          "--chat-template-kwargs",
+          "{\"preserve_thinking\": true}",
+          "--chat-template-file",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+          "--cache-ram",
+          "8192",
+          "--reasoning",
+          "off",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "17841",
+          "--mmproj",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+        ],
+        "fixture": "argv/J5-ui-log-cap/launches.jsonl",
+        "line": 2,
+        "pid": 17996,
+        "program": "-m"
+      },
+      {
+        "argCount": 8,
+        "args": [
+          "-m",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "--parity-chunks",
+          "0",
+          "--parity-repeat-line",
+          "slot request: generated 1 token in 42 ms — parity log-cap probe line",
+          "--parity-repeat-count",
+          "1203"
+        ],
+        "fixture": "argv/J5-ui-log-cap/launches.jsonl",
+        "line": 3,
+        "pid": 27116,
+        "program": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js"
+      },
+      {
+        "argCount": 8,
+        "args": [
+          "-m",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "--parity-chunks",
+          "0",
+          "--parity-repeat-line",
+          "slot request: generated 1 token in 42 ms — parity log-cap probe line",
+          "--parity-repeat-count",
+          "1203"
+        ],
+        "fixture": "argv/J5-ui-log-cap/launches.jsonl",
+        "line": 4,
+        "pid": 26612,
+        "program": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js"
+      },
+      {
+        "argCount": 38,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
+          "-ngl",
+          "99",
+          "-t",
+          "15",
+          "--temp",
+          "0.7",
+          "--top-k",
+          "20",
+          "--top-p",
+          "0.01",
+          "--repeat-penalty",
+          "1.05",
+          "--parallel",
+          "1",
+          "--load-mode",
+          "mlock",
+          "-c",
+          "64000",
+          "--n-cpu-moe",
+          "26",
+          "-ctk",
+          "q8_0",
+          "-ctv",
+          "q8_0",
+          "-fa",
+          "on",
+          "--jinja",
+          "--cache-ram",
+          "8192",
+          "--reasoning",
+          "on",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "7838"
+        ],
+        "fixture": "argv/J6-corpus-smoke/launch.jsonl",
+        "line": 1,
+        "pid": 32992,
+        "program": "-m"
+      },
+      {
+        "argCount": 38,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
+          "-ngl",
+          "99",
+          "-t",
+          "15",
+          "--temp",
+          "0.7",
+          "--top-k",
+          "20",
+          "--top-p",
+          "0.01",
+          "--repeat-penalty",
+          "1.05",
+          "--parallel",
+          "1",
+          "--load-mode",
+          "mlock",
+          "-c",
+          "64000",
+          "--n-cpu-moe",
+          "26",
+          "-ctk",
+          "q8_0",
+          "-ctv",
+          "q8_0",
+          "-fa",
+          "on",
+          "--jinja",
+          "--cache-ram",
+          "8192",
+          "--reasoning",
+          "on",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "7838"
+        ],
+        "fixture": "argv/J6-corpus-smoke/launch.jsonl",
+        "line": 2,
+        "pid": 3784,
+        "program": "-m"
+      },
+      {
+        "argCount": 26,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+          "-ngl",
+          "99",
+          "-t",
+          "15",
+          "--temp",
+          "1",
+          "--top-p",
+          "1",
+          "--parallel",
+          "1",
+          "--load-mode",
+          "mlock",
+          "-c",
+          "16384",
+          "-fa",
+          "off",
+          "--jinja",
+          "--cache-ram",
+          "8192",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "7838"
+        ],
+        "fixture": "argv/J6-corpus-smoke/launch.jsonl",
+        "line": 3,
+        "pid": 22876,
+        "program": "-m"
+      },
+      {
+        "argCount": 26,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+          "-ngl",
+          "99",
+          "-t",
+          "15",
+          "--temp",
+          "1",
+          "--top-p",
+          "1",
+          "--parallel",
+          "1",
+          "--load-mode",
+          "mlock",
+          "-c",
+          "16384",
+          "-fa",
+          "off",
+          "--jinja",
+          "--cache-ram",
+          "8192",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "7838"
+        ],
+        "fixture": "argv/J6-corpus-smoke/launch.jsonl",
+        "line": 4,
+        "pid": 1076,
+        "program": "-m"
+      },
+      {
+        "argCount": 28,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+          "-ngl",
+          "99",
+          "-t",
+          "15",
+          "--temp",
+          "1",
+          "--top-p",
+          "1",
+          "--parallel",
+          "1",
+          "--load-mode",
+          "mlock",
+          "-c",
+          "100000",
+          "--n-cpu-moe",
+          "5",
+          "-fa",
+          "on",
+          "--jinja",
+          "--cache-ram",
+          "8192",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "7838"
+        ],
+        "fixture": "argv/J6-corpus-smoke/launch.jsonl",
+        "line": 5,
+        "pid": 3520,
+        "program": "-m"
+      },
+      {
+        "argCount": 28,
+        "args": [
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+          "-ngl",
+          "99",
+          "-t",
+          "15",
+          "--temp",
+          "1",
+          "--top-p",
+          "1",
+          "--parallel",
+          "1",
+          "--load-mode",
+          "mlock",
+          "-c",
+          "100000",
+          "--n-cpu-moe",
+          "5",
+          "-fa",
+          "on",
+          "--jinja",
+          "--cache-ram",
+          "8192",
+          "--host",
+          "0.0.0.0",
+          "-fit",
+          "off",
+          "--port",
+          "7838"
+        ],
+        "fixture": "argv/J6-corpus-smoke/launch.jsonl",
+        "line": 6,
+        "pid": 20192,
+        "program": "-m"
+      }
+    ]
+  },
+  "stopEffect": {
+    "bodies": [
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J3-start-stop/stop.request.json"
+      },
+      {
+        "body": "{\"success\":false,\"error\":\"No server is currently running\"}",
+        "fixture": "http/J3c-start-missing-path/stop-while-idle.request.json"
+      },
+      {
+        "body": "{\"success\":false,\"error\":\"No server is currently running\"}",
+        "fixture": "http/J3d-restart/stop-after-restart.request.json"
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J4-launch-presets/stop-after-default-port.request.json"
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J4-launch-presets/stop-after-explicit-port.request.json"
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J4b-ui-presets-launch/stop-after-presets-ui.request.json"
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J5-ui-cadence/stop-after-cadence.request.json"
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J5-ui-launch/start-from-ui-draft-mtp-stop-first.request.json"
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J5-ui-launch/stop-after-ui-launch.request.json"
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J5-ui-log-cap/stop-after-log-flood.request.json"
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J5-ui-log-cap/stop-from-driver.request.json"
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J6-corpus-smoke/stop-after-corpus-launches.request.json"
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J6-corpus-smoke/stop-between-corpus-launches-1.request.json"
+      },
+      {
+        "body": "{\"success\":true,\"message\":\"Server stopped successfully\"}",
+        "fixture": "http/J6-corpus-smoke/stop-between-corpus-launches-2.request.json"
+      }
+    ],
+    "endedEvents": [
+      {
+        "fixture": "ws/J3-start-stop/events.json",
+        "payload": {
+          "message": "Server process has ended"
+        }
+      },
+      {
+        "fixture": "ws/J3b-exit-code/events.json",
+        "payload": {
+          "message": "Server process has ended"
+        }
+      }
+    ],
+    "statusAfter": [
+      {
+        "body": "{\"running\":false}",
+        "fixture": "http/J1-settings/status.request.json"
+      },
+      {
+        "body": "{\"running\":false}",
+        "fixture": "http/J3-start-stop/status-before.request.json"
+      },
+      {
+        "body": "{\"running\":true}",
+        "fixture": "http/J3-start-stop/status-running.request.json"
+      },
+      {
+        "body": "{\"running\":false}",
+        "fixture": "http/J3d-restart/status-after-restart-settle.request.json"
+      },
+      {
+        "body": "{\"running\":false}",
+        "fixture": "http/J3d-restart/status-immediately-after-restart.request.json"
+      },
+      {
+        "body": "{\"running\":true}",
+        "fixture": "http/J5-ui-cadence/status-while-running.request.json"
+      },
+      {
+        "body": "{\"running\":true}",
+        "fixture": "http/J5-ui-launch/start-from-ui-draft-mtp-status.request.json"
+      },
+      {
+        "body": "{\"running\":true}",
+        "fixture": "http/J5-ui-launch/start-from-ui-status.request.json"
+      }
+    ]
+  }
+}

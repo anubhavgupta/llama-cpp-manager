@@ -1,0 +1,58 @@
+{
+  "artifact": "process-lifecycle",
+  "schemaVersion": 1,
+  "derivation": "model",
+  "derivedBy": "independent model pass (c): fresh-context read of git:parity-baseline:server.js only, plus the /start body shape in public/script.js. No fixture and no other derivation was consulted.",
+  "sources": ["git:parity-baseline:server.js", "git:parity-baseline:public/script.js"],
+  "spawn": {
+    "function": "child_process.spawn(exe, args, { stdio: 'pipe' })",
+    "shell": false,
+    "shellNote": "no { shell: true } anywhere, so the child is CreateProcess'd directly; the candidate must reproduce Node/libuv Windows argv quoting for spaces and quotes (§9 trap 3). A .cmd/.bat path cannot be spawned this way.",
+    "stdio": "pipe for all three streams; the stdout/stderr handlers forward raw chunks",
+    "cwd": "not specified — inherits the manager's cwd, which is where models-preset.ini is written and read",
+    "exe": "body.serverPath verbatim, no existence or type check",
+    "args": "body.args verbatim, in order, no filtering or reordering",
+    "spawnSites": ["POST /start", "POST /restart", "POST /launch-presets"]
+  },
+  "kill": {
+    "sequence": "runningProcess.kill('SIGTERM'); setTimeout(() => { if (runningProcess && !runningProcess.killed) runningProcess.kill('SIGKILL'); }, 1000)",
+    "delayMs": 1000,
+    "sites": ["POST /stop", "POST /restart"],
+    "orderDefect": {
+      "fact": "runningProcess = null runs synchronously right after arming the timer, and the timer callback re-reads the same module-level variable instead of a captured reference",
+      "consequenceForStop": "the SIGKILL branch never runs for the process /stop was called on, because runningProcess is already null when the timer fires",
+      "consequenceForRelaunch": "a child spawned within the 1 s window is the one the pending timer kills (Q24)",
+      "consequenceForRestart": "/restart kills the old child, nulls runningProcess, then assigns the replacement synchronously; the old child's close handler later nulls runningProcess again, so /status settles running:false while the replacement may be alive, and the pending timer can kill it — survival is a platform race (Q23)",
+      "killedFlag": "process.killed only reflects that a signal was delivered, not that the process exited, so /status can report running:false for a live child"
+    }
+  },
+  "state": {
+    "runningProcess": "module-level, single slot, no pid tracking; /status reads !!runningProcess && !runningProcess.killed",
+    "lastLaunchConfig": "module-level { serverPath, args }; written only by /start (not by /launch-presets, not by /restart); memory only, so /restart 400s after a manager restart (Q4)",
+    "connectedClients": "module-level array of sockets, push on connection and splice on disconnect; every emit iterates it",
+    "systemMetrics": "module-level {cpu,ram,gpu,vram} each with usage and a 50-point history, refreshed every 1000 ms by setInterval(updateSystemMetricsHistory, 1000)",
+    "resetPoints": [
+      "'close' handler sets runningProcess = null (any child, including the replacement being nulled by the previous child)",
+      "'error' handler sets runningProcess = null",
+      "/stop sets runningProcess = null immediately, before the child has exited"
+    ]
+  },
+  "handlers": {
+    "close": "console.log(`Server process exited with code ${code}`); runningProcess = null; connectedClients.forEach(c => c.emit('server-ended', { message: 'Server process has ended' }))",
+    "error": "console.error(`Failed to start process: ${error}`); runningProcess = null; connectedClients.forEach(c => c.emit('server-error', { message: 'Failed to start server: ' + error.message }))",
+    "stdout": "const logData = data.toString(); console.log('STDOUT:', logData); emit log-stream {type:'stdout', data: logData}",
+    "stderr": "const logData = data.toString(); console.log('STDERR:', logData); emit log-stream {type:'stderr', data: logData}",
+    "stdoutStderrGuards": "both handlers are installed inside if (runningProcess.stdout) / if (runningProcess.stderr), which are always true with stdio: 'pipe'"
+  },
+  "exitCodes": {
+    "observedSource": "server.js prints the child's exit code, it never inspects or maps it",
+    "candidateRule": "the code must be printed exactly as 'Server process exited with code <code>' including the null case for a signal-killed child",
+    "valuesObservedInRecordings": "see SPEC/from-runtime/process-lifecycle.json — this derivation does not read fixtures"
+  },
+  "launchPresetsPath": {
+    "iniFile": "path.join(__dirname, 'models-preset.ini') — written on every POST /launch-presets before the serverPath guard",
+    "args": ["--models-preset", "<ini path>", "--host", "0.0.0.0", "--port", "(serverPort || DEFAULT_PORT).toString()"],
+    "portDivergence": "Q5: /start's --port comes from the client (settings.serverPort), /launch-presets' from body.serverPort falling back to DEFAULT_PORT 8080",
+    "noRunningCheck": "spawn happens even if runningProcess is already set, orphaning the previous child"
+  }
+}

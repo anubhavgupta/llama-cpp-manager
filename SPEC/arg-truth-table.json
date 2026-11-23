@@ -1,0 +1,2772 @@
+{
+  "alwaysEmittedObserved": {
+    "flags": [
+      "--cache-ram",
+      "--host",
+      "--load-mode",
+      "--port",
+      "--temp",
+      "--top-p",
+      "-c",
+      "-fa",
+      "-fit",
+      "-m",
+      "-t"
+    ],
+    "launches": 5
+  },
+  "artifact": "arg-truth-table",
+  "driverAuthoredBodies": {
+    "bodies": [
+      {
+        "fixture": "http/J3-start-stop/start-while-running.request.json",
+        "flags": [
+          "-m",
+          "-ngl",
+          "-t",
+          "--temp",
+          "--top-k",
+          "--top-p",
+          "--min-p",
+          "--repeat-penalty",
+          "--parallel",
+          "--load-mode",
+          "-c",
+          "--n-cpu-moe",
+          "-ctk",
+          "-ctv",
+          "-fa",
+          "--jinja",
+          "--chat-template-kwargs",
+          "--chat-template-file",
+          "--verbose",
+          "--backend-sampling",
+          "--no-kv-offload",
+          "--no-mmproj-offload",
+          "--cache-ram",
+          "--spec-type",
+          "--spec-ngram-mod-n-match",
+          "--spec-ngram-mod-n-min",
+          "--spec-ngram-mod-n-max",
+          "--reasoning",
+          "--host",
+          "-fit",
+          "--port"
+        ]
+      },
+      {
+        "fixture": "http/J3-start-stop/start.request.json",
+        "flags": [
+          "-m",
+          "-ngl",
+          "-t",
+          "--temp",
+          "--top-k",
+          "--top-p",
+          "--min-p",
+          "--repeat-penalty",
+          "--parallel",
+          "--load-mode",
+          "-c",
+          "--n-cpu-moe",
+          "-ctk",
+          "-ctv",
+          "-fa",
+          "--jinja",
+          "--chat-template-kwargs",
+          "--chat-template-file",
+          "--verbose",
+          "--backend-sampling",
+          "--no-kv-offload",
+          "--no-mmproj-offload",
+          "--cache-ram",
+          "--spec-type",
+          "--spec-ngram-mod-n-match",
+          "--spec-ngram-mod-n-min",
+          "--spec-ngram-mod-n-max",
+          "--reasoning",
+          "--host",
+          "-fit",
+          "--port"
+        ]
+      },
+      {
+        "fixture": "http/J3b-exit-code/start.request.json",
+        "flags": [
+          "-m",
+          "--port",
+          "--parity-chunks",
+          "--parity-exit-code"
+        ]
+      },
+      {
+        "fixture": "http/J3c-start-missing-path/start-without-serverpath.request.json",
+        "flags": [
+          "-m"
+        ]
+      },
+      {
+        "fixture": "http/J3d-restart/start.request.json",
+        "flags": [
+          "-m",
+          "--parity-chunks"
+        ]
+      },
+      {
+        "fixture": "http/J5-ui-log-cap/start-log-flood.request.json",
+        "flags": [
+          "-m",
+          "--parity-chunks",
+          "--parity-repeat-line",
+          "--parity-repeat-count"
+        ]
+      }
+    ],
+    "note": "these /start bodies were written by the capture harness, not by the page, so they are listed but never paired (C5)"
+  },
+  "emission": {
+    "alwaysAppended": {
+      "note": [
+        "--cache-ram",
+        "--host",
+        "--load-mode",
+        "--port",
+        "--temp",
+        "--top-p",
+        "-c",
+        "-fa",
+        "-fit",
+        "-m",
+        "-t"
+      ],
+      "resolution": "agree",
+      "sources": [
+        "a",
+        "c"
+      ],
+      "value": [
+        "--host",
+        "--port",
+        "-fit"
+      ]
+    },
+    "orderSemantics": {
+      "modelWording": "order is the argv position contract: pushes run in source order inside one flat array, and the three unguarded pushes at the end of the block are always the last three entries before --mmproj",
+      "resolution": "static-wording",
+      "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+      "sources": [
+        "a"
+      ],
+      "value": "args.push runs in source order in one flat array; argv order is part of the contract"
+    }
+  },
+  "flags": [
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 0
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "backendSampling"
+        ]
+      },
+      "flag": "--backend-sampling",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.backendSampling)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 13 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 24
+      },
+      "value": {
+        "note": "only derivation (a) records an expression here; the other records none",
+        "resolution": "complement-from-a",
+        "sources": [
+          "a"
+        ],
+        "value": "'--backend-sampling'"
+      }
+    },
+    {
+      "always": {
+        "note": "present in every recorded body",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "cacheRam"
+        ]
+      },
+      "flag": "--cache-ram",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam))"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 11/15/16 of 4 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 27
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: 8192, -1",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "String(config.cacheRam)"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "modelPath"
+        ]
+      },
+      "flag": "--chat-template-file",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.loadCustomChatTemplate && config.modelPath)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 15 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 22
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "modelWording": "config.modelPath.replace(/[/\\\\][^/\\\\]*$/, '') + '\\\\chat-template.jinja'",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "modelDir + '\\\\chat-template.jinja'"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "chatTemplateKwargs"
+        ]
+      },
+      "flag": "--chat-template-kwargs",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.chatTemplateKwargs)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 14 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 21
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "note": "emitted values recorded: {\"preserve_thinking\": true}",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.chatTemplateKwargs"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 0
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "cpuMoe"
+        ]
+      },
+      "flag": "--cpu-moe",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.cpuMoe)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 9 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 15
+      },
+      "value": {
+        "note": "only derivation (a) records an expression here; the other records none",
+        "resolution": "complement-from-a",
+        "sources": [
+          "a"
+        ],
+        "value": "'--cpu-moe'"
+      }
+    },
+    {
+      "always": {
+        "note": "present in every recorded body",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": true
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": null
+      },
+      "flag": "--host",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": null
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 12/17/18/22 of 4 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 39
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: 0.0.0.0",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "\"0.0.0.0\""
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 1 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 0
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "jinja"
+        ]
+      },
+      "flag": "--jinja",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.jinja)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 10/14/13 of 3 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 20
+      },
+      "value": {
+        "note": "only derivation (a) records an expression here; the other records none",
+        "resolution": "complement-from-a",
+        "sources": [
+          "a"
+        ],
+        "value": "'--jinja'"
+      }
+    },
+    {
+      "always": {
+        "note": "present in every recorded body",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "loadMode"
+        ]
+      },
+      "flag": "--load-mode",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.loadMode)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 6/8/9 of 4 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 11
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: mmap, mlock",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.loadMode"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 3 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "minP"
+        ]
+      },
+      "flag": "--min-p",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if ((!isNaN(parseFloat(config.minP)) && config.minP != \"0\") || config.minP == \"0.00\")"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 6/4 of 2 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 7
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "note": "emitted values recorded: 0.05, 0.00",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.minP.toString()"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 3 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "modelPath"
+        ]
+      },
+      "flag": "--mmproj",
+      "guard": {
+        "modelWording": "window.models.forEach(model => { if (model.path === modelPath && model.mmprojFile) ... })",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "if (model.path === modelPath && model.mmprojFile)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 21/25 of 2 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 42
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "modelWording": "model.mmprojFile of the window.models entry whose path === modelPathSelect.value.trim()",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "model.mmprojFile"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 2 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "nCpuMoe"
+        ]
+      },
+      "flag": "--n-cpu-moe",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.nCpuMoe > 0)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 8/10/11 of 3 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 14
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: 8, 26, 5",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.nCpuMoe.toString()"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 0
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "noKvOffload"
+        ]
+      },
+      "flag": "--no-kv-offload",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.noKvOffload)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 14 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 25
+      },
+      "value": {
+        "note": "only derivation (a) records an expression here; the other records none",
+        "resolution": "complement-from-a",
+        "sources": [
+          "a"
+        ],
+        "value": "'--no-kv-offload'"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 0
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "noMmprojOffload"
+        ]
+      },
+      "flag": "--no-mmproj-offload",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.noMmprojOffload)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 15 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 26
+      },
+      "value": {
+        "note": "only derivation (a) records an expression here; the other records none",
+        "resolution": "complement-from-a",
+        "sources": [
+          "a"
+        ],
+        "value": "'--no-mmproj-offload'"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 1 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "parallel"
+        ]
+      },
+      "flag": "--parallel",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.parallel > 0)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 5/7/8 of 3 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 10
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: 1",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.parallel.toString()"
+      }
+    },
+    {
+      "always": {
+        "note": "present in every recorded body",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": true
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "serverPort"
+        ]
+      },
+      "flag": "--port",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": null
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 14/19/20/24 of 4 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 41
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "modelWording": "settings.serverPort.toString() (localStorage settings, not the config object)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "settings.serverPort.toString()"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "presencePenalty"
+        ]
+      },
+      "flag": "--presence-penalty",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != \"0\") || config.presencePenalty == \"0.00\")"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 5 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 9
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "note": "emitted values recorded: 0.0",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.presencePenalty.toString()"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 3 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "reasoning"
+        ]
+      },
+      "flag": "--reasoning",
+      "guard": {
+        "modelWording": "else if (config.reasoning === 'on')",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "else if (config.reasoning === 'off') { if (config.reasoning === 'on')"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 16/17 of 2 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 34
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json"
+        ],
+        "note": "emitted values recorded: off, on",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "'on'"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 3 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "repeatPenalty"
+        ]
+      },
+      "flag": "--repeat-penalty",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != \"0\") || config.repeatPenalty == \"0.00\")"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 6/7 of 2 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 8
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json"
+        ],
+        "note": "emitted values recorded: 1.05",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.repeatPenalty.toString()"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "specDraftNMax"
+        ]
+      },
+      "flag": "--spec-draft-n-max",
+      "guard": {
+        "modelWording": "outer speculation guard + if (config.specDraftNMax > 0 && config.speculationType !== 'none')",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.specDraftNMax > 0 && config.speculationType !== 'none')"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 21 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 32
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "note": "emitted values recorded: 8",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.specDraftNMax.toString()"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngramMod"
+        ]
+      },
+      "flag": "--spec-ngram-mod-n-match",
+      "guard": {
+        "modelWording": "outer speculation guard + if (config.ngramMod)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 18 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 29
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "note": "emitted values recorded: 24",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "'24'"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngramMod"
+        ]
+      },
+      "flag": "--spec-ngram-mod-n-max",
+      "guard": {
+        "modelWording": "outer speculation guard + if (config.ngramMod)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 20 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 31
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "note": "emitted values recorded: 64",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "'64'"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngramMod"
+        ]
+      },
+      "flag": "--spec-ngram-mod-n-min",
+      "guard": {
+        "modelWording": "outer speculation guard + if (config.ngramMod)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 19 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 30
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "note": "emitted values recorded: 48",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "'48'"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngramMod",
+          "speculationType"
+        ]
+      },
+      "flag": "--spec-type",
+      "guard": {
+        "modelWording": "outer: if (config.speculationType !== 'none' || config.ngramMod); inner: if (specTypes.length > 0)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "if (config.speculationType !== 'none' || config.ngramMod) { if (specTypes.length > 0)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 17 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 28
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json"
+        ],
+        "note": "emitted values recorded: ngram-mod,draft-mtp",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "specTypes.join(',')"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 4 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 0
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "swaFull"
+        ]
+      },
+      "flag": "--swa-full",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.swaFull)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 7 of 1 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 12
+      },
+      "value": {
+        "note": "only derivation (a) records an expression here; the other records none",
+        "resolution": "complement-from-a",
+        "sources": [
+          "a"
+        ],
+        "value": "'--swa-full'"
+      }
+    },
+    {
+      "always": {
+        "note": "present in every recorded body",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "temp"
+        ]
+      },
+      "flag": "--temp",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.temp >= 0)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 3/2 of 4 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 4
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: 0.7, 0, 1",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.temp.toString()"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 3 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "topK"
+        ]
+      },
+      "flag": "--top-k",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.topK > 0)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 4 of 2 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 5
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json"
+        ],
+        "note": "emitted values recorded: 20",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.topK.toString()"
+      }
+    },
+    {
+      "always": {
+        "note": "present in every recorded body",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "topP"
+        ]
+      },
+      "flag": "--top-p",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.topP >= 0)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 4/5/3 of 4 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 6
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: 0, 0.01, 1",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.topP.toString()"
+      }
+    },
+    {
+      "always": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 0
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "verbose"
+        ]
+      },
+      "flag": "--verbose",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.verbose)"
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 23
+      },
+      "value": {
+        "note": "only derivation (a) records an expression here; the other records none",
+        "resolution": "complement-from-a",
+        "sources": [
+          "a"
+        ],
+        "value": "'--verbose'"
+      }
+    },
+    {
+      "always": {
+        "note": "present in every recorded body",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "contextSize"
+        ]
+      },
+      "flag": "-c",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.contextSize > 0)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 7/9/10/8 of 4 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 13
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: 16384, 1, 64000, 100000",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.contextSize.toString()"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 3 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "contextTokenKey"
+        ]
+      },
+      "flag": "-ctk",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.ctkEnable && config.contextTokenKey && config.contextTokenValue)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 11/10 of 2 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 16
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json"
+        ],
+        "note": "emitted values recorded: q8_0",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.contextTokenKey"
+      }
+    },
+    {
+      "always": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ctkd"
+        ]
+      },
+      "flag": "-ctkd",
+      "guard": {
+        "modelWording": "draft guard + if (config.ctkd)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ctkd)"
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 37
+      },
+      "value": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.ctkd"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 3 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "contextTokenValue"
+        ]
+      },
+      "flag": "-ctv",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.ctkEnable && config.contextTokenKey && config.contextTokenValue)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 12/11 of 2 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 17
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json"
+        ],
+        "note": "emitted values recorded: q8_0",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.contextTokenValue"
+      }
+    },
+    {
+      "always": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ctvd"
+        ]
+      },
+      "flag": "-ctvd",
+      "guard": {
+        "modelWording": "draft guard + if (config.ctvd)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ctvd)"
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 38
+      },
+      "value": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.ctvd"
+      }
+    },
+    {
+      "always": {
+        "note": "present in every recorded body",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 0
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "fastAttention"
+        ]
+      },
+      "flag": "-fa",
+      "guard": {
+        "modelWording": "else if (config.fastAttention === 'auto')",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "else if (config.fastAttention && config.fastAttention !== 'auto') { if (config.fastAttention === 'auto')"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 9/13/12 of 4 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 19
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "only derivation (a) records an expression here; the other records none",
+        "resolution": "complement-from-a",
+        "sources": [
+          "a"
+        ],
+        "value": "'-fa'"
+      }
+    },
+    {
+      "always": {
+        "note": "present in every recorded body",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": true
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": null
+      },
+      "flag": "-fit",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": null
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 13/18/19/23 of 4 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 40
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: off",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "\"off\""
+      }
+    },
+    {
+      "always": {
+        "note": "present in every recorded body",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "modelPath"
+        ]
+      },
+      "flag": "-m",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.modelPath)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 0 of 4 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf, C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf, C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf, C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.modelPath"
+      }
+    },
+    {
+      "always": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "draftModelPath"
+        ]
+      },
+      "flag": "-md",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp')"
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 35
+      },
+      "value": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.draftModelPath"
+      }
+    },
+    {
+      "always": {
+        "note": "absent in 1 recorded body(ies)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngl"
+        ]
+      },
+      "flag": "-ngl",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.ngl > 0)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 1 of 3 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 2
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: 99",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.ngl.toString()"
+      }
+    },
+    {
+      "always": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "resolution": "agree",
+        "sources": [
+          "a"
+        ],
+        "value": [
+          "ngld"
+        ]
+      },
+      "flag": "-ngld",
+      "guard": {
+        "modelWording": "draft guard + if (config.ngld >= 0)",
+        "resolution": "static-wording",
+        "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+        "sources": [
+          "a"
+        ],
+        "value": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ngld >= 0)"
+      },
+      "order": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 36
+      },
+      "value": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.ngld.toString()"
+      }
+    },
+    {
+      "always": {
+        "note": "present in every recorded body",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": false
+      },
+      "arity": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 1
+      },
+      "fields": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "resolution": "agree+runtime-confirmed",
+        "sources": [
+          "a",
+          "b"
+        ],
+        "value": [
+          "threads"
+        ]
+      },
+      "flag": "-t",
+      "guard": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "if (config.threads > 0)"
+      },
+      "order": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json"
+        ],
+        "note": "recorded at 2/1 of 4 recorded bodies",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": 3
+      },
+      "value": {
+        "evidence": [
+          "ws/J5-ui-launch/launch-attempts.json",
+          "localstorage/J5-ui-launch/after-ui-launch.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "corpus/configs.remapped.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ],
+        "note": "emitted values recorded: 12, 4, 15",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": "config.threads.toString()"
+      }
+    }
+  ],
+  "gaps": [
+    {
+      "__gap": true,
+      "reason": "a flag that every recorded launch emits has no negative observation, so the condition that gates it is invisible (see alwaysEmitted and flags[].absentIn)"
+    },
+    {
+      "__gap": true,
+      "reason": "the order of flags that no recorded launch emitted cannot be derived; only flags present in the recordings are listed"
+    }
+  ],
+  "generatedBy": "tools/parity/spec-reconcile.js",
+  "recordedBodies": {
+    "evidence": [
+      "ws/J5-ui-launch/launch-attempts.json",
+      "localstorage/J5-ui-launch/after-ui-launch.json",
+      "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+      "corpus/configs.remapped.json",
+      "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+      "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+    ],
+    "launches": [
+      "GPT-OSS-20B 16K 125TPS|GPT-OSS-20B 100K 52TPS|GPT-20B 131K(full) - 50TPS@J6-corpus-smoke",
+      "Qwen 3 Q4 64K - 28TPS|Qwen 3 Q4 10K - 38TPS|Qwen 3 Q4 64K - Draft@J6-corpus-smoke",
+      "capture-alpha@J5-ui-launch",
+      "capture-beta@J5-ui-launch"
+    ],
+    "note": "the order below is the order the page itself POSTed, recorded on the wire; it is the only order the recordings can show"
+  },
+  "rule": "one row per args.push site in launchServer, in source order; recorded bodies corroborate order, values and conditionality",
+  "schemaVersion": 1
+}

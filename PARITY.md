@@ -49,7 +49,9 @@ Non-determinism addenda discovered during capture (beyond §8): dotenv v17 print
   inputs tokenized to `SCRATCH_ROOT/` (vectors are authored inputs — tokenization lawful; goldens regenerated
   from baseline for tokenized inputs; literal-path coverage kept via username-free absolute paths).
   Leak scanner: tools/parity/leak-check.js (from scratchpad); exception list documents the legacy `.lmstudio`
-  constant as oracle truth.
+  constant as oracle truth. After the re-record, REGENERATE SPEC from-runtime/pack (its quoted evidence paths
+  currently carry the old scratch root — 13 leak-check hits, all derived artifacts, tokenizable by
+  regeneration; legal to regenerate because only fixtures/goldens are uneditable recorded bytes).
 
 - 2026-11-23 `bdd883e` — AUTHORIZED FIXTURE RE-RECORD (C8 backing entry): added journey `J4b-ui-presets-launch`
   because no recorded journey had ever produced app-generated `models-preset.ini` bytes (the ini generator had

@@ -1,0 +1,1381 @@
+{
+  "baseUrl": {
+    "evidence": [
+      "http/J0-baseline/root.request.json"
+    ],
+    "note": "the origin every recorded request was issued against",
+    "origin": [
+      "http://localhost:7837"
+    ]
+  },
+  "clientGuards": {
+    "dialogs": {
+      "configNameAlert": [
+        {
+          "message": "Please enter a configuration name",
+          "type": "alert"
+        }
+      ],
+      "deleteConfirm": {
+        "configsAfter": 1,
+        "configsBefore": 2,
+        "dialogs": [
+          {
+            "message": "Are you sure you want to delete the configuration \"capture-alpha\"?",
+            "type": "confirm"
+          }
+        ]
+      },
+      "dialogs": [
+        {
+          "message": "Please enter the path to llama-server.exe",
+          "type": "alert"
+        },
+        {
+          "message": "Please enter a models directory path",
+          "type": "alert"
+        },
+        {
+          "message": "Please enter a configuration name",
+          "type": "alert"
+        },
+        {
+          "message": "Are you sure you want to delete the configuration \"capture-alpha\"?",
+          "type": "confirm"
+        }
+      ],
+      "note": "Native alert/confirm dialogs are OS windows outside the page surface, so they are recorded as type + message text here (Q13). The handler dismissed them unless the journey set accept.",
+      "settingsSave": {
+        "mainFrameNavigationsAfter": 2,
+        "mainFrameNavigationsBefore": 1,
+        "reloadObserved": true,
+        "requestRecordedAs": "http/J5-ui-dialogs/settings-from-ui.request.json"
+      }
+    },
+    "launchAttempts": {
+      "argvLog": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl",
+      "attempts": [
+        {
+          "argvLinesAfter": 2,
+          "argvLinesBefore": 0,
+          "argvLinesGained": 2,
+          "config": "capture-alpha",
+          "dialogsDuringAttempt": [],
+          "form": {
+            "launchDisabled": false,
+            "modelPathIsAnOption": true,
+            "modelPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "optionCount": 11,
+            "serverPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+          },
+          "requestBlockedWith": null,
+          "requestBody": {
+            "args": [
+              "-m",
+              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+              "-ngl",
+              "99",
+              "-t",
+              "12",
+              "--temp",
+              "0.7",
+              "--top-k",
+              "20",
+              "--top-p",
+              "0",
+              "--min-p",
+              "0.05",
+              "--repeat-penalty",
+              "1.05",
+              "--parallel",
+              "1",
+              "--load-mode",
+              "mmap",
+              "-c",
+              "16384",
+              "--n-cpu-moe",
+              "8",
+              "-fa",
+              "--jinja",
+              "--chat-template-kwargs",
+              "{\"preserve_thinking\": true}",
+              "--chat-template-file",
+              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+              "--cache-ram",
+              "8192",
+              "--reasoning",
+              "off",
+              "--host",
+              "0.0.0.0",
+              "-fit",
+              "off",
+              "--port",
+              "7838",
+              "--mmproj",
+              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+            ],
+            "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+          },
+          "requestObserved": true,
+          "requestStatus": 200,
+          "responseBody": {
+            "message": "Server started successfully",
+            "success": true
+          },
+          "runningAfter": true
+        },
+        {
+          "argvLinesAfter": 4,
+          "argvLinesBefore": 2,
+          "argvLinesGained": 2,
+          "config": "capture-beta",
+          "dialogsDuringAttempt": [],
+          "form": {
+            "launchDisabled": true,
+            "modelPathIsAnOption": true,
+            "modelPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "optionCount": 11,
+            "serverPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+          },
+          "requestBlockedWith": null,
+          "requestBody": {
+            "args": [
+              "-m",
+              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+              "-t",
+              "4",
+              "--temp",
+              "0",
+              "--top-p",
+              "0",
+              "--min-p",
+              "0.00",
+              "--presence-penalty",
+              "0.0",
+              "--load-mode",
+              "mmap",
+              "--swa-full",
+              "-c",
+              "1",
+              "--cpu-moe",
+              "-ctk",
+              "q8_0",
+              "-ctv",
+              "q8_0",
+              "-fa",
+              "on",
+              "--backend-sampling",
+              "--no-kv-offload",
+              "--no-mmproj-offload",
+              "--cache-ram",
+              "-1",
+              "--spec-type",
+              "ngram-mod,draft-mtp",
+              "--spec-ngram-mod-n-match",
+              "24",
+              "--spec-ngram-mod-n-min",
+              "48",
+              "--spec-ngram-mod-n-max",
+              "64",
+              "--spec-draft-n-max",
+              "8",
+              "--host",
+              "0.0.0.0",
+              "-fit",
+              "off",
+              "--port",
+              "7838",
+              "--mmproj",
+              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+            ],
+            "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+          },
+          "requestObserved": true,
+          "requestStatus": 200,
+          "responseBody": {
+            "message": "Server started successfully",
+            "success": true
+          },
+          "runningAfter": true
+        }
+      ],
+      "note": "One entry per #launchBtn click. launchServer validates serverPath then the modelPath <select> (script.js:413-420) and alerts instead of posting /start, and loadConfiguration blanks a modelPath with no matching <option> (Q18), so the form state and the dialog list are recorded next to the argv evidence rather than assumed."
+    },
+    "note": "the page blocks some requests before they leave: these dialog messages and form states were recorded instead of a request"
+  },
+  "clientPolling": {
+    "counts": {
+      "/metrics": 12,
+      "/status": 2
+    },
+    "entries": [
+      {
+        "gapFromAnyMs": null,
+        "gapFromSamePathMs": null,
+        "path": "/metrics",
+        "tMs": 1795407885327,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 987,
+        "gapFromSamePathMs": 987,
+        "path": "/metrics",
+        "tMs": 1795407886314,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 1002,
+        "gapFromSamePathMs": 1002,
+        "path": "/metrics",
+        "tMs": 1795407887316,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 1002,
+        "gapFromSamePathMs": 1002,
+        "path": "/metrics",
+        "tMs": 1795407888318,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 18,
+        "gapFromSamePathMs": null,
+        "path": "/status",
+        "tMs": 1795407888336,
+        "url": "http://localhost:7837/status"
+      },
+      {
+        "gapFromAnyMs": 986,
+        "gapFromSamePathMs": 1004,
+        "path": "/metrics",
+        "tMs": 1795407889322,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 996,
+        "gapFromSamePathMs": 996,
+        "path": "/metrics",
+        "tMs": 1795407890318,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 999,
+        "gapFromSamePathMs": 999,
+        "path": "/metrics",
+        "tMs": 1795407891317,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 1002,
+        "gapFromSamePathMs": 1002,
+        "path": "/metrics",
+        "tMs": 1795407892319,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 996,
+        "gapFromSamePathMs": 996,
+        "path": "/metrics",
+        "tMs": 1795407893315,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 19,
+        "gapFromSamePathMs": 4998,
+        "path": "/status",
+        "tMs": 1795407893334,
+        "url": "http://localhost:7837/status"
+      },
+      {
+        "gapFromAnyMs": 986,
+        "gapFromSamePathMs": 1005,
+        "path": "/metrics",
+        "tMs": 1795407894320,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 1001,
+        "gapFromSamePathMs": 1001,
+        "path": "/metrics",
+        "tMs": 1795407895321,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 997,
+        "gapFromSamePathMs": 997,
+        "path": "/metrics",
+        "tMs": 1795407896318,
+        "url": "http://localhost:7837/metrics"
+      }
+    ],
+    "note": "fetch URLs the page issued while a server was running, in arrival order, with wall-clock gaps. public/script.js polls /status every 5 s (init) and /metrics every 1 s (startMetricUpdates).",
+    "running": true,
+    "windowMs": 12018
+  },
+  "firstRun": {
+    "observation": "GET /settings with no settings.json in the sandbox answers from server.js own default branch. The personal path in the recorded response is the string hardcoded in server.js at parity-baseline, recorded from the app (C5) — it is not corpus data.",
+    "recordedDefaultModelsDirectory": "C:\\Users\\anubh\\.lmstudio\\models",
+    "serverPort": 8080
+  },
+  "gaps": [
+    {
+      "__gap": true,
+      "reason": "HTTP status codes are missing from every recording except the ones listed in routes[].statusesRecorded; the response bodies are recorded in full"
+    },
+    {
+      "__gap": true,
+      "reason": "response headers were not captured, so content types are not derivable from the recordings"
+    },
+    {
+      "__gap": true,
+      "reason": "server-side branch coverage: a body recorded for one input says nothing about the branch another input would take"
+    }
+  ],
+  "generatedBy": "tools/parity/spec-runtime.js",
+  "launchPresetsPortSource": {
+    "launchPresetsWithServerPort": {
+      "argv": [
+        "--models-preset",
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "7838"
+      ],
+      "port": "7838"
+    },
+    "launchPresetsWithoutServerPort": {
+      "argv": [
+        "--models-preset",
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8080"
+      ],
+      "port": "8080"
+    },
+    "settingsJsonServerPort": 7838,
+    "startJourneyPort": "7838 (see argv/J3-start-stop/launch.jsonl, client-supplied --port)"
+  },
+  "metricsDegradation": {
+    "evidence": [
+      "http/J2b-metrics-garbage/shape-note.json",
+      "http/J2c-metrics-fail/metrics-1.response"
+    ],
+    "note": "With nvidia-smi replying \"not a csv\", getSystemMetrics() parses the line, finds fewer than 3 comma fields, and returns WITHOUT throwing — so the Math.random() catch branch never runs and /metrics reports gpu=0, vram=0, vramUsage=\"0/0\" alongside real cpu/ram. plan.md §9 trap 4 lists the unexpected CSV shape as a simulated-path trigger; recorded legacy runtime evidence (plan §4 step 1) says it is a silent-zero path."
+  },
+  "neverRecorded": {
+    "candidates": [
+      "PUT/DELETE/PATCH on any path",
+      "any non-JSON request body",
+      "query strings on /status, /metrics, /models"
+    ],
+    "note": "no recording exercises these, so (b) has no position on them"
+  },
+  "restartEffect": {
+    "afterManagerRestart": {
+      "body": {
+        "error": "No previous configuration found to restart from",
+        "success": false
+      },
+      "status": 400
+    },
+    "getRestart": {
+      "firstBytes": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /rest",
+      "json": false,
+      "length": 145
+    },
+    "settleNote": "POST /restart answers 200 success:true, but /status settles on running:false: the killed child's close handler clears runningProcess after /restart assigned the replacement (server.js:459-470), and POST /stop then returns success:false while the replacement may still be running. The deferred SIGKILL at server.js:437-445 reads the same module-level variable, so the replacement surviving is a race - the counts below differ between runs and are compared through the restart-settle shape rule."
+  },
+  "routes": {
+    "GET /": {
+      "builtByThePage": false,
+      "requestBodyFields": [],
+      "requestFixtures": [
+        "http/J0-baseline/root.request.json"
+      ],
+      "requestsRecorded": 1,
+      "responses": [
+        {
+          "fixture": "http/J0-baseline/root.request.json",
+          "shape": "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-w",
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": []
+    },
+    "GET /metrics": {
+      "builtByThePage": false,
+      "requestBodyFields": [],
+      "requestFixtures": [
+        "http/J1-settings/metrics-1.request.json",
+        "http/J1-settings/metrics-2.request.json",
+        "http/J1-settings/metrics-3.request.json",
+        "http/J2b-metrics-garbage/metrics-1.request.json",
+        "http/J2b-metrics-garbage/metrics-2.request.json",
+        "http/J2b-metrics-garbage/metrics-3.request.json",
+        "http/J2c-metrics-fail/metrics-1.request.json",
+        "http/J2c-metrics-fail/metrics-2.request.json",
+        "http/J2c-metrics-fail/metrics-3.request.json"
+      ],
+      "requestsRecorded": 9,
+      "responses": [
+        {
+          "fixture": "http/J1-settings/metrics-1.request.json",
+          "shape": {
+            "cpu": "1.0370885635690996",
+            "gpu": "42",
+            "ram": "27.68985577415661",
+            "vram": "50.23193359375",
+            "vramUsage": "\"12345/24576\""
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J1-settings/metrics-2.request.json",
+          "shape": {
+            "cpu": "1.0370885635690996",
+            "gpu": "42",
+            "ram": "27.68985577415661",
+            "vram": "50.23193359375",
+            "vramUsage": "\"12345/24576\""
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J1-settings/metrics-3.request.json",
+          "shape": {
+            "cpu": "1.0370885635690996",
+            "gpu": "42",
+            "ram": "27.68985577415661",
+            "vram": "50.23193359375",
+            "vramUsage": "\"12345/24576\""
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J2b-metrics-garbage/metrics-1.request.json",
+          "shape": {
+            "cpu": "1.2014589143960475",
+            "gpu": "0",
+            "ram": "27.71593879314162",
+            "vram": "0",
+            "vramUsage": "\"0/0\""
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J2b-metrics-garbage/metrics-2.request.json",
+          "shape": {
+            "cpu": "1.2014589143960475",
+            "gpu": "0",
+            "ram": "27.71593879314162",
+            "vram": "0",
+            "vramUsage": "\"0/0\""
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J2b-metrics-garbage/metrics-3.request.json",
+          "shape": {
+            "cpu": "1.2014589143960475",
+            "gpu": "0",
+            "ram": "27.71593879314162",
+            "vram": "0",
+            "vramUsage": "\"0/0\""
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J2c-metrics-fail/metrics-1.request.json",
+          "shape": {
+            "cpu": "0.8407579370058982",
+            "gpu": "45.919350858967874",
+            "ram": "27.712326925271018",
+            "vram": "6.134175193039512",
+            "vramUsage": "\"502.51163181379707/8192\""
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J2c-metrics-fail/metrics-2.request.json",
+          "shape": {
+            "cpu": "0.8407579370058982",
+            "gpu": "45.919350858967874",
+            "ram": "27.712326925271018",
+            "vram": "6.134175193039512",
+            "vramUsage": "\"502.51163181379707/8192\""
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J2c-metrics-fail/metrics-3.request.json",
+          "shape": {
+            "cpu": "0.8407579370058982",
+            "gpu": "45.919350858967874",
+            "ram": "27.712326925271018",
+            "vram": "6.134175193039512",
+            "vramUsage": "\"502.51163181379707/8192\""
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": []
+    },
+    "GET /models": {
+      "builtByThePage": false,
+      "requestBodyFields": [],
+      "requestFixtures": [
+        "http/J2-models/models.request.json"
+      ],
+      "requestsRecorded": 1,
+      "responses": [
+        {
+          "fixture": "http/J2-models/models.request.json",
+          "shape": {
+            "models": "array[10]",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": []
+    },
+    "GET /restart": {
+      "builtByThePage": false,
+      "requestBodyFields": [],
+      "requestFixtures": [
+        "http/J3d-restart/restart-get-not-a-route.request.json"
+      ],
+      "requestsRecorded": 1,
+      "responses": [
+        {
+          "fixture": "http/J3d-restart/restart-get-not-a-route.request.json",
+          "shape": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /rest",
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": []
+    },
+    "GET /settings": {
+      "builtByThePage": false,
+      "requestBodyFields": [],
+      "requestFixtures": [
+        "http/J0-baseline/settings-first-run.request.json",
+        "http/J1-settings/settings-read.request.json"
+      ],
+      "requestsRecorded": 2,
+      "responses": [
+        {
+          "fixture": "http/J0-baseline/settings-first-run.request.json",
+          "shape": {
+            "settings": "object{modelsDirectory,serverPort}",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J1-settings/settings-read.request.json",
+          "shape": {
+            "settings": "object{modelsDirectory,serverPort}",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": []
+    },
+    "GET /status": {
+      "builtByThePage": false,
+      "requestBodyFields": [],
+      "requestFixtures": [
+        "http/J1-settings/status.request.json",
+        "http/J3-start-stop/status-before.request.json",
+        "http/J3-start-stop/status-running.request.json",
+        "http/J3d-restart/status-after-restart-settle.request.json",
+        "http/J3d-restart/status-immediately-after-restart.request.json",
+        "http/J5-ui-cadence/status-while-running.request.json",
+        "http/J5-ui-launch/start-from-ui-draft-mtp-status.request.json",
+        "http/J5-ui-launch/start-from-ui-status.request.json"
+      ],
+      "requestsRecorded": 8,
+      "responses": [
+        {
+          "fixture": "http/J1-settings/status.request.json",
+          "shape": {
+            "running": "false"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J3-start-stop/status-before.request.json",
+          "shape": {
+            "running": "false"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J3-start-stop/status-running.request.json",
+          "shape": {
+            "running": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J3d-restart/status-after-restart-settle.request.json",
+          "shape": {
+            "running": "false"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J3d-restart/status-immediately-after-restart.request.json",
+          "shape": {
+            "running": "false"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-cadence/status-while-running.request.json",
+          "shape": {
+            "running": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-launch/start-from-ui-draft-mtp-status.request.json",
+          "shape": {
+            "running": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-launch/start-from-ui-status.request.json",
+          "shape": {
+            "running": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": []
+    },
+    "GET /swagger": {
+      "builtByThePage": false,
+      "requestBodyFields": [],
+      "requestFixtures": [
+        "http/J0-baseline/swagger.request.json"
+      ],
+      "requestsRecorded": 1,
+      "responses": [
+        {
+          "fixture": "http/J0-baseline/swagger.request.json",
+          "shape": "<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <title>Swagger UI - Llama CPP Manager API</title>\r\n    <meta charset=\"utf-8\">\r\n    ",
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": []
+    },
+    "GET /swagger.json": {
+      "builtByThePage": false,
+      "requestBodyFields": [],
+      "requestFixtures": [
+        "http/J0-baseline/swagger-json.request.json"
+      ],
+      "requestsRecorded": 1,
+      "responses": [
+        {
+          "fixture": "http/J0-baseline/swagger-json.request.json",
+          "shape": {
+            "info": "object{title,version,description}",
+            "openapi": "\"3.0.3\"",
+            "paths": "object{/,/start,/stop,/models,/metrics,/status,/restart,/settings,/launch-presets}",
+            "servers": "array[1]"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": []
+    },
+    "POST /launch-presets": {
+      "builtByThePage": true,
+      "requestBodyFields": [
+        "presets",
+        "serverPath",
+        "serverPort"
+      ],
+      "requestFixtures": [
+        "http/J4-launch-presets/launch-presets-default-port.request.json",
+        "http/J4-launch-presets/launch-presets-explicit-port.request.json",
+        "http/J4b-ui-presets-launch/launch-presets-from-ui.request.json"
+      ],
+      "requestsRecorded": 3,
+      "responses": [
+        {
+          "fixture": "http/J4-launch-presets/launch-presets-default-port.request.json",
+          "shape": {
+            "message": "\"Server started with model presets successfully\"",
+            "presetsFile": "\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\app\\\\models-preset.ini\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J4-launch-presets/launch-presets-explicit-port.request.json",
+          "shape": {
+            "message": "\"Server started with model presets successfully\"",
+            "presetsFile": "\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\app\\\\models-preset.ini\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J4b-ui-presets-launch/launch-presets-from-ui.request.json",
+          "shape": {
+            "message": "\"Server started with model presets successfully\"",
+            "presetsFile": "\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\app\\\\models-preset.ini\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": []
+    },
+    "POST /restart": {
+      "builtByThePage": false,
+      "requestBodyFields": [],
+      "requestFixtures": [
+        "http/J3d-restart/restart-after-manager-restart.request.json",
+        "http/J3d-restart/restart-before-any-launch.request.json",
+        "http/J3d-restart/restart.request.json",
+        "http/J4-launch-presets/restart-after-presets.request.json"
+      ],
+      "requestsRecorded": 4,
+      "responses": [
+        {
+          "fixture": "http/J3d-restart/restart-after-manager-restart.request.json",
+          "shape": {
+            "error": "\"No previous configuration found to restart from\"",
+            "success": "false"
+          },
+          "status": 400,
+          "statusEvidence": "http/J3d-restart/restart-after-manager-restart.json"
+        },
+        {
+          "fixture": "http/J3d-restart/restart-before-any-launch.request.json",
+          "shape": {
+            "error": "\"No previous configuration found to restart from\"",
+            "success": "false"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J3d-restart/restart.request.json",
+          "shape": {
+            "message": "\"Server restarted successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J4-launch-presets/restart-after-presets.request.json",
+          "shape": {
+            "error": "\"No previous configuration found to restart from\"",
+            "success": "false"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": [
+        400
+      ]
+    },
+    "POST /settings": {
+      "builtByThePage": true,
+      "requestBodyFields": [
+        "modelsDirectory",
+        "serverPort"
+      ],
+      "requestFixtures": [
+        "http/J1-settings/settings-post-with-port.request.json",
+        "http/J1-settings/settings-post-without-port.request.json",
+        "http/J4-launch-presets/settings-server-port-7838.request.json",
+        "http/J4b-ui-presets-launch/settings-models-directory.request.json",
+        "http/J5-ui-dialogs/settings-from-ui.request.json"
+      ],
+      "requestsRecorded": 5,
+      "responses": [
+        {
+          "fixture": "http/J1-settings/settings-post-with-port.request.json",
+          "shape": {
+            "message": "\"Settings saved successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J1-settings/settings-post-without-port.request.json",
+          "shape": {
+            "message": "\"Settings saved successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J4-launch-presets/settings-server-port-7838.request.json",
+          "shape": {
+            "message": "\"Settings saved successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J4b-ui-presets-launch/settings-models-directory.request.json",
+          "shape": {
+            "message": "\"Settings saved successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-dialogs/settings-from-ui.request.json",
+          "shape": {
+            "message": "\"Settings saved successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": []
+    },
+    "POST /start": {
+      "builtByThePage": true,
+      "requestBodyFields": [
+        "args",
+        "serverPath"
+      ],
+      "requestFixtures": [
+        "http/J3-start-stop/start-while-running.request.json",
+        "http/J3-start-stop/start.request.json",
+        "http/J3b-exit-code/start.request.json",
+        "http/J3c-start-missing-path/start-without-serverpath.request.json",
+        "http/J3d-restart/start.request.json",
+        "http/J5-ui-launch/start-from-ui-draft-mtp.request.json",
+        "http/J5-ui-launch/start-from-ui.request.json",
+        "http/J5-ui-log-cap/start-log-flood.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+        "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+      ],
+      "requestsRecorded": 11,
+      "responses": [
+        {
+          "fixture": "http/J3-start-stop/start-while-running.request.json",
+          "shape": {
+            "error": "\"Server is already running\"",
+            "success": "false"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J3-start-stop/start.request.json",
+          "shape": {
+            "message": "\"Server started successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J3b-exit-code/start.request.json",
+          "shape": {
+            "message": "\"Server started successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J3c-start-missing-path/start-without-serverpath.request.json",
+          "shape": {
+            "error": "\"Server path is required\"",
+            "success": "false"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J3d-restart/start.request.json",
+          "shape": {
+            "message": "\"Server started successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-launch/start-from-ui-draft-mtp.request.json",
+          "shape": {
+            "message": "\"Server started successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-launch/start-from-ui.request.json",
+          "shape": {
+            "message": "\"Server started successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-log-cap/start-log-flood.request.json",
+          "shape": {
+            "message": "\"Server started successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "shape": {
+            "message": "\"Server started successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "shape": {
+            "message": "\"Server started successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J6-corpus-smoke/start-from-ui-config-3.request.json",
+          "shape": {
+            "message": "\"Server started successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "ws/J5-ui-launch/launch-attempts.json",
+          "shape": {
+            "blockedWith": null,
+            "statusRecordedByCdp": 200
+          },
+          "status": 200,
+          "statusEvidence": "ws/J5-ui-launch/launch-attempts.json"
+        },
+        {
+          "fixture": "ws/J5-ui-launch/launch-attempts.json",
+          "shape": {
+            "blockedWith": null,
+            "statusRecordedByCdp": 200
+          },
+          "status": 200,
+          "statusEvidence": "ws/J5-ui-launch/launch-attempts.json"
+        }
+      ],
+      "statusesRecorded": [
+        200
+      ]
+    },
+    "POST /stop": {
+      "builtByThePage": false,
+      "requestBodyFields": [],
+      "requestFixtures": [
+        "http/J3-start-stop/stop.request.json",
+        "http/J3c-start-missing-path/stop-while-idle.request.json",
+        "http/J3d-restart/stop-after-restart.request.json",
+        "http/J4-launch-presets/stop-after-default-port.request.json",
+        "http/J4-launch-presets/stop-after-explicit-port.request.json",
+        "http/J4b-ui-presets-launch/stop-after-presets-ui.request.json",
+        "http/J5-ui-cadence/stop-after-cadence.request.json",
+        "http/J5-ui-launch/start-from-ui-draft-mtp-stop-first.request.json",
+        "http/J5-ui-launch/stop-after-ui-launch.request.json",
+        "http/J5-ui-log-cap/stop-after-log-flood.request.json",
+        "http/J5-ui-log-cap/stop-from-driver.request.json",
+        "http/J6-corpus-smoke/stop-after-corpus-launches.request.json",
+        "http/J6-corpus-smoke/stop-between-corpus-launches-1.request.json",
+        "http/J6-corpus-smoke/stop-between-corpus-launches-2.request.json"
+      ],
+      "requestsRecorded": 14,
+      "responses": [
+        {
+          "fixture": "http/J3-start-stop/stop.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J3c-start-missing-path/stop-while-idle.request.json",
+          "shape": {
+            "error": "\"No server is currently running\"",
+            "success": "false"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J3d-restart/stop-after-restart.request.json",
+          "shape": {
+            "error": "\"No server is currently running\"",
+            "success": "false"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J4-launch-presets/stop-after-default-port.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J4-launch-presets/stop-after-explicit-port.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J4b-ui-presets-launch/stop-after-presets-ui.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-cadence/stop-after-cadence.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-launch/start-from-ui-draft-mtp-stop-first.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-launch/stop-after-ui-launch.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-log-cap/stop-after-log-flood.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J5-ui-log-cap/stop-from-driver.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J6-corpus-smoke/stop-after-corpus-launches.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J6-corpus-smoke/stop-between-corpus-launches-1.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        },
+        {
+          "fixture": "http/J6-corpus-smoke/stop-between-corpus-launches-2.request.json",
+          "shape": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "status": {
+            "__gap": true,
+            "reason": "the recording stores the response bytes only; the status line was not captured"
+          },
+          "statusEvidence": null
+        }
+      ],
+      "statusesRecorded": []
+    }
+  },
+  "rule": "derived from fixtures/** recordings only; no app source was read (plan.md §2 Phase 3 (b))",
+  "settingsFileEffect": [
+    {
+      "exists": true,
+      "fixture": "ini/J1-settings/settings.after-with-port.json",
+      "kind": "with-port",
+      "value": {
+        "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+        "serverPort": 7838
+      }
+    },
+    {
+      "exists": true,
+      "fixture": "ini/J1-settings/settings.after-without-port.json",
+      "kind": "without-port",
+      "value": {
+        "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+        "serverPort": 8080
+      }
+    }
+  ]
+}

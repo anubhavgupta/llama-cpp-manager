@@ -1,0 +1,132 @@
+{
+  "absentEvents": [
+    {
+      "event": "server-started",
+      "fact": "no emit site named server-started exists in server.js (emitted events found: server-ended, server-error, log-stream)"
+    }
+  ],
+  "artifact": "socket-contract",
+  "clientListeners": [
+    {
+      "event": "connect",
+      "handler": "() => { console.log('Connected to WebSocket server for log streaming'); showOutput('Connected to server for real-time logging'); }",
+      "line": 903
+    },
+    {
+      "event": "log-stream",
+      "handler": "(data) => { // Stream logs to output box if (data && data.data) { showOutput(data.data.trim()); } }",
+      "line": 908
+    },
+    {
+      "event": "server-ended",
+      "handler": "(data) => { console.log('Server process ended:', data.message); showOutput('Server process has ended'); updateStatus(false); updateButtonStates(false); }",
+      "line": 915
+    },
+    {
+      "event": "server-error",
+      "handler": "(data) => { console.error('Server error:', data.message); showOutput('Server error: ' + data.message); }",
+      "line": 922
+    },
+    {
+      "event": "disconnect",
+      "handler": "() => { console.log('Disconnected from WebSocket server'); showOutput('Disconnected from server for real-time logging'); }",
+      "line": 927
+    }
+  ],
+  "clientToServer": {
+    "customEmits": []
+  },
+  "connectionHandlers": {
+    "connectedClientsOps": [
+      {
+        "line": 519,
+        "op": "push"
+      },
+      {
+        "line": 524,
+        "op": "indexOf"
+      },
+      {
+        "line": 526,
+        "op": "splice"
+      }
+    ],
+    "handlers": [
+      {
+        "body": "(socket) => { console.log('Client connected for log streaming'); connectedClients.push(socket); // Remove client when disconnected socket.on('disconnect', () => { console.log('Client disconnected from log streaming'); c…",
+        "event": "connection",
+        "line": 517
+      },
+      {
+        "body": "() => { console.log('Client disconnected from log streaming'); const index = connectedClients.indexOf(socket); if (index > -1) { connectedClients.splice(index, 1); } }",
+        "event": "disconnect",
+        "line": 522
+      }
+    ],
+    "line": 517
+  },
+  "derivation": "static",
+  "generatedBy": "tools/parity/spec-static.js",
+  "schemaVersion": 1,
+  "serverToClient": [
+    {
+      "emitSites": [
+        "server.js:308",
+        "server.js:468",
+        "server.js:633"
+      ],
+      "emitTarget": "connectedClients.forEach(client => client.emit(...))",
+      "event": "server-ended",
+      "payloadKeys": [
+        "message"
+      ],
+      "payloadText": "{ message: 'Server process has ended' }"
+    },
+    {
+      "emitSites": [
+        "server.js:317",
+        "server.js:477",
+        "server.js:642"
+      ],
+      "emitTarget": "connectedClients.forEach(client => client.emit(...))",
+      "event": "server-error",
+      "payloadKeys": [
+        "message"
+      ],
+      "payloadText": "{ message: 'Failed to start server: ' + error.message }"
+    },
+    {
+      "emitSites": [
+        "server.js:328",
+        "server.js:339",
+        "server.js:488",
+        "server.js:499",
+        "server.js:653",
+        "server.js:664"
+      ],
+      "emitTarget": "connectedClients.forEach(client => client.emit(...))",
+      "event": "log-stream",
+      "payloadKeys": [
+        "type",
+        "data"
+      ],
+      "payloadText": "{ type: 'stdout', data: logData }"
+    }
+  ],
+  "sources": [
+    {
+      "file": "git:parity-baseline:server.js",
+      "sha256": "aad4000f55f086fd1fbfd843df67c291348aa01e47b43c21c5d76b964385c210"
+    },
+    {
+      "file": "git:parity-baseline:public/script.js",
+      "sha256": "cc866fbbffafb80f960587fb617a36340124766dd77effb9e40992cc73f8e678"
+    }
+  ],
+  "transport": {
+    "clientConnect": "io()",
+    "ioCreation": "require('socket.io')(httpServer, { cors: { origin: \"*\" } })",
+    "ioOptions": "{ cors: { origin: \"*\" } }",
+    "origin": "\"*\""
+  }
+}

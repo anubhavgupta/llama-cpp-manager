@@ -1,0 +1,139 @@
+{
+  "artifact": "storage-schema",
+  "derivation": "static",
+  "generatedBy": "tools/parity/spec-static.js",
+  "insertionOrder": {
+    "iniIteration": [
+      {
+        "arg": "configs",
+        "call": "Object.entries",
+        "line": 697
+      }
+    ],
+    "note": "ini section order follows the parsed object; the rendered config list is sorted separately",
+    "renderListSort": [
+      {
+        "call": ".sort()",
+        "line": 1005,
+        "target": "configNames"
+      }
+    ]
+  },
+  "persistedFieldCount": 36,
+  "persistedFields": [
+    "serverPath",
+    "modelPath",
+    "ngl",
+    "threads",
+    "temp",
+    "topK",
+    "topP",
+    "minP",
+    "repeatPenalty",
+    "presencePenalty",
+    "parallel",
+    "loadMode",
+    "swaFull",
+    "backendSampling",
+    "contextSize",
+    "nCpuMoe",
+    "cpuMoe",
+    "ctkEnable",
+    "contextTokenKey",
+    "contextTokenValue",
+    "fastAttention",
+    "jinja",
+    "verbose",
+    "noKvOffload",
+    "noMmprojOffload",
+    "cacheRam",
+    "speculationType",
+    "ngramMod",
+    "specDraftNMax",
+    "reasoning",
+    "loadCustomChatTemplate",
+    "chatTemplateKwargs",
+    "draftModelPath",
+    "ngld",
+    "ctkd",
+    "ctvd"
+  ],
+  "schemaVersion": 1,
+  "settingsObjectKeys": [
+    {
+      "keys": [
+        "serverPort"
+      ],
+      "line": 76,
+      "where": "module-level settings object"
+    },
+    {
+      "keys": [],
+      "line": 1524,
+      "spread": true,
+      "where": "openSettingsDialog merge"
+    }
+  ],
+  "sites": {
+    "read": [
+      {
+        "key": "llamaCppConfigs",
+        "sites": [
+          {
+            "line": 185,
+            "variable": null
+          },
+          {
+            "line": 681,
+            "variable": null
+          },
+          {
+            "line": 1211,
+            "variable": null
+          }
+        ]
+      },
+      {
+        "key": "llamaCppSettings",
+        "sites": [
+          {
+            "line": 170,
+            "variable": null
+          }
+        ]
+      }
+    ],
+    "written": [
+      {
+        "key": "llamaCppConfigs",
+        "sites": [
+          {
+            "line": 196,
+            "variable": "JSON.stringify(configurations)"
+          }
+        ]
+      },
+      {
+        "key": "llamaCppSettings",
+        "sites": [
+          {
+            "line": 180,
+            "variable": "JSON.stringify(settings)"
+          }
+        ]
+      }
+    ]
+  },
+  "sources": [
+    {
+      "file": "git:parity-baseline:public/script.js",
+      "sha256": "cc866fbbffafb80f960587fb617a36340124766dd77effb9e40992cc73f8e678"
+    }
+  ],
+  "writeIsFreshLiteral": {
+    "evidence": [
+      "public/script.js:216"
+    ],
+    "fact": "saveCurrentValues assigns a brand-new object literal, so keys outside the persisted set are dropped when that configuration is saved again (Q16)"
+  }
+}

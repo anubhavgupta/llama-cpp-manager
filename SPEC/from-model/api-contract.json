@@ -1,0 +1,135 @@
+{
+  "artifact": "api-contract",
+  "schemaVersion": 1,
+  "derivation": "model",
+  "derivedBy": "independent model pass (c): fresh-context read of git:parity-baseline:server.js only. No fixture and no other derivation was consulted.",
+  "sources": ["git:parity-baseline:server.js"],
+  "server": {
+    "framework": "express 4 + http.createServer(app) + socket.io on the same httpServer",
+    "listenPort": 7837,
+    "listenPortNote": "const PORT = 7837 is hard-coded; settings.serverPort never changes it (Q11)",
+    "middleware": ["express.static('public')", "express.json()", "express.urlencoded({ extended: true })"],
+    "defaultPortConstant": "DEFAULT_PORT = 8080 (module level, top of file)",
+    "bodyParsing": "JSON body parser is installed, so a malformed JSON body surfaces as an express 400 HTML error rather than app JSON",
+    "notARoute": [
+      { "path": "/swagger.json", "servedBy": "express.static('public') reading public/swagger.json", "note": "the hand-authored OpenAPI doc is a static asset, so its content is not the runtime contract of the handlers" },
+      { "path": "/restart with GET", "servedBy": "no handler registered for that method", "note": "express default 404 HTML error page, not app JSON (Q23 addendum)" }
+    ]
+  },
+  "routes": [
+    {
+      "method": "GET", "path": "/", "registrationOrder": 1,
+      "responses": [{ "status": 200, "kind": "file", "body": "public/index.html", "condition": "always (res.sendFile)" }]
+    },
+    {
+      "method": "GET", "path": "/swagger", "registrationOrder": 2,
+      "responses": [{ "status": 200, "kind": "file", "body": "public/swagger.html", "condition": "always (res.sendFile)" }]
+    },
+    {
+      "method": "POST", "path": "/start", "registrationOrder": 3,
+      "requestBody": { "serverPath": "string, required", "args": "string[], defaults to [] when absent" },
+      "responses": [
+        { "status": 400, "body": { "success": false, "error": "Server path is required" }, "condition": "if (!serverPath)" },
+        { "status": 200, "body": { "success": false, "error": "Server is already running" }, "condition": "if (runningProcess) - a 200 with success:false, Q3" },
+        { "status": 200, "body": { "success": true, "message": "Server started successfully" }, "condition": "spawn armed without throwing" },
+        { "status": 500, "body": { "success": false, "error": "Failed to start server: <error.message>" }, "condition": "catch around the spawn block" }
+      ],
+      "sideEffects": [
+        "lastLaunchConfig = { serverPath, args } is written BEFORE the spawn attempt and only on the not-already-running path",
+        "console.log('Starting server with args:', args)",
+        "spawn(serverPath, args, { stdio: 'pipe' })",
+        "close handler: console.log('Server process exited with code ' + code), runningProcess = null, emit server-ended to every connected client",
+        "error handler: console.error('Failed to start process: ...'), runningProcess = null, emit server-error",
+        "stdout/stderr data handlers: console.log('STDOUT: '/'STDERR: ' + chunk) then emit log-stream { type, data: chunk.toString() }"
+      ]
+    },
+    {
+      "method": "POST", "path": "/stop", "registrationOrder": 4,
+      "requestBody": { "none": "the client sends no body" },
+      "responses": [
+        { "status": 200, "body": { "success": false, "error": "No server is currently running" }, "condition": "if (!runningProcess)" },
+        { "status": 200, "body": { "success": true, "message": "Server stopped successfully" }, "condition": "kill path completed" },
+        { "status": 500, "body": { "success": false, "error": "Failed to stop server: <error.message>" }, "condition": "catch" }
+      ],
+      "sideEffects": [
+        "runningProcess.kill('SIGTERM'), then setTimeout(1000) whose body re-reads the module-level runningProcess",
+        "runningProcess = null runs synchronously, so the armed timer can never SIGKILL the process /stop was called for, and it does target a child spawned within that second (Q24)"
+      ]
+    },
+    {
+      "method": "GET", "path": "/models", "registrationOrder": 5,
+      "responses": [
+        { "status": 200, "body": { "success": true, "models": "array of { name, path, relativePath, mmprojFile }" }, "condition": "always" },
+        { "status": 500, "body": { "success": false, "error": "Failed to fetch models: <error.message>" }, "condition": "catch (findGGUFFiles swallows its own errors, so this is near-unreachable)" }
+      ],
+      "sideEffects": [
+        "model root comes from settings.modelsDirectory, else process.env.MODEL_PATH, else C:\\models",
+        "recursive walk; files starting with mmproj are skipped as candidates; the first same-directory mmproj* file becomes that model's mmprojFile",
+        "relativePath is path.relative(basePath, itemPath), so the separator style is the platform's"
+      ]
+    },
+    {
+      "method": "GET", "path": "/metrics", "registrationOrder": 6,
+      "responses": [
+        {
+          "status": 200,
+          "body": { "cpu": "number", "ram": "number", "gpu": "number", "vram": "number", "vramUsage": "string `${total - free}/${total}`" },
+          "condition": "always; the five keys are the whole body, in that key order, with no success flag",
+          "note": "gpu/vram come from nvidia-smi on win32 and from Math.random() elsewhere or on failure (Q6); vramUsage is a string built from the two numbers, so its formatting is part of the contract"
+        }
+      ]
+    },
+    {
+      "method": "GET", "path": "/status", "registrationOrder": 7,
+      "responses": [{ "status": 200, "body": { "running": "boolean !!runningProcess && !runningProcess.killed" }, "condition": "always" }]
+    },
+    {
+      "method": "POST", "path": "/restart", "registrationOrder": 8,
+      "responses": [
+        { "status": 400, "body": { "success": false, "error": "No previous configuration found to restart from" }, "condition": "if (!lastLaunchConfig) - lastLaunchConfig is memory only, so a manager restart produces 400 (Q4)" },
+        { "status": 500, "body": { "success": false, "error": "Failed to stop server: <error.message>" }, "condition": "catch around the stop step" },
+        { "status": 200, "body": { "success": true, "message": "Server restarted successfully" }, "condition": "spawn armed without throwing" },
+        { "status": 500, "body": { "success": false, "error": "Failed to restart server: <error.message>" }, "condition": "catch around the spawn block" }
+      ],
+      "sideEffects": [
+        "re-kills with SIGTERM + the same 1 s timer, nulls runningProcess, then spawns lastLaunchConfig again",
+        "the killed child's close handler later nulls the module-level runningProcess that now points at the replacement, so /status settles running:false (Q23)"
+      ]
+    },
+    {
+      "method": "GET", "path": "/settings", "registrationOrder": 9,
+      "responses": [
+        { "status": 200, "body": { "success": true, "settings": "<parsed settings.json>" }, "condition": "settings.json readable and valid JSON" },
+        { "status": 200, "body": { "success": true, "settings": { "modelsDirectory": "process.env.MODEL_PATH || the literal C:\\\\Users\\\\anubh\\\\.lmstudio\\\\models", "serverPort": 8080 } }, "condition": "catch - any read or parse failure answers 200 success:true with the built-in defaults" }
+      ]
+    },
+    {
+      "method": "POST", "path": "/settings", "registrationOrder": 10,
+      "requestBody": { "modelsDirectory": "string, required", "serverPort": "optional" },
+      "responses": [
+        { "status": 400, "body": { "success": false, "error": "Models directory path is required" }, "condition": "if (!modelsDirectory)" },
+        { "status": 200, "body": { "success": true, "message": "Settings saved successfully" }, "condition": "write completed" },
+        { "status": 500, "body": { "success": false, "error": "Failed to save settings: <error.message>" }, "condition": "catch - fs.access(modelsDirectory) failing lands here" }
+      ],
+      "sideEffects": [
+        "writes settings.json as JSON.stringify({ modelsDirectory, serverPort }, null, 2) - exactly two keys, so any other key in the file is dropped",
+        "Q2 TDZ: the 'preserve existing settings' read uses settingsPath before its const declaration, the ReferenceError is swallowed by the empty catch, so an omitted serverPort is persisted as 8080 regardless of what the file said"
+      ]
+    },
+    {
+      "method": "POST", "path": "/launch-presets", "registrationOrder": 11,
+      "requestBody": { "presets": "string (the whole ini), required", "serverPath": "string, required", "serverPort": "optional" },
+      "responses": [
+        { "status": 400, "body": { "success": false, "error": "Presets content is required" }, "condition": "if (!presets)" },
+        { "status": 400, "body": { "success": false, "error": "Server path not found" }, "condition": "if (!serverPath) - evaluated AFTER the ini file has already been written", "note": "the file is written before this guard, so a 400 still rewrites models-preset.ini" },
+        { "status": 200, "body": { "success": true, "message": "Server started with model presets successfully", "presetsFile": "<absolute path to models-preset.ini>" }, "condition": "spawn armed" },
+        { "status": 500, "body": { "success": false, "error": "Failed to start server with presets: <error.message>" }, "condition": "catch, preceded by console.error('Error launching server with presets:', error)" }
+      ],
+      "sideEffects": [
+        "writes <app dir>/models-preset.ini with the posted bytes verbatim (no reformatting)",
+        "spawns its own argv: --models-preset <file> --host 0.0.0.0 --port (serverPort || 8080) (Q5)",
+        "overwrites runningProcess without checking whether a child is already running, and never touches lastLaunchConfig - so /restart after /launch-presets still answers 400"
+      ]
+    }
+  ]
+}

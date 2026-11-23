@@ -1,0 +1,508 @@
+{
+  "artifact": "api-contract",
+  "derivation": "static",
+  "generatedBy": "tools/parity/spec-static.js",
+  "nonRoutes": [
+    {
+      "evidence": [
+        "public/script.js:17",
+        "public/script.js:18",
+        "public/script.js:19"
+      ],
+      "path": "/swagger.json",
+      "why": "no app.get registration exists; express.static(public) serves the checked-in file"
+    },
+    {
+      "evidence": [
+        "server.js:425"
+      ],
+      "path": "GET /restart",
+      "why": "only app.post('/restart') is registered, so express answers the default 404 page"
+    }
+  ],
+  "routes": [
+    {
+      "handlerAsync": false,
+      "line": 266,
+      "method": "GET",
+      "path": "/",
+      "registrationOrder": 1,
+      "responses": [
+        {
+          "bodyText": "path.join(__dirname, 'public', 'index.html')",
+          "condition": [],
+          "kind": "file",
+          "line": 267,
+          "status": 200,
+          "statusExplicit": false
+        }
+      ],
+      "sideEffects": []
+    },
+    {
+      "handlerAsync": false,
+      "line": 271,
+      "method": "GET",
+      "path": "/swagger",
+      "registrationOrder": 2,
+      "responses": [
+        {
+          "bodyText": "path.join(__dirname, 'public', 'swagger.html')",
+          "condition": [],
+          "kind": "file",
+          "line": 272,
+          "status": 200,
+          "statusExplicit": false
+        }
+      ],
+      "sideEffects": []
+    },
+    {
+      "handlerAsync": false,
+      "line": 276,
+      "method": "POST",
+      "path": "/start",
+      "registrationOrder": 3,
+      "responses": [
+        {
+          "body": {
+            "error": "\"Server path is required\"",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: 'Server path is required' }",
+          "condition": [
+            "if (!serverPath)"
+          ],
+          "line": 280,
+          "status": 400,
+          "statusExplicit": true
+        },
+        {
+          "body": {
+            "error": "\"Server is already running\"",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: 'Server is already running' }",
+          "condition": [
+            "if (runningProcess)"
+          ],
+          "line": 288,
+          "status": 200,
+          "statusExplicit": false
+        },
+        {
+          "body": {
+            "message": "\"Server started successfully\"",
+            "success": "true"
+          },
+          "bodyText": "{ success: true, message: 'Server started successfully' }",
+          "condition": [],
+          "line": 344,
+          "status": 200,
+          "statusExplicit": false
+        },
+        {
+          "body": {
+            "error": "`Failed to start server: ${error.message}`",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: `Failed to start server: ${error.message}` }",
+          "condition": [],
+          "line": 349,
+          "status": 500,
+          "statusExplicit": true
+        }
+      ],
+      "sideEffects": []
+    },
+    {
+      "handlerAsync": false,
+      "line": 357,
+      "method": "POST",
+      "path": "/stop",
+      "registrationOrder": 4,
+      "responses": [
+        {
+          "body": {
+            "error": "\"No server is currently running\"",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: 'No server is currently running' }",
+          "condition": [
+            "if (!runningProcess)"
+          ],
+          "line": 359,
+          "status": 200,
+          "statusExplicit": false
+        },
+        {
+          "body": {
+            "message": "\"Server stopped successfully\"",
+            "success": "true"
+          },
+          "bodyText": "{ success: true, message: 'Server stopped successfully' }",
+          "condition": [],
+          "line": 377,
+          "status": 200,
+          "statusExplicit": false
+        },
+        {
+          "body": {
+            "error": "`Failed to stop server: ${error.message}`",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: `Failed to stop server: ${error.message}` }",
+          "condition": [],
+          "line": 382,
+          "status": 500,
+          "statusExplicit": true
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "kill",
+          "line": 369,
+          "signal": "SIGTERM"
+        },
+        {
+          "delay": 1000,
+          "kind": "timer",
+          "line": 370
+        },
+        {
+          "kind": "kill",
+          "line": 372,
+          "signal": "SIGKILL"
+        }
+      ]
+    },
+    {
+      "handlerAsync": true,
+      "line": 390,
+      "method": "GET",
+      "path": "/models",
+      "registrationOrder": 5,
+      "responses": [
+        {
+          "body": {
+            "models": "models",
+            "success": "true"
+          },
+          "bodyText": "{ success: true, models: models }",
+          "condition": [],
+          "line": 393,
+          "status": 200,
+          "statusExplicit": false
+        },
+        {
+          "body": {
+            "error": "'Failed to fetch models: ' + error.message",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: 'Failed to fetch models: ' + error.message }",
+          "condition": [],
+          "line": 398,
+          "status": 500,
+          "statusExplicit": true
+        }
+      ],
+      "sideEffects": []
+    },
+    {
+      "handlerAsync": false,
+      "line": 406,
+      "method": "GET",
+      "path": "/metrics",
+      "registrationOrder": 6,
+      "responses": [
+        {
+          "body": {
+            "cpu": "systemMetrics.cpu.usage",
+            "gpu": "systemMetrics.gpu.usage",
+            "ram": "systemMetrics.ram.usage",
+            "vram": "systemMetrics.vram.usage",
+            "vramUsage": "`${systemMetrics.vram.total - systemMetrics.vram.free}/${systemMetrics.vram.total}`"
+          },
+          "bodyText": "{ cpu: systemMetrics.cpu.usage, ram: systemMetrics.ram.usage, gpu: systemMetrics.gpu.usage, vram: systemMetrics.vram.usage, vramUsage: `${systemMetrics.vram.total - systemMetrics.vram.free}/${systemMetrics.vram.total}`, }",
+          "condition": [],
+          "line": 408,
+          "status": 200,
+          "statusExplicit": false
+        }
+      ],
+      "sideEffects": []
+    },
+    {
+      "handlerAsync": false,
+      "line": 418,
+      "method": "GET",
+      "path": "/status",
+      "registrationOrder": 7,
+      "responses": [
+        {
+          "body": {
+            "running": "!!runningProcess && !runningProcess.killed"
+          },
+          "bodyText": "{ running: !!runningProcess && !runningProcess.killed }",
+          "condition": [],
+          "line": 419,
+          "status": 200,
+          "statusExplicit": false
+        }
+      ],
+      "sideEffects": []
+    },
+    {
+      "handlerAsync": false,
+      "line": 425,
+      "method": "POST",
+      "path": "/restart",
+      "registrationOrder": 8,
+      "responses": [
+        {
+          "body": {
+            "error": "\"No previous configuration found to restart from\"",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: 'No previous configuration found to restart from' }",
+          "condition": [
+            "if (!lastLaunchConfig)"
+          ],
+          "line": 428,
+          "status": 400,
+          "statusExplicit": true
+        },
+        {
+          "body": {
+            "error": "`Failed to stop server: ${error.message}`",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: `Failed to stop server: ${error.message}` }",
+          "condition": [
+            "if (runningProcess)"
+          ],
+          "line": 449,
+          "status": 500,
+          "statusExplicit": true
+        },
+        {
+          "body": {
+            "message": "\"Server restarted successfully\"",
+            "success": "true"
+          },
+          "bodyText": "{ success: true, message: 'Server restarted successfully' }",
+          "condition": [],
+          "line": 504,
+          "status": 200,
+          "statusExplicit": false
+        },
+        {
+          "body": {
+            "error": "`Failed to restart server: ${error.message}`",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: `Failed to restart server: ${error.message}` }",
+          "condition": [],
+          "line": 509,
+          "status": 500,
+          "statusExplicit": true
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "kill",
+          "line": 439,
+          "signal": "SIGTERM"
+        },
+        {
+          "delay": 1000,
+          "kind": "timer",
+          "line": 440
+        },
+        {
+          "kind": "kill",
+          "line": 442,
+          "signal": "SIGKILL"
+        }
+      ]
+    },
+    {
+      "handlerAsync": false,
+      "line": 537,
+      "method": "GET",
+      "path": "/settings",
+      "registrationOrder": 9,
+      "responses": [
+        {
+          "body": {
+            "settings": "settings",
+            "success": "true"
+          },
+          "bodyText": "{ success: true, settings }",
+          "condition": [],
+          "line": 543,
+          "status": 200,
+          "statusExplicit": false
+        },
+        {
+          "body": {
+            "settings": "{ modelsDirectory: process.env.MODEL_PATH || \"C:\\\\Users\\\\anubh\\\\.lmstudio\\\\models\", serverPort: DEFAULT_PORT }",
+            "success": "true"
+          },
+          "bodyText": "{ success: true, settings: { modelsDirectory: process.env.MODEL_PATH || \"C:\\\\Users\\\\anubh\\\\.lmstudio\\\\models\", serverPort: DEFAULT_PORT } }",
+          "condition": [],
+          "line": 547,
+          "status": 200,
+          "statusExplicit": false
+        }
+      ],
+      "sideEffects": []
+    },
+    {
+      "handlerAsync": true,
+      "line": 552,
+      "method": "POST",
+      "path": "/settings",
+      "registrationOrder": 10,
+      "responses": [
+        {
+          "body": {
+            "error": "\"Models directory path is required\"",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: 'Models directory path is required' }",
+          "condition": [
+            "if (!modelsDirectory)"
+          ],
+          "line": 556,
+          "status": 400,
+          "statusExplicit": true
+        },
+        {
+          "body": {
+            "message": "\"Settings saved successfully\"",
+            "success": "true"
+          },
+          "bodyText": "{ success: true, message: 'Settings saved successfully' }",
+          "condition": [],
+          "line": 578,
+          "status": 200,
+          "statusExplicit": false
+        },
+        {
+          "body": {
+            "error": "`Failed to save settings: ${error.message}`",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: `Failed to save settings: ${error.message}` }",
+          "condition": [],
+          "line": 583,
+          "status": 500,
+          "statusExplicit": true
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "writeFile",
+          "line": 576,
+          "target": "settingsPath"
+        }
+      ]
+    },
+    {
+      "handlerAsync": true,
+      "line": 591,
+      "method": "POST",
+      "path": "/launch-presets",
+      "registrationOrder": 11,
+      "responses": [
+        {
+          "body": {
+            "error": "\"Presets content is required\"",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: 'Presets content is required' }",
+          "condition": [
+            "if (!presets)"
+          ],
+          "line": 596,
+          "status": 400,
+          "statusExplicit": true
+        },
+        {
+          "body": {
+            "error": "\"Server path not found\"",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: 'Server path not found' }",
+          "condition": [
+            "if (!serverPath)"
+          ],
+          "line": 609,
+          "status": 400,
+          "statusExplicit": true
+        },
+        {
+          "body": {
+            "message": "\"Server started with model presets successfully\"",
+            "presetsFile": "presetsFilePath",
+            "success": "true"
+          },
+          "bodyText": "{ success: true, message: 'Server started with model presets successfully', presetsFile: presetsFilePath }",
+          "condition": [],
+          "line": 669,
+          "status": 200,
+          "statusExplicit": false
+        },
+        {
+          "body": {
+            "error": "`Failed to start server with presets: ${error.message}`",
+            "success": "false"
+          },
+          "bodyText": "{ success: false, error: `Failed to start server with presets: ${error.message}` }",
+          "condition": [],
+          "line": 676,
+          "status": 500,
+          "statusExplicit": true
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "writeFile",
+          "line": 604,
+          "target": "presetsFilePath"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 1,
+  "server": {
+    "defaultPortConstant": {
+      "line": 1,
+      "name": "DEFAULT_PORT",
+      "value": 8080
+    },
+    "listen": [
+      {
+        "line": 532,
+        "port": "PORT"
+      }
+    ],
+    "middleware": [
+      "express.static('public')",
+      "express.json()",
+      "express.urlencoded({ extended: true })"
+    ],
+    "portConstant": {
+      "line": 11,
+      "name": "PORT",
+      "value": 7837
+    }
+  },
+  "sources": [
+    {
+      "file": "git:parity-baseline:server.js",
+      "sha256": "aad4000f55f086fd1fbfd843df67c291348aa01e47b43c21c5d76b964385c210"
+    }
+  ]
+}

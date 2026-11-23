@@ -1,0 +1,318 @@
+{
+  "absentEvents": {
+    "resolution": "agree",
+    "sources": [
+      "a",
+      "c"
+    ],
+    "value": [
+      "server-started"
+    ]
+  },
+  "artifact": "socket-contract",
+  "endedPayloads": [
+    {
+      "fixture": "ws/J3-start-stop/events.json",
+      "payload": {
+        "message": "Server process has ended"
+      }
+    },
+    {
+      "fixture": "ws/J3b-exit-code/events.json",
+      "payload": {
+        "message": "Server process has ended"
+      }
+    }
+  ],
+  "events": [
+    {
+      "emitted": {
+        "note": "observed on 3 recorded connection(s)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": null
+      },
+      "event": "connect",
+      "payloadKeys": {
+        "resolution": "unstated",
+        "sources": [],
+        "value": null
+      }
+    },
+    {
+      "emitted": {
+        "note": "observed on 3 recorded connection(s)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": null
+      },
+      "event": "disconnect",
+      "payloadKeys": {
+        "resolution": "unstated",
+        "sources": [],
+        "value": null
+      }
+    },
+    {
+      "emitted": {
+        "note": "observed on 3 recorded connection(s)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": true
+      },
+      "event": "log-stream",
+      "payloadKeys": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": [
+          "data",
+          "type"
+        ]
+      }
+    },
+    {
+      "emitted": {
+        "note": "observed on 3 recorded connection(s)",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": true
+      },
+      "event": "server-ended",
+      "payloadKeys": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": [
+          "message"
+        ]
+      }
+    },
+    {
+      "emitted": {
+        "note": "not observed on any recorded connection",
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": true
+      },
+      "event": "server-error",
+      "payloadKeys": {
+        "resolution": "agree",
+        "sources": [
+          "a",
+          "c"
+        ],
+        "value": [
+          "message"
+        ]
+      }
+    }
+  ],
+  "gaps": [
+    {
+      "__gap": true,
+      "reason": "socket.io reconnection behaviour: no recording disconnects and reconnects the page"
+    },
+    {
+      "__gap": true,
+      "reason": "whether the client re-joins split log payloads is invisible: the recordings show pane line counts and payload sizes, not the app-side handler"
+    },
+    {
+      "__gap": true,
+      "reason": "event emission order inside the server is only observable as it arrived on one recorded socket"
+    },
+    {
+      "__gap": true,
+      "reason": "the socket path/namespace string is recorded as the page URL, not as the server-side namespace"
+    }
+  ],
+  "generatedBy": "tools/parity/spec-reconcile.js",
+  "logStreamChunks": {
+    "evidence": [
+      "ws/J3-start-stop/events.json",
+      "ws/J3b-exit-code/events.json",
+      "ws/J5-ui-log-cap/events.json"
+    ],
+    "note": {
+      "chunkByteSizes": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        19,
+        28,
+        33,
+        34,
+        47,
+        51,
+        52,
+        100
+      ],
+      "keys": [
+        "dataBase64",
+        "dataLength",
+        "type"
+      ]
+    },
+    "resolution": "runtime-note",
+    "sources": [],
+    "value": null
+  },
+  "modelPaneRules": {
+    "autoScroll": "modelOutput.scrollTop = modelOutput.scrollHeight after every entry",
+    "cap": "keep the last 1000 entries of textContent.split('\\n')",
+    "entryFormat": "[<new Date().toISOString()>] <message>\\n appended to #modelOutput.textContent",
+    "initialText": "the markup ships with 'No output yet...' inside #modelOutput, so the first real entry is appended after that line"
+  },
+  "paneBehaviour": {
+    "chunkBoundary": {
+      "blankPayloads": 1,
+      "morePaneLinesThanSourceLines": true,
+      "note": "Default 7-byte chunks: each log-stream payload becomes one pane line after .trim(), so N source lines become many pane lines and whitespace-only payloads become blank lines. The exact pane line count follows socket coalescing and is shape-compared; the payload bytes are golden in ws/J5-ui-log-cap/events.json.",
+      "paneBlankLines": 1,
+      "paneLines": 73,
+      "somePayloadsAreWhitespaceOnly": true,
+      "sourceLines": 9
+    },
+    "eventIdentity": {
+      "connection": "J3d-restart-c1",
+      "eventNames": [
+        "connect",
+        "disconnect",
+        "log-stream",
+        "server-ended"
+      ],
+      "firstEvent": "connect",
+      "lastEvent": "disconnect",
+      "url": "http://localhost:7837"
+    },
+    "logPane": {
+      "capEvidence": {
+        "heldExactlyOneThousandEntries": true,
+        "oldestEntriesDropped": true,
+        "pinnedToBottom": true,
+        "trailingSplitElementEmpty": true
+      },
+      "elementId": "modelOutput",
+      "lineCount": 1000,
+      "note": "showOutput caps the pane at the last 1000 entries of textContent.split(\"\n\") and then pins scrollTop to scrollHeight (plan.md §9 trap 9). The page clock was frozen for the pixels, and every entry is the same --parity-repeat-line text.",
+      "repeatLine": "slot request: generated 1 token in 42 ms — parity log-cap probe line"
+    },
+    "paneTexts": {
+      "fixtures": [
+        "ws/J5-ui-log-cap/log-pane.text",
+        "ws/J5-ui-log-cap/log-pane-chunks7.text"
+      ],
+      "note": "raw pane text dumps, golden-compared by the suite"
+    },
+    "sourceLines": {
+      "note": "Line counts of the concatenated log-stream payload bytes, recorded after the fake finished streaming and before POST /stop: this journey writes every startup line to stdout, and the listening notification is the last of them. The pane side of the §9 trap 9 claim - newline loss and the per-event .trim() - is recorded by J5-ui-log-cap.",
+      "stderrSourceLines": 0,
+      "stdoutSourceLines": 9
+    }
+  },
+  "recordedConnections": [
+    {
+      "connection": "J3-start-stop-c1",
+      "counts": {
+        "connect": 1,
+        "disconnect": 1,
+        "log-stream": 64,
+        "server-ended": 1
+      },
+      "eventNames": [
+        "connect",
+        "log-stream",
+        "server-ended",
+        "disconnect"
+      ],
+      "firstEvent": "connect",
+      "fixture": "ws/J3-start-stop/events.json",
+      "lastEvent": "disconnect",
+      "url": null
+    },
+    {
+      "connection": "J3b-exit-code-c1",
+      "counts": {
+        "connect": 1,
+        "disconnect": 1,
+        "log-stream": 8,
+        "server-ended": 1
+      },
+      "eventNames": [
+        "connect",
+        "log-stream",
+        "server-ended",
+        "disconnect"
+      ],
+      "firstEvent": "connect",
+      "fixture": "ws/J3b-exit-code/events.json",
+      "lastEvent": "disconnect",
+      "url": null
+    },
+    {
+      "connection": "J5-ui-log-cap-c1",
+      "counts": {
+        "connect": 1,
+        "disconnect": 1,
+        "log-stream": 66
+      },
+      "eventNames": [
+        "connect",
+        "log-stream",
+        "disconnect"
+      ],
+      "firstEvent": "connect",
+      "fixture": "ws/J5-ui-log-cap/events.json",
+      "lastEvent": "disconnect",
+      "url": null
+    }
+  ],
+  "rule": "server→client emits, their payloads, and what the recorded sockets actually carried",
+  "schemaVersion": 1,
+  "transport": {
+    "clientConnect": {
+      "modelWording": "initWebSocket() is called only after a successful POST /start, POST /restart or POST /launch-presets response; initWebSocket() returns immediately when the module-level socket is already non-null; on a successful POST /stop the client calls socket.disconnect() and sets socket = null, so the next start reconnects; io() is called with no arguments, so the socket URL is the page origin - settings.serverPort never affects it",
+      "resolution": "static-wording",
+      "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+      "sources": [
+        "a"
+      ],
+      "value": "io()"
+    },
+    "clientHandlers": {
+      "resolution": "agree",
+      "sources": [
+        "a",
+        "c"
+      ],
+      "value": [
+        "connect",
+        "disconnect",
+        "log-stream",
+        "server-ended",
+        "server-error"
+      ]
+    }
+  }
+}

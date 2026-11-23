@@ -1,0 +1,220 @@
+{
+  "connections": [
+    {
+      "connection": "J3-start-stop-c1",
+      "counts": {
+        "connect": 1,
+        "disconnect": 1,
+        "log-stream": 64,
+        "server-ended": 1
+      },
+      "eventNames": [
+        "connect",
+        "log-stream",
+        "server-ended",
+        "disconnect"
+      ],
+      "firstEvent": "connect",
+      "fixture": "ws/J3-start-stop/events.json",
+      "lastEvent": "disconnect",
+      "url": null
+    },
+    {
+      "connection": "J3b-exit-code-c1",
+      "counts": {
+        "connect": 1,
+        "disconnect": 1,
+        "log-stream": 8,
+        "server-ended": 1
+      },
+      "eventNames": [
+        "connect",
+        "log-stream",
+        "server-ended",
+        "disconnect"
+      ],
+      "firstEvent": "connect",
+      "fixture": "ws/J3b-exit-code/events.json",
+      "lastEvent": "disconnect",
+      "url": null
+    },
+    {
+      "connection": "J5-ui-log-cap-c1",
+      "counts": {
+        "connect": 1,
+        "disconnect": 1,
+        "log-stream": 66
+      },
+      "eventNames": [
+        "connect",
+        "log-stream",
+        "disconnect"
+      ],
+      "firstEvent": "connect",
+      "fixture": "ws/J5-ui-log-cap/events.json",
+      "lastEvent": "disconnect",
+      "url": null
+    }
+  ],
+  "endedPayloads": [
+    {
+      "fixture": "ws/J3-start-stop/events.json",
+      "payload": {
+        "message": "Server process has ended"
+      }
+    },
+    {
+      "fixture": "ws/J3b-exit-code/events.json",
+      "payload": {
+        "message": "Server process has ended"
+      }
+    }
+  ],
+  "gaps": [
+    {
+      "__gap": true,
+      "reason": "socket.io reconnection behaviour: no recording disconnects and reconnects the page"
+    },
+    {
+      "__gap": true,
+      "reason": "whether the client re-joins split log payloads is invisible: the recordings show pane line counts and payload sizes, not the app-side handler"
+    },
+    {
+      "__gap": true,
+      "reason": "event emission order inside the server is only observable as it arrived on one recorded socket"
+    },
+    {
+      "__gap": true,
+      "reason": "the socket path/namespace string is recorded as the page URL, not as the server-side namespace"
+    }
+  ],
+  "generatedBy": "tools/parity/spec-runtime.js",
+  "logStreamPayload": {
+    "chunkByteSizes": [
+      1,
+      2,
+      5,
+      6,
+      7,
+      19,
+      28,
+      33,
+      34,
+      47,
+      51,
+      52,
+      100
+    ],
+    "evidence": [
+      "ws/J3-start-stop/events.json",
+      "ws/J3b-exit-code/events.json",
+      "ws/J5-ui-log-cap/events.json"
+    ],
+    "keys": [
+      "dataBase64",
+      "dataLength",
+      "type"
+    ],
+    "note": "payload bytes are recorded base64-encoded; the recordings do not decode them on the client side, so re-assembly behaviour is not observable here"
+  },
+  "managerLogs": [
+    {
+      "bytes": 0,
+      "fixture": "ws/J3-start-stop/manager.stderr.log"
+    },
+    {
+      "bytes": 2391,
+      "fixture": "ws/J3-start-stop/manager.stdout.log"
+    },
+    {
+      "bytes": 0,
+      "fixture": "ws/J3b-exit-code/manager.stderr.log"
+    },
+    {
+      "bytes": 1042,
+      "fixture": "ws/J3b-exit-code/manager.stdout.log"
+    },
+    {
+      "bytes": 0,
+      "fixture": "ws/J3d-restart/manager-2.stderr.log"
+    },
+    {
+      "bytes": 147,
+      "fixture": "ws/J3d-restart/manager-2.stdout.log"
+    },
+    {
+      "bytes": 0,
+      "fixture": "ws/J4-launch-presets/manager.stderr.log"
+    },
+    {
+      "bytes": 875,
+      "fixture": "ws/J4-launch-presets/manager.stdout.log"
+    },
+    {
+      "bytes": 826,
+      "fixture": "ws/J4b-ui-presets-launch/manager.stderr.log"
+    },
+    {
+      "bytes": 576,
+      "fixture": "ws/J4b-ui-presets-launch/manager.stdout.log"
+    }
+  ],
+  "observedEventNames": [
+    "connect",
+    "disconnect",
+    "log-stream",
+    "server-ended"
+  ],
+  "paneBehaviour": {
+    "chunkBoundary": {
+      "blankPayloads": 1,
+      "morePaneLinesThanSourceLines": true,
+      "note": "Default 7-byte chunks: each log-stream payload becomes one pane line after .trim(), so N source lines become many pane lines and whitespace-only payloads become blank lines. The exact pane line count follows socket coalescing and is shape-compared; the payload bytes are golden in ws/J5-ui-log-cap/events.json.",
+      "paneBlankLines": 1,
+      "paneLines": 73,
+      "somePayloadsAreWhitespaceOnly": true,
+      "sourceLines": 9
+    },
+    "eventIdentity": {
+      "connection": "J3d-restart-c1",
+      "eventNames": [
+        "connect",
+        "disconnect",
+        "log-stream",
+        "server-ended"
+      ],
+      "firstEvent": "connect",
+      "lastEvent": "disconnect",
+      "url": "http://localhost:7837"
+    },
+    "logPane": {
+      "capEvidence": {
+        "heldExactlyOneThousandEntries": true,
+        "oldestEntriesDropped": true,
+        "pinnedToBottom": true,
+        "trailingSplitElementEmpty": true
+      },
+      "elementId": "modelOutput",
+      "lineCount": 1000,
+      "note": "showOutput caps the pane at the last 1000 entries of textContent.split(\"\n\") and then pins scrollTop to scrollHeight (plan.md §9 trap 9). The page clock was frozen for the pixels, and every entry is the same --parity-repeat-line text.",
+      "repeatLine": "slot request: generated 1 token in 42 ms — parity log-cap probe line"
+    },
+    "paneTexts": {
+      "fixtures": [
+        "ws/J5-ui-log-cap/log-pane.text",
+        "ws/J5-ui-log-cap/log-pane-chunks7.text"
+      ],
+      "note": "raw pane text dumps, golden-compared by the suite"
+    },
+    "sourceLines": {
+      "note": "Line counts of the concatenated log-stream payload bytes, recorded after the fake finished streaming and before POST /stop: this journey writes every startup line to stdout, and the listening notification is the last of them. The pane side of the §9 trap 9 claim - newline loss and the per-event .trim() - is recorded by J5-ui-log-cap.",
+      "stderrSourceLines": 0,
+      "stdoutSourceLines": 9
+    }
+  },
+  "rule": "derived from fixtures/** recordings only; no app source was read (plan.md §2 Phase 3 (b))",
+  "serverError": {
+    "__gap": true,
+    "reason": "no recorded connection carries a server-error event; the crash journey records server-ended instead"
+  }
+}

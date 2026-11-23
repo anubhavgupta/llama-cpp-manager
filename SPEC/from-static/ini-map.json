@@ -1,0 +1,860 @@
+{
+  "artifact": "ini-map",
+  "builtBy": "launchModelPresets in the browser; the finished string is POSTed to /launch-presets, and server.js writes the body verbatim to models-preset.ini",
+  "derivation": "static",
+  "generatedBy": "tools/parity/spec-static.js",
+  "nameDivergences": [
+    {
+      "cli": "-m",
+      "evidence": [
+        "public/script.js:713"
+      ],
+      "ini": "model"
+    },
+    {
+      "cli": "-md",
+      "evidence": [
+        "public/script.js:816"
+      ],
+      "ini": "model-draft"
+    },
+    {
+      "cli": "--spec-ngram-mod-n-match",
+      "evidence": [
+        "public/script.js:838"
+      ],
+      "ini": "spec-ngram-size-n"
+    },
+    {
+      "cli": "--spec-ngram-mod-n-min",
+      "evidence": [
+        "public/script.js:839"
+      ],
+      "ini": "draft-min"
+    },
+    {
+      "cli": "--spec-ngram-mod-n-max",
+      "evidence": [
+        "public/script.js:840"
+      ],
+      "ini": "draft-max"
+    }
+  ],
+  "pairingRule": "an ini key pairs with the argv push behind an identical guard chain that prints a field in common; members of a shared chain pair by relative emission order",
+  "rows": [
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "-m",
+      "evidence": [
+        "public/script.js:713"
+      ],
+      "fields": [
+        "modelPath"
+      ],
+      "guard": "if (config.modelPath)",
+      "guardFields": [
+        "modelPath"
+      ],
+      "key": "model",
+      "line": 713,
+      "nameDivergence": true,
+      "order": 1,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.modelPath}\n"
+    },
+    {
+      "always": false,
+      "attribution": "guard",
+      "cliCounterpart": "--mmproj",
+      "evidence": [
+        "public/script.js:719"
+      ],
+      "fields": [
+        "modelPath"
+      ],
+      "guard": "if (model.path === modelPath && model.mmprojFile)",
+      "guardFields": [
+        "modelPath"
+      ],
+      "key": "mmproj",
+      "line": 719,
+      "nameDivergence": false,
+      "order": 2,
+      "pairedBy": "identical-guard-chain",
+      "value": "${model.mmprojFile}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:725"
+      ],
+      "fields": [
+        "temp"
+      ],
+      "guard": "if (config.temp !== undefined && config.temp >= 0)",
+      "guardFields": [
+        "temp"
+      ],
+      "key": "temp",
+      "line": 725,
+      "nameDivergence": null,
+      "order": 3,
+      "pairedBy": null,
+      "value": "${config.temp}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "-c",
+      "evidence": [
+        "public/script.js:729"
+      ],
+      "fields": [
+        "contextSize"
+      ],
+      "guard": "if (config.contextSize > 0)",
+      "guardFields": [
+        "contextSize"
+      ],
+      "key": "c",
+      "line": 729,
+      "nameDivergence": false,
+      "order": 4,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.contextSize.toString()}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:733"
+      ],
+      "fields": [
+        "topK"
+      ],
+      "guard": "if (config.topK !== undefined && config.topK > 0)",
+      "guardFields": [
+        "topK"
+      ],
+      "key": "top-k",
+      "line": 733,
+      "nameDivergence": null,
+      "order": 5,
+      "pairedBy": null,
+      "value": "${config.topK}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:737"
+      ],
+      "fields": [
+        "topP"
+      ],
+      "guard": "if (config.topP !== undefined && config.topP >= 0)",
+      "guardFields": [
+        "topP"
+      ],
+      "key": "top-p",
+      "line": 737,
+      "nameDivergence": null,
+      "order": 6,
+      "pairedBy": null,
+      "value": "${config.topP}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "--min-p",
+      "evidence": [
+        "public/script.js:741"
+      ],
+      "fields": [
+        "minP"
+      ],
+      "guard": "if ((!isNaN(parseFloat(config.minP)) && config.minP != \"0\") || config.minP == \"0.00\")",
+      "guardFields": [
+        "minP"
+      ],
+      "key": "min-p",
+      "line": 741,
+      "nameDivergence": false,
+      "order": 7,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.minP}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "--repeat-penalty",
+      "evidence": [
+        "public/script.js:745"
+      ],
+      "fields": [
+        "repeatPenalty"
+      ],
+      "guard": "if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != \"0\") || config.repeatPenalty == \"0.00\")",
+      "guardFields": [
+        "repeatPenalty"
+      ],
+      "key": "repeat-penalty",
+      "line": 745,
+      "nameDivergence": false,
+      "order": 8,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.repeatPenalty}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "--presence-penalty",
+      "evidence": [
+        "public/script.js:749"
+      ],
+      "fields": [
+        "presencePenalty"
+      ],
+      "guard": "if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != \"0\") || config.presencePenalty == \"0.00\")",
+      "guardFields": [
+        "presencePenalty"
+      ],
+      "key": "presence-penalty",
+      "line": 749,
+      "nameDivergence": false,
+      "order": 9,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.presencePenalty}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:753"
+      ],
+      "fields": [
+        "ngl"
+      ],
+      "guard": "if (config.ngl !== undefined && config.ngl > 0)",
+      "guardFields": [
+        "ngl"
+      ],
+      "key": "ngl",
+      "line": 753,
+      "nameDivergence": null,
+      "order": 10,
+      "pairedBy": null,
+      "value": "${config.ngl}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:757"
+      ],
+      "fields": [
+        "threads"
+      ],
+      "guard": "if (config.threads !== undefined && config.threads > 0)",
+      "guardFields": [
+        "threads"
+      ],
+      "key": "threads",
+      "line": 757,
+      "nameDivergence": null,
+      "order": 11,
+      "pairedBy": null,
+      "value": "${config.threads}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:761"
+      ],
+      "fields": [
+        "nCpuMoe"
+      ],
+      "guard": "if (config.nCpuMoe !== undefined && config.nCpuMoe > 0)",
+      "guardFields": [
+        "nCpuMoe"
+      ],
+      "key": "n-cpu-moe",
+      "line": 761,
+      "nameDivergence": null,
+      "order": 12,
+      "pairedBy": null,
+      "value": "${config.nCpuMoe}\n"
+    },
+    {
+      "always": false,
+      "attribution": "guard",
+      "cliCounterpart": "--cpu-moe",
+      "evidence": [
+        "public/script.js:765"
+      ],
+      "fields": [
+        "cpuMoe"
+      ],
+      "guard": "if (config.cpuMoe)",
+      "guardFields": [
+        "cpuMoe"
+      ],
+      "key": "cpu-moe",
+      "line": 765,
+      "nameDivergence": false,
+      "order": 13,
+      "pairedBy": "identical-guard-chain",
+      "value": "true"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "--parallel",
+      "evidence": [
+        "public/script.js:770"
+      ],
+      "fields": [
+        "parallel"
+      ],
+      "guard": "if (config.parallel > 0)",
+      "guardFields": [
+        "parallel"
+      ],
+      "key": "parallel",
+      "line": 770,
+      "nameDivergence": false,
+      "order": 14,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.parallel}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:775"
+      ],
+      "fields": [
+        "loadMode"
+      ],
+      "guard": "if (config.loadMode !== undefined)",
+      "guardFields": [
+        "loadMode"
+      ],
+      "key": "load-mode",
+      "line": 775,
+      "nameDivergence": null,
+      "order": 15,
+      "pairedBy": null,
+      "value": "${config.loadMode}\n"
+    },
+    {
+      "always": false,
+      "attribution": "guard",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:779"
+      ],
+      "fields": [
+        "noKvOffload"
+      ],
+      "guard": "if (config.noKvOffload !== undefined && config.noKvOffload)",
+      "guardFields": [
+        "noKvOffload"
+      ],
+      "key": "no-kv-offload",
+      "line": 779,
+      "nameDivergence": null,
+      "order": 16,
+      "pairedBy": null,
+      "value": "true\n"
+    },
+    {
+      "always": false,
+      "attribution": "guard",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:783"
+      ],
+      "fields": [
+        "noMmprojOffload"
+      ],
+      "guard": "if (config.noMmprojOffload !== undefined && config.noMmprojOffload)",
+      "guardFields": [
+        "noMmprojOffload"
+      ],
+      "key": "no-mmproj-offload",
+      "line": 783,
+      "nameDivergence": null,
+      "order": 17,
+      "pairedBy": null,
+      "value": "true\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "--cache-ram",
+      "evidence": [
+        "public/script.js:787"
+      ],
+      "fields": [
+        "cacheRam"
+      ],
+      "guard": "if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam))",
+      "guardFields": [
+        "cacheRam"
+      ],
+      "key": "cache-ram",
+      "line": 787,
+      "nameDivergence": false,
+      "order": 18,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.cacheRam}\n"
+    },
+    {
+      "always": false,
+      "attribution": "guard",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:791"
+      ],
+      "fields": [
+        "jinja"
+      ],
+      "guard": "if (config.jinja !== undefined && config.jinja)",
+      "guardFields": [
+        "jinja"
+      ],
+      "key": "jinja",
+      "line": 791,
+      "nameDivergence": null,
+      "order": 19,
+      "pairedBy": null,
+      "value": "true\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "--chat-template-kwargs",
+      "evidence": [
+        "public/script.js:795"
+      ],
+      "fields": [
+        "chatTemplateKwargs"
+      ],
+      "guard": "if (config.chatTemplateKwargs)",
+      "guardFields": [
+        "chatTemplateKwargs"
+      ],
+      "key": "chat-template-kwargs",
+      "line": 795,
+      "nameDivergence": false,
+      "order": 20,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.chatTemplateKwargs}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:799"
+      ],
+      "fields": [
+        "modelPath"
+      ],
+      "guard": "if (config.loadCustomChatTemplate !== undefined && config.loadCustomChatTemplate)",
+      "guardFields": [
+        "loadCustomChatTemplate"
+      ],
+      "key": "chat-template-file",
+      "line": 799,
+      "nameDivergence": null,
+      "order": 21,
+      "pairedBy": null,
+      "value": "${config.modelPath.replace(/[/\\\\][^/\\\\]*$/, '')}\\chat-template.jinja\n"
+    },
+    {
+      "always": false,
+      "attribution": "guard",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:803"
+      ],
+      "fields": [
+        "verbose"
+      ],
+      "guard": "if (config.verbose !== undefined && config.verbose)",
+      "guardFields": [
+        "verbose"
+      ],
+      "key": "verbose",
+      "line": 803,
+      "nameDivergence": null,
+      "order": 22,
+      "pairedBy": null,
+      "value": "true\n"
+    },
+    {
+      "always": false,
+      "attribution": "guard",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:807"
+      ],
+      "fields": [
+        "backendSampling"
+      ],
+      "guard": "if (config.backendSampling !== undefined && config.backendSampling)",
+      "guardFields": [
+        "backendSampling"
+      ],
+      "key": "backend-sampling",
+      "line": 807,
+      "nameDivergence": null,
+      "order": 23,
+      "pairedBy": null,
+      "value": "true\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:811"
+      ],
+      "fields": [
+        "fastAttention"
+      ],
+      "guard": "if (config.fastAttention)",
+      "guardFields": [
+        "fastAttention"
+      ],
+      "key": "fa",
+      "line": 811,
+      "nameDivergence": null,
+      "order": 24,
+      "pairedBy": null,
+      "value": "${config.fastAttention ?? 'auto'}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "-md",
+      "evidence": [
+        "public/script.js:816"
+      ],
+      "fields": [
+        "draftModelPath"
+      ],
+      "guard": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp')",
+      "guardFields": [
+        "draftModelPath",
+        "speculationType"
+      ],
+      "key": "model-draft",
+      "line": 816,
+      "nameDivergence": true,
+      "order": 25,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.draftModelPath}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:818"
+      ],
+      "fields": [
+        "ngld"
+      ],
+      "guard": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ngld !== undefined && config.ngld >= 0)",
+      "guardFields": [
+        "draftModelPath",
+        "speculationType",
+        "ngld"
+      ],
+      "key": "ngld",
+      "line": 818,
+      "nameDivergence": null,
+      "order": 26,
+      "pairedBy": null,
+      "value": "${config.ngld}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "-ctkd",
+      "evidence": [
+        "public/script.js:821"
+      ],
+      "fields": [
+        "ctkd"
+      ],
+      "guard": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ctkd)",
+      "guardFields": [
+        "draftModelPath",
+        "speculationType",
+        "ctkd"
+      ],
+      "key": "ctkd",
+      "line": 821,
+      "nameDivergence": false,
+      "order": 27,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.ctkd}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "-ctvd",
+      "evidence": [
+        "public/script.js:824"
+      ],
+      "fields": [
+        "ctvd"
+      ],
+      "guard": "if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') { if (config.ctvd)",
+      "guardFields": [
+        "draftModelPath",
+        "speculationType",
+        "ctvd"
+      ],
+      "key": "ctvd",
+      "line": 824,
+      "nameDivergence": false,
+      "order": 28,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.ctvd}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "--spec-type",
+      "evidence": [
+        "public/script.js:835"
+      ],
+      "fields": [
+        "speculationType",
+        "ngramMod"
+      ],
+      "guard": "if (config.speculationType !== 'none' || config.ngramMod) { if (specTypes.length > 0)",
+      "guardFields": [
+        "speculationType",
+        "ngramMod"
+      ],
+      "key": "spec-type",
+      "line": 835,
+      "nameDivergence": false,
+      "order": 29,
+      "pairedBy": "identical-guard-chain",
+      "value": "${specTypes.join(',')}\n"
+    },
+    {
+      "always": false,
+      "attribution": "guard",
+      "cliCounterpart": "--spec-ngram-mod-n-match",
+      "evidence": [
+        "public/script.js:838"
+      ],
+      "fields": [
+        "ngramMod"
+      ],
+      "guard": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)",
+      "guardFields": [
+        "speculationType",
+        "ngramMod"
+      ],
+      "key": "spec-ngram-size-n",
+      "line": 838,
+      "nameDivergence": true,
+      "order": 30,
+      "pairedBy": "identical-guard-chain",
+      "value": "24\n"
+    },
+    {
+      "always": false,
+      "attribution": "guard",
+      "cliCounterpart": "--spec-ngram-mod-n-min",
+      "evidence": [
+        "public/script.js:839"
+      ],
+      "fields": [
+        "ngramMod"
+      ],
+      "guard": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)",
+      "guardFields": [
+        "speculationType",
+        "ngramMod"
+      ],
+      "key": "draft-min",
+      "line": 839,
+      "nameDivergence": true,
+      "order": 31,
+      "pairedBy": "identical-guard-chain",
+      "value": "48\n"
+    },
+    {
+      "always": false,
+      "attribution": "guard",
+      "cliCounterpart": "--spec-ngram-mod-n-max",
+      "evidence": [
+        "public/script.js:840"
+      ],
+      "fields": [
+        "ngramMod"
+      ],
+      "guard": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.ngramMod)",
+      "guardFields": [
+        "speculationType",
+        "ngramMod"
+      ],
+      "key": "draft-max",
+      "line": 840,
+      "nameDivergence": true,
+      "order": 32,
+      "pairedBy": "identical-guard-chain",
+      "value": "64\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": "--spec-draft-n-max",
+      "evidence": [
+        "public/script.js:843"
+      ],
+      "fields": [
+        "specDraftNMax"
+      ],
+      "guard": "if (config.speculationType !== 'none' || config.ngramMod) { if (config.specDraftNMax > 0 && config.speculationType !== 'none')",
+      "guardFields": [
+        "speculationType",
+        "ngramMod",
+        "specDraftNMax"
+      ],
+      "key": "spec-draft-n-max",
+      "line": 843,
+      "nameDivergence": false,
+      "order": 33,
+      "pairedBy": "identical-guard-chain",
+      "value": "${config.specDraftNMax}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:849"
+      ],
+      "fields": [
+        "reasoning"
+      ],
+      "guard": "if (config.reasoning !== undefined && config.reasoning !== 'auto')",
+      "guardFields": [
+        "reasoning"
+      ],
+      "key": "reasoning",
+      "line": 849,
+      "nameDivergence": null,
+      "order": 34,
+      "pairedBy": null,
+      "value": "${config.reasoning}\n"
+    },
+    {
+      "always": false,
+      "attribution": "value",
+      "cliCounterpart": null,
+      "evidence": [
+        "public/script.js:851"
+      ],
+      "fields": [
+        "disableReasoning"
+      ],
+      "guard": "else if (config.reasoning !== undefined && config.reasoning !== 'auto') { if (config.disableReasoning !== undefined)",
+      "guardFields": [
+        "reasoning",
+        "disableReasoning"
+      ],
+      "key": "reasoning",
+      "line": 851,
+      "nameDivergence": null,
+      "order": 35,
+      "pairedBy": null,
+      "value": "${config.disableReasoning ? 'off' : 'on'}\n"
+    },
+    {
+      "always": true,
+      "attribution": "value",
+      "cliCounterpart": "--port",
+      "evidence": [
+        "public/script.js:862"
+      ],
+      "fields": [
+        "serverPort"
+      ],
+      "guard": null,
+      "guardFields": [],
+      "key": "port",
+      "line": 862,
+      "nameDivergence": false,
+      "order": 36,
+      "pairedBy": "identical-guard-chain",
+      "value": "${settings.serverPort}\n"
+    }
+  ],
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "file": "git:parity-baseline:public/script.js",
+      "sha256": "cc866fbbffafb80f960587fb617a36340124766dd77effb9e40992cc73f8e678"
+    },
+    {
+      "file": "git:parity-baseline:server.js",
+      "sha256": "aad4000f55f086fd1fbfd843df67c291348aa01e47b43c21c5d76b964385c210"
+    }
+  ],
+  "structure": {
+    "lineFormat": "<key> = <value>, single spaces around =, each line terminated by \\n; nothing quoted or escaped",
+    "sectionHeader": [
+      {
+        "line": 709,
+        "text": "[${sectionName}]\n"
+      },
+      {
+        "line": 799,
+        "text": "chat-template-file = ${config.modelPath.replace(/[/\\\\][^/\\\\]*$/, '')}\\chat-template.jinja\n"
+      }
+    ],
+    "sectionOrder": {
+      "line": 697,
+      "loop": "const [configName, config]",
+      "note": "sections iterate Object.entries(parsed llamaCppConfigs), so localStorage insertion order is the section order (§9 trap 6)"
+    },
+    "sectionSeparator": {
+      "lines": [
+        855
+      ]
+    },
+    "trailingKey": [
+      {
+        "evidence": [
+          "public/script.js:862"
+        ],
+        "key": "port",
+        "line": 862,
+        "value": "${settings.serverPort}\n"
+      }
+    ],
+    "versionHeader": "'version = 1\\n\\n'"
+  }
+}

@@ -1,0 +1,641 @@
+{
+  "claimsFromTheApp": {
+    "claims": {
+      "legacyReasoningOff": "[capture-legacy-disable-true]",
+      "legacyReasoningOn": "[capture-legacy-disable-false]",
+      "mmproj": "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+      "ngramKeys": "spec-ngram-size-n = 24\ndraft-min = 48\ndraft-max = 64\n",
+      "trailingPort": "port = 17844\n",
+      "versionHeader": "version = 1\n\n[capture-alpha]\n"
+    },
+    "existedBefore": true,
+    "fileByteLength": 2432,
+    "note": "launchModelPresets prints the sections to the log pane BEFORE appending the trailing port line, so the pane and the POST body differ by that line; the posted bytes and the file bytes are identical (recorded here). The two capture-legacy-disable-* sections are the Q17 legacy-disableReasoning pair, the mmproj line comes from window.models. Section order is Object.entries(localStorage) insertion order (§9 trap 6).",
+    "postedByteLength": 2432,
+    "sectionOrder": [
+      "[capture-alpha]",
+      "[capture-beta]",
+      "[capture-legacy-disable-false]",
+      "[capture-legacy-disable-true]"
+    ]
+  },
+  "documents": [
+    {
+      "afterLastSection": [],
+      "fixture": "ini/J4-launch-presets/presets-direct-with-port.ini",
+      "sections": [
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "temp = 0.7",
+            "c = 16384",
+            "spec-type = ngram-mod",
+            "spec-ngram-size-n = 24",
+            "draft-min = 48",
+            "draft-max = 64"
+          ],
+          "name": "capture-alpha"
+        },
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "top-k = 20",
+            "reasoning = off",
+            "port = 7838"
+          ],
+          "name": "capture-beta"
+        }
+      ],
+      "unparsedLines": [],
+      "versionHeader": "version = 1"
+    },
+    {
+      "afterLastSection": [],
+      "fixture": "ini/J4-launch-presets/presets-direct.ini",
+      "sections": [
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "temp = 0.7",
+            "c = 16384",
+            "spec-type = ngram-mod",
+            "spec-ngram-size-n = 24",
+            "draft-min = 48",
+            "draft-max = 64"
+          ],
+          "name": "capture-alpha"
+        },
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "top-k = 20",
+            "reasoning = off",
+            "port = 7838"
+          ],
+          "name": "capture-beta"
+        }
+      ],
+      "unparsedLines": [],
+      "versionHeader": "version = 1"
+    },
+    {
+      "afterLastSection": [],
+      "fixture": "ini/J4b-ui-presets-launch/presets-from-ui.ini",
+      "sections": [
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "temp = 0.7",
+            "c = 16384",
+            "top-k = 20",
+            "top-p = 0",
+            "min-p = 0.05",
+            "repeat-penalty = 1.05",
+            "presence-penalty = 0",
+            "ngl = 99",
+            "threads = 12",
+            "n-cpu-moe = 8",
+            "parallel = 1",
+            "load-mode = mmap",
+            "cache-ram = 8192",
+            "jinja = true",
+            "chat-template-kwargs = {\"preserve_thinking\": true}",
+            "chat-template-file = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+            "fa = auto",
+            "reasoning = off"
+          ],
+          "name": "capture-alpha"
+        },
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf",
+            "temp = 0",
+            "c = 1",
+            "top-p = 0",
+            "min-p = 0.00",
+            "repeat-penalty = 0",
+            "presence-penalty = 0.0",
+            "threads = 4",
+            "cpu-moe = true",
+            "load-mode = mmap",
+            "no-kv-offload = true",
+            "no-mmproj-offload = true",
+            "cache-ram = -1",
+            "verbose = true",
+            "backend-sampling = true",
+            "fa = on",
+            "spec-type = ngram-mod,draft-mtp",
+            "spec-ngram-size-n = 24",
+            "draft-min = 48",
+            "draft-max = 64",
+            "spec-draft-n-max = 8"
+          ],
+          "name": "capture-beta"
+        },
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf",
+            "temp = 0.7",
+            "c = 16384",
+            "top-k = 20",
+            "top-p = 0",
+            "min-p = 0.05",
+            "repeat-penalty = 1.05",
+            "presence-penalty = 0",
+            "ngl = 99",
+            "threads = 12",
+            "n-cpu-moe = 8",
+            "parallel = 1",
+            "load-mode = mmap",
+            "cache-ram = 8192",
+            "jinja = true",
+            "chat-template-kwargs = {\"preserve_thinking\": true}",
+            "chat-template-file = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\chat-template.jinja",
+            "fa = auto",
+            "reasoning = on"
+          ],
+          "name": "capture-legacy-disable-false"
+        },
+        {
+          "keys": [
+            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "temp = 0",
+            "c = 1",
+            "top-p = 0",
+            "min-p = 0.00",
+            "repeat-penalty = 0",
+            "presence-penalty = 0.0",
+            "threads = 4",
+            "cpu-moe = true",
+            "load-mode = mmap",
+            "no-kv-offload = true",
+            "no-mmproj-offload = true",
+            "cache-ram = -1",
+            "verbose = true",
+            "backend-sampling = true",
+            "fa = on",
+            "spec-type = ngram-mod,draft-mtp",
+            "spec-ngram-size-n = 24",
+            "draft-min = 48",
+            "draft-max = 64",
+            "spec-draft-n-max = 8",
+            "reasoning = off",
+            "port = 17844"
+          ],
+          "name": "capture-legacy-disable-true"
+        }
+      ],
+      "unparsedLines": [],
+      "versionHeader": "version = 1"
+    }
+  ],
+  "gaps": [
+    {
+      "__gap": true,
+      "reason": "a section with no stored config behind it is invisible: every recorded section name matches a stored config in the same recording, so nothing shows what happens to an unsaved form"
+    },
+    {
+      "__gap": true,
+      "reason": "whether an ini key is emitted when its field holds a retired enum value is not recorded; no recording writes an ini while a control holds a retired value"
+    },
+    {
+      "__gap": true,
+      "reason": "the key order inside a section is only observable per recorded document; the three recordings agree but a key that never appears in them has no position"
+    }
+  ],
+  "generatedBy": "tools/parity/spec-runtime.js",
+  "keyClaims": {
+    "backend-sampling": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "true"
+      ]
+    },
+    "c": {
+      "field": "contextSize",
+      "observedIn": [
+        "ini/J4-launch-presets/presets-direct-with-port.ini",
+        "ini/J4-launch-presets/presets-direct.ini",
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": "recorded value identity, every recorded section agrees",
+      "valuesObserved": [
+        "16384",
+        "1"
+      ]
+    },
+    "cache-ram": {
+      "field": "cacheRam",
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": "recorded value identity, every recorded section agrees",
+      "valuesObserved": [
+        "8192",
+        "-1"
+      ]
+    },
+    "chat-template-file": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\chat-template.jinja"
+      ]
+    },
+    "chat-template-kwargs": {
+      "field": "chatTemplateKwargs",
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": "recorded value identity, every recorded section agrees",
+      "valuesObserved": [
+        "{\"preserve_thinking\": true}"
+      ]
+    },
+    "cpu-moe": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "true"
+      ]
+    },
+    "draft-max": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4-launch-presets/presets-direct-with-port.ini",
+        "ini/J4-launch-presets/presets-direct.ini",
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "64"
+      ]
+    },
+    "draft-min": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4-launch-presets/presets-direct-with-port.ini",
+        "ini/J4-launch-presets/presets-direct.ini",
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "48"
+      ]
+    },
+    "fa": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "auto",
+        "on"
+      ]
+    },
+    "jinja": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "true"
+      ]
+    },
+    "load-mode": {
+      "field": "loadMode",
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": "recorded value identity, every recorded section agrees",
+      "valuesObserved": [
+        "mmap"
+      ]
+    },
+    "min-p": {
+      "field": "minP",
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": "recorded value identity, every recorded section agrees",
+      "valuesObserved": [
+        "0.05",
+        "0.00"
+      ]
+    },
+    "mmproj": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4-launch-presets/presets-direct-with-port.ini",
+        "ini/J4-launch-presets/presets-direct.ini",
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+      ]
+    },
+    "model": {
+      "field": "modelPath",
+      "observedIn": [
+        "ini/J4-launch-presets/presets-direct-with-port.ini",
+        "ini/J4-launch-presets/presets-direct.ini",
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": "recorded value identity, every recorded section agrees",
+      "valuesObserved": [
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf"
+      ]
+    },
+    "n-cpu-moe": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "8"
+      ]
+    },
+    "ngl": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "99"
+      ]
+    },
+    "no-kv-offload": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "true"
+      ]
+    },
+    "no-mmproj-offload": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "true"
+      ]
+    },
+    "parallel": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "1"
+      ]
+    },
+    "port": {
+      "field": "serverPort",
+      "observedIn": [
+        "ini/J4-launch-presets/presets-direct-with-port.ini",
+        "ini/J4-launch-presets/presets-direct.ini",
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": "recorded value identity, every recorded section agrees",
+      "valuesObserved": [
+        "7838",
+        "17844"
+      ]
+    },
+    "presence-penalty": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "0",
+        "0.0"
+      ]
+    },
+    "reasoning": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4-launch-presets/presets-direct-with-port.ini",
+        "ini/J4-launch-presets/presets-direct.ini",
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "off",
+        "on"
+      ]
+    },
+    "repeat-penalty": {
+      "field": "repeatPenalty",
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": "recorded value identity, every recorded section agrees",
+      "valuesObserved": [
+        "1.05",
+        "0"
+      ]
+    },
+    "spec-draft-n-max": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "8"
+      ]
+    },
+    "spec-ngram-size-n": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: candidates nCpuMoe; pairing with nCpuMoe is contradicted by another recording"
+      },
+      "observedIn": [
+        "ini/J4-launch-presets/presets-direct-with-port.ini",
+        "ini/J4-launch-presets/presets-direct.ini",
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "24"
+      ]
+    },
+    "spec-type": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4-launch-presets/presets-direct-with-port.ini",
+        "ini/J4-launch-presets/presets-direct.ini",
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "ngram-mod",
+        "ngram-mod,draft-mtp"
+      ]
+    },
+    "temp": {
+      "field": "temp",
+      "observedIn": [
+        "ini/J4-launch-presets/presets-direct-with-port.ini",
+        "ini/J4-launch-presets/presets-direct.ini",
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": "recorded value identity, every recorded section agrees",
+      "valuesObserved": [
+        "0.7",
+        "0"
+      ]
+    },
+    "threads": {
+      "field": "threads",
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": "recorded value identity, every recorded section agrees",
+      "valuesObserved": [
+        "12",
+        "4"
+      ]
+    },
+    "top-k": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: candidates topK; pairing with topK is contradicted by another recording"
+      },
+      "observedIn": [
+        "ini/J4-launch-presets/presets-direct-with-port.ini",
+        "ini/J4-launch-presets/presets-direct.ini",
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "20"
+      ]
+    },
+    "top-p": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "0"
+      ]
+    },
+    "verbose": {
+      "field": {
+        "__gap": true,
+        "reason": "recorded values cannot identify the field: no field value matches the emitted text"
+      },
+      "observedIn": [
+        "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+      ],
+      "pairedBy": null,
+      "valuesObserved": [
+        "true"
+      ]
+    }
+  },
+  "keysAfterLastSection": {
+    "evidence": [],
+    "keys": [],
+    "note": "the recorded files end with this line and no section follows it"
+  },
+  "lineFormat": {
+    "evidence": [
+      "ini/J4-launch-presets/presets-direct-with-port.ini",
+      "ini/J4-launch-presets/presets-direct.ini",
+      "ini/J4b-ui-presets-launch/presets-from-ui.ini"
+    ],
+    "observed": "every recorded line is \"key = value\" with one space around the equals sign"
+  },
+  "rule": "derived from fixtures/** recordings only; no app source was read (plan.md §2 Phase 3 (b))",
+  "versionHeader": [
+    "version = 1"
+  ]
+}

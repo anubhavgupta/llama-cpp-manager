@@ -1,0 +1,1097 @@
+{
+  "info": {
+    "description": "Regenerated for the Phase 3 SPEC pack from runtime evidence (fixtures/http/**, fixtures/ws/**) cross-checked against the parity-baseline source read. Status codes carry an x-status-source field because the recordings captured response bytes, not status lines, except where noted.",
+    "title": "llama-cpp-manager HTTP contract (parity port)",
+    "version": "parity-baseline"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/": {
+      "get": {
+        "description": "derivations stating registration: a+c",
+        "operationId": "get_",
+        "responses": {
+          "200": {
+            "content": {
+              "text/html": {
+                "example": "<!DOCTYPE html> …",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "GET / → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "GET / — registered: 1",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J0-baseline/root.request.json"
+        ]
+      }
+    },
+    "/launch-presets": {
+      "post": {
+        "description": "derivations stating registration: a+c",
+        "operationId": "post_launch_presets",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "presets": {
+                    "type": "string"
+                  },
+                  "serverPath": {
+                    "type": "string"
+                  },
+                  "serverPort": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "presets",
+                  "serverPath",
+                  "serverPort"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-derivations": [
+            "b"
+          ]
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /launch-presets → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /launch-presets → 400 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /launch-presets → 500 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "POST /launch-presets — registered: 11",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J4-launch-presets/launch-presets-default-port.request.json",
+          "http/J4-launch-presets/launch-presets-explicit-port.request.json",
+          "http/J4b-ui-presets-launch/launch-presets-from-ui.request.json"
+        ]
+      }
+    },
+    "/metrics": {
+      "get": {
+        "description": "derivations stating registration: a+c",
+        "operationId": "get_metrics",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "GET /metrics → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "GET /metrics — registered: 6",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J1-settings/metrics-1.request.json",
+          "http/J1-settings/metrics-2.request.json",
+          "http/J1-settings/metrics-3.request.json",
+          "http/J2b-metrics-garbage/metrics-1.request.json",
+          "http/J2b-metrics-garbage/metrics-2.request.json",
+          "http/J2b-metrics-garbage/metrics-3.request.json",
+          "http/J2c-metrics-fail/metrics-1.request.json",
+          "http/J2c-metrics-fail/metrics-2.request.json",
+          "http/J2c-metrics-fail/metrics-3.request.json"
+        ]
+      }
+    },
+    "/models": {
+      "get": {
+        "description": "derivations stating registration: a+c",
+        "operationId": "get_models",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "GET /models → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "GET /models → 500 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "GET /models — registered: 5",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J2-models/models.request.json"
+        ]
+      }
+    },
+    "/restart": {
+      "get": {
+        "description": "derivations stating registration: a+c NOT registered in parity-baseline: the recorded request answered from the framework default handler, not from an app route.",
+        "operationId": "get_restart",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "recorded response bytes; the body is not JSON",
+                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /rest",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "GET /restart → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "GET /restart — registered: null",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J3d-restart/restart-get-not-a-route.request.json"
+        ]
+      },
+      "post": {
+        "description": "derivations stating registration: a+c",
+        "operationId": "post_restart",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /restart → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /restart → 400 (status recorded from legacy)",
+            "x-status-source": "runtime recording"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /restart → 500 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "POST /restart — registered: 8",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J3d-restart/restart-after-manager-restart.request.json",
+          "http/J3d-restart/restart-before-any-launch.request.json",
+          "http/J3d-restart/restart.request.json",
+          "http/J4-launch-presets/restart-after-presets.request.json"
+        ]
+      }
+    },
+    "/settings": {
+      "get": {
+        "description": "derivations stating registration: a+c",
+        "operationId": "get_settings",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "GET /settings → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "GET /settings — registered: 9",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J0-baseline/settings-first-run.request.json",
+          "http/J1-settings/settings-read.request.json"
+        ]
+      },
+      "post": {
+        "description": "derivations stating registration: a+c",
+        "operationId": "post_settings",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "modelsDirectory": {
+                    "type": "string"
+                  },
+                  "serverPort": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "modelsDirectory",
+                  "serverPort"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-derivations": [
+            "b"
+          ]
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /settings → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /settings → 400 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /settings → 500 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "POST /settings — registered: 10",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J1-settings/settings-post-with-port.request.json",
+          "http/J1-settings/settings-post-without-port.request.json",
+          "http/J4-launch-presets/settings-server-port-7838.request.json",
+          "http/J4b-ui-presets-launch/settings-models-directory.request.json",
+          "http/J5-ui-dialogs/settings-from-ui.request.json"
+        ]
+      }
+    },
+    "/start": {
+      "post": {
+        "description": "derivations stating registration: a+c",
+        "operationId": "post_start",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "args": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "serverPath": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "args",
+                  "serverPath"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-derivations": [
+            "b"
+          ]
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /start → 200 (status recorded from legacy)",
+            "x-status-source": "runtime recording"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /start → 400 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /start → 500 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "POST /start — registered: 3",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J3-start-stop/start-while-running.request.json",
+          "http/J3-start-stop/start.request.json",
+          "http/J3b-exit-code/start.request.json",
+          "http/J3c-start-missing-path/start-without-serverpath.request.json",
+          "http/J3d-restart/start.request.json",
+          "http/J5-ui-launch/start-from-ui-draft-mtp.request.json",
+          "http/J5-ui-launch/start-from-ui.request.json",
+          "http/J5-ui-log-cap/start-log-flood.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-1.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
+          "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
+        ]
+      }
+    },
+    "/status": {
+      "get": {
+        "description": "derivations stating registration: a+c",
+        "operationId": "get_status",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "GET /status → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "GET /status — registered: 7",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J1-settings/status.request.json",
+          "http/J3-start-stop/status-before.request.json",
+          "http/J3-start-stop/status-running.request.json",
+          "http/J3d-restart/status-after-restart-settle.request.json",
+          "http/J3d-restart/status-immediately-after-restart.request.json",
+          "http/J5-ui-cadence/status-while-running.request.json",
+          "http/J5-ui-launch/start-from-ui-draft-mtp-status.request.json",
+          "http/J5-ui-launch/start-from-ui-status.request.json"
+        ]
+      }
+    },
+    "/stop": {
+      "post": {
+        "description": "derivations stating registration: a+c",
+        "operationId": "post_stop",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /stop → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "POST /stop → 500 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "POST /stop — registered: 4",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J3-start-stop/stop.request.json",
+          "http/J3c-start-missing-path/stop-while-idle.request.json",
+          "http/J3d-restart/stop-after-restart.request.json",
+          "http/J4-launch-presets/stop-after-default-port.request.json",
+          "http/J4-launch-presets/stop-after-explicit-port.request.json",
+          "http/J4b-ui-presets-launch/stop-after-presets-ui.request.json",
+          "http/J5-ui-cadence/stop-after-cadence.request.json",
+          "http/J5-ui-launch/start-from-ui-draft-mtp-stop-first.request.json",
+          "http/J5-ui-launch/stop-after-ui-launch.request.json",
+          "http/J5-ui-log-cap/stop-after-log-flood.request.json",
+          "http/J5-ui-log-cap/stop-from-driver.request.json",
+          "http/J6-corpus-smoke/stop-after-corpus-launches.request.json",
+          "http/J6-corpus-smoke/stop-between-corpus-launches-1.request.json",
+          "http/J6-corpus-smoke/stop-between-corpus-launches-2.request.json"
+        ]
+      }
+    },
+    "/swagger": {
+      "get": {
+        "description": "derivations stating registration: a+c",
+        "operationId": "get_swagger",
+        "responses": {
+          "200": {
+            "content": {
+              "text/html": {
+                "example": "<!DOCTYPE html> …",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "GET /swagger → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "GET /swagger — registered: 2",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J0-baseline/swagger.request.json"
+        ]
+      }
+    },
+    "/swagger.json": {
+      "get": {
+        "description": "derivations stating registration: a+c NOT registered in parity-baseline: the recorded request answered from the framework default handler, not from an app route.",
+        "operationId": "get_swagger_json",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "GET /swagger.json → 200 (status read from parity-baseline source; the recording captured the body only)",
+            "x-status-source": "static source read"
+          }
+        },
+        "summary": "GET /swagger.json — registered: null",
+        "x-derivations": [
+          "a",
+          "c"
+        ],
+        "x-evidence": [
+          "http/J0-baseline/swagger-json.request.json"
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "description": "the origin every recorded request was issued against (Q11: settings.serverPort never changes it)",
+      "url": [
+        "http://localhost:7837"
+      ]
+    }
+  ],
+  "x-non-routes": [
+    {
+      "evidence": [
+        "public/script.js:17",
+        "public/script.js:18",
+        "public/script.js:19"
+      ],
+      "path": "/swagger.json",
+      "why": "no app.get registration exists; express.static(public) serves the checked-in file"
+    },
+    {
+      "evidence": [
+        "server.js:425"
+      ],
+      "path": "GET /restart",
+      "why": "only app.post('/restart') is registered, so express answers the default 404 page"
+    }
+  ],
+  "x-notes": [
+    "POST /restart: POST with no request body in parity-baseline",
+    "POST /stop: POST with no request body in parity-baseline"
+  ],
+  "x-runtime-only-observations": {
+    "clientGuards": {
+      "dialogs": {
+        "configNameAlert": [
+          {
+            "message": "Please enter a configuration name",
+            "type": "alert"
+          }
+        ],
+        "deleteConfirm": {
+          "configsAfter": 1,
+          "configsBefore": 2,
+          "dialogs": [
+            {
+              "message": "Are you sure you want to delete the configuration \"capture-alpha\"?",
+              "type": "confirm"
+            }
+          ]
+        },
+        "dialogs": [
+          {
+            "message": "Please enter the path to llama-server.exe",
+            "type": "alert"
+          },
+          {
+            "message": "Please enter a models directory path",
+            "type": "alert"
+          },
+          {
+            "message": "Please enter a configuration name",
+            "type": "alert"
+          },
+          {
+            "message": "Are you sure you want to delete the configuration \"capture-alpha\"?",
+            "type": "confirm"
+          }
+        ],
+        "note": "Native alert/confirm dialogs are OS windows outside the page surface, so they are recorded as type + message text here (Q13). The handler dismissed them unless the journey set accept.",
+        "settingsSave": {
+          "mainFrameNavigationsAfter": 2,
+          "mainFrameNavigationsBefore": 1,
+          "reloadObserved": true,
+          "requestRecordedAs": "http/J5-ui-dialogs/settings-from-ui.request.json"
+        }
+      },
+      "launchAttempts": {
+        "argvLog": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl",
+        "attempts": [
+          {
+            "argvLinesAfter": 2,
+            "argvLinesBefore": 0,
+            "argvLinesGained": 2,
+            "config": "capture-alpha",
+            "dialogsDuringAttempt": [],
+            "form": {
+              "launchDisabled": false,
+              "modelPathIsAnOption": true,
+              "modelPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+              "optionCount": 11,
+              "serverPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+            },
+            "requestBlockedWith": null,
+            "requestBody": {
+              "args": [
+                "-m",
+                "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+                "-ngl",
+                "99",
+                "-t",
+                "12",
+                "--temp",
+                "0.7",
+                "--top-k",
+                "20",
+                "--top-p",
+                "0",
+                "--min-p",
+                "0.05",
+                "--repeat-penalty",
+                "1.05",
+                "--parallel",
+                "1",
+                "--load-mode",
+                "mmap",
+                "-c",
+                "16384",
+                "--n-cpu-moe",
+                "8",
+                "-fa",
+                "--jinja",
+                "--chat-template-kwargs",
+                "{\"preserve_thinking\": true}",
+                "--chat-template-file",
+                "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+                "--cache-ram",
+                "8192",
+                "--reasoning",
+                "off",
+                "--host",
+                "0.0.0.0",
+                "-fit",
+                "off",
+                "--port",
+                "7838",
+                "--mmproj",
+                "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+              ],
+              "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+            },
+            "requestObserved": true,
+            "requestStatus": 200,
+            "responseBody": {
+              "message": "Server started successfully",
+              "success": true
+            },
+            "runningAfter": true
+          },
+          {
+            "argvLinesAfter": 4,
+            "argvLinesBefore": 2,
+            "argvLinesGained": 2,
+            "config": "capture-beta",
+            "dialogsDuringAttempt": [],
+            "form": {
+              "launchDisabled": true,
+              "modelPathIsAnOption": true,
+              "modelPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+              "optionCount": 11,
+              "serverPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+            },
+            "requestBlockedWith": null,
+            "requestBody": {
+              "args": [
+                "-m",
+                "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+                "-t",
+                "4",
+                "--temp",
+                "0",
+                "--top-p",
+                "0",
+                "--min-p",
+                "0.00",
+                "--presence-penalty",
+                "0.0",
+                "--load-mode",
+                "mmap",
+                "--swa-full",
+                "-c",
+                "1",
+                "--cpu-moe",
+                "-ctk",
+                "q8_0",
+                "-ctv",
+                "q8_0",
+                "-fa",
+                "on",
+                "--backend-sampling",
+                "--no-kv-offload",
+                "--no-mmproj-offload",
+                "--cache-ram",
+                "-1",
+                "--spec-type",
+                "ngram-mod,draft-mtp",
+                "--spec-ngram-mod-n-match",
+                "24",
+                "--spec-ngram-mod-n-min",
+                "48",
+                "--spec-ngram-mod-n-max",
+                "64",
+                "--spec-draft-n-max",
+                "8",
+                "--host",
+                "0.0.0.0",
+                "-fit",
+                "off",
+                "--port",
+                "7838",
+                "--mmproj",
+                "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+              ],
+              "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+            },
+            "requestObserved": true,
+            "requestStatus": 200,
+            "responseBody": {
+              "message": "Server started successfully",
+              "success": true
+            },
+            "runningAfter": true
+          }
+        ],
+        "note": "One entry per #launchBtn click. launchServer validates serverPath then the modelPath <select> (script.js:413-420) and alerts instead of posting /start, and loadConfiguration blanks a modelPath with no matching <option> (Q18), so the form state and the dialog list are recorded next to the argv evidence rather than assumed."
+      },
+      "note": "the page blocks some requests before they leave: these dialog messages and form states were recorded instead of a request"
+    },
+    "clientPolling": {
+      "counts": {
+        "/metrics": 12,
+        "/status": 2
+      },
+      "entries": [
+        {
+          "gapFromAnyMs": null,
+          "gapFromSamePathMs": null,
+          "path": "/metrics",
+          "tMs": 1795407885327,
+          "url": "http://localhost:7837/metrics"
+        },
+        {
+          "gapFromAnyMs": 987,
+          "gapFromSamePathMs": 987,
+          "path": "/metrics",
+          "tMs": 1795407886314,
+          "url": "http://localhost:7837/metrics"
+        },
+        {
+          "gapFromAnyMs": 1002,
+          "gapFromSamePathMs": 1002,
+          "path": "/metrics",
+          "tMs": 1795407887316,
+          "url": "http://localhost:7837/metrics"
+        },
+        {
+          "gapFromAnyMs": 1002,
+          "gapFromSamePathMs": 1002,
+          "path": "/metrics",
+          "tMs": 1795407888318,
+          "url": "http://localhost:7837/metrics"
+        },
+        {
+          "gapFromAnyMs": 18,
+          "gapFromSamePathMs": null,
+          "path": "/status",
+          "tMs": 1795407888336,
+          "url": "http://localhost:7837/status"
+        },
+        {
+          "gapFromAnyMs": 986,
+          "gapFromSamePathMs": 1004,
+          "path": "/metrics",
+          "tMs": 1795407889322,
+          "url": "http://localhost:7837/metrics"
+        },
+        {
+          "gapFromAnyMs": 996,
+          "gapFromSamePathMs": 996,
+          "path": "/metrics",
+          "tMs": 1795407890318,
+          "url": "http://localhost:7837/metrics"
+        },
+        {
+          "gapFromAnyMs": 999,
+          "gapFromSamePathMs": 999,
+          "path": "/metrics",
+          "tMs": 1795407891317,
+          "url": "http://localhost:7837/metrics"
+        },
+        {
+          "gapFromAnyMs": 1002,
+          "gapFromSamePathMs": 1002,
+          "path": "/metrics",
+          "tMs": 1795407892319,
+          "url": "http://localhost:7837/metrics"
+        },
+        {
+          "gapFromAnyMs": 996,
+          "gapFromSamePathMs": 996,
+          "path": "/metrics",
+          "tMs": 1795407893315,
+          "url": "http://localhost:7837/metrics"
+        },
+        {
+          "gapFromAnyMs": 19,
+          "gapFromSamePathMs": 4998,
+          "path": "/status",
+          "tMs": 1795407893334,
+          "url": "http://localhost:7837/status"
+        },
+        {
+          "gapFromAnyMs": 986,
+          "gapFromSamePathMs": 1005,
+          "path": "/metrics",
+          "tMs": 1795407894320,
+          "url": "http://localhost:7837/metrics"
+        },
+        {
+          "gapFromAnyMs": 1001,
+          "gapFromSamePathMs": 1001,
+          "path": "/metrics",
+          "tMs": 1795407895321,
+          "url": "http://localhost:7837/metrics"
+        },
+        {
+          "gapFromAnyMs": 997,
+          "gapFromSamePathMs": 997,
+          "path": "/metrics",
+          "tMs": 1795407896318,
+          "url": "http://localhost:7837/metrics"
+        }
+      ],
+      "note": "fetch URLs the page issued while a server was running, in arrival order, with wall-clock gaps. public/script.js polls /status every 5 s (init) and /metrics every 1 s (startMetricUpdates).",
+      "running": true,
+      "windowMs": 12018
+    },
+    "firstRun": {
+      "observation": "GET /settings with no settings.json in the sandbox answers from server.js own default branch. The personal path in the recorded response is the string hardcoded in server.js at parity-baseline, recorded from the app (C5) — it is not corpus data.",
+      "recordedDefaultModelsDirectory": "C:\\Users\\anubh\\.lmstudio\\models",
+      "serverPort": 8080
+    },
+    "launchPresetsPortSource": {
+      "launchPresetsWithServerPort": {
+        "argv": [
+          "--models-preset",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "--host",
+          "0.0.0.0",
+          "--port",
+          "7838"
+        ],
+        "port": "7838"
+      },
+      "launchPresetsWithoutServerPort": {
+        "argv": [
+          "--models-preset",
+          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "--host",
+          "0.0.0.0",
+          "--port",
+          "8080"
+        ],
+        "port": "8080"
+      },
+      "settingsJsonServerPort": 7838,
+      "startJourneyPort": "7838 (see argv/J3-start-stop/launch.jsonl, client-supplied --port)"
+    },
+    "metricsDegradation": {
+      "evidence": [
+        "http/J2b-metrics-garbage/shape-note.json",
+        "http/J2c-metrics-fail/metrics-1.response"
+      ],
+      "note": "With nvidia-smi replying \"not a csv\", getSystemMetrics() parses the line, finds fewer than 3 comma fields, and returns WITHOUT throwing — so the Math.random() catch branch never runs and /metrics reports gpu=0, vram=0, vramUsage=\"0/0\" alongside real cpu/ram. plan.md §9 trap 4 lists the unexpected CSV shape as a simulated-path trigger; recorded legacy runtime evidence (plan §4 step 1) says it is a silent-zero path."
+    },
+    "restartEffect": {
+      "afterManagerRestart": {
+        "body": {
+          "error": "No previous configuration found to restart from",
+          "success": false
+        },
+        "status": 400
+      },
+      "getRestart": {
+        "firstBytes": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /rest",
+        "json": false,
+        "length": 145
+      },
+      "settleNote": "POST /restart answers 200 success:true, but /status settles on running:false: the killed child's close handler clears runningProcess after /restart assigned the replacement (server.js:459-470), and POST /stop then returns success:false while the replacement may still be running. The deferred SIGKILL at server.js:437-445 reads the same module-level variable, so the replacement surviving is a race - the counts below differ between runs and are compared through the restart-settle shape rule."
+    },
+    "settingsFileEffect": [
+      {
+        "exists": true,
+        "fixture": "ini/J1-settings/settings.after-with-port.json",
+        "kind": "with-port",
+        "value": {
+          "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+          "serverPort": 7838
+        }
+      },
+      {
+        "exists": true,
+        "fixture": "ini/J1-settings/settings.after-without-port.json",
+        "kind": "without-port",
+        "value": {
+          "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+          "serverPort": 8080
+        }
+      }
+    ]
+  },
+  "x-server": {
+    "defaultPortConstant": {
+      "resolution": "agree",
+      "sources": [
+        "a",
+        "c"
+      ],
+      "value": 8080
+    },
+    "listenPort": {
+      "evidence": [
+        "http/J0-baseline/root.request.json"
+      ],
+      "resolution": "agree+runtime-confirmed",
+      "sources": [
+        "a",
+        "c",
+        "b"
+      ],
+      "value": 7837
+    },
+    "middleware": {
+      "modelWording": "express 4 + http.createServer(app) + socket.io on the same httpServer",
+      "resolution": "static-wording",
+      "resolutionReason": "the static read quotes the source expression; the model pass paraphrases the same behaviour. The pack keeps the source text and the model phrasing as a note.",
+      "sources": [
+        "a"
+      ],
+      "value": "express.static('public') + express.json() + express.urlencoded({ extended: true })"
+    }
+  },
+  "x-status-gaps": [
+    {
+      "__gap": true,
+      "reason": "HTTP status codes are missing from every recording except the ones listed in routes[].statusesRecorded; the response bodies are recorded in full"
+    },
+    {
+      "__gap": true,
+      "reason": "response headers were not captured, so content types are not derivable from the recordings"
+    },
+    {
+      "__gap": true,
+      "reason": "server-side branch coverage: a body recorded for one input says nothing about the branch another input would take"
+    }
+  ]
+}

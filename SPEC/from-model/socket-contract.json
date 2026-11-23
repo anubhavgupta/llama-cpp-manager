@@ -1,0 +1,70 @@
+{
+  "artifact": "socket-contract",
+  "schemaVersion": 1,
+  "derivation": "model",
+  "derivedBy": "independent model pass (c): fresh-context read of git:parity-baseline:server.js and public/script.js (initWebSocket) only. No fixture and no other derivation was consulted.",
+  "sources": ["git:parity-baseline:server.js", "git:parity-baseline:public/script.js"],
+  "transport": {
+    "library": "socket.io v4 server, socket.io.esm.min.js client served from public/",
+    "endpoint": "same origin as the page (io() with no URL), i.e. http://localhost:7837",
+    "namespace": "/",
+    "serverOptions": { "cors": { "origin": "*" } },
+    "serverSetup": "io is attached to the same httpServer that serves the API, created before the routes and started by httpServer.listen(PORT)"
+  },
+  "serverToClient": [
+    {
+      "event": "log-stream",
+      "payload": { "type": "'stdout' | 'stderr'", "data": "string - one raw child pipe chunk, data.toString() of the whole chunk" },
+      "emittedFrom": ["POST /start stdout data handler", "POST /start stderr data handler", "POST /restart stdout/stderr handlers", "POST /launch-presets stdout/stderr handlers"],
+      "emitTarget": "every entry of the module-level connectedClients array, via client.emit inside connectedClients.forEach",
+      "contract": [
+        "no line splitting and no server-side trim: a chunk that ends mid-line is delivered as one event mid-line, and a whitespace-only chunk is delivered as a whitespace-only event",
+        "the same bytes are also console.log'd by the manager as 'STDOUT: <chunk>' / 'STDERR: <chunk>'",
+        "type is exactly 'stdout' or 'stderr'"
+      ]
+    },
+    {
+      "event": "server-ended",
+      "payload": { "message": "'Server process has ended'" },
+      "emittedFrom": ["the 'close' handler of every spawned child (all three spawn sites)"],
+      "contract": ["fired once per child close, including a child that exits by itself; the manager also console.logs 'Server process exited with code <code>' first"]
+    },
+    {
+      "event": "server-error",
+      "payload": { "message": "'Failed to start server: ' + error.message" },
+      "emittedFrom": ["the 'error' handler of every spawned child (all three spawn sites)"],
+      "contract": ["spawn errors surface as an error event, not as a throw; the handler also nulls runningProcess"]
+    }
+  ],
+  "absentEvents": [
+    { "event": "server-started", "fact": "no emit of that name exists anywhere in server.js; the client learns about a successful start from the POST response, not from a socket event" },
+    { "event": "metrics / status over sockets", "fact": "metrics and status are polled over HTTP only; nothing is pushed" }
+  ],
+  "clientToServer": { "customEvents": [], "note": "the client never emits a custom event; it only connects and disconnects" },
+  "connectionLifecycle": {
+    "server": [
+      "io.on('connection'): console.log('Client connected for log streaming') then connectedClients.push(socket)",
+      "socket.on('disconnect'): console.log('Client disconnected from log streaming'), then indexOf + splice(index,1) when index > -1",
+      "connectedClients is module level and grows per socket; stale entries are removed only by the disconnect handler"
+    ],
+    "client": [
+      "initWebSocket() is called only after a successful POST /start, POST /restart or POST /launch-presets response",
+      "initWebSocket() returns immediately when the module-level socket is already non-null",
+      "on a successful POST /stop the client calls socket.disconnect() and sets socket = null, so the next start reconnects",
+      "io() is called with no arguments, so the socket URL is the page origin - settings.serverPort never affects it"
+    ]
+  },
+  "clientHandlers": [
+    { "event": "connect", "behavior": "showOutput('Connected to server for real-time logging') plus a console.log" },
+    { "event": "log-stream", "behavior": "if (data && data.data) showOutput(data.data.trim()) - the trim is per event, so a chunk boundary inside a word produces two pane lines", "pane": "one entry per received event" },
+    { "event": "server-ended", "behavior": "showOutput('Server process has ended'); updateStatus(false); updateButtonStates(false)" },
+    { "event": "server-error", "behavior": "showOutput('Server error: ' + data.message)" },
+    { "event": "disconnect", "behavior": "showOutput('Disconnected from server for real-time logging')" }
+  ],
+  "paneRules": {
+    "entryFormat": "[<new Date().toISOString()>] <message>\\n appended to #modelOutput.textContent",
+    "cap": "keep the last 1000 entries of textContent.split('\\n')",
+    "autoScroll": "modelOutput.scrollTop = modelOutput.scrollHeight after every entry",
+    "initialText": "the markup ships with 'No output yet...' inside #modelOutput, so the first real entry is appended after that line"
+  }
+}
