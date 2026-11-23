@@ -1,0 +1,84 @@
+{
+  "generated_by": "tools/parity/gen-goldens.js",
+  "command": "node tools/parity/gen-goldens.js",
+  "impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "note": "sha256 of every committed vector and golden file, with the command that regenerates it. Goldens are recorded from the baseline inline blocks (C5); rerunning the command must reproduce these bytes (gen-vectors.js --check, gen-goldens.js --check).",
+  "files": [
+    {
+      "file": "fixtures/vectors/boundary/vectors.jsonl",
+      "command": "node tools/parity/gen-vectors.js",
+      "sha256": "5f94f038d56940e89610f1a30785399a50296e70dd4b189e4e618efc001f013c"
+    },
+    {
+      "file": "fixtures/vectors/cover/vectors.jsonl",
+      "command": "node tools/parity/gen-vectors.js",
+      "sha256": "79f0fc770b35730a0f409ba9212edbf7dca2e5acca8109a2a27bcb0cb6de568e"
+    },
+    {
+      "file": "fixtures/vectors/format/vectors.jsonl",
+      "command": "node tools/parity/gen-vectors.js",
+      "sha256": "e798da74336a4010155f7f52df10c784edc070013e93facd1547ab7a82f52ee7"
+    },
+    {
+      "file": "fixtures/vectors/random/vectors.jsonl",
+      "command": "node tools/parity/gen-vectors.js",
+      "sha256": "232cf5004af10af31c0ceab34b01aab6b8e1a2569aa06eee5a01a06bf7c81c12"
+    },
+    {
+      "file": "fixtures/vectors/corpus/vectors.jsonl",
+      "command": "node tools/parity/gen-vectors.js",
+      "sha256": "d65cb268b661d9edb02b09ff703321bc8726c2de6ce0888b53e1e7ac6a356f51"
+    },
+    {
+      "file": "fixtures/vectors/INPUTS.json",
+      "command": "node tools/parity/gen-vectors.js",
+      "sha256": "8dcfc3a6dc418095818b9cd05b48f792a036f3fd8095d5474cf04c5a83f5c418"
+    },
+    {
+      "file": "fixtures/vectors/coverage-map.json",
+      "command": "node tools/parity/gen-vectors.js",
+      "sha256": "9c8841c5a8d47e22dea2e19e321bcdf7a48e6b0dbfad8362a2cba084748fcf3a"
+    },
+    {
+      "file": "fixtures/vectors/coverage-exceptions.json",
+      "command": "node tools/parity/gen-vectors.js",
+      "sha256": "61b0c54dbc3c71653eb87dd2ba3035c8cef2a44969d304254294fb24152df016"
+    },
+    {
+      "file": "fixtures/vectors/README.md",
+      "command": "node tools/parity/gen-vectors.js",
+      "sha256": "00e44e87c2e05c04cdb1609eefc7a5ec19806862037e17ca181a320697501aa3"
+    },
+    {
+      "file": "fixtures/goldens/boundary/goldens.jsonl",
+      "command": "node tools/parity/gen-goldens.js",
+      "sha256": "a1c129d8e275fa6cd7c55039b686e96d038e9e1ae54d62348c7ca3a27db0e349"
+    },
+    {
+      "file": "fixtures/goldens/cover/goldens.jsonl",
+      "command": "node tools/parity/gen-goldens.js",
+      "sha256": "2e78b776de058f8417e1c2b0d390a9a4b6af8d084259f795b39b572b2c312131"
+    },
+    {
+      "file": "fixtures/goldens/format/goldens.jsonl",
+      "command": "node tools/parity/gen-goldens.js",
+      "sha256": "9230217b64108e4971ba940c5a9eb10df0efab6d4c6cdcf8c5c136e67b75543a"
+    },
+    {
+      "file": "fixtures/goldens/random/goldens.jsonl",
+      "command": "node tools/parity/gen-goldens.js",
+      "sha256": "b8db7fab1da8b8af180a16b1eac89b6f732e35369cec442dc63d40108be85cdd"
+    },
+    {
+      "file": "fixtures/goldens/corpus/goldens.jsonl",
+      "command": "node tools/parity/gen-goldens.js",
+      "sha256": "80187d91a587bfa03f5c8a7dd54143c98f1423e3aa78d658f2dd7c5bc2a13f96"
+    },
+    {
+      "file": "fixtures/vectors/MANIFEST.json",
+      "command": "node tools/parity/gen-goldens.js (writes this file)",
+      "sha256": null,
+      "note": "a manifest cannot carry its own hash; every other entry is checkable"
+    }
+  ]
+}

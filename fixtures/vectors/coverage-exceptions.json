@@ -1,0 +1,161 @@
+{
+  "generated_by": "tools/parity/gen-vectors.js",
+  "command": "node tools/parity/gen-vectors.js",
+  "note": "single-outcome = the predicate cannot take both values for any input of the two generators (mutation-equivalent branch, plan §2 item 6). unreachable-domain = the row is outside both generators. Both classes are recorded, never dropped (C2).",
+  "row_synthesis": {
+    "synthesized": 182,
+    "unfound": [
+      "BA-9: predicate is true for every input in the field domain",
+      "BA-25: predicate is true for every input in the field domain",
+      "BA-40: predicate is false for every input in the field domain",
+      "BA-45: predicate is false for every input in the field domain",
+      "BA-50: predicate is false for every input in the field domain",
+      "BA-78: predicate is true for every input in the field domain",
+      "INI-55: predicate is false for every input in the field domain"
+    ]
+  },
+  "cover": {
+    "two": 125,
+    "three": 374
+  },
+  "random_draws": 1500,
+  "vectors_without_a_row": [
+    "boundary-minp-0",
+    "boundary-presence-penalty-0.00",
+    "boundary-port-8080",
+    "format-topp-0.00-stored",
+    "format-presencepenalty-0.00-stored",
+    "format-topp-0.00-dom",
+    "format-presencepenalty-0.00-dom",
+    "format-temp-parsefloat-0.7xyz-dom"
+  ],
+  "not_evaluable": [],
+  "exceptions": {
+    "BA-9": {
+      "class": "single-outcome",
+      "kind": "logical-or",
+      "snippet": "parseInt(fields.threads) || 1",
+      "vectors": 14,
+      "flip_vectors": 0,
+      "reason": "the predicate takes this value for every input the two generators accept (mutation-equivalent branch, plan §2 item 6)"
+    },
+    "BA-25": {
+      "class": "single-outcome",
+      "kind": "logical-or",
+      "snippet": "parseInt(fields.contextSize) || 1",
+      "vectors": 14,
+      "flip_vectors": 0,
+      "reason": "the predicate takes this value for every input the two generators accept (mutation-equivalent branch, plan §2 item 6)"
+    },
+    "BA-78": {
+      "class": "single-outcome",
+      "kind": "neq-comparison",
+      "snippet": "config.cacheRam !== undefined",
+      "vectors": 28,
+      "flip_vectors": 0,
+      "reason": "the predicate takes this value for every input the two generators accept (mutation-equivalent branch, plan §2 item 6)"
+    },
+    "INI-55": {
+      "class": "single-outcome",
+      "kind": "truthiness",
+      "snippet": "Number.isNaN(config.cacheRam)",
+      "vectors": 28,
+      "flip_vectors": 0,
+      "reason": "the predicate takes this value for every input the two generators accept (mutation-equivalent branch, plan §2 item 6)"
+    },
+    "BA-1": {
+      "class": "unreachable-domain",
+      "kind": "if",
+      "snippet": "if (!serverPath)",
+      "reason": "outside both generators (launchServer): reads serverPath, which buildArgs/buildPresetIni never receive"
+    },
+    "BA-2": {
+      "class": "unreachable-domain",
+      "kind": "if",
+      "snippet": "if (!modelPathSelect.value.trim())",
+      "reason": "outside both generators (launchServer): reads modelPathSelect.value.trim(), which buildArgs/buildPresetIni never receive"
+    },
+    "BA-3": {
+      "class": "unreachable-domain",
+      "kind": "if",
+      "snippet": "if (currentConfigId)",
+      "reason": "outside both generators (launchServer): reads currentConfigId, which buildArgs/buildPresetIni never receive"
+    },
+    "BA-4": {
+      "class": "unreachable-domain",
+      "kind": "if",
+      "snippet": "if (data.success)",
+      "reason": "outside both generators (launchServer): reads data.success, which buildArgs/buildPresetIni never receive"
+    },
+    "BA-5": {
+      "class": "unreachable-domain",
+      "kind": "error-path",
+      "snippet": "catch (error)",
+      "reason": "outside both generators (launchServer): reads error, which buildArgs/buildPresetIni never receive"
+    },
+    "INI-1": {
+      "class": "unreachable-domain",
+      "kind": "if",
+      "snippet": "if (!savedConfigs)",
+      "reason": "outside both generators (launchModelPresets): reads savedConfigs, which buildArgs/buildPresetIni never receive"
+    },
+    "INI-2": {
+      "class": "unreachable-domain",
+      "kind": "eq-comparison",
+      "snippet": "if (Object.keys(configs).length === 0)",
+      "reason": "outside both generators (launchModelPresets): reads Object.keys().length, which buildArgs/buildPresetIni never receive"
+    },
+    "INI-3": {
+      "class": "unreachable-domain",
+      "kind": "if",
+      "snippet": "if (data.success)",
+      "reason": "outside both generators (launchModelPresets): reads data.success, which buildArgs/buildPresetIni never receive"
+    },
+    "INI-4": {
+      "class": "unreachable-domain",
+      "kind": "error-path",
+      "snippet": "catch (error)",
+      "reason": "outside both generators (launchModelPresets): reads error, which buildArgs/buildPresetIni never receive"
+    },
+    "vector:boundary-minp-0": {
+      "class": "duplicate-of-reference",
+      "family": "boundary",
+      "reason": "the input is identical to the reference, so the reference golden already pins these bytes; kept because the plan §2.3 probe list names this value (it is what the fresh page holds)"
+    },
+    "vector:boundary-presence-penalty-0.00": {
+      "class": "duplicate-of-reference",
+      "family": "boundary",
+      "reason": "the input is identical to the reference, so the reference golden already pins these bytes; kept because the plan §2.3 probe list names this value (it is what the fresh page holds)"
+    },
+    "vector:boundary-port-8080": {
+      "class": "rowless-vector",
+      "family": "boundary",
+      "reason": "it changes only the always-appended args (--host 0.0.0.0, -fit off, --port), which SPEC-ROWS.md records as unguarded pushes no predicate row can name; the golden bytes are the assertion"
+    },
+    "vector:format-topp-0.00-stored": {
+      "class": "duplicate-of-reference",
+      "family": "format",
+      "reason": "the input is identical to the reference, so the reference golden already pins these bytes; kept because the plan §2.3 probe list names this value (it is what the fresh page holds)"
+    },
+    "vector:format-presencepenalty-0.00-stored": {
+      "class": "duplicate-of-reference",
+      "family": "format",
+      "reason": "the input is identical to the reference, so the reference golden already pins these bytes; kept because the plan §2.3 probe list names this value (it is what the fresh page holds)"
+    },
+    "vector:format-topp-0.00-dom": {
+      "class": "duplicate-of-reference",
+      "family": "format",
+      "reason": "the input is identical to the reference, so the reference golden already pins these bytes; kept because the plan §2.3 probe list names this value (it is what the fresh page holds)"
+    },
+    "vector:format-presencepenalty-0.00-dom": {
+      "class": "duplicate-of-reference",
+      "family": "format",
+      "reason": "the input is identical to the reference, so the reference golden already pins these bytes; kept because the plan §2.3 probe list names this value (it is what the fresh page holds)"
+    },
+    "vector:format-temp-parsefloat-0.7xyz-dom": {
+      "class": "duplicate-of-reference",
+      "family": "format",
+      "reason": "the input is identical to the reference, so the reference golden already pins these bytes; kept because the plan §2.3 probe list names this value (it is what the fresh page holds)"
+    }
+  }
+}
