@@ -15,6 +15,8 @@ const platform = os.platform();
 
 // Middleware
 app.use(express.static('public'));
+// The extracted generators live in legacy/lib (plan.md §11) and are loaded by the page as /lib/*.js.
+app.use('/lib', express.static(path.join(__dirname, 'legacy', 'lib')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

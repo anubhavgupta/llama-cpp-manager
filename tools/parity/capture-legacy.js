@@ -14,6 +14,7 @@
 //
 // journeys: J0-baseline J1-settings J2-models J2b-metrics-garbage J2c-metrics-fail
 //           J3-start-stop J3b-exit-code J3c-start-missing-path J3d-restart J4-launch-presets
+//           J4b-ui-presets-launch
 //           J5-ui-states J5-ui-log-cap J5-ui-cadence J5-ui-launch J5-ui-dialogs J6-corpus-smoke
 
 const crypto = require('crypto');
@@ -1168,6 +1169,119 @@ async function j4LaunchPresets(cap) {
     await cap.stopSession({ journey });
 }
 
+// The app-built models-preset.ini bytes. #launchPresetsBtn is the only control that runs
+// launchModelPresets, and the file the manager writes is the only record of the ini the BROWSER
+// generated — J4's ini fixtures are the harness's own presets string. The seed adds the two legacy
+// `disableReasoning` configs smallSeed has no key for (Q17: no `reasoning` key, ini carries
+// `reasoning = on|off` while the launch path ignores it), and one config whose model has an mmproj
+// sibling so the ini's mmproj line is recorded too.
+async function j4bUiPresetsLaunch(cap) {
+    const journey = 'J4b-ui-presets-launch';
+    await cap.startSession(journey);
+    // The ini's mmproj line comes from window.models, and /models answers from the manager's OWN
+    // settings.json, so the journey points the manager at the fixture tree itself instead of
+    // depending on which journey ran before it in the sandbox.
+    const settings = parseJson(await cap.post(journey, 'settings-models-directory', '/settings',
+        { modelsDirectory: winPath(cap.modelsDir), serverPort: 7838 }), 'POST /settings modelsDirectory');
+    assert(settings.success === true, 'POST /settings did not succeed: ' + JSON.stringify(settings));
+    const seed = cap.smallSeed(17844);
+    const legacyOn = { ...seed.configs['capture-alpha'], modelPath: plainModel(cap),
+        reasoning: undefined, disableReasoning: false };
+    const legacyOff = { ...seed.configs['capture-beta'], modelPath: spacedModel(cap),
+        reasoning: undefined, disableReasoning: true };
+    const seeded = {
+        ...seed,
+        configs: { ...seed.configs, 'capture-legacy-disable-false': legacyOn, 'capture-legacy-disable-true': legacyOff }
+    };
+    const iniFile = path.join(cap.app, 'models-preset.ini');
+    const before = fs.existsSync(iniFile) ? fs.readFileSync(iniFile) : null;
+
+    const page = await cap.newUiPage({ seed: seeded, mockMetrics: true, freezeClock: true, settleMs: 800 });
+    await page.page.waitForSelector('#configList .config-item');
+    const modelOptions = await page.page.$$eval('#modelPath option', (nodes) => nodes.map((node) => node.value));
+    assert(modelOptions.includes(spacedModel(cap)), 'the manager did not offer the fixture models —'
+        + ' window.models is empty, so the ini mmproj line cannot be recorded: '
+        + JSON.stringify(modelOptions.slice(0, 3)));
+    const rendered = await page.page.$$eval('#configList .config-item .config-item-name',
+        (nodes) => nodes.map((node) => node.textContent));
+    assert(rendered.length === Object.keys(seeded.configs).length,
+        'the presets page rendered ' + rendered.length + ' of ' + Object.keys(seeded.configs).length
+            + ' seeded configs: ' + JSON.stringify(rendered));
+
+    // Pixels first: the log pane gains one entry per forwarded stdout chunk (§8 'websocket log chunk
+    // boundaries'), so a screenshot taken after the launch would carry a chunk-coalescing artefact in
+    // its compared .render.json. This state is the presets control surface with the binary selected.
+    const options = await page.page.$$eval('#launchPresetsSelect option',
+        (nodes) => nodes.map((node) => node.value));
+    assert(options.includes(cap.standin), 'the Launch Presets dropdown does not offer the stand-in'
+        + ' binary: ' + JSON.stringify(options));
+    await page.page.selectOption('#launchPresetsSelect', cap.standin);
+    await cap.screenshot(page, journey, 'presets-selected-1280x800');
+
+    const exchange = await cap.exchange(page, journey, 'launch-presets-from-ui', '/launch-presets',
+        () => page.page.click('#launchPresetsBtn'));
+    assert(exchange.status === 200, 'the UI POST /launch-presets returned ' + exchange.status);
+    const body = JSON.parse(exchange.body.toString('utf8'));
+    assert(body.success === true, 'UI POST /launch-presets body is not a success: ' + JSON.stringify(body));
+    const request = JSON.parse(exchange.request.postData);
+    assert(request.serverPath === cap.standin, 'the UI posted serverPath ' + JSON.stringify(request.serverPath)
+        + ' instead of the selected stand-in');
+    assert(request.serverPort === 17844, 'the UI posted serverPort ' + JSON.stringify(request.serverPort)
+        + ' instead of the seeded settings.serverPort');
+
+    assert(fs.existsSync(iniFile), 'launchModelPresets did not write ' + winPath(iniFile));
+    const iniBytes = fs.readFileSync(iniFile);
+    const ini = iniBytes.toString('utf8');
+    cap.out.copyFrom('ini', journey, 'presets-from-ui.ini', iniFile,
+        cap.describeSession('bytes of ' + winPath(iniFile) + ': the models-preset.ini the browser'
+            + ' generated in launchModelPresets and POSTed to /launch-presets, written verbatim by'
+            + ' server.js (launchModelPresets -> buildPresetIni)'));
+
+    // What the recorded ini pins. A failure here is the behavior, not the fixture.
+    const claims = {
+        versionHeader: 'version = 1\n\n[capture-alpha]\n',
+        mmproj: 'mmproj = ' + winPath(path.join(cap.modelsDir, 'models with spaces', 'mmproj-spaced model Q4.gguf')),
+        ngramKeys: 'spec-ngram-size-n = 24\ndraft-min = 48\ndraft-max = 64\n',
+        legacyReasoningOn: '[capture-legacy-disable-false]',
+        legacyReasoningOff: '[capture-legacy-disable-true]',
+        trailingPort: 'port = 17844\n'
+    };
+    for (const [name, text] of Object.entries(claims)) {
+        assert(ini.includes(text), 'the app-generated ini does not carry ' + name + ' (' + JSON.stringify(text) + ')');
+    }
+    assert(ini.endsWith('port = 17844\n'), 'the app-generated ini does not end with the trailing port line (Q10)');
+    assert(ini === request.presets, 'the written models-preset.ini is not the bytes the page posted');
+    assert(before === null || !before.equals(iniBytes),
+        'models-preset.ini is unchanged — the app did not write it in this journey');
+    cap.out.json('ini', journey, 'presets-claims.json', {
+        note: 'launchModelPresets prints the sections to the log pane BEFORE appending the trailing'
+            + ' port line, so the pane and the POST body differ by that line; the posted bytes and the'
+            + ' file bytes are identical (recorded here). The two capture-legacy-disable-* sections are'
+            + ' the Q17 legacy-disableReasoning pair, the mmproj line comes from window.models.'
+            + ' Section order is Object.entries(localStorage) insertion order (§9 trap 6).',
+        postedByteLength: Buffer.byteLength(request.presets, 'utf8'),
+        fileByteLength: iniBytes.length,
+        sectionOrder: ini.split('\n').filter((line) => /^\[.+\]$/.test(line)),
+        existedBefore: before !== null,
+        claims
+    }, cap.describeSession('claims asserted against the app-generated models-preset.ini in this journey'));
+
+    await cap.waitForRunning(true);
+    await cap.waitForArgvLines(2);
+    const launched = cap.lastArgv(journey);
+    const portAt = launched.argv.indexOf('--port');
+    assert(portAt >= 0 && launched.argv[portAt + 1] === '17844',
+        'Q5: /launch-presets with the page-supplied serverPort spawned --port '
+        + (portAt >= 0 ? launched.argv[portAt + 1] : '<missing>'));
+    assert(launched.argv.includes('--models-preset'),
+        'the presets launch did not carry --models-preset: ' + JSON.stringify(launched.argv));
+    cap.recordArgv(journey);
+    await cap.post(journey, 'stop-after-presets-ui', '/stop', undefined);
+    await cap.waitForRunning(false);
+    await page.context.close();
+    await cap.stopSession({ journey });
+}
+
 // The two stand-in routes that node v24 refuses, recorded as evidence for why the journeys use the
 // compiled relay (see tools/parity/standin-llama-server.cs).
 function spawnProbe(exe, args, env) {
@@ -2163,6 +2277,7 @@ async function runCapture(cap) {
         { names: ['J3c-start-missing-path'], run: () => j3MissingPath(cap) },
         { names: ['J3d-restart'], run: () => j3Restart(cap) },
         { names: ['J4-launch-presets'], run: () => j4LaunchPresets(cap) },
+        { names: ['J4b-ui-presets-launch'], run: () => j4bUiPresetsLaunch(cap) },
         { names: ['J5-ui-states'], run: () => j5UiStates(cap) },
         { names: ['J5-ui-log-cap'], run: () => j5UiLogCap(cap) },
         { names: ['J5-ui-cadence'], run: () => j5UiCadence(cap) },

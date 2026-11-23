@@ -420,30 +420,32 @@ async function launchServer() {
         return;
     }
     
-    // Collect all configuration values
-    const config = {
-        modelPath: modelPathSelect.value.trim(),  // Use select value instead of input value
-        ngl: parseInt(nglInput.value) || 0,
-        threads: parseInt(threadsInput.value) || 1,
-        temp: parseFloat(tempInput.value) || 0,
-        topK: parseInt(topKInput.value) || 0,
-        topP: parseFloat(topPInput.value) || 0,
-        minP: minPInput.value || 0,
-        repeatPenalty: repeatPenaltyInput.value || 0,
-        presencePenalty: presencePenaltyInput.value || 0,
-        parallel: parseInt(document.getElementById('parallel').value) || 0,
+    // Collect all configuration values: one read per element id, in the order of the
+    // original `const config = {...}` literal. buildArgs.js performs the coercions. The
+    // trailing --mmproj pass re-reads modelPath, so the map carries that value too.
+    const fields = {
+        modelPath: modelPathSelect.value,  // Use select value instead of input value
+        ngl: nglInput.value,
+        threads: threadsInput.value,
+        temp: tempInput.value,
+        topK: topKInput.value,
+        topP: topPInput.value,
+        minP: minPInput.value,
+        repeatPenalty: repeatPenaltyInput.value,
+        presencePenalty: presencePenaltyInput.value,
+        parallel: document.getElementById('parallel').value,
         loadMode: loadModeSelect.value,
         swaFull: swaFullCheckbox.checked,
         backendSampling: backendSamplingCheckbox.checked,
-        contextSize: parseInt(contextSizeInput.value) || 1,
-        nCpuMoe: parseInt(nCpuMoeInput.value) || 0,
+        contextSize: contextSizeInput.value,
+        nCpuMoe: nCpuMoeInput.value,
         cpuMoe: cpuMoeCheckbox.checked,
         noKvOffload: noKvOffloadCheckbox.checked,
         noMmprojOffload: noMmprojOffloadCheckbox.checked,
-        cacheRam: parseInt(cacheRamInput.value),
+        cacheRam: cacheRamInput.value,
         speculationType: speculationTypeSelect.value,
         ngramMod: ngramModCheckbox.checked,
-        specDraftNMax: parseInt(specDraftNMaxInput.value) || 0,
+        specDraftNMax: specDraftNMaxInput.value,
         ctkEnable: ctkEnableCheckbox.checked,
         contextTokenKey: contextTokenKeySelect.value,
         contextTokenValue: contextTokenValueSelect.value,
@@ -452,9 +454,9 @@ async function launchServer() {
         verbose: verboseCheckbox.checked,
         reasoning: reasoningSelect.value,
         loadCustomChatTemplate: loadCustomChatTemplateCheckbox.checked,
-        chatTemplateKwargs: chatTemplateKwargsInput.value.trim(),
-        draftModelPath: draftModelPathSelect.value.trim(),
-        ngld: parseInt(ngldInput.value) || 0,
+        chatTemplateKwargs: chatTemplateKwargsInput.value,
+        draftModelPath: draftModelPathSelect.value,
+        ngld: ngldInput.value,
         ctkd: ctkdSelect.value,
         ctvd: ctvdSelect.value
     };
@@ -469,178 +471,7 @@ async function launchServer() {
         showOutput('Connecting to server for real-time logging...');
         
         // Build command arguments
-        const args = [];
-        
-        if (config.modelPath) {
-            args.push('-m', config.modelPath);
-        }
-        
-        if (config.ngl > 0) {
-            args.push('-ngl', config.ngl.toString());
-        }
-        
-        if (config.threads > 0) {
-            args.push('-t', config.threads.toString());
-        }
-        
-        if (config.temp >= 0) {
-            args.push('--temp', config.temp.toString());
-        }
-        
-        if (config.topK > 0) {
-            args.push('--top-k', config.topK.toString());
-        }
-        
-        if (config.topP >= 0) {
-            args.push('--top-p', config.topP.toString());
-        }
-
-        if ((!isNaN(parseFloat(config.minP)) && config.minP != "0") || config.minP == "0.00") {
-            args.push('--min-p', config.minP.toString());
-        }
-
-        if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != "0") || config.repeatPenalty == "0.00") {
-            args.push('--repeat-penalty', config.repeatPenalty.toString());
-        }
-        
-        if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != "0") || config.presencePenalty == "0.00") {
-            args.push('--presence-penalty', config.presencePenalty.toString());
-        }
-        
-        // Add parallel parameter
-        if (config.parallel > 0) {
-            args.push('--parallel', config.parallel.toString());
-        }
-        
-        if (config.loadMode) {
-            args.push('--load-mode', config.loadMode);
-        }
-
-        if (config.swaFull) {
-            args.push('--swa-full');
-        }
-        
-        if (config.contextSize > 0) {
-            args.push('-c', config.contextSize.toString());
-        }
-        
-        if (config.nCpuMoe > 0) {
-            args.push('--n-cpu-moe', config.nCpuMoe.toString());
-        }
-        
-        if (config.cpuMoe) {
-            args.push('--cpu-moe');
-        }
-        
-        // Add context token parameters if enabled
-        if (config.ctkEnable && config.contextTokenKey && config.contextTokenValue) {
-            args.push('-ctk', config.contextTokenKey);
-            args.push('-ctv', config.contextTokenValue);
-        }
-        
-        // Add fast attention flag with proper value
-        if (config.fastAttention && config.fastAttention !== 'auto') {
-            args.push('-fa', config.fastAttention);
-        } else if (config.fastAttention === 'auto') {
-            // For 'auto' we still add -fa but without a value to maintain compatibility
-            // Or we can just skip it since 'auto' is default behavior
-            args.push('-fa');
-        }
-        
-        // Add jinja flag if checked
-        if (config.jinja) {
-            args.push('--jinja');
-        }
-
-        // Add chat-template-kwargs if provided
-        if (config.chatTemplateKwargs) {
-            args.push('--chat-template-kwargs', config.chatTemplateKwargs);
-        }
-
-         // Add --chat-template-file if custom chat template is enabled
-        if (config.loadCustomChatTemplate && config.modelPath) {
-            // Derive the model directory from the model path and append chat-template.jinja
-            const modelDir = config.modelPath.replace(/[/\\][^/\\]*$/, '');
-            args.push('--chat-template-file', modelDir + '\\chat-template.jinja');
-        }
-
-        // Add verbose flag if checked
-        if (config.verbose) {
-            args.push('--verbose');
-        }
-
-        // Add backend-sampling flag if checked
-        if (config.backendSampling) {
-            args.push('--backend-sampling');
-        }
-
-        // Add no-kv-offload flag if checked
-        if (config.noKvOffload) {
-            args.push('--no-kv-offload');
-        }
-
-        // Add no-mmproj-offload flag if checked
-        if (config.noMmprojOffload) {
-            args.push('--no-mmproj-offload');
-        }
-
-        // Add cache RAM limit (--cache-ram): -1 = no limit, 0 = disable
-        if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam)) {
-            args.push('--cache-ram', String(config.cacheRam));
-        }
-
-        // Add speculation flags
-        if (config.speculationType !== 'none' || config.ngramMod) {
-            const specTypes = [];
-            if (config.ngramMod) specTypes.push('ngram-mod');
-            if (config.speculationType !== 'none') specTypes.push(config.speculationType);
-            if (specTypes.length > 0) {
-                args.push('--spec-type', specTypes.join(','));
-            }
-            // ngram-mod specific flags (always added when ngramMod is checked)
-            if (config.ngramMod) {
-                args.push('--spec-ngram-mod-n-match', '24');
-                args.push('--spec-ngram-mod-n-min', '48');
-                args.push('--spec-ngram-mod-n-max', '64');
-            }
-            // draft n-max (applies to draft-mtp, draft-dflash, draft-dspark only)
-            if (config.specDraftNMax > 0 && config.speculationType !== 'none') {
-                args.push('--spec-draft-n-max', config.specDraftNMax.toString());
-            }
-        }
-
-        // Add reasoning flag
-        if (config.reasoning === 'off') {
-            args.push('--reasoning', 'off');
-        } else if (config.reasoning === 'on') {
-            args.push('--reasoning', 'on');
-        }
-
-        // Add draft model parameters if specified
-        if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') {
-            args.push('-md', config.draftModelPath);
-            if (config.ngld >= 0) {
-                args.push('-ngld', config.ngld.toString());
-            }
-            if (config.ctkd) {
-                args.push('-ctkd', config.ctkd);
-            }
-            if (config.ctvd) {
-                args.push('-ctvd', config.ctvd);
-            }
-        }
-
-        args.push("--host", "0.0.0.0");
-        args.push("-fit", "off");
-        args.push("--port", settings.serverPort.toString());
-
-        // mmproj loading
-        const modelPath = modelPathSelect.value.trim();
-        window.models.forEach(model => {
-            if (model.path === modelPath && model.mmprojFile) {
-                args.push('--mmproj', model.mmprojFile);
-            }
-        });
+        const args = window.ParityLib.buildArgs(fields, settings, window.models);
         
         showOutput(`Command arguments: ${args.join(' ')}`);
         
@@ -691,169 +522,7 @@ async function launchModelPresets() {
         }
         
         // Convert configurations to models-preset.ini format
-        let presetContent = 'version = 1\n\n';
-        
-        // Process each configuration
-        for (const [configName, config] of Object.entries(configs)) {
-            // Create a section name based on the model path or configuration name
-            let sectionName = configName;
-            // if (config.modelPath) {
-            //     // Extract just the filename for the section name if it's a GGUF model path
-            //     const fileName = config.modelPath.split('/').pop().split('\\').pop();
-            //     if (fileName && fileName.endsWith('.gguf')) {
-            //         sectionName = fileName.replace('.gguf', '');
-            //     }
-            // }
-            
-            // Create section header with proper format
-            presetContent += `[${sectionName}]\n`;
-            
-            // Add model path if available
-            if (config.modelPath) {
-                presetContent += `model = ${config.modelPath}\n`;
-            }
-            // mmproj loading
-            const modelPath = config.modelPath;
-            window.models.forEach(model => {
-                if (model.path === modelPath && model.mmprojFile) {
-                    presetContent += `mmproj = ${model.mmprojFile}\n`;
-                }
-            });
-            
-            // Add other parameters based on the configuration
-            if (config.temp !== undefined && config.temp >= 0) {
-                presetContent += `temp = ${config.temp}\n`;
-            }
-
-            if (config.contextSize > 0) {
-                presetContent += `c = ${config.contextSize.toString()}\n`;
-            }
-            
-            if (config.topK !== undefined && config.topK > 0) {
-                presetContent += `top-k = ${config.topK}\n`;
-            }
-            
-            if (config.topP !== undefined && config.topP >= 0) {
-                presetContent += `top-p = ${config.topP}\n`;
-            }
-
-            if ((!isNaN(parseFloat(config.minP)) && config.minP != "0") || config.minP == "0.00") {
-                presetContent += `min-p = ${config.minP}\n`;
-            }
-
-            if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != "0") || config.repeatPenalty == "0.00") {
-                presetContent += `repeat-penalty = ${config.repeatPenalty}\n`;
-            }
-            
-            if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != "0") || config.presencePenalty == "0.00") {
-                presetContent += `presence-penalty = ${config.presencePenalty}\n`;
-            }
-            
-            if (config.ngl !== undefined && config.ngl > 0) {
-                presetContent += `ngl = ${config.ngl}\n`;
-            }
-            
-            if (config.threads !== undefined && config.threads > 0) {
-                presetContent += `threads = ${config.threads}\n`;
-            }
-
-            if (config.nCpuMoe !== undefined && config.nCpuMoe > 0) {
-                presetContent += `n-cpu-moe = ${config.nCpuMoe}\n`;
-            }
-            
-            if (config.cpuMoe) {
-                presetContent += 'cpu-moe = true\n';
-            }
-
-            // Add parallel parameter
-            if (config.parallel > 0) {
-                   presetContent += `parallel = ${config.parallel}\n`;
-            }
-            
-            
-            if (config.loadMode !== undefined) {
-                presetContent += `load-mode = ${config.loadMode}\n`;
-            }
-            
-            if (config.noKvOffload !== undefined && config.noKvOffload) {
-                presetContent += `no-kv-offload = true\n`;
-            }
-
-            if (config.noMmprojOffload !== undefined && config.noMmprojOffload) {
-                presetContent += `no-mmproj-offload = true\n`;
-            }
-
-            if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam)) {
-                presetContent += `cache-ram = ${config.cacheRam}\n`;
-            }
-
-            if (config.jinja !== undefined && config.jinja) {
-                presetContent += `jinja = true\n`;
-            }
-
-            if (config.chatTemplateKwargs) {
-                presetContent += `chat-template-kwargs = ${config.chatTemplateKwargs}\n`;
-            }
-
-            if (config.loadCustomChatTemplate !== undefined && config.loadCustomChatTemplate) {
-                presetContent += `chat-template-file = ${config.modelPath.replace(/[/\\][^/\\]*$/, '')}\\chat-template.jinja\n`;
-            }
-            
-            if (config.verbose !== undefined && config.verbose) {
-                presetContent += `verbose = true\n`;
-            }
-
-            if (config.backendSampling !== undefined && config.backendSampling) {
-                presetContent += `backend-sampling = true\n`;
-            }
-
-            if (config.fastAttention) {
-                presetContent += `fa = ${config.fastAttention ?? 'auto'}\n`;
-            }
-
-            // Add draft model parameters if available
-            if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp') {
-                presetContent += `model-draft = ${config.draftModelPath}\n`;
-                if (config.ngld !== undefined && config.ngld >= 0) {
-                    presetContent += `ngld = ${config.ngld}\n`;
-                }
-                if (config.ctkd) {
-                    presetContent += `ctkd = ${config.ctkd}\n`;
-                }
-                if (config.ctvd) {
-                    presetContent += `ctvd = ${config.ctvd}\n`;
-                }
-            }
-            
-
-            // Add speculation settings
-            if (config.speculationType !== 'none' || config.ngramMod) {
-                const specTypes = [];
-                if (config.ngramMod) specTypes.push('ngram-mod');
-                if (config.speculationType !== 'none') specTypes.push(config.speculationType);
-                if (specTypes.length > 0) {
-                    presetContent += `spec-type = ${specTypes.join(',')}\n`;
-                }
-                if (config.ngramMod) {
-                    presetContent += `spec-ngram-size-n = 24\n`;
-                    presetContent += `draft-min = 48\n`;
-                    presetContent += `draft-max = 64\n`;
-                }
-                if (config.specDraftNMax > 0 && config.speculationType !== 'none') {
-                    presetContent += `spec-draft-n-max = ${config.specDraftNMax}\n`;
-                }
-            }
-
-            // Add reasoning setting
-            if (config.reasoning !== undefined && config.reasoning !== 'auto') {
-                presetContent += `reasoning = ${config.reasoning}\n`;
-            } else if (config.disableReasoning !== undefined) {
-                presetContent += `reasoning = ${config.disableReasoning ? 'off' : 'on'}\n`;
-            }
-            
-            // Add a blank line between sections for readability
-            presetContent += '\n';
-        }
+        let presetContent = window.ParityLib.buildPresetIni(configs, window.models);
         
         showOutput('Generated models-preset.ini content:');
         showOutput(presetContent);

@@ -7,10 +7,11 @@
 #   bash tools/parity/capture-legacy.sh --out <dir>          # record somewhere else
 #   bash tools/parity/capture-legacy.sh --journeys J5-ui-launch,J6-corpus-smoke --keep-scratch
 #   (--only / --only=... is the same filter; a filtered run writes no MANIFEST.json and claims no
-#    determinism, and should be pointed at a scratch --out so a debug loop never churns fixtures/)
-#       debugging pass: run those journeys only (no MANIFEST.json, no determinism claim)
+#    determinism, and should be pointed at a scratch --out so a debug loop never churns fixtures/
+#    — a filtered run is a debugging pass that records only those journeys)
+#   bash tools/parity/capture-legacy.sh --ref <git-ref|worktree>  # sandbox source (default parity-baseline)
 #
-# Sandbox (§10 blast radius): the app is extracted from `git archive parity-baseline` into a
+# Sandbox (§10 blast radius): the app is extracted from `git archive <ref>` (default parity-baseline) into a
 # scratch dir outside the repo and node_modules is junctioned in; the repo's settings.json,
 # models-preset.ini and model dirs are never touched. A junction is always unlinked with
 # `rmdir`, never with `rm -rf`, so no recursive delete can walk into the repo's node_modules.
@@ -25,6 +26,7 @@ COMPARISON="$REPO/fixtures/COMPARISON.json"
 VERIFY=no
 KEEP=no
 ONLY=""
+REF=parity-baseline
 SCRATCH=${PARITY_SCRATCH:-}
 
 die() { echo "capture-legacy: $*" >&2; exit 1; }
@@ -36,8 +38,10 @@ while [ $# -gt 0 ]; do
     --scratch) shift; [ $# -gt 0 ] || die "--scratch needs a directory"; SCRATCH=$(cygpath -m "$1") ;;
     --keep-scratch) KEEP=yes ;;
     --only|--journeys) shift; [ $# -gt 0 ] || die "$1 needs a comma-separated journey list"; ONLY=$1 ;;
+    --ref) shift; [ $# -gt 0 ] || die "--ref needs a git ref or 'worktree'"; REF=$1 ;;
+    --ref=*) REF=${1#*=} ;;
     --only=*|--journeys=*) ONLY=${1#*=} ;;
-    -h|--help) sed -n '2,12p' "$0"; exit 0 ;;
+    -h|--help) sed -n '2,13p' "$0"; exit 0 ;;
     *) die "unknown argument: $1" ;;
   esac
   shift
@@ -54,6 +58,11 @@ case "$SCRATCH" in
 esac
 case "$SCRATCH" in
   "$REPO"|"$REPO"/*) die "refusing to use a scratch dir inside the repo: $SCRATCH" ;;
+esac
+case "$REF" in
+  worktree) ;;
+  *) git -C "$REPO_UNIX" rev-parse --verify --quiet "${REF}^{commit}" >/dev/null \
+       || die "--ref: unknown git ref '$REF' (use a ref that resolves to a commit, or 'worktree')" ;;
 esac
 COMPARE="$SCRATCH-compare"
 SCRATCH_UNIX=$(cygpath -u "$SCRATCH")
@@ -85,7 +94,20 @@ trap cleanup EXIT
 prepare_sandbox() {
   clean_dir "$SCRATCH_UNIX"
   mkdir -p "$SCRATCH_UNIX/app" "$SCRATCH_UNIX/bin" "$SCRATCH_UNIX/argv" "$SCRATCH_UNIX/fixtures"
-  git -C "$REPO_UNIX" archive parity-baseline | tar -x -C "$SCRATCH_UNIX/app"
+  if [ "$REF" = worktree ]; then
+    # Working-tree mode (tools/parity/preservation-proof.sh run B): the candidate's own app files,
+    # copied. node_modules is never copied — it is junctioned below, exactly as in a recorded run.
+    for part in server.js package.json; do
+      [ -f "$REPO_UNIX/$part" ] || die "worktree sandbox: $part is missing from the working tree"
+      cp "$REPO_UNIX/$part" "$SCRATCH_UNIX/app/$part"
+    done
+    for part in public legacy; do
+      [ -d "$REPO_UNIX/$part" ] || die "worktree sandbox: $part/ is missing from the working tree"
+      cp -r "$REPO_UNIX/$part" "$SCRATCH_UNIX/app/$part"
+    done
+  else
+    git -C "$REPO_UNIX" archive "$REF" | tar -x -C "$SCRATCH_UNIX/app"
+  fi
   [ -f "$SCRATCH_UNIX/app/server.js" ] || die "git archive produced no server.js"
   MSYS_NO_PATHCONV=1 cmd /c mklink /J "$(cygpath -w "$SCRATCH_UNIX/app/node_modules")" "$(cygpath -w "$REPO_UNIX/node_modules")" >/dev/null \
     || die "mklink /J failed for the node_modules junction"
@@ -129,7 +151,7 @@ prepare_sandbox() {
       }
       if (busy.length) { console.log(busy.join(" ")); process.exit(1); }
     })();
-  ' 7837 7838 8080 17839 17840 17841 17842 17843 17899 >"$SCRATCH_UNIX/ports-busy.txt" 2>/dev/null || \
+  ' 7837 7838 8080 17839 17840 17841 17842 17843 17844 17899 >"$SCRATCH_UNIX/ports-busy.txt" 2>/dev/null || \
     die "port(s) $(cat "$SCRATCH_UNIX/ports-busy.txt") already in use — refusing to kill an unknown process; free them and re-run"
 }
 

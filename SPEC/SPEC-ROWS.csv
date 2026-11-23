@@ -1,202 +1,202 @@
 row_id,file,line,fn_or_route,kind,code_snippet,vars_read,targets
 BA-1,public/script.js,412,launchServer,if,if (!serverPath),serverPath,alert;alert:Please enter the path to llama-server.exe;return
 BA-2,public/script.js,418,launchServer,if,if (!modelPathSelect.value.trim()),modelPathSelect.value.trim(),alert;alert:Please select a model from the dropdown;return
-BA-3,public/script.js,426,launchServer,truthiness,parseInt(nglInput.value),parseInt();nglInput(#ngl).value,
-BA-4,public/script.js,426,launchServer,logical-or,parseInt(nglInput.value) || 0,parseInt();nglInput(#ngl).value,
-BA-5,public/script.js,427,launchServer,truthiness,parseInt(threadsInput.value),parseInt();threadsInput(#threads).value,
-BA-6,public/script.js,427,launchServer,logical-or,parseInt(threadsInput.value) || 1,parseInt();threadsInput(#threads).value,
-BA-7,public/script.js,428,launchServer,truthiness,parseFloat(tempInput.value),parseFloat();tempInput(#temp).value,
-BA-8,public/script.js,428,launchServer,logical-or,parseFloat(tempInput.value) || 0,parseFloat();tempInput(#temp).value,
-BA-9,public/script.js,429,launchServer,truthiness,parseInt(topKInput.value),parseInt();topKInput(#topK).value,
-BA-10,public/script.js,429,launchServer,logical-or,parseInt(topKInput.value) || 0,parseInt();topKInput(#topK).value,
-BA-11,public/script.js,430,launchServer,truthiness,parseFloat(topPInput.value),parseFloat();topPInput(#topP).value,
-BA-12,public/script.js,430,launchServer,logical-or,parseFloat(topPInput.value) || 0,parseFloat();topPInput(#topP).value,
-BA-13,public/script.js,431,launchServer,truthiness,minPInput.value,minPInput(#minP).value,
-BA-14,public/script.js,431,launchServer,logical-or,minPInput.value || 0,minPInput(#minP).value,
-BA-15,public/script.js,432,launchServer,truthiness,repeatPenaltyInput.value,repeatPenaltyInput(#repeatPenalty).value,
-BA-16,public/script.js,432,launchServer,logical-or,repeatPenaltyInput.value || 0,repeatPenaltyInput(#repeatPenalty).value,
-BA-17,public/script.js,433,launchServer,truthiness,presencePenaltyInput.value,presencePenaltyInput(#presencePenalty).value,
-BA-18,public/script.js,433,launchServer,logical-or,presencePenaltyInput.value || 0,presencePenaltyInput(#presencePenalty).value,
-BA-19,public/script.js,434,launchServer,truthiness,parseInt(document.getElementById('parallel').value),parseInt();#parallel.value,
-BA-20,public/script.js,434,launchServer,logical-or,parseInt(document.getElementById('parallel').value) || 0,parseInt();#parallel.value,
-BA-21,public/script.js,438,launchServer,truthiness,parseInt(contextSizeInput.value),parseInt();contextSizeInput(#contextSize).value,
-BA-22,public/script.js,438,launchServer,logical-or,parseInt(contextSizeInput.value) || 1,parseInt();contextSizeInput(#contextSize).value,
-BA-23,public/script.js,439,launchServer,truthiness,parseInt(nCpuMoeInput.value),parseInt();nCpuMoeInput(#nCpuMoe).value,
-BA-24,public/script.js,439,launchServer,logical-or,parseInt(nCpuMoeInput.value) || 0,parseInt();nCpuMoeInput(#nCpuMoe).value,
-BA-25,public/script.js,446,launchServer,truthiness,parseInt(specDraftNMaxInput.value),parseInt();specDraftNMaxInput(#specDraftNMax).value,
-BA-26,public/script.js,446,launchServer,logical-or,parseInt(specDraftNMaxInput.value) || 0,parseInt();specDraftNMaxInput(#specDraftNMax).value,
-BA-27,public/script.js,457,launchServer,truthiness,parseInt(ngldInput.value),parseInt();ngldInput(#ngld).value,
-BA-28,public/script.js,457,launchServer,logical-or,parseInt(ngldInput.value) || 0,parseInt();ngldInput(#ngld).value,
-BA-29,public/script.js,463,launchServer,if,if (currentConfigId),currentConfigId,saveCurrentValues
-BA-30,public/script.js,474,launchServer,if,if (config.modelPath),config.modelPath,args.push;args.push:-m
-BA-31,public/script.js,478,launchServer,range-comparison,if (config.ngl > 0),config.ngl,args.push;args.push:-ngl;config.ngl.toString
-BA-32,public/script.js,482,launchServer,range-comparison,if (config.threads > 0),config.threads,args.push;args.push:-t;config.threads.toString
-BA-33,public/script.js,486,launchServer,range-comparison,if (config.temp >= 0),config.temp,args.push;args.push:--temp;config.temp.toString
-BA-34,public/script.js,490,launchServer,range-comparison,if (config.topK > 0),config.topK,args.push;args.push:--top-k;config.topK.toString
-BA-35,public/script.js,494,launchServer,range-comparison,if (config.topP >= 0),config.topP,args.push;args.push:--top-p;config.topP.toString
-BA-36,public/script.js,498,launchServer,logical-or,"if ((!isNaN(parseFloat(config.minP)) && config.minP != ""0"") || config.minP == ""0.00"")",isNaN();parseFloat();config.minP,args.push;args.push:--min-p;config.minP.toString
-BA-37,public/script.js,498,launchServer,logical-and,"!isNaN(parseFloat(config.minP)) && config.minP != ""0""",isNaN();parseFloat();config.minP,args.push;args.push:--min-p;config.minP.toString
-BA-38,public/script.js,498,launchServer,truthiness,isNaN(parseFloat(config.minP)),isNaN();parseFloat();config.minP,args.push;args.push:--min-p;config.minP.toString
-BA-39,public/script.js,498,launchServer,neq-comparison,"config.minP != ""0""",config.minP,args.push;args.push:--min-p;config.minP.toString
-BA-40,public/script.js,498,launchServer,eq-comparison,"config.minP == ""0.00""",config.minP,args.push;args.push:--min-p;config.minP.toString
-BA-41,public/script.js,502,launchServer,logical-or,"if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != ""0"") || config.repeatPenalty == ""0.00"")",isNaN();parseFloat();config.repeatPenalty,args.push;args.push:--repeat-penalty;config.repeatPenalty.toString
-BA-42,public/script.js,502,launchServer,logical-and,"!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != ""0""",isNaN();parseFloat();config.repeatPenalty,args.push;args.push:--repeat-penalty;config.repeatPenalty.toString
-BA-43,public/script.js,502,launchServer,truthiness,isNaN(parseFloat(config.repeatPenalty)),isNaN();parseFloat();config.repeatPenalty,args.push;args.push:--repeat-penalty;config.repeatPenalty.toString
-BA-44,public/script.js,502,launchServer,neq-comparison,"config.repeatPenalty != ""0""",config.repeatPenalty,args.push;args.push:--repeat-penalty;config.repeatPenalty.toString
-BA-45,public/script.js,502,launchServer,eq-comparison,"config.repeatPenalty == ""0.00""",config.repeatPenalty,args.push;args.push:--repeat-penalty;config.repeatPenalty.toString
-BA-46,public/script.js,506,launchServer,logical-or,"if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != ""0"") || config.presencePenalty == ""0.00"")",isNaN();parseFloat();config.presencePenalty,args.push;args.push:--presence-penalty;config.presencePenalty.toString
-BA-47,public/script.js,506,launchServer,logical-and,"!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != ""0""",isNaN();parseFloat();config.presencePenalty,args.push;args.push:--presence-penalty;config.presencePenalty.toString
-BA-48,public/script.js,506,launchServer,truthiness,isNaN(parseFloat(config.presencePenalty)),isNaN();parseFloat();config.presencePenalty,args.push;args.push:--presence-penalty;config.presencePenalty.toString
-BA-49,public/script.js,506,launchServer,neq-comparison,"config.presencePenalty != ""0""",config.presencePenalty,args.push;args.push:--presence-penalty;config.presencePenalty.toString
-BA-50,public/script.js,506,launchServer,eq-comparison,"config.presencePenalty == ""0.00""",config.presencePenalty,args.push;args.push:--presence-penalty;config.presencePenalty.toString
-BA-51,public/script.js,511,launchServer,range-comparison,if (config.parallel > 0),config.parallel,args.push;args.push:--parallel;config.parallel.toString
-BA-52,public/script.js,515,launchServer,if,if (config.loadMode),config.loadMode,args.push;args.push:--load-mode
-BA-53,public/script.js,519,launchServer,if,if (config.swaFull),config.swaFull,args.push;args.push:--swa-full
-BA-54,public/script.js,523,launchServer,range-comparison,if (config.contextSize > 0),config.contextSize,args.push;args.push:-c;config.contextSize.toString
-BA-55,public/script.js,527,launchServer,range-comparison,if (config.nCpuMoe > 0),config.nCpuMoe,args.push;args.push:--n-cpu-moe;config.nCpuMoe.toString
-BA-56,public/script.js,531,launchServer,if,if (config.cpuMoe),config.cpuMoe,args.push;args.push:--cpu-moe
-BA-57,public/script.js,536,launchServer,logical-and,if (config.ctkEnable && config.contextTokenKey && config.contextTokenValue),config.ctkEnable;config.contextTokenKey;config.contextTokenValue,args.push;args.push:-ctk;args.push:-ctv
-BA-58,public/script.js,536,launchServer,truthiness,config.ctkEnable,config.ctkEnable,args.push;args.push:-ctk;args.push:-ctv
-BA-59,public/script.js,536,launchServer,logical-and,config.ctkEnable && config.contextTokenKey,config.ctkEnable;config.contextTokenKey,args.push;args.push:-ctk;args.push:-ctv
-BA-60,public/script.js,536,launchServer,truthiness,config.contextTokenKey,config.contextTokenKey,args.push;args.push:-ctk;args.push:-ctv
-BA-61,public/script.js,536,launchServer,truthiness,config.contextTokenValue,config.contextTokenValue,args.push;args.push:-ctk;args.push:-ctv
-BA-62,public/script.js,542,launchServer,logical-and,if (config.fastAttention && config.fastAttention !== 'auto'),config.fastAttention,args.push;args.push:-fa
-BA-63,public/script.js,542,launchServer,truthiness,config.fastAttention,config.fastAttention,args.push;args.push:-fa
-BA-64,public/script.js,542,launchServer,neq-comparison,config.fastAttention !== 'auto',config.fastAttention,args.push;args.push:-fa
-BA-65,public/script.js,544,launchServer,eq-comparison,else if (config.fastAttention === 'auto'),config.fastAttention,args.push;args.push:-fa
-BA-66,public/script.js,551,launchServer,if,if (config.jinja),config.jinja,args.push;args.push:--jinja
-BA-67,public/script.js,556,launchServer,if,if (config.chatTemplateKwargs),config.chatTemplateKwargs,args.push;args.push:--chat-template-kwargs
-BA-68,public/script.js,561,launchServer,logical-and,if (config.loadCustomChatTemplate && config.modelPath),config.loadCustomChatTemplate;config.modelPath,modelDir;args.push;args.push:--chat-template-file
-BA-69,public/script.js,561,launchServer,truthiness,config.loadCustomChatTemplate,config.loadCustomChatTemplate,modelDir;args.push;args.push:--chat-template-file
-BA-70,public/script.js,561,launchServer,truthiness,config.modelPath,config.modelPath,modelDir;args.push;args.push:--chat-template-file
-BA-71,public/script.js,568,launchServer,if,if (config.verbose),config.verbose,args.push;args.push:--verbose
-BA-72,public/script.js,573,launchServer,if,if (config.backendSampling),config.backendSampling,args.push;args.push:--backend-sampling
-BA-73,public/script.js,578,launchServer,if,if (config.noKvOffload),config.noKvOffload,args.push;args.push:--no-kv-offload
-BA-74,public/script.js,583,launchServer,if,if (config.noMmprojOffload),config.noMmprojOffload,args.push;args.push:--no-mmproj-offload
-BA-75,public/script.js,588,launchServer,logical-and,if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam)),config.cacheRam;undefined;Number.isNaN(),args.push;args.push:--cache-ram;String
-BA-76,public/script.js,588,launchServer,neq-comparison,config.cacheRam !== undefined,config.cacheRam;undefined,args.push;args.push:--cache-ram;String
-BA-77,public/script.js,588,launchServer,truthiness,Number.isNaN(config.cacheRam),Number.isNaN();config.cacheRam,args.push;args.push:--cache-ram;String
-BA-78,public/script.js,593,launchServer,logical-or,if (config.speculationType !== 'none' || config.ngramMod),config.speculationType;config.ngramMod,specTypes
-BA-79,public/script.js,593,launchServer,neq-comparison,config.speculationType !== 'none',config.speculationType,specTypes
-BA-80,public/script.js,593,launchServer,truthiness,config.ngramMod,config.ngramMod,specTypes
-BA-81,public/script.js,595,launchServer,if,if (config.ngramMod),config.ngramMod,specTypes.push;specTypes.push:ngram-mod
-BA-82,public/script.js,596,launchServer,neq-comparison,if (config.speculationType !== 'none'),config.speculationType,specTypes.push
-BA-83,public/script.js,597,launchServer,range-comparison,if (specTypes.length > 0),specTypes.length,"args.push;args.push:--spec-type;specTypes.join;specTypes.join:,"
-BA-84,public/script.js,601,launchServer,if,if (config.ngramMod),config.ngramMod,args.push;args.push:--spec-ngram-mod-n-match;args.push:--spec-ngram-mod-n-min;args.push:--spec-ngram-mod-n-max
-BA-85,public/script.js,607,launchServer,logical-and,if (config.specDraftNMax > 0 && config.speculationType !== 'none'),config.specDraftNMax;config.speculationType,args.push;args.push:--spec-draft-n-max;config.specDraftNMax.toString
-BA-86,public/script.js,607,launchServer,range-comparison,config.specDraftNMax > 0,config.specDraftNMax,args.push;args.push:--spec-draft-n-max;config.specDraftNMax.toString
-BA-87,public/script.js,607,launchServer,neq-comparison,config.speculationType !== 'none',config.speculationType,args.push;args.push:--spec-draft-n-max;config.specDraftNMax.toString
-BA-88,public/script.js,613,launchServer,eq-comparison,if (config.reasoning === 'off'),config.reasoning,args.push;args.push:--reasoning
-BA-89,public/script.js,615,launchServer,eq-comparison,else if (config.reasoning === 'on'),config.reasoning,args.push;args.push:--reasoning
-BA-90,public/script.js,620,launchServer,logical-and,if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp'),config.draftModelPath;config.speculationType,args.push;args.push:-md
-BA-91,public/script.js,620,launchServer,truthiness,config.draftModelPath,config.draftModelPath,args.push;args.push:-md
-BA-92,public/script.js,620,launchServer,logical-and,config.draftModelPath && config.speculationType !== 'none',config.draftModelPath;config.speculationType,args.push;args.push:-md
-BA-93,public/script.js,620,launchServer,neq-comparison,config.speculationType !== 'none',config.speculationType,args.push;args.push:-md
-BA-94,public/script.js,620,launchServer,neq-comparison,config.speculationType !== 'draft-mtp',config.speculationType,args.push;args.push:-md
-BA-95,public/script.js,622,launchServer,range-comparison,if (config.ngld >= 0),config.ngld,args.push;args.push:-ngld;config.ngld.toString
-BA-96,public/script.js,625,launchServer,if,if (config.ctkd),config.ctkd,args.push;args.push:-ctkd
-BA-97,public/script.js,628,launchServer,if,if (config.ctvd),config.ctvd,args.push;args.push:-ctvd
-BA-98,public/script.js,640,launchServer,logical-and,if (model.path === modelPath && model.mmprojFile),model.path;modelPath;model.mmprojFile,args.push;args.push:--mmproj
-BA-99,public/script.js,640,launchServer,eq-comparison,model.path === modelPath,model.path;modelPath,args.push;args.push:--mmproj
-BA-100,public/script.js,640,launchServer,truthiness,model.mmprojFile,model.mmprojFile,args.push;args.push:--mmproj
-BA-101,public/script.js,660,launchServer,if,if (data.success),data.success,showOutput;showOutput:Server started successfully;updateStatus;updateButtonStates;initWebSocket;else:showOutput
-BA-102,public/script.js,669,launchServer,error-path,catch (error),error,showOutput
-INI-1,public/script.js,682,launchModelPresets,if,if (!savedConfigs),savedConfigs,showOutput;showOutput:No configurations found to create presets file;return
-INI-2,public/script.js,688,launchModelPresets,eq-comparison,if (Object.keys(configs).length === 0),Object.keys().length,showOutput;showOutput:No configurations found to create presets file;return
-INI-3,public/script.js,697,launchModelPresets,loop-gate,"for (const [configName, config] of Object.entries(configs))",Object.entries();configs,sectionName;presetContent:[;modelPath;window.models.forEach;presetContent
-INI-4,public/script.js,712,launchModelPresets,if,if (config.modelPath),config.modelPath,presetContent:model =
-INI-5,public/script.js,718,launchModelPresets,logical-and,if (model.path === modelPath && model.mmprojFile),model.path;modelPath;model.mmprojFile,presetContent:mmproj =
-INI-6,public/script.js,718,launchModelPresets,eq-comparison,model.path === modelPath,model.path;modelPath,presetContent:mmproj =
-INI-7,public/script.js,718,launchModelPresets,truthiness,model.mmprojFile,model.mmprojFile,presetContent:mmproj =
-INI-8,public/script.js,724,launchModelPresets,logical-and,if (config.temp !== undefined && config.temp >= 0),config.temp;undefined,presetContent:temp =
-INI-9,public/script.js,724,launchModelPresets,neq-comparison,config.temp !== undefined,config.temp;undefined,presetContent:temp =
-INI-10,public/script.js,724,launchModelPresets,range-comparison,config.temp >= 0,config.temp,presetContent:temp =
-INI-11,public/script.js,728,launchModelPresets,range-comparison,if (config.contextSize > 0),config.contextSize,presetContent:c =;config.contextSize.toString
-INI-12,public/script.js,732,launchModelPresets,logical-and,if (config.topK !== undefined && config.topK > 0),config.topK;undefined,presetContent:top-k =
-INI-13,public/script.js,732,launchModelPresets,neq-comparison,config.topK !== undefined,config.topK;undefined,presetContent:top-k =
-INI-14,public/script.js,732,launchModelPresets,range-comparison,config.topK > 0,config.topK,presetContent:top-k =
-INI-15,public/script.js,736,launchModelPresets,logical-and,if (config.topP !== undefined && config.topP >= 0),config.topP;undefined,presetContent:top-p =
-INI-16,public/script.js,736,launchModelPresets,neq-comparison,config.topP !== undefined,config.topP;undefined,presetContent:top-p =
-INI-17,public/script.js,736,launchModelPresets,range-comparison,config.topP >= 0,config.topP,presetContent:top-p =
-INI-18,public/script.js,740,launchModelPresets,logical-or,"if ((!isNaN(parseFloat(config.minP)) && config.minP != ""0"") || config.minP == ""0.00"")",isNaN();parseFloat();config.minP,presetContent:min-p =
-INI-19,public/script.js,740,launchModelPresets,logical-and,"!isNaN(parseFloat(config.minP)) && config.minP != ""0""",isNaN();parseFloat();config.minP,presetContent:min-p =
-INI-20,public/script.js,740,launchModelPresets,truthiness,isNaN(parseFloat(config.minP)),isNaN();parseFloat();config.minP,presetContent:min-p =
-INI-21,public/script.js,740,launchModelPresets,neq-comparison,"config.minP != ""0""",config.minP,presetContent:min-p =
-INI-22,public/script.js,740,launchModelPresets,eq-comparison,"config.minP == ""0.00""",config.minP,presetContent:min-p =
-INI-23,public/script.js,744,launchModelPresets,logical-or,"if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != ""0"") || config.repeatPenalty == ""0.00"")",isNaN();parseFloat();config.repeatPenalty,presetContent:repeat-penalty =
-INI-24,public/script.js,744,launchModelPresets,logical-and,"!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != ""0""",isNaN();parseFloat();config.repeatPenalty,presetContent:repeat-penalty =
-INI-25,public/script.js,744,launchModelPresets,truthiness,isNaN(parseFloat(config.repeatPenalty)),isNaN();parseFloat();config.repeatPenalty,presetContent:repeat-penalty =
-INI-26,public/script.js,744,launchModelPresets,neq-comparison,"config.repeatPenalty != ""0""",config.repeatPenalty,presetContent:repeat-penalty =
-INI-27,public/script.js,744,launchModelPresets,eq-comparison,"config.repeatPenalty == ""0.00""",config.repeatPenalty,presetContent:repeat-penalty =
-INI-28,public/script.js,748,launchModelPresets,logical-or,"if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != ""0"") || config.presencePenalty == ""0.00"")",isNaN();parseFloat();config.presencePenalty,presetContent:presence-penalty =
-INI-29,public/script.js,748,launchModelPresets,logical-and,"!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != ""0""",isNaN();parseFloat();config.presencePenalty,presetContent:presence-penalty =
-INI-30,public/script.js,748,launchModelPresets,truthiness,isNaN(parseFloat(config.presencePenalty)),isNaN();parseFloat();config.presencePenalty,presetContent:presence-penalty =
-INI-31,public/script.js,748,launchModelPresets,neq-comparison,"config.presencePenalty != ""0""",config.presencePenalty,presetContent:presence-penalty =
-INI-32,public/script.js,748,launchModelPresets,eq-comparison,"config.presencePenalty == ""0.00""",config.presencePenalty,presetContent:presence-penalty =
-INI-33,public/script.js,752,launchModelPresets,logical-and,if (config.ngl !== undefined && config.ngl > 0),config.ngl;undefined,presetContent:ngl =
-INI-34,public/script.js,752,launchModelPresets,neq-comparison,config.ngl !== undefined,config.ngl;undefined,presetContent:ngl =
-INI-35,public/script.js,752,launchModelPresets,range-comparison,config.ngl > 0,config.ngl,presetContent:ngl =
-INI-36,public/script.js,756,launchModelPresets,logical-and,if (config.threads !== undefined && config.threads > 0),config.threads;undefined,presetContent:threads =
-INI-37,public/script.js,756,launchModelPresets,neq-comparison,config.threads !== undefined,config.threads;undefined,presetContent:threads =
-INI-38,public/script.js,756,launchModelPresets,range-comparison,config.threads > 0,config.threads,presetContent:threads =
-INI-39,public/script.js,760,launchModelPresets,logical-and,if (config.nCpuMoe !== undefined && config.nCpuMoe > 0),config.nCpuMoe;undefined,presetContent:n-cpu-moe =
-INI-40,public/script.js,760,launchModelPresets,neq-comparison,config.nCpuMoe !== undefined,config.nCpuMoe;undefined,presetContent:n-cpu-moe =
-INI-41,public/script.js,760,launchModelPresets,range-comparison,config.nCpuMoe > 0,config.nCpuMoe,presetContent:n-cpu-moe =
-INI-42,public/script.js,764,launchModelPresets,if,if (config.cpuMoe),config.cpuMoe,presetContent:cpu-moe = true
-INI-43,public/script.js,769,launchModelPresets,range-comparison,if (config.parallel > 0),config.parallel,presetContent:parallel =
-INI-44,public/script.js,774,launchModelPresets,neq-comparison,if (config.loadMode !== undefined),config.loadMode;undefined,presetContent:load-mode =
-INI-45,public/script.js,778,launchModelPresets,logical-and,if (config.noKvOffload !== undefined && config.noKvOffload),config.noKvOffload;undefined,presetContent:no-kv-offload = true
-INI-46,public/script.js,778,launchModelPresets,neq-comparison,config.noKvOffload !== undefined,config.noKvOffload;undefined,presetContent:no-kv-offload = true
-INI-47,public/script.js,778,launchModelPresets,truthiness,config.noKvOffload,config.noKvOffload,presetContent:no-kv-offload = true
-INI-48,public/script.js,782,launchModelPresets,logical-and,if (config.noMmprojOffload !== undefined && config.noMmprojOffload),config.noMmprojOffload;undefined,presetContent:no-mmproj-offload = true
-INI-49,public/script.js,782,launchModelPresets,neq-comparison,config.noMmprojOffload !== undefined,config.noMmprojOffload;undefined,presetContent:no-mmproj-offload = true
-INI-50,public/script.js,782,launchModelPresets,truthiness,config.noMmprojOffload,config.noMmprojOffload,presetContent:no-mmproj-offload = true
-INI-51,public/script.js,786,launchModelPresets,logical-and,if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam)),config.cacheRam;undefined;Number.isNaN(),presetContent:cache-ram =
-INI-52,public/script.js,786,launchModelPresets,neq-comparison,config.cacheRam !== undefined,config.cacheRam;undefined,presetContent:cache-ram =
-INI-53,public/script.js,786,launchModelPresets,truthiness,Number.isNaN(config.cacheRam),Number.isNaN();config.cacheRam,presetContent:cache-ram =
-INI-54,public/script.js,790,launchModelPresets,logical-and,if (config.jinja !== undefined && config.jinja),config.jinja;undefined,presetContent:jinja = true
-INI-55,public/script.js,790,launchModelPresets,neq-comparison,config.jinja !== undefined,config.jinja;undefined,presetContent:jinja = true
-INI-56,public/script.js,790,launchModelPresets,truthiness,config.jinja,config.jinja,presetContent:jinja = true
-INI-57,public/script.js,794,launchModelPresets,if,if (config.chatTemplateKwargs),config.chatTemplateKwargs,presetContent:chat-template-kwargs =
-INI-58,public/script.js,798,launchModelPresets,logical-and,if (config.loadCustomChatTemplate !== undefined && config.loadCustomChatTemplate),config.loadCustomChatTemplate;undefined,presetContent:chat-template-file =;config.modelPath.replace
-INI-59,public/script.js,798,launchModelPresets,neq-comparison,config.loadCustomChatTemplate !== undefined,config.loadCustomChatTemplate;undefined,presetContent:chat-template-file =;config.modelPath.replace
-INI-60,public/script.js,798,launchModelPresets,truthiness,config.loadCustomChatTemplate,config.loadCustomChatTemplate,presetContent:chat-template-file =;config.modelPath.replace
-INI-61,public/script.js,802,launchModelPresets,logical-and,if (config.verbose !== undefined && config.verbose),config.verbose;undefined,presetContent:verbose = true
-INI-62,public/script.js,802,launchModelPresets,neq-comparison,config.verbose !== undefined,config.verbose;undefined,presetContent:verbose = true
-INI-63,public/script.js,802,launchModelPresets,truthiness,config.verbose,config.verbose,presetContent:verbose = true
-INI-64,public/script.js,806,launchModelPresets,logical-and,if (config.backendSampling !== undefined && config.backendSampling),config.backendSampling;undefined,presetContent:backend-sampling = true
-INI-65,public/script.js,806,launchModelPresets,neq-comparison,config.backendSampling !== undefined,config.backendSampling;undefined,presetContent:backend-sampling = true
-INI-66,public/script.js,806,launchModelPresets,truthiness,config.backendSampling,config.backendSampling,presetContent:backend-sampling = true
-INI-67,public/script.js,810,launchModelPresets,if,if (config.fastAttention),config.fastAttention,presetContent:fa =
-INI-68,public/script.js,811,launchModelPresets,truthiness,config.fastAttention,config.fastAttention,presetContent:fa =
-INI-69,public/script.js,811,launchModelPresets,logical-nullish,config.fastAttention ?? 'auto',config.fastAttention,presetContent:fa =
-INI-70,public/script.js,815,launchModelPresets,logical-and,if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp'),config.draftModelPath;config.speculationType,presetContent:model-draft =
-INI-71,public/script.js,815,launchModelPresets,truthiness,config.draftModelPath,config.draftModelPath,presetContent:model-draft =
-INI-72,public/script.js,815,launchModelPresets,logical-and,config.draftModelPath && config.speculationType !== 'none',config.draftModelPath;config.speculationType,presetContent:model-draft =
-INI-73,public/script.js,815,launchModelPresets,neq-comparison,config.speculationType !== 'none',config.speculationType,presetContent:model-draft =
-INI-74,public/script.js,815,launchModelPresets,neq-comparison,config.speculationType !== 'draft-mtp',config.speculationType,presetContent:model-draft =
-INI-75,public/script.js,817,launchModelPresets,logical-and,if (config.ngld !== undefined && config.ngld >= 0),config.ngld;undefined,presetContent:ngld =
-INI-76,public/script.js,817,launchModelPresets,neq-comparison,config.ngld !== undefined,config.ngld;undefined,presetContent:ngld =
-INI-77,public/script.js,817,launchModelPresets,range-comparison,config.ngld >= 0,config.ngld,presetContent:ngld =
-INI-78,public/script.js,820,launchModelPresets,if,if (config.ctkd),config.ctkd,presetContent:ctkd =
-INI-79,public/script.js,823,launchModelPresets,if,if (config.ctvd),config.ctvd,presetContent:ctvd =
-INI-80,public/script.js,830,launchModelPresets,logical-or,if (config.speculationType !== 'none' || config.ngramMod),config.speculationType;config.ngramMod,specTypes
-INI-81,public/script.js,830,launchModelPresets,neq-comparison,config.speculationType !== 'none',config.speculationType,specTypes
-INI-82,public/script.js,830,launchModelPresets,truthiness,config.ngramMod,config.ngramMod,specTypes
-INI-83,public/script.js,832,launchModelPresets,if,if (config.ngramMod),config.ngramMod,specTypes.push;specTypes.push:ngram-mod
-INI-84,public/script.js,833,launchModelPresets,neq-comparison,if (config.speculationType !== 'none'),config.speculationType,specTypes.push
-INI-85,public/script.js,834,launchModelPresets,range-comparison,if (specTypes.length > 0),specTypes.length,"presetContent:spec-type =;specTypes.join;specTypes.join:,"
-INI-86,public/script.js,837,launchModelPresets,if,if (config.ngramMod),config.ngramMod,presetContent:spec-ngram-size-n = 24;presetContent:draft-min = 48;presetContent:draft-max = 64
-INI-87,public/script.js,842,launchModelPresets,logical-and,if (config.specDraftNMax > 0 && config.speculationType !== 'none'),config.specDraftNMax;config.speculationType,presetContent:spec-draft-n-max =
-INI-88,public/script.js,842,launchModelPresets,range-comparison,config.specDraftNMax > 0,config.specDraftNMax,presetContent:spec-draft-n-max =
-INI-89,public/script.js,842,launchModelPresets,neq-comparison,config.speculationType !== 'none',config.speculationType,presetContent:spec-draft-n-max =
-INI-90,public/script.js,848,launchModelPresets,logical-and,if (config.reasoning !== undefined && config.reasoning !== 'auto'),config.reasoning;undefined,presetContent:reasoning =
-INI-91,public/script.js,848,launchModelPresets,neq-comparison,config.reasoning !== undefined,config.reasoning;undefined,presetContent:reasoning =
-INI-92,public/script.js,848,launchModelPresets,neq-comparison,config.reasoning !== 'auto',config.reasoning,presetContent:reasoning =
-INI-93,public/script.js,850,launchModelPresets,neq-comparison,else if (config.disableReasoning !== undefined),config.disableReasoning;undefined,presetContent:reasoning =
-INI-94,public/script.js,851,launchModelPresets,ternary,config.disableReasoning ? 'off' : 'on',config.disableReasoning,
-INI-95,public/script.js,879,launchModelPresets,if,if (data.success),data.success,showOutput;showOutput:Model presets process started successfully;updateStatus;updateButtonStates;initWebSocket;else:showOutput
-INI-96,public/script.js,888,launchModelPresets,error-path,catch (error),error,showOutput
+BA-3,public/script.js,465,launchServer,if,if (currentConfigId),currentConfigId,saveCurrentValues
+BA-4,public/script.js,491,launchServer,if,if (data.success),data.success,showOutput;showOutput:Server started successfully;updateStatus;updateButtonStates;initWebSocket;else:showOutput
+BA-5,public/script.js,500,launchServer,error-path,catch (error),error,showOutput
+BA-6,legacy/lib/buildArgs.js,33,launchServer > buildArgs,truthiness,parseInt(fields.ngl),parseInt();fields.ngl,
+BA-7,legacy/lib/buildArgs.js,33,launchServer > buildArgs,logical-or,parseInt(fields.ngl) || 0,parseInt();fields.ngl,
+BA-8,legacy/lib/buildArgs.js,34,launchServer > buildArgs,truthiness,parseInt(fields.threads),parseInt();fields.threads,
+BA-9,legacy/lib/buildArgs.js,34,launchServer > buildArgs,logical-or,parseInt(fields.threads) || 1,parseInt();fields.threads,
+BA-10,legacy/lib/buildArgs.js,35,launchServer > buildArgs,truthiness,parseFloat(fields.temp),parseFloat();fields.temp,
+BA-11,legacy/lib/buildArgs.js,35,launchServer > buildArgs,logical-or,parseFloat(fields.temp) || 0,parseFloat();fields.temp,
+BA-12,legacy/lib/buildArgs.js,36,launchServer > buildArgs,truthiness,parseInt(fields.topK),parseInt();fields.topK,
+BA-13,legacy/lib/buildArgs.js,36,launchServer > buildArgs,logical-or,parseInt(fields.topK) || 0,parseInt();fields.topK,
+BA-14,legacy/lib/buildArgs.js,37,launchServer > buildArgs,truthiness,parseFloat(fields.topP),parseFloat();fields.topP,
+BA-15,legacy/lib/buildArgs.js,37,launchServer > buildArgs,logical-or,parseFloat(fields.topP) || 0,parseFloat();fields.topP,
+BA-16,legacy/lib/buildArgs.js,38,launchServer > buildArgs,truthiness,fields.minP,fields.minP,
+BA-17,legacy/lib/buildArgs.js,38,launchServer > buildArgs,logical-or,fields.minP || 0,fields.minP,
+BA-18,legacy/lib/buildArgs.js,39,launchServer > buildArgs,truthiness,fields.repeatPenalty,fields.repeatPenalty,
+BA-19,legacy/lib/buildArgs.js,39,launchServer > buildArgs,logical-or,fields.repeatPenalty || 0,fields.repeatPenalty,
+BA-20,legacy/lib/buildArgs.js,40,launchServer > buildArgs,truthiness,fields.presencePenalty,fields.presencePenalty,
+BA-21,legacy/lib/buildArgs.js,40,launchServer > buildArgs,logical-or,fields.presencePenalty || 0,fields.presencePenalty,
+BA-22,legacy/lib/buildArgs.js,41,launchServer > buildArgs,truthiness,parseInt(fields.parallel),parseInt();fields.parallel,
+BA-23,legacy/lib/buildArgs.js,41,launchServer > buildArgs,logical-or,parseInt(fields.parallel) || 0,parseInt();fields.parallel,
+BA-24,legacy/lib/buildArgs.js,45,launchServer > buildArgs,truthiness,parseInt(fields.contextSize),parseInt();fields.contextSize,
+BA-25,legacy/lib/buildArgs.js,45,launchServer > buildArgs,logical-or,parseInt(fields.contextSize) || 1,parseInt();fields.contextSize,
+BA-26,legacy/lib/buildArgs.js,46,launchServer > buildArgs,truthiness,parseInt(fields.nCpuMoe),parseInt();fields.nCpuMoe,
+BA-27,legacy/lib/buildArgs.js,46,launchServer > buildArgs,logical-or,parseInt(fields.nCpuMoe) || 0,parseInt();fields.nCpuMoe,
+BA-28,legacy/lib/buildArgs.js,53,launchServer > buildArgs,truthiness,parseInt(fields.specDraftNMax),parseInt();fields.specDraftNMax,
+BA-29,legacy/lib/buildArgs.js,53,launchServer > buildArgs,logical-or,parseInt(fields.specDraftNMax) || 0,parseInt();fields.specDraftNMax,
+BA-30,legacy/lib/buildArgs.js,64,launchServer > buildArgs,truthiness,parseInt(fields.ngld),parseInt();fields.ngld,
+BA-31,legacy/lib/buildArgs.js,64,launchServer > buildArgs,logical-or,parseInt(fields.ngld) || 0,parseInt();fields.ngld,
+BA-32,legacy/lib/buildArgs.js,72,launchServer > buildArgs,if,if (config.modelPath),config.modelPath,args.push;args.push:-m
+BA-33,legacy/lib/buildArgs.js,76,launchServer > buildArgs,range-comparison,if (config.ngl > 0),config.ngl,args.push;args.push:-ngl;config.ngl.toString
+BA-34,legacy/lib/buildArgs.js,80,launchServer > buildArgs,range-comparison,if (config.threads > 0),config.threads,args.push;args.push:-t;config.threads.toString
+BA-35,legacy/lib/buildArgs.js,84,launchServer > buildArgs,range-comparison,if (config.temp >= 0),config.temp,args.push;args.push:--temp;config.temp.toString
+BA-36,legacy/lib/buildArgs.js,88,launchServer > buildArgs,range-comparison,if (config.topK > 0),config.topK,args.push;args.push:--top-k;config.topK.toString
+BA-37,legacy/lib/buildArgs.js,92,launchServer > buildArgs,range-comparison,if (config.topP >= 0),config.topP,args.push;args.push:--top-p;config.topP.toString
+BA-38,legacy/lib/buildArgs.js,96,launchServer > buildArgs,logical-or,"if ((!isNaN(parseFloat(config.minP)) && config.minP != ""0"") || config.minP == ""0.00"")",isNaN();parseFloat();config.minP,args.push;args.push:--min-p;config.minP.toString
+BA-39,legacy/lib/buildArgs.js,96,launchServer > buildArgs,logical-and,"!isNaN(parseFloat(config.minP)) && config.minP != ""0""",isNaN();parseFloat();config.minP,args.push;args.push:--min-p;config.minP.toString
+BA-40,legacy/lib/buildArgs.js,96,launchServer > buildArgs,truthiness,isNaN(parseFloat(config.minP)),isNaN();parseFloat();config.minP,args.push;args.push:--min-p;config.minP.toString
+BA-41,legacy/lib/buildArgs.js,96,launchServer > buildArgs,neq-comparison,"config.minP != ""0""",config.minP,args.push;args.push:--min-p;config.minP.toString
+BA-42,legacy/lib/buildArgs.js,96,launchServer > buildArgs,eq-comparison,"config.minP == ""0.00""",config.minP,args.push;args.push:--min-p;config.minP.toString
+BA-43,legacy/lib/buildArgs.js,100,launchServer > buildArgs,logical-or,"if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != ""0"") || config.repeatPenalty == ""0.00"")",isNaN();parseFloat();config.repeatPenalty,args.push;args.push:--repeat-penalty;config.repeatPenalty.toString
+BA-44,legacy/lib/buildArgs.js,100,launchServer > buildArgs,logical-and,"!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != ""0""",isNaN();parseFloat();config.repeatPenalty,args.push;args.push:--repeat-penalty;config.repeatPenalty.toString
+BA-45,legacy/lib/buildArgs.js,100,launchServer > buildArgs,truthiness,isNaN(parseFloat(config.repeatPenalty)),isNaN();parseFloat();config.repeatPenalty,args.push;args.push:--repeat-penalty;config.repeatPenalty.toString
+BA-46,legacy/lib/buildArgs.js,100,launchServer > buildArgs,neq-comparison,"config.repeatPenalty != ""0""",config.repeatPenalty,args.push;args.push:--repeat-penalty;config.repeatPenalty.toString
+BA-47,legacy/lib/buildArgs.js,100,launchServer > buildArgs,eq-comparison,"config.repeatPenalty == ""0.00""",config.repeatPenalty,args.push;args.push:--repeat-penalty;config.repeatPenalty.toString
+BA-48,legacy/lib/buildArgs.js,104,launchServer > buildArgs,logical-or,"if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != ""0"") || config.presencePenalty == ""0.00"")",isNaN();parseFloat();config.presencePenalty,args.push;args.push:--presence-penalty;config.presencePenalty.toString
+BA-49,legacy/lib/buildArgs.js,104,launchServer > buildArgs,logical-and,"!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != ""0""",isNaN();parseFloat();config.presencePenalty,args.push;args.push:--presence-penalty;config.presencePenalty.toString
+BA-50,legacy/lib/buildArgs.js,104,launchServer > buildArgs,truthiness,isNaN(parseFloat(config.presencePenalty)),isNaN();parseFloat();config.presencePenalty,args.push;args.push:--presence-penalty;config.presencePenalty.toString
+BA-51,legacy/lib/buildArgs.js,104,launchServer > buildArgs,neq-comparison,"config.presencePenalty != ""0""",config.presencePenalty,args.push;args.push:--presence-penalty;config.presencePenalty.toString
+BA-52,legacy/lib/buildArgs.js,104,launchServer > buildArgs,eq-comparison,"config.presencePenalty == ""0.00""",config.presencePenalty,args.push;args.push:--presence-penalty;config.presencePenalty.toString
+BA-53,legacy/lib/buildArgs.js,109,launchServer > buildArgs,range-comparison,if (config.parallel > 0),config.parallel,args.push;args.push:--parallel;config.parallel.toString
+BA-54,legacy/lib/buildArgs.js,113,launchServer > buildArgs,if,if (config.loadMode),config.loadMode,args.push;args.push:--load-mode
+BA-55,legacy/lib/buildArgs.js,117,launchServer > buildArgs,if,if (config.swaFull),config.swaFull,args.push;args.push:--swa-full
+BA-56,legacy/lib/buildArgs.js,121,launchServer > buildArgs,range-comparison,if (config.contextSize > 0),config.contextSize,args.push;args.push:-c;config.contextSize.toString
+BA-57,legacy/lib/buildArgs.js,125,launchServer > buildArgs,range-comparison,if (config.nCpuMoe > 0),config.nCpuMoe,args.push;args.push:--n-cpu-moe;config.nCpuMoe.toString
+BA-58,legacy/lib/buildArgs.js,129,launchServer > buildArgs,if,if (config.cpuMoe),config.cpuMoe,args.push;args.push:--cpu-moe
+BA-59,legacy/lib/buildArgs.js,134,launchServer > buildArgs,logical-and,if (config.ctkEnable && config.contextTokenKey && config.contextTokenValue),config.ctkEnable;config.contextTokenKey;config.contextTokenValue,args.push;args.push:-ctk;args.push:-ctv
+BA-60,legacy/lib/buildArgs.js,134,launchServer > buildArgs,truthiness,config.ctkEnable,config.ctkEnable,args.push;args.push:-ctk;args.push:-ctv
+BA-61,legacy/lib/buildArgs.js,134,launchServer > buildArgs,logical-and,config.ctkEnable && config.contextTokenKey,config.ctkEnable;config.contextTokenKey,args.push;args.push:-ctk;args.push:-ctv
+BA-62,legacy/lib/buildArgs.js,134,launchServer > buildArgs,truthiness,config.contextTokenKey,config.contextTokenKey,args.push;args.push:-ctk;args.push:-ctv
+BA-63,legacy/lib/buildArgs.js,134,launchServer > buildArgs,truthiness,config.contextTokenValue,config.contextTokenValue,args.push;args.push:-ctk;args.push:-ctv
+BA-64,legacy/lib/buildArgs.js,140,launchServer > buildArgs,logical-and,if (config.fastAttention && config.fastAttention !== 'auto'),config.fastAttention,args.push;args.push:-fa
+BA-65,legacy/lib/buildArgs.js,140,launchServer > buildArgs,truthiness,config.fastAttention,config.fastAttention,args.push;args.push:-fa
+BA-66,legacy/lib/buildArgs.js,140,launchServer > buildArgs,neq-comparison,config.fastAttention !== 'auto',config.fastAttention,args.push;args.push:-fa
+BA-67,legacy/lib/buildArgs.js,142,launchServer > buildArgs,eq-comparison,else if (config.fastAttention === 'auto'),config.fastAttention,args.push;args.push:-fa
+BA-68,legacy/lib/buildArgs.js,149,launchServer > buildArgs,if,if (config.jinja),config.jinja,args.push;args.push:--jinja
+BA-69,legacy/lib/buildArgs.js,154,launchServer > buildArgs,if,if (config.chatTemplateKwargs),config.chatTemplateKwargs,args.push;args.push:--chat-template-kwargs
+BA-70,legacy/lib/buildArgs.js,159,launchServer > buildArgs,logical-and,if (config.loadCustomChatTemplate && config.modelPath),config.loadCustomChatTemplate;config.modelPath,modelDir;args.push;args.push:--chat-template-file
+BA-71,legacy/lib/buildArgs.js,159,launchServer > buildArgs,truthiness,config.loadCustomChatTemplate,config.loadCustomChatTemplate,modelDir;args.push;args.push:--chat-template-file
+BA-72,legacy/lib/buildArgs.js,159,launchServer > buildArgs,truthiness,config.modelPath,config.modelPath,modelDir;args.push;args.push:--chat-template-file
+BA-73,legacy/lib/buildArgs.js,166,launchServer > buildArgs,if,if (config.verbose),config.verbose,args.push;args.push:--verbose
+BA-74,legacy/lib/buildArgs.js,171,launchServer > buildArgs,if,if (config.backendSampling),config.backendSampling,args.push;args.push:--backend-sampling
+BA-75,legacy/lib/buildArgs.js,176,launchServer > buildArgs,if,if (config.noKvOffload),config.noKvOffload,args.push;args.push:--no-kv-offload
+BA-76,legacy/lib/buildArgs.js,181,launchServer > buildArgs,if,if (config.noMmprojOffload),config.noMmprojOffload,args.push;args.push:--no-mmproj-offload
+BA-77,legacy/lib/buildArgs.js,186,launchServer > buildArgs,logical-and,if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam)),config.cacheRam;undefined;Number.isNaN(),args.push;args.push:--cache-ram;String
+BA-78,legacy/lib/buildArgs.js,186,launchServer > buildArgs,neq-comparison,config.cacheRam !== undefined,config.cacheRam;undefined,args.push;args.push:--cache-ram;String
+BA-79,legacy/lib/buildArgs.js,186,launchServer > buildArgs,truthiness,Number.isNaN(config.cacheRam),Number.isNaN();config.cacheRam,args.push;args.push:--cache-ram;String
+BA-80,legacy/lib/buildArgs.js,191,launchServer > buildArgs,logical-or,if (config.speculationType !== 'none' || config.ngramMod),config.speculationType;config.ngramMod,specTypes
+BA-81,legacy/lib/buildArgs.js,191,launchServer > buildArgs,neq-comparison,config.speculationType !== 'none',config.speculationType,specTypes
+BA-82,legacy/lib/buildArgs.js,191,launchServer > buildArgs,truthiness,config.ngramMod,config.ngramMod,specTypes
+BA-83,legacy/lib/buildArgs.js,193,launchServer > buildArgs,if,if (config.ngramMod),config.ngramMod,specTypes.push;specTypes.push:ngram-mod
+BA-84,legacy/lib/buildArgs.js,194,launchServer > buildArgs,neq-comparison,if (config.speculationType !== 'none'),config.speculationType,specTypes.push
+BA-85,legacy/lib/buildArgs.js,195,launchServer > buildArgs,range-comparison,if (specTypes.length > 0),specTypes.length,"args.push;args.push:--spec-type;specTypes.join;specTypes.join:,"
+BA-86,legacy/lib/buildArgs.js,199,launchServer > buildArgs,if,if (config.ngramMod),config.ngramMod,args.push;args.push:--spec-ngram-mod-n-match;args.push:--spec-ngram-mod-n-min;args.push:--spec-ngram-mod-n-max
+BA-87,legacy/lib/buildArgs.js,205,launchServer > buildArgs,logical-and,if (config.specDraftNMax > 0 && config.speculationType !== 'none'),config.specDraftNMax;config.speculationType,args.push;args.push:--spec-draft-n-max;config.specDraftNMax.toString
+BA-88,legacy/lib/buildArgs.js,205,launchServer > buildArgs,range-comparison,config.specDraftNMax > 0,config.specDraftNMax,args.push;args.push:--spec-draft-n-max;config.specDraftNMax.toString
+BA-89,legacy/lib/buildArgs.js,205,launchServer > buildArgs,neq-comparison,config.speculationType !== 'none',config.speculationType,args.push;args.push:--spec-draft-n-max;config.specDraftNMax.toString
+BA-90,legacy/lib/buildArgs.js,211,launchServer > buildArgs,eq-comparison,if (config.reasoning === 'off'),config.reasoning,args.push;args.push:--reasoning
+BA-91,legacy/lib/buildArgs.js,213,launchServer > buildArgs,eq-comparison,else if (config.reasoning === 'on'),config.reasoning,args.push;args.push:--reasoning
+BA-92,legacy/lib/buildArgs.js,218,launchServer > buildArgs,logical-and,if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp'),config.draftModelPath;config.speculationType,args.push;args.push:-md
+BA-93,legacy/lib/buildArgs.js,218,launchServer > buildArgs,truthiness,config.draftModelPath,config.draftModelPath,args.push;args.push:-md
+BA-94,legacy/lib/buildArgs.js,218,launchServer > buildArgs,logical-and,config.draftModelPath && config.speculationType !== 'none',config.draftModelPath;config.speculationType,args.push;args.push:-md
+BA-95,legacy/lib/buildArgs.js,218,launchServer > buildArgs,neq-comparison,config.speculationType !== 'none',config.speculationType,args.push;args.push:-md
+BA-96,legacy/lib/buildArgs.js,218,launchServer > buildArgs,neq-comparison,config.speculationType !== 'draft-mtp',config.speculationType,args.push;args.push:-md
+BA-97,legacy/lib/buildArgs.js,220,launchServer > buildArgs,range-comparison,if (config.ngld >= 0),config.ngld,args.push;args.push:-ngld;config.ngld.toString
+BA-98,legacy/lib/buildArgs.js,223,launchServer > buildArgs,if,if (config.ctkd),config.ctkd,args.push;args.push:-ctkd
+BA-99,legacy/lib/buildArgs.js,226,launchServer > buildArgs,if,if (config.ctvd),config.ctvd,args.push;args.push:-ctvd
+BA-100,legacy/lib/buildArgs.js,238,launchServer > buildArgs,logical-and,if (model.path === modelPath && model.mmprojFile),model.path;modelPath;model.mmprojFile,args.push;args.push:--mmproj
+BA-101,legacy/lib/buildArgs.js,238,launchServer > buildArgs,eq-comparison,model.path === modelPath,model.path;modelPath,args.push;args.push:--mmproj
+BA-102,legacy/lib/buildArgs.js,238,launchServer > buildArgs,truthiness,model.mmprojFile,model.mmprojFile,args.push;args.push:--mmproj
+INI-1,public/script.js,513,launchModelPresets,if,if (!savedConfigs),savedConfigs,showOutput;showOutput:No configurations found to create presets file;return
+INI-2,public/script.js,519,launchModelPresets,eq-comparison,if (Object.keys(configs).length === 0),Object.keys().length,showOutput;showOutput:No configurations found to create presets file;return
+INI-3,public/script.js,548,launchModelPresets,if,if (data.success),data.success,showOutput;showOutput:Model presets process started successfully;updateStatus;updateButtonStates;initWebSocket;else:showOutput
+INI-4,public/script.js,557,launchModelPresets,error-path,catch (error),error,showOutput
+INI-5,legacy/lib/buildPresetIni.js,27,launchModelPresets > buildPresetIni,loop-gate,"for (const [configName, config] of Object.entries(configs))",Object.entries();configs,sectionName;presetContent:[;modelPath;models.forEach;presetContent
+INI-6,legacy/lib/buildPresetIni.js,42,launchModelPresets > buildPresetIni,if,if (config.modelPath),config.modelPath,presetContent:model =
+INI-7,legacy/lib/buildPresetIni.js,48,launchModelPresets > buildPresetIni,logical-and,if (model.path === modelPath && model.mmprojFile),model.path;modelPath;model.mmprojFile,presetContent:mmproj =
+INI-8,legacy/lib/buildPresetIni.js,48,launchModelPresets > buildPresetIni,eq-comparison,model.path === modelPath,model.path;modelPath,presetContent:mmproj =
+INI-9,legacy/lib/buildPresetIni.js,48,launchModelPresets > buildPresetIni,truthiness,model.mmprojFile,model.mmprojFile,presetContent:mmproj =
+INI-10,legacy/lib/buildPresetIni.js,54,launchModelPresets > buildPresetIni,logical-and,if (config.temp !== undefined && config.temp >= 0),config.temp;undefined,presetContent:temp =
+INI-11,legacy/lib/buildPresetIni.js,54,launchModelPresets > buildPresetIni,neq-comparison,config.temp !== undefined,config.temp;undefined,presetContent:temp =
+INI-12,legacy/lib/buildPresetIni.js,54,launchModelPresets > buildPresetIni,range-comparison,config.temp >= 0,config.temp,presetContent:temp =
+INI-13,legacy/lib/buildPresetIni.js,58,launchModelPresets > buildPresetIni,range-comparison,if (config.contextSize > 0),config.contextSize,presetContent:c =;config.contextSize.toString
+INI-14,legacy/lib/buildPresetIni.js,62,launchModelPresets > buildPresetIni,logical-and,if (config.topK !== undefined && config.topK > 0),config.topK;undefined,presetContent:top-k =
+INI-15,legacy/lib/buildPresetIni.js,62,launchModelPresets > buildPresetIni,neq-comparison,config.topK !== undefined,config.topK;undefined,presetContent:top-k =
+INI-16,legacy/lib/buildPresetIni.js,62,launchModelPresets > buildPresetIni,range-comparison,config.topK > 0,config.topK,presetContent:top-k =
+INI-17,legacy/lib/buildPresetIni.js,66,launchModelPresets > buildPresetIni,logical-and,if (config.topP !== undefined && config.topP >= 0),config.topP;undefined,presetContent:top-p =
+INI-18,legacy/lib/buildPresetIni.js,66,launchModelPresets > buildPresetIni,neq-comparison,config.topP !== undefined,config.topP;undefined,presetContent:top-p =
+INI-19,legacy/lib/buildPresetIni.js,66,launchModelPresets > buildPresetIni,range-comparison,config.topP >= 0,config.topP,presetContent:top-p =
+INI-20,legacy/lib/buildPresetIni.js,70,launchModelPresets > buildPresetIni,logical-or,"if ((!isNaN(parseFloat(config.minP)) && config.minP != ""0"") || config.minP == ""0.00"")",isNaN();parseFloat();config.minP,presetContent:min-p =
+INI-21,legacy/lib/buildPresetIni.js,70,launchModelPresets > buildPresetIni,logical-and,"!isNaN(parseFloat(config.minP)) && config.minP != ""0""",isNaN();parseFloat();config.minP,presetContent:min-p =
+INI-22,legacy/lib/buildPresetIni.js,70,launchModelPresets > buildPresetIni,truthiness,isNaN(parseFloat(config.minP)),isNaN();parseFloat();config.minP,presetContent:min-p =
+INI-23,legacy/lib/buildPresetIni.js,70,launchModelPresets > buildPresetIni,neq-comparison,"config.minP != ""0""",config.minP,presetContent:min-p =
+INI-24,legacy/lib/buildPresetIni.js,70,launchModelPresets > buildPresetIni,eq-comparison,"config.minP == ""0.00""",config.minP,presetContent:min-p =
+INI-25,legacy/lib/buildPresetIni.js,74,launchModelPresets > buildPresetIni,logical-or,"if ((!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != ""0"") || config.repeatPenalty == ""0.00"")",isNaN();parseFloat();config.repeatPenalty,presetContent:repeat-penalty =
+INI-26,legacy/lib/buildPresetIni.js,74,launchModelPresets > buildPresetIni,logical-and,"!isNaN(parseFloat(config.repeatPenalty)) && config.repeatPenalty != ""0""",isNaN();parseFloat();config.repeatPenalty,presetContent:repeat-penalty =
+INI-27,legacy/lib/buildPresetIni.js,74,launchModelPresets > buildPresetIni,truthiness,isNaN(parseFloat(config.repeatPenalty)),isNaN();parseFloat();config.repeatPenalty,presetContent:repeat-penalty =
+INI-28,legacy/lib/buildPresetIni.js,74,launchModelPresets > buildPresetIni,neq-comparison,"config.repeatPenalty != ""0""",config.repeatPenalty,presetContent:repeat-penalty =
+INI-29,legacy/lib/buildPresetIni.js,74,launchModelPresets > buildPresetIni,eq-comparison,"config.repeatPenalty == ""0.00""",config.repeatPenalty,presetContent:repeat-penalty =
+INI-30,legacy/lib/buildPresetIni.js,78,launchModelPresets > buildPresetIni,logical-or,"if ((!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != ""0"") || config.presencePenalty == ""0.00"")",isNaN();parseFloat();config.presencePenalty,presetContent:presence-penalty =
+INI-31,legacy/lib/buildPresetIni.js,78,launchModelPresets > buildPresetIni,logical-and,"!isNaN(parseFloat(config.presencePenalty)) && config.presencePenalty != ""0""",isNaN();parseFloat();config.presencePenalty,presetContent:presence-penalty =
+INI-32,legacy/lib/buildPresetIni.js,78,launchModelPresets > buildPresetIni,truthiness,isNaN(parseFloat(config.presencePenalty)),isNaN();parseFloat();config.presencePenalty,presetContent:presence-penalty =
+INI-33,legacy/lib/buildPresetIni.js,78,launchModelPresets > buildPresetIni,neq-comparison,"config.presencePenalty != ""0""",config.presencePenalty,presetContent:presence-penalty =
+INI-34,legacy/lib/buildPresetIni.js,78,launchModelPresets > buildPresetIni,eq-comparison,"config.presencePenalty == ""0.00""",config.presencePenalty,presetContent:presence-penalty =
+INI-35,legacy/lib/buildPresetIni.js,82,launchModelPresets > buildPresetIni,logical-and,if (config.ngl !== undefined && config.ngl > 0),config.ngl;undefined,presetContent:ngl =
+INI-36,legacy/lib/buildPresetIni.js,82,launchModelPresets > buildPresetIni,neq-comparison,config.ngl !== undefined,config.ngl;undefined,presetContent:ngl =
+INI-37,legacy/lib/buildPresetIni.js,82,launchModelPresets > buildPresetIni,range-comparison,config.ngl > 0,config.ngl,presetContent:ngl =
+INI-38,legacy/lib/buildPresetIni.js,86,launchModelPresets > buildPresetIni,logical-and,if (config.threads !== undefined && config.threads > 0),config.threads;undefined,presetContent:threads =
+INI-39,legacy/lib/buildPresetIni.js,86,launchModelPresets > buildPresetIni,neq-comparison,config.threads !== undefined,config.threads;undefined,presetContent:threads =
+INI-40,legacy/lib/buildPresetIni.js,86,launchModelPresets > buildPresetIni,range-comparison,config.threads > 0,config.threads,presetContent:threads =
+INI-41,legacy/lib/buildPresetIni.js,90,launchModelPresets > buildPresetIni,logical-and,if (config.nCpuMoe !== undefined && config.nCpuMoe > 0),config.nCpuMoe;undefined,presetContent:n-cpu-moe =
+INI-42,legacy/lib/buildPresetIni.js,90,launchModelPresets > buildPresetIni,neq-comparison,config.nCpuMoe !== undefined,config.nCpuMoe;undefined,presetContent:n-cpu-moe =
+INI-43,legacy/lib/buildPresetIni.js,90,launchModelPresets > buildPresetIni,range-comparison,config.nCpuMoe > 0,config.nCpuMoe,presetContent:n-cpu-moe =
+INI-44,legacy/lib/buildPresetIni.js,94,launchModelPresets > buildPresetIni,if,if (config.cpuMoe),config.cpuMoe,presetContent:cpu-moe = true
+INI-45,legacy/lib/buildPresetIni.js,99,launchModelPresets > buildPresetIni,range-comparison,if (config.parallel > 0),config.parallel,presetContent:parallel =
+INI-46,legacy/lib/buildPresetIni.js,104,launchModelPresets > buildPresetIni,neq-comparison,if (config.loadMode !== undefined),config.loadMode;undefined,presetContent:load-mode =
+INI-47,legacy/lib/buildPresetIni.js,108,launchModelPresets > buildPresetIni,logical-and,if (config.noKvOffload !== undefined && config.noKvOffload),config.noKvOffload;undefined,presetContent:no-kv-offload = true
+INI-48,legacy/lib/buildPresetIni.js,108,launchModelPresets > buildPresetIni,neq-comparison,config.noKvOffload !== undefined,config.noKvOffload;undefined,presetContent:no-kv-offload = true
+INI-49,legacy/lib/buildPresetIni.js,108,launchModelPresets > buildPresetIni,truthiness,config.noKvOffload,config.noKvOffload,presetContent:no-kv-offload = true
+INI-50,legacy/lib/buildPresetIni.js,112,launchModelPresets > buildPresetIni,logical-and,if (config.noMmprojOffload !== undefined && config.noMmprojOffload),config.noMmprojOffload;undefined,presetContent:no-mmproj-offload = true
+INI-51,legacy/lib/buildPresetIni.js,112,launchModelPresets > buildPresetIni,neq-comparison,config.noMmprojOffload !== undefined,config.noMmprojOffload;undefined,presetContent:no-mmproj-offload = true
+INI-52,legacy/lib/buildPresetIni.js,112,launchModelPresets > buildPresetIni,truthiness,config.noMmprojOffload,config.noMmprojOffload,presetContent:no-mmproj-offload = true
+INI-53,legacy/lib/buildPresetIni.js,116,launchModelPresets > buildPresetIni,logical-and,if (config.cacheRam !== undefined && !Number.isNaN(config.cacheRam)),config.cacheRam;undefined;Number.isNaN(),presetContent:cache-ram =
+INI-54,legacy/lib/buildPresetIni.js,116,launchModelPresets > buildPresetIni,neq-comparison,config.cacheRam !== undefined,config.cacheRam;undefined,presetContent:cache-ram =
+INI-55,legacy/lib/buildPresetIni.js,116,launchModelPresets > buildPresetIni,truthiness,Number.isNaN(config.cacheRam),Number.isNaN();config.cacheRam,presetContent:cache-ram =
+INI-56,legacy/lib/buildPresetIni.js,120,launchModelPresets > buildPresetIni,logical-and,if (config.jinja !== undefined && config.jinja),config.jinja;undefined,presetContent:jinja = true
+INI-57,legacy/lib/buildPresetIni.js,120,launchModelPresets > buildPresetIni,neq-comparison,config.jinja !== undefined,config.jinja;undefined,presetContent:jinja = true
+INI-58,legacy/lib/buildPresetIni.js,120,launchModelPresets > buildPresetIni,truthiness,config.jinja,config.jinja,presetContent:jinja = true
+INI-59,legacy/lib/buildPresetIni.js,124,launchModelPresets > buildPresetIni,if,if (config.chatTemplateKwargs),config.chatTemplateKwargs,presetContent:chat-template-kwargs =
+INI-60,legacy/lib/buildPresetIni.js,128,launchModelPresets > buildPresetIni,logical-and,if (config.loadCustomChatTemplate !== undefined && config.loadCustomChatTemplate),config.loadCustomChatTemplate;undefined,presetContent:chat-template-file =;config.modelPath.replace
+INI-61,legacy/lib/buildPresetIni.js,128,launchModelPresets > buildPresetIni,neq-comparison,config.loadCustomChatTemplate !== undefined,config.loadCustomChatTemplate;undefined,presetContent:chat-template-file =;config.modelPath.replace
+INI-62,legacy/lib/buildPresetIni.js,128,launchModelPresets > buildPresetIni,truthiness,config.loadCustomChatTemplate,config.loadCustomChatTemplate,presetContent:chat-template-file =;config.modelPath.replace
+INI-63,legacy/lib/buildPresetIni.js,132,launchModelPresets > buildPresetIni,logical-and,if (config.verbose !== undefined && config.verbose),config.verbose;undefined,presetContent:verbose = true
+INI-64,legacy/lib/buildPresetIni.js,132,launchModelPresets > buildPresetIni,neq-comparison,config.verbose !== undefined,config.verbose;undefined,presetContent:verbose = true
+INI-65,legacy/lib/buildPresetIni.js,132,launchModelPresets > buildPresetIni,truthiness,config.verbose,config.verbose,presetContent:verbose = true
+INI-66,legacy/lib/buildPresetIni.js,136,launchModelPresets > buildPresetIni,logical-and,if (config.backendSampling !== undefined && config.backendSampling),config.backendSampling;undefined,presetContent:backend-sampling = true
+INI-67,legacy/lib/buildPresetIni.js,136,launchModelPresets > buildPresetIni,neq-comparison,config.backendSampling !== undefined,config.backendSampling;undefined,presetContent:backend-sampling = true
+INI-68,legacy/lib/buildPresetIni.js,136,launchModelPresets > buildPresetIni,truthiness,config.backendSampling,config.backendSampling,presetContent:backend-sampling = true
+INI-69,legacy/lib/buildPresetIni.js,140,launchModelPresets > buildPresetIni,if,if (config.fastAttention),config.fastAttention,presetContent:fa =
+INI-70,legacy/lib/buildPresetIni.js,141,launchModelPresets > buildPresetIni,truthiness,config.fastAttention,config.fastAttention,presetContent:fa =
+INI-71,legacy/lib/buildPresetIni.js,141,launchModelPresets > buildPresetIni,logical-nullish,config.fastAttention ?? 'auto',config.fastAttention,presetContent:fa =
+INI-72,legacy/lib/buildPresetIni.js,145,launchModelPresets > buildPresetIni,logical-and,if (config.draftModelPath && config.speculationType !== 'none' && config.speculationType !== 'draft-mtp'),config.draftModelPath;config.speculationType,presetContent:model-draft =
+INI-73,legacy/lib/buildPresetIni.js,145,launchModelPresets > buildPresetIni,truthiness,config.draftModelPath,config.draftModelPath,presetContent:model-draft =
+INI-74,legacy/lib/buildPresetIni.js,145,launchModelPresets > buildPresetIni,logical-and,config.draftModelPath && config.speculationType !== 'none',config.draftModelPath;config.speculationType,presetContent:model-draft =
+INI-75,legacy/lib/buildPresetIni.js,145,launchModelPresets > buildPresetIni,neq-comparison,config.speculationType !== 'none',config.speculationType,presetContent:model-draft =
+INI-76,legacy/lib/buildPresetIni.js,145,launchModelPresets > buildPresetIni,neq-comparison,config.speculationType !== 'draft-mtp',config.speculationType,presetContent:model-draft =
+INI-77,legacy/lib/buildPresetIni.js,147,launchModelPresets > buildPresetIni,logical-and,if (config.ngld !== undefined && config.ngld >= 0),config.ngld;undefined,presetContent:ngld =
+INI-78,legacy/lib/buildPresetIni.js,147,launchModelPresets > buildPresetIni,neq-comparison,config.ngld !== undefined,config.ngld;undefined,presetContent:ngld =
+INI-79,legacy/lib/buildPresetIni.js,147,launchModelPresets > buildPresetIni,range-comparison,config.ngld >= 0,config.ngld,presetContent:ngld =
+INI-80,legacy/lib/buildPresetIni.js,150,launchModelPresets > buildPresetIni,if,if (config.ctkd),config.ctkd,presetContent:ctkd =
+INI-81,legacy/lib/buildPresetIni.js,153,launchModelPresets > buildPresetIni,if,if (config.ctvd),config.ctvd,presetContent:ctvd =
+INI-82,legacy/lib/buildPresetIni.js,160,launchModelPresets > buildPresetIni,logical-or,if (config.speculationType !== 'none' || config.ngramMod),config.speculationType;config.ngramMod,specTypes
+INI-83,legacy/lib/buildPresetIni.js,160,launchModelPresets > buildPresetIni,neq-comparison,config.speculationType !== 'none',config.speculationType,specTypes
+INI-84,legacy/lib/buildPresetIni.js,160,launchModelPresets > buildPresetIni,truthiness,config.ngramMod,config.ngramMod,specTypes
+INI-85,legacy/lib/buildPresetIni.js,162,launchModelPresets > buildPresetIni,if,if (config.ngramMod),config.ngramMod,specTypes.push;specTypes.push:ngram-mod
+INI-86,legacy/lib/buildPresetIni.js,163,launchModelPresets > buildPresetIni,neq-comparison,if (config.speculationType !== 'none'),config.speculationType,specTypes.push
+INI-87,legacy/lib/buildPresetIni.js,164,launchModelPresets > buildPresetIni,range-comparison,if (specTypes.length > 0),specTypes.length,"presetContent:spec-type =;specTypes.join;specTypes.join:,"
+INI-88,legacy/lib/buildPresetIni.js,167,launchModelPresets > buildPresetIni,if,if (config.ngramMod),config.ngramMod,presetContent:spec-ngram-size-n = 24;presetContent:draft-min = 48;presetContent:draft-max = 64
+INI-89,legacy/lib/buildPresetIni.js,172,launchModelPresets > buildPresetIni,logical-and,if (config.specDraftNMax > 0 && config.speculationType !== 'none'),config.specDraftNMax;config.speculationType,presetContent:spec-draft-n-max =
+INI-90,legacy/lib/buildPresetIni.js,172,launchModelPresets > buildPresetIni,range-comparison,config.specDraftNMax > 0,config.specDraftNMax,presetContent:spec-draft-n-max =
+INI-91,legacy/lib/buildPresetIni.js,172,launchModelPresets > buildPresetIni,neq-comparison,config.speculationType !== 'none',config.speculationType,presetContent:spec-draft-n-max =
+INI-92,legacy/lib/buildPresetIni.js,178,launchModelPresets > buildPresetIni,logical-and,if (config.reasoning !== undefined && config.reasoning !== 'auto'),config.reasoning;undefined,presetContent:reasoning =
+INI-93,legacy/lib/buildPresetIni.js,178,launchModelPresets > buildPresetIni,neq-comparison,config.reasoning !== undefined,config.reasoning;undefined,presetContent:reasoning =
+INI-94,legacy/lib/buildPresetIni.js,178,launchModelPresets > buildPresetIni,neq-comparison,config.reasoning !== 'auto',config.reasoning,presetContent:reasoning =
+INI-95,legacy/lib/buildPresetIni.js,180,launchModelPresets > buildPresetIni,neq-comparison,else if (config.disableReasoning !== undefined),config.disableReasoning;undefined,presetContent:reasoning =
+INI-96,legacy/lib/buildPresetIni.js,181,launchModelPresets > buildPresetIni,ternary,config.disableReasoning ? 'off' : 'on',config.disableReasoning,
 SCV-1,public/script.js,214,saveCurrentValues,if,if (!configId),configId,return
 SCV-2,public/script.js,219,saveCurrentValues,truthiness,parseInt(nglInput.value),parseInt();nglInput(#ngl).value,
 SCV-3,public/script.js,219,saveCurrentValues,logical-or,parseInt(nglInput.value) || 0,parseInt();nglInput(#ngl).value,
@@ -281,54 +281,54 @@ LC-53,public/script.js,341,loadConfiguration,truthiness,config.ctvd,config.ctvd,
 LC-54,public/script.js,341,loadConfiguration,logical-nullish,config.ctvd ?? 'f16',config.ctvd,
 LC-55,public/script.js,343,loadConfiguration,truthiness,config.chatTemplateKwargs,config.chatTemplateKwargs,
 LC-56,public/script.js,343,loadConfiguration,logical-nullish,"config.chatTemplateKwargs ?? """"",config.chatTemplateKwargs,
-DC-1,public/script.js,1112,deleteConfiguration,if,"if (confirm(`Are you sure you want to delete the configuration ""${configName}""?`))",confirm();configName,saveConfigurations;renderConfigList
-DC-2,public/script.js,1118,deleteConfiguration,eq-comparison,if (currentConfigId === configName),currentConfigId;configName,currentConfigId;serverPathInput.value;modelPathSelect.value;nglInput.value:99;threadsInput.value:12;tempInput.value:0.7;topKInput.value:20;topPInput.value:0.00;repeatPenaltyInput.value:1.05;loadModeSelect.value:mmap;swaFullCheckbox.checked;noMmprojOffloadCheckbox.checked;contextSizeInput.value:16384;nCpuMoeInput.value:8;cpuMoeCheckbox.checked;cacheRamInput.value:8192;ctkEnableCheckbox.checked;speculationTypeSelect.value:none;ngramModCheckbox.checked;specDraftNMaxInput.value:0;fastAttentionCheckbox.value:auto;loadCustomChatTemplateCheckbox.checked;draftModelPathSelect.value;ngldInput.value:0;ctkdSelect.value:f16;ctvdSelect.value:f16;setupKvarnWarnings
-SV-post-start-1,server.js,279,POST /start,if,if (!serverPath),serverPath,return;res.json;res.status(400)
-SV-post-start-2,server.js,287,POST /start,if,if (runningProcess),runningProcess,return;res.json
-SV-post-start-3,server.js,322,POST /start,if,if (runningProcess.stdout),runningProcess.stdout,runningProcess.stdout.on;runningProcess.stdout.on:data
-SV-post-start-4,server.js,333,POST /start,if,if (runningProcess.stderr),runningProcess.stderr,runningProcess.stderr.on;runningProcess.stderr.on:data
-SV-post-start-5,server.js,348,POST /start,error-path,catch (error),error,res.json;res.status(500)
-SV-post-stop-1,server.js,358,POST /stop,if,if (!runningProcess),runningProcess,return;res.json
-SV-post-stop-2,server.js,368,POST /stop,logical-and,if (runningProcess && !runningProcess.killed),runningProcess;runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
-SV-post-stop-3,server.js,368,POST /stop,truthiness,runningProcess,runningProcess,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
-SV-post-stop-4,server.js,368,POST /stop,truthiness,runningProcess.killed,runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
-SV-post-stop-5,server.js,371,POST /stop,logical-and,if (runningProcess && !runningProcess.killed),runningProcess;runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGKILL
-SV-post-stop-6,server.js,371,POST /stop,truthiness,runningProcess,runningProcess,runningProcess.kill;runningProcess.kill:SIGKILL
-SV-post-stop-7,server.js,371,POST /stop,truthiness,runningProcess.killed,runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGKILL
-SV-post-stop-8,server.js,381,POST /stop,error-path,catch (error),error,res.json;res.status(500)
-SV-get-models-1,server.js,397,GET /models,error-path,catch (error),error,res.json;res.status(500)
-SV-get-status-1,server.js,420,GET /status,logical-and,!!runningProcess && !runningProcess.killed,runningProcess;runningProcess.killed,
-SV-get-status-2,server.js,420,GET /status,truthiness,runningProcess,runningProcess,
-SV-get-status-3,server.js,420,GET /status,truthiness,runningProcess.killed,runningProcess.killed,
-SV-post-restart-1,server.js,427,POST /restart,if,if (!lastLaunchConfig),lastLaunchConfig,return;res.json;res.status(400)
-SV-post-restart-2,server.js,435,POST /restart,if,if (runningProcess),runningProcess,
-SV-post-restart-3,server.js,438,POST /restart,logical-and,if (runningProcess && !runningProcess.killed),runningProcess;runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
-SV-post-restart-4,server.js,438,POST /restart,truthiness,runningProcess,runningProcess,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
-SV-post-restart-5,server.js,438,POST /restart,truthiness,runningProcess.killed,runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
-SV-post-restart-6,server.js,441,POST /restart,logical-and,if (runningProcess && !runningProcess.killed),runningProcess;runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGKILL
-SV-post-restart-7,server.js,441,POST /restart,truthiness,runningProcess,runningProcess,runningProcess.kill;runningProcess.kill:SIGKILL
-SV-post-restart-8,server.js,441,POST /restart,truthiness,runningProcess.killed,runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGKILL
-SV-post-restart-9,server.js,447,POST /restart,error-path,catch (error),error,return;res.json;res.status(500)
-SV-post-restart-10,server.js,482,POST /restart,if,if (runningProcess.stdout),runningProcess.stdout,runningProcess.stdout.on;runningProcess.stdout.on:data
-SV-post-restart-11,server.js,493,POST /restart,if,if (runningProcess.stderr),runningProcess.stderr,runningProcess.stderr.on;runningProcess.stderr.on:data
-SV-post-restart-12,server.js,508,POST /restart,error-path,catch (error),error,res.json;res.status(500)
-SV-ws-connection-1,server.js,525,WS connection,range-comparison,if (index > -1),index,connectedClients.splice
-SV-get-settings-1,server.js,545,GET /settings,error-path,.catch (err),err,res.json
-SV-get-settings-2,server.js,547,GET /settings,truthiness,process.env.MODEL_PATH,process.env.MODEL_PATH,
-SV-get-settings-3,server.js,547,GET /settings,logical-or,"process.env.MODEL_PATH || ""C:\\Users\\anubh\\.lmstudio\\models""",process.env.MODEL_PATH,
-SV-post-settings-1,server.js,555,POST /settings,if,if (!modelsDirectory),modelsDirectory,return;res.json;res.status(400)
-SV-post-settings-2,server.js,571,POST /settings,error-path,catch (),,
-SV-post-settings-3,server.js,575,POST /settings,neq-comparison,serverPort !== undefined,serverPort;undefined,
-SV-post-settings-4,server.js,575,POST /settings,ternary,serverPort !== undefined ? serverPort : (existingSettings.serverPort || DEFAULT_PORT),serverPort;undefined;existingSettings.serverPort;DEFAULT_PORT,
-SV-post-settings-5,server.js,575,POST /settings,truthiness,existingSettings.serverPort,existingSettings.serverPort,
-SV-post-settings-6,server.js,575,POST /settings,logical-or,existingSettings.serverPort || DEFAULT_PORT,existingSettings.serverPort;DEFAULT_PORT,
-SV-post-settings-7,server.js,575,POST /settings,truthiness,DEFAULT_PORT,DEFAULT_PORT,
-SV-post-settings-8,server.js,582,POST /settings,error-path,catch (error),error,res.json;res.status(500)
-SV-post-launch-presets-1,server.js,595,POST /launch-presets,if,if (!presets),presets,return;res.json;res.status(400)
-SV-post-launch-presets-2,server.js,608,POST /launch-presets,if,if (!serverPath),serverPath,return;res.json;res.status(400)
-SV-post-launch-presets-3,server.js,619,POST /launch-presets,truthiness,serverPort,serverPort,
-SV-post-launch-presets-4,server.js,619,POST /launch-presets,logical-or,serverPort || DEFAULT_PORT,serverPort;DEFAULT_PORT,
-SV-post-launch-presets-5,server.js,619,POST /launch-presets,truthiness,DEFAULT_PORT,DEFAULT_PORT,
-SV-post-launch-presets-6,server.js,647,POST /launch-presets,if,if (runningProcess.stdout),runningProcess.stdout,runningProcess.stdout.on;runningProcess.stdout.on:data
-SV-post-launch-presets-7,server.js,658,POST /launch-presets,if,if (runningProcess.stderr),runningProcess.stderr,runningProcess.stderr.on;runningProcess.stderr.on:data
-SV-post-launch-presets-8,server.js,674,POST /launch-presets,error-path,catch (error),error,res.json;res.status(500)
+DC-1,public/script.js,781,deleteConfiguration,if,"if (confirm(`Are you sure you want to delete the configuration ""${configName}""?`))",confirm();configName,saveConfigurations;renderConfigList
+DC-2,public/script.js,787,deleteConfiguration,eq-comparison,if (currentConfigId === configName),currentConfigId;configName,currentConfigId;serverPathInput.value;modelPathSelect.value;nglInput.value:99;threadsInput.value:12;tempInput.value:0.7;topKInput.value:20;topPInput.value:0.00;repeatPenaltyInput.value:1.05;loadModeSelect.value:mmap;swaFullCheckbox.checked;noMmprojOffloadCheckbox.checked;contextSizeInput.value:16384;nCpuMoeInput.value:8;cpuMoeCheckbox.checked;cacheRamInput.value:8192;ctkEnableCheckbox.checked;speculationTypeSelect.value:none;ngramModCheckbox.checked;specDraftNMaxInput.value:0;fastAttentionCheckbox.value:auto;loadCustomChatTemplateCheckbox.checked;draftModelPathSelect.value;ngldInput.value:0;ctkdSelect.value:f16;ctvdSelect.value:f16;setupKvarnWarnings
+SV-post-start-1,server.js,281,POST /start,if,if (!serverPath),serverPath,return;res.json;res.status(400)
+SV-post-start-2,server.js,289,POST /start,if,if (runningProcess),runningProcess,return;res.json
+SV-post-start-3,server.js,324,POST /start,if,if (runningProcess.stdout),runningProcess.stdout,runningProcess.stdout.on;runningProcess.stdout.on:data
+SV-post-start-4,server.js,335,POST /start,if,if (runningProcess.stderr),runningProcess.stderr,runningProcess.stderr.on;runningProcess.stderr.on:data
+SV-post-start-5,server.js,350,POST /start,error-path,catch (error),error,res.json;res.status(500)
+SV-post-stop-1,server.js,360,POST /stop,if,if (!runningProcess),runningProcess,return;res.json
+SV-post-stop-2,server.js,370,POST /stop,logical-and,if (runningProcess && !runningProcess.killed),runningProcess;runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
+SV-post-stop-3,server.js,370,POST /stop,truthiness,runningProcess,runningProcess,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
+SV-post-stop-4,server.js,370,POST /stop,truthiness,runningProcess.killed,runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
+SV-post-stop-5,server.js,373,POST /stop,logical-and,if (runningProcess && !runningProcess.killed),runningProcess;runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGKILL
+SV-post-stop-6,server.js,373,POST /stop,truthiness,runningProcess,runningProcess,runningProcess.kill;runningProcess.kill:SIGKILL
+SV-post-stop-7,server.js,373,POST /stop,truthiness,runningProcess.killed,runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGKILL
+SV-post-stop-8,server.js,383,POST /stop,error-path,catch (error),error,res.json;res.status(500)
+SV-get-models-1,server.js,399,GET /models,error-path,catch (error),error,res.json;res.status(500)
+SV-get-status-1,server.js,422,GET /status,logical-and,!!runningProcess && !runningProcess.killed,runningProcess;runningProcess.killed,
+SV-get-status-2,server.js,422,GET /status,truthiness,runningProcess,runningProcess,
+SV-get-status-3,server.js,422,GET /status,truthiness,runningProcess.killed,runningProcess.killed,
+SV-post-restart-1,server.js,429,POST /restart,if,if (!lastLaunchConfig),lastLaunchConfig,return;res.json;res.status(400)
+SV-post-restart-2,server.js,437,POST /restart,if,if (runningProcess),runningProcess,
+SV-post-restart-3,server.js,440,POST /restart,logical-and,if (runningProcess && !runningProcess.killed),runningProcess;runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
+SV-post-restart-4,server.js,440,POST /restart,truthiness,runningProcess,runningProcess,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
+SV-post-restart-5,server.js,440,POST /restart,truthiness,runningProcess.killed,runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGTERM;setTimeout
+SV-post-restart-6,server.js,443,POST /restart,logical-and,if (runningProcess && !runningProcess.killed),runningProcess;runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGKILL
+SV-post-restart-7,server.js,443,POST /restart,truthiness,runningProcess,runningProcess,runningProcess.kill;runningProcess.kill:SIGKILL
+SV-post-restart-8,server.js,443,POST /restart,truthiness,runningProcess.killed,runningProcess.killed,runningProcess.kill;runningProcess.kill:SIGKILL
+SV-post-restart-9,server.js,449,POST /restart,error-path,catch (error),error,return;res.json;res.status(500)
+SV-post-restart-10,server.js,484,POST /restart,if,if (runningProcess.stdout),runningProcess.stdout,runningProcess.stdout.on;runningProcess.stdout.on:data
+SV-post-restart-11,server.js,495,POST /restart,if,if (runningProcess.stderr),runningProcess.stderr,runningProcess.stderr.on;runningProcess.stderr.on:data
+SV-post-restart-12,server.js,510,POST /restart,error-path,catch (error),error,res.json;res.status(500)
+SV-ws-connection-1,server.js,527,WS connection,range-comparison,if (index > -1),index,connectedClients.splice
+SV-get-settings-1,server.js,547,GET /settings,error-path,.catch (err),err,res.json
+SV-get-settings-2,server.js,549,GET /settings,truthiness,process.env.MODEL_PATH,process.env.MODEL_PATH,
+SV-get-settings-3,server.js,549,GET /settings,logical-or,"process.env.MODEL_PATH || ""C:\\Users\\anubh\\.lmstudio\\models""",process.env.MODEL_PATH,
+SV-post-settings-1,server.js,557,POST /settings,if,if (!modelsDirectory),modelsDirectory,return;res.json;res.status(400)
+SV-post-settings-2,server.js,573,POST /settings,error-path,catch (),,
+SV-post-settings-3,server.js,577,POST /settings,neq-comparison,serverPort !== undefined,serverPort;undefined,
+SV-post-settings-4,server.js,577,POST /settings,ternary,serverPort !== undefined ? serverPort : (existingSettings.serverPort || DEFAULT_PORT),serverPort;undefined;existingSettings.serverPort;DEFAULT_PORT,
+SV-post-settings-5,server.js,577,POST /settings,truthiness,existingSettings.serverPort,existingSettings.serverPort,
+SV-post-settings-6,server.js,577,POST /settings,logical-or,existingSettings.serverPort || DEFAULT_PORT,existingSettings.serverPort;DEFAULT_PORT,
+SV-post-settings-7,server.js,577,POST /settings,truthiness,DEFAULT_PORT,DEFAULT_PORT,
+SV-post-settings-8,server.js,584,POST /settings,error-path,catch (error),error,res.json;res.status(500)
+SV-post-launch-presets-1,server.js,597,POST /launch-presets,if,if (!presets),presets,return;res.json;res.status(400)
+SV-post-launch-presets-2,server.js,610,POST /launch-presets,if,if (!serverPath),serverPath,return;res.json;res.status(400)
+SV-post-launch-presets-3,server.js,621,POST /launch-presets,truthiness,serverPort,serverPort,
+SV-post-launch-presets-4,server.js,621,POST /launch-presets,logical-or,serverPort || DEFAULT_PORT,serverPort;DEFAULT_PORT,
+SV-post-launch-presets-5,server.js,621,POST /launch-presets,truthiness,DEFAULT_PORT,DEFAULT_PORT,
+SV-post-launch-presets-6,server.js,649,POST /launch-presets,if,if (runningProcess.stdout),runningProcess.stdout,runningProcess.stdout.on;runningProcess.stdout.on:data
+SV-post-launch-presets-7,server.js,660,POST /launch-presets,if,if (runningProcess.stderr),runningProcess.stderr,runningProcess.stderr.on;runningProcess.stderr.on:data
+SV-post-launch-presets-8,server.js,676,POST /launch-presets,error-path,catch (error),error,res.json;res.status(500)

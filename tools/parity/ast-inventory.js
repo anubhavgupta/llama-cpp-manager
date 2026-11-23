@@ -25,16 +25,31 @@ const OUT_CSV = path.join(REPO, 'SPEC', 'SPEC-ROWS.csv');
 
 const SOURCES = [
     { file: 'public/script.js', sourceTypes: ['script', 'module'] },
+    { file: 'legacy/lib/buildArgs.js', sourceTypes: ['script', 'module'] },
+    { file: 'legacy/lib/buildPresetIni.js', sourceTypes: ['script', 'module'] },
     { file: 'server.js', sourceTypes: ['script', 'module'] },
 ];
 
-// Regions found by function name in public/script.js. Prefixes are stable ids.
+// Regions found by function name (never by line number). A region may span several functions: the
+// two generators moved into legacy/lib in Phase 2.1, and BA/INI stay one id sequence across the
+// caller and the generator so BA-n / INI-n keep naming the predicate they named before the
+// extraction. `order` fixes the sequence of the parts; `label` is the row's fn_or_route.
 const SCRIPT_REGIONS = [
-    { prefix: 'BA', name: 'launchServer', label: 'launchServer' },
-    { prefix: 'INI', name: 'launchModelPresets', label: 'launchModelPresets' },
-    { prefix: 'SCV', name: 'saveCurrentValues', label: 'saveCurrentValues' },
-    { prefix: 'LC', name: 'loadConfiguration', label: 'loadConfiguration' },
-    { prefix: 'DC', name: 'deleteConfiguration', label: 'deleteConfiguration' },
+    {
+        prefix: 'BA', label: 'launchServer', parts: [
+            { order: 0, file: 'public/script.js', name: 'launchServer', label: 'launchServer' },
+            { order: 1, file: 'legacy/lib/buildArgs.js', name: 'buildArgs', label: 'launchServer > buildArgs' },
+        ],
+    },
+    {
+        prefix: 'INI', label: 'launchModelPresets', parts: [
+            { order: 0, file: 'public/script.js', name: 'launchModelPresets', label: 'launchModelPresets' },
+            { order: 1, file: 'legacy/lib/buildPresetIni.js', name: 'buildPresetIni', label: 'launchModelPresets > buildPresetIni' },
+        ],
+    },
+    { prefix: 'SCV', label: 'saveCurrentValues', parts: [{ order: 0, file: 'public/script.js', name: 'saveCurrentValues', label: 'saveCurrentValues' }] },
+    { prefix: 'LC', label: 'loadConfiguration', parts: [{ order: 0, file: 'public/script.js', name: 'loadConfiguration', label: 'loadConfiguration' }] },
+    { prefix: 'DC', label: 'deleteConfiguration', parts: [{ order: 0, file: 'public/script.js', name: 'deleteConfiguration', label: 'deleteConfiguration' }] },
 ];
 
 const ROUTE_METHODS = new Set(['get', 'post', 'put', 'delete', 'patch', 'all']);
@@ -537,17 +552,20 @@ function pathSlug(value) {
     return slug || 'root';
 }
 
-function findScriptRegions(ast) {
+function findScriptRegions(ast, file) {
     const regions = [];
     for (const spec of SCRIPT_REGIONS) {
-        let node = null;
-        walkNodes(ast, (n) => {
-            if (node) return;
-            const name = n.id && n.id.name;
-            if ((n.type === 'FunctionDeclaration' || n.type === 'FunctionExpression') && name === spec.name) node = n;
-        });
-        if (!node) throw new Error(`region root not found by name: ${spec.name}`);
-        regions.push({ prefix: spec.prefix, label: spec.label, node });
+        for (const part of spec.parts) {
+            if (part.file !== file) continue;
+            let node = null;
+            walkNodes(ast, (n) => {
+                if (node) return;
+                const name = n.id && n.id.name;
+                if ((n.type === 'FunctionDeclaration' || n.type === 'FunctionExpression') && name === part.name) node = n;
+            });
+            if (!node) throw new Error(`region root not found by name: ${part.name} (${part.file})`);
+            regions.push({ prefix: spec.prefix, label: part.label, node, order: part.order });
+        }
     }
     return regions;
 }
@@ -585,34 +603,55 @@ function csvCell(value) {
 }
 
 function build() {
-    const rows = [];
     const regions = [];
     const parsed = {};
+    // prefix -> { spec, parts: [{ file, label, node, src, rows }] }, in first-encounter order.
+    const collected = new Map();
 
     for (const source of SOURCES) {
         const p = parse(source.file, source.sourceTypes);
         parsed[source.file] = p;
         const domIds = buildDomIdMap(p.ast);
-        const fileRegions = source.file === 'server.js' ? findServerRegions(p.ast) : findScriptRegions(p.ast);
+        const fileRegions = source.file === 'server.js' ? findServerRegions(p.ast) : findScriptRegions(p.ast, source.file);
         for (const region of fileRegions) {
             const regionRows = buildRegionRows(p.src, region.node, domIds);
-            regionRows.forEach((row, i) => {
-                row.row_id = region.prefix + '-' + (i + 1);
-                row.file = source.file;
+            const spec = SCRIPT_REGIONS.find((candidate) => candidate.prefix === region.prefix);
+            const entry = { file: source.file, label: region.label, node: region.node, src: p.src, rows: regionRows };
+            if (!collected.has(region.prefix)) {
+                collected.set(region.prefix, { spec, label: spec ? spec.label : region.label, parts: [] });
+            }
+            collected.get(region.prefix).parts.push(entry);
+        }
+    }
+
+    const rows = [];
+    for (const [prefix, entry] of collected) {
+        const parts = entry.parts.slice().sort((a, b) => {
+            const spec = entry.spec;
+            const order = (part) => (spec ? spec.parts.find((candidate) => candidate.file === part.file && candidate.label === part.label).order : 0);
+            return order(a) - order(b);
+        });
+        const regionRows = [];
+        for (const part of parts) {
+            part.rows.forEach((row, i) => {
+                row.row_id = prefix + '-' + (regionRows.length + 1);
+                row.file = part.file;
                 row.line = row.node.loc.start.line;
-                row.fn_or_route = region.label;
+                row.fn_or_route = part.label;
+                regionRows.push(row);
                 rows.push(row);
             });
-            regions.push({
-                prefix: region.prefix,
-                label: region.label,
-                file: source.file,
-                count: regionRows.length,
-                node: region.node,
-                src: p.src,
-                rows: regionRows,
-            });
         }
+        regions.push({
+            prefix,
+            label: entry.label,
+            file: [...new Set(parts.map((part) => part.file))].join(' + '),
+            count: regionRows.length,
+            parts,
+            node: parts[0].node,
+            src: parts[0].src,
+            rows: regionRows,
+        });
     }
 
     const csv = [COLUMNS.join(',')].concat(rows.map((r) => [
@@ -658,20 +697,22 @@ function flagPushes(region) {
     // branch that guards it (nearest enclosing branch node, null when the push
     // is unconditional and therefore has no predicate that could guard it).
     const out = [];
-    walkNodes(region.node, (node, ancestors) => {
-        if (node.type !== 'CallExpression') return;
-        const callee = node.callee;
-        if (!callee || callee.type !== 'MemberExpression' || callee.property.name !== 'push') return;
-        for (const arg of node.arguments) {
-            if (arg.type !== 'Literal' || typeof arg.value !== 'string') continue;
-            if (!FLAG_RE.test(arg.value)) continue;
-            let branch = null;
-            for (let i = ancestors.length - 1; i >= 0; i--) {
-                if (BRANCH_TYPES.has(ancestors[i].type) && ancestors[i] !== region.node) { branch = ancestors[i]; break; }
+    for (const part of region.parts || [{ node: region.node }]) {
+        walkNodes(part.node, (node, ancestors) => {
+            if (node.type !== 'CallExpression') return;
+            const callee = node.callee;
+            if (!callee || callee.type !== 'MemberExpression' || callee.property.name !== 'push') return;
+            for (const arg of node.arguments) {
+                if (arg.type !== 'Literal' || typeof arg.value !== 'string') continue;
+                if (!FLAG_RE.test(arg.value)) continue;
+                let branch = null;
+                for (let i = ancestors.length - 1; i >= 0; i--) {
+                    if (BRANCH_TYPES.has(ancestors[i].type) && ancestors[i] !== part.node) { branch = ancestors[i]; break; }
+                }
+                out.push({ flag: arg.value, branch, line: node.loc.start.line });
             }
-            out.push({ flag: arg.value, branch, line: node.loc.start.line });
-        }
-    });
+        });
+    }
     return out;
 }
 
@@ -708,7 +749,13 @@ function selftest() {
     }
     const expectedPrefixes = SCRIPT_REGIONS.map((r) => r.prefix);
     for (const prefix of expectedPrefixes) {
-        if (!regions.some((r) => r.prefix === prefix)) fail(`region ${prefix} was not located by function name`);
+        const region = regions.find((r) => r.prefix === prefix);
+        if (!region) { fail(`region ${prefix} was not located by function name`); continue; }
+        for (const part of (SCRIPT_REGIONS.find((r) => r.prefix === prefix).parts)) {
+            if (!region.parts.some((located) => located.file === part.file)) {
+                fail(`region ${prefix} does not include its ${part.file} part (${part.name})`);
+            }
+        }
     }
 
     for (const r of rows) {
