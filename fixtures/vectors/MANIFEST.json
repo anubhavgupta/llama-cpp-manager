@@ -75,6 +75,21 @@
       "sha256": "80187d91a587bfa03f5c8a7dd54143c98f1423e3aa78d658f2dd7c5bc2a13f96"
     },
     {
+      "file": "fixtures/vectors/boundary/shrunk-mutation.jsonl",
+      "command": "node tools/parity/equiv-prove.js --apply (append-only promotion; the goldens are recorded from parity-baseline by gen-goldens.js record)",
+      "sha256": "91a5a6e602047352d3178507aa35a5a772a367b9bd044983549ee25432ffb262"
+    },
+    {
+      "file": "fixtures/goldens/boundary/shrunk-mutation.goldens.jsonl",
+      "command": "node tools/parity/equiv-prove.js --apply (append-only promotion; the goldens are recorded from parity-baseline by gen-goldens.js record)",
+      "sha256": "1daf42d9dbce1a1ce56b83b39d7f735ecdfa34659fbd6100cd2a7fca3140d3a4"
+    },
+    {
+      "file": "fixtures/vectors/coverage-promotions.json",
+      "command": "node tools/parity/equiv-prove.js --apply (append-only promotion; the goldens are recorded from parity-baseline by gen-goldens.js record)",
+      "sha256": "d564291f485c45c62e7de6642cbd8d7b355d3881a025f63a2569169d5bc0df98"
+    },
+    {
       "file": "fixtures/vectors/MANIFEST.json",
       "command": "node tools/parity/gen-goldens.js (writes this file)",
       "sha256": null,

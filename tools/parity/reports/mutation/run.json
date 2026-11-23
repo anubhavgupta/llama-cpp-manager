@@ -1,6 +1,6 @@
 {
   "generated_by": "tools/parity/mutation-run.js",
-  "command": "node tools/parity/mutation-run.js --tier1 300 --workers 10",
+  "command": "node tools/parity/mutation-run.js --tier1 300 --workers 8",
   "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
   "goldens_impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
   "snapshot": {
@@ -10,16 +10,17 @@
     "mismatched_against_commit": 0
   },
   "vectors": {
-    "total": 2746,
+    "total": 2752,
     "tier1": 300,
-    "rest": 2446
+    "rest": 2452,
+    "promoted": 6
   },
   "mutants": {
     "enumerated": 706,
     "run": 706,
-    "killed": 642,
-    "survived": 64,
-    "score": "90.93%",
+    "killed": 648,
+    "survived": 58,
+    "score": "91.78%",
     "by_class": {
       "conditional-inversion": {
         "mutants": 75,
@@ -48,8 +49,8 @@
       },
       "numeric-literal": {
         "mutants": 35,
-        "killed": 33,
-        "survived": 2
+        "killed": 35,
+        "survived": 0
       },
       "negation-insertion": {
         "mutants": 41,
@@ -73,8 +74,8 @@
       },
       "equality-strictness": {
         "mutants": 47,
-        "killed": 9,
-        "survived": 38
+        "killed": 12,
+        "survived": 35
       },
       "loop-body-removal": {
         "mutants": 1,
@@ -83,8 +84,8 @@
       },
       "loop-first-iteration": {
         "mutants": 1,
-        "killed": 0,
-        "survived": 1
+        "killed": 1,
+        "survived": 0
       },
       "branch-swap": {
         "mutants": 2,
@@ -93,20 +94,25 @@
       }
     },
     "by_tier": {
-      "tier1": 631,
+      "tier1": 637,
       "tier2": 11,
-      "full": 64
+      "full": 58
     }
   },
   "tier_control": {
     "sample_fraction": 0.1,
-    "pool": 631,
+    "pool": 637,
     "sample_size": 64,
     "seed": 20261126,
     "disagreements": 0
   },
-  "runtime_ms": 13240,
-  "workers": 10,
+  "baseline_control": {
+    "vectors": 2752,
+    "channels": 2,
+    "disagreements": 0
+  },
+  "runtime_ms": 12005,
+  "workers": 8,
   "rows": {
     "BA-32": {
       "mutants": 4,
@@ -437,31 +443,27 @@
     },
     "BA-80": {
       "mutants": 38,
-      "killed": 35,
-      "survived": 3,
+      "killed": 36,
+      "survived": 2,
       "survivor_ids": [
         "M-args-123-0035-equality-strictness-f8537e7f9e",
-        "M-args-123-0039-string-literal-73e321f73d",
-        "M-args-137-0039-numeric-literal-3baaf26df7"
+        "M-args-123-0039-string-literal-73e321f73d"
       ]
     },
     "BA-81": {
       "mutants": 35,
-      "killed": 32,
-      "survived": 3,
+      "killed": 33,
+      "survived": 2,
       "survivor_ids": [
         "M-args-123-0035-equality-strictness-f8537e7f9e",
-        "M-args-123-0039-string-literal-73e321f73d",
-        "M-args-137-0039-numeric-literal-3baaf26df7"
+        "M-args-123-0039-string-literal-73e321f73d"
       ]
     },
     "BA-82": {
       "mutants": 32,
-      "killed": 31,
-      "survived": 1,
-      "survivor_ids": [
-        "M-args-137-0039-numeric-literal-3baaf26df7"
-      ]
+      "killed": 32,
+      "survived": 0,
+      "survivor_ids": []
     },
     "BA-83": {
       "mutants": 2,
@@ -493,20 +495,17 @@
     },
     "BA-87": {
       "mutants": 13,
-      "killed": 11,
-      "survived": 2,
+      "killed": 12,
+      "survived": 1,
       "survivor_ids": [
-        "M-args-137-0039-numeric-literal-3baaf26df7",
         "M-args-137-0067-equality-strictness-6cccb1595d"
       ]
     },
     "BA-88": {
       "mutants": 6,
-      "killed": 5,
-      "survived": 1,
-      "survivor_ids": [
-        "M-args-137-0039-numeric-literal-3baaf26df7"
-      ]
+      "killed": 6,
+      "survived": 0,
+      "survivor_ids": []
     },
     "BA-89": {
       "mutants": 7,
@@ -778,11 +777,9 @@
     },
     "INI-5": {
       "mutants": 39,
-      "killed": 38,
-      "survived": 1,
-      "survivor_ids": [
-        "M-ini-004-0043-loop-first-iteration-591318a098"
-      ]
+      "killed": 39,
+      "survived": 0,
+      "survivor_ids": []
     },
     "INI-6": {
       "mutants": 4,
@@ -1058,11 +1055,9 @@
     },
     "INI-46": {
       "mutants": 6,
-      "killed": 5,
-      "survived": 1,
-      "survivor_ids": [
-        "M-ini-081-0032-equality-strictness-56f653f8fa"
-      ]
+      "killed": 6,
+      "survived": 0,
+      "survivor_ids": []
     },
     "INI-47": {
       "mutants": 8,
@@ -1329,31 +1324,27 @@
     },
     "INI-82": {
       "mutants": 30,
-      "killed": 27,
-      "survived": 3,
+      "killed": 28,
+      "survived": 2,
       "survivor_ids": [
         "M-ini-137-0039-equality-strictness-eb22505630",
-        "M-ini-137-0043-string-literal-fa4ffae0e8",
-        "M-ini-149-0043-numeric-literal-d479f9603b"
+        "M-ini-137-0043-string-literal-fa4ffae0e8"
       ]
     },
     "INI-83": {
       "mutants": 27,
-      "killed": 24,
-      "survived": 3,
+      "killed": 25,
+      "survived": 2,
       "survivor_ids": [
         "M-ini-137-0039-equality-strictness-eb22505630",
-        "M-ini-137-0043-string-literal-fa4ffae0e8",
-        "M-ini-149-0043-numeric-literal-d479f9603b"
+        "M-ini-137-0043-string-literal-fa4ffae0e8"
       ]
     },
     "INI-84": {
       "mutants": 24,
-      "killed": 23,
-      "survived": 1,
-      "survivor_ids": [
-        "M-ini-149-0043-numeric-literal-d479f9603b"
-      ]
+      "killed": 24,
+      "survived": 0,
+      "survivor_ids": []
     },
     "INI-85": {
       "mutants": 2,
@@ -1385,20 +1376,17 @@
     },
     "INI-89": {
       "mutants": 13,
-      "killed": 11,
-      "survived": 2,
+      "killed": 12,
+      "survived": 1,
       "survivor_ids": [
-        "M-ini-149-0043-numeric-literal-d479f9603b",
         "M-ini-149-0071-equality-strictness-6073f375ae"
       ]
     },
     "INI-90": {
       "mutants": 6,
-      "killed": 5,
-      "survived": 1,
-      "survivor_ids": [
-        "M-ini-149-0043-numeric-literal-d479f9603b"
-      ]
+      "killed": 6,
+      "survived": 0,
+      "survivor_ids": []
     },
     "INI-91": {
       "mutants": 7,
@@ -1410,19 +1398,15 @@
     },
     "INI-92": {
       "mutants": 10,
-      "killed": 9,
-      "survived": 1,
-      "survivor_ids": [
-        "M-ini-155-0033-equality-strictness-d0d635d9c8"
-      ]
+      "killed": 10,
+      "survived": 0,
+      "survivor_ids": []
     },
     "INI-93": {
       "mutants": 5,
-      "killed": 4,
-      "survived": 1,
-      "survivor_ids": [
-        "M-ini-155-0033-equality-strictness-d0d635d9c8"
-      ]
+      "killed": 5,
+      "survived": 0,
+      "survivor_ids": []
     },
     "INI-94": {
       "mutants": 7,
@@ -1434,11 +1418,9 @@
     },
     "INI-95": {
       "mutants": 3,
-      "killed": 2,
-      "survived": 1,
-      "survivor_ids": [
-        "M-ini-157-0047-equality-strictness-f5ab958a60"
-      ]
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
     },
     "INI-96": {
       "mutants": 3,
@@ -1463,7 +1445,6 @@
     "M-args-123-0039-string-literal-73e321f73d",
     "M-args-126-0039-equality-strictness-cca128651f",
     "M-args-127-0033-relational-boundary-a8471235f6",
-    "M-args-137-0039-numeric-literal-3baaf26df7",
     "M-args-137-0067-equality-strictness-6cccb1595d",
     "M-args-143-0029-equality-strictness-f82e935fdc",
     "M-args-145-0036-equality-strictness-85a1d91dd8",
@@ -1475,7 +1456,6 @@
     "M-config-012-0070-operand-removal-e7cec54bcb",
     "M-config-017-0046-operand-removal-50b72c86f8",
     "M-config-024-0058-operand-removal-8776a536a7",
-    "M-ini-004-0043-loop-first-iteration-591318a098",
     "M-ini-025-0031-equality-strictness-6a45602833",
     "M-ini-039-0028-equality-strictness-7799d22852",
     "M-ini-047-0064-equality-strictness-5c4c65bcf3",
@@ -1484,7 +1464,6 @@
     "M-ini-059-0027-equality-strictness-9e4b7e73fb",
     "M-ini-063-0031-equality-strictness-949aaa70d2",
     "M-ini-067-0031-equality-strictness-88fc97f65e",
-    "M-ini-081-0032-equality-strictness-56f653f8fa",
     "M-ini-085-0016-negation-insertion-2169033dfd",
     "M-ini-085-0035-equality-strictness-b7c77e3e63",
     "M-ini-089-0016-negation-insertion-38ae0dcda7",
@@ -1507,11 +1486,8 @@
     "M-ini-137-0043-string-literal-fa4ffae0e8",
     "M-ini-140-0043-equality-strictness-2269a656a8",
     "M-ini-141-0037-relational-boundary-1f30eddadb",
-    "M-ini-149-0043-numeric-literal-d479f9603b",
     "M-ini-149-0071-equality-strictness-6073f375ae",
-    "M-ini-155-0033-equality-strictness-d0d635d9c8",
-    "M-ini-155-0067-equality-strictness-60cab77f69",
-    "M-ini-157-0047-equality-strictness-f5ab958a60"
+    "M-ini-155-0067-equality-strictness-60cab77f69"
   ],
   "mutant_results": [
     {
@@ -1694,8 +1670,8 @@
       "killing_vector_ids": [
         "format-ngl-1e21-stored"
       ],
-      "first_killing_index": 840,
-      "vectors_checked": 841,
+      "first_killing_index": 846,
+      "vectors_checked": 847,
       "first_problem": "argv length 31 -> 29, first divergence at index 0: baseline \"-ngl\" vs candidate \"-t\""
     },
     {
@@ -1808,7 +1784,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -2175,8 +2151,8 @@
       "killing_vector_ids": [
         "format-topk-1e21-stored"
       ],
-      "first_killing_index": 843,
-      "vectors_checked": 844,
+      "first_killing_index": 849,
+      "vectors_checked": 850,
       "first_problem": "argv length 31 -> 29, first divergence at index 6: baseline \"--top-k\" vs candidate \"--top-p\""
     },
     {
@@ -2546,7 +2522,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -2719,7 +2695,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -2977,7 +2953,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -3175,7 +3151,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -3408,7 +3384,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -3581,7 +3557,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -4088,7 +4064,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -4294,8 +4270,8 @@
       "killing_vector_ids": [
         "format-ncpumoe-1e21-stored"
       ],
-      "first_killing_index": 847,
-      "vectors_checked": 848,
+      "first_killing_index": 853,
+      "vectors_checked": 854,
       "first_problem": "argv length 31 -> 29, first divergence at index 20: baseline \"--n-cpu-moe\" vs candidate \"-fa\""
     },
     {
@@ -4948,7 +4924,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -5146,7 +5122,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -6203,7 +6179,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -6430,7 +6406,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -6455,7 +6431,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -6722,7 +6698,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -6849,7 +6825,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -7614,12 +7590,14 @@
       "before": "0",
       "after": "1",
       "line": 137,
-      "status": "survived",
-      "killed_on_tier": "full",
-      "killing_vector_ids": [],
-      "first_killing_index": -1,
-      "vectors_checked": 2746,
-      "first_problem": null
+      "status": "killed",
+      "killed_on_tier": "tier1",
+      "killing_vector_ids": [
+        "shrunk-mutation-probe-0272"
+      ],
+      "first_killing_index": 245,
+      "vectors_checked": 246,
+      "first_problem": "argv length 35 -> 33, first divergence at index 27: baseline \"--spec-draft-n-max\" vs candidate \"--host\""
     },
     {
       "id": "M-args-137-0041-boolean-operator-186a781581",
@@ -7663,8 +7641,8 @@
       "killing_vector_ids": [
         "cover2-012"
       ],
-      "first_killing_index": 257,
-      "vectors_checked": 258,
+      "first_killing_index": 263,
+      "vectors_checked": 264,
       "first_problem": "argv length 41 -> 43, first divergence at index 35: baseline \"--host\" vs candidate \"--spec-draft-n-max\""
     },
     {
@@ -7712,7 +7690,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -7771,8 +7749,8 @@
       "killing_vector_ids": [
         "cover2-012"
       ],
-      "first_killing_index": 257,
-      "vectors_checked": 258,
+      "first_killing_index": 263,
+      "vectors_checked": 264,
       "first_problem": "argv length 41 -> 43, first divergence at index 35: baseline \"--host\" vs candidate \"--spec-draft-n-max\""
     },
     {
@@ -7935,7 +7913,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -8163,7 +8141,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -8466,7 +8444,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -8612,7 +8590,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -9263,7 +9241,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -9480,7 +9458,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -9754,7 +9732,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -10262,7 +10240,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -10444,7 +10422,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -10534,7 +10512,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -10625,8 +10603,8 @@
       "killing_vector_ids": [
         "cover2-013"
       ],
-      "first_killing_index": 258,
-      "vectors_checked": 259,
+      "first_killing_index": 264,
+      "vectors_checked": 265,
       "first_problem": "argv length 49 -> 47, first divergence at index 37: baseline \"-ngld\" vs candidate \"-ctkd\""
     },
     {
@@ -10689,12 +10667,14 @@
       "before": "Object.entries(configs)",
       "after": "Object.entries(configs).slice(0, 1)",
       "line": 4,
-      "status": "survived",
-      "killed_on_tier": "full",
-      "killing_vector_ids": [],
-      "first_killing_index": -1,
-      "vectors_checked": 2746,
-      "first_problem": null
+      "status": "killed",
+      "killed_on_tier": "tier1",
+      "killing_vector_ids": [
+        "shrunk-mutation-probe-0003"
+      ],
+      "first_killing_index": 249,
+      "vectors_checked": 250,
+      "first_problem": "ini bytes 475 -> 244, first difference at byte 244\n      baseline: \"= 8192\\nfa = auto\\nspec-type = draft-mtp\\n\\n[mutation-probe-0003-2]\\ntemp = 0.7\\nc = 1\"\n      candidate: \"= 8192\\nfa = auto\\nspec-type = draft-mtp\\n\\n\""
     },
     {
       "id": "M-ini-016-0000-statement-removal-766e27e1aa",
@@ -10881,7 +10861,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -11105,8 +11085,8 @@
       "killing_vector_ids": [
         "format-temp-null-stored"
       ],
-      "first_killing_index": 1059,
-      "vectors_checked": 1060,
+      "first_killing_index": 1065,
+      "vectors_checked": 1066,
       "first_problem": "ini bytes 225 -> 213, first difference at byte 39\n      baseline: \"version = 1\\n\\n[format-temp-null-stored]\\ntemp = null\\nc = 16384\\ntop-k = 20\\ntop-p =\"\n      candidate: \"version = 1\\n\\n[format-temp-null-stored]\\nc = 16384\\ntop-k = 20\\ntop-p = 0.00\\nrepeat\""
     },
     {
@@ -11401,8 +11381,8 @@
       "killing_vector_ids": [
         "format-contextsize-0.1-stored"
       ],
-      "first_killing_index": 815,
-      "vectors_checked": 816,
+      "first_killing_index": 821,
+      "vectors_checked": 822,
       "first_problem": "ini bytes 228 -> 220, first difference at byte 56\n      baseline: \"rmat-contextsize-0.1-stored]\\ntemp = 0.7\\nc = 0.1\\ntop-k = 20\\ntop-p = 0.00\\nrepeat-p\"\n      candidate: \"rmat-contextsize-0.1-stored]\\ntemp = 0.7\\ntop-k = 20\\ntop-p = 0.00\\nrepeat-penalty =\""
     },
     {
@@ -11544,7 +11524,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -11664,8 +11644,8 @@
       "killing_vector_ids": [
         "format-topk-0.1-stored"
       ],
-      "first_killing_index": 812,
-      "vectors_checked": 813,
+      "first_killing_index": 818,
+      "vectors_checked": 819,
       "first_problem": "ini bytes 224 -> 212, first difference at byte 63\n      baseline: \"pk-0.1-stored]\\ntemp = 0.7\\nc = 16384\\ntop-k = 0.1\\ntop-p = 0.00\\nrepeat-penalty = 1.\"\n      candidate: \"pk-0.1-stored]\\ntemp = 0.7\\nc = 16384\\ntop-p = 0.00\\nrepeat-penalty = 1.05\\npresence-\""
     },
     {
@@ -11820,8 +11800,8 @@
       "killing_vector_ids": [
         "format-topp-null-stored"
       ],
-      "first_killing_index": 1061,
-      "vectors_checked": 1062,
+      "first_killing_index": 1067,
+      "vectors_checked": 1068,
       "first_problem": "ini bytes 224 -> 211, first difference at byte 71\n      baseline: \"stored]\\ntemp = 0.7\\nc = 16384\\ntop-k = 20\\ntop-p = null\\nrepeat-penalty = 1.05\\nprese\"\n      candidate: \"stored]\\ntemp = 0.7\\nc = 16384\\ntop-k = 20\\nrepeat-penalty = 1.05\\npresence-penalty =\""
     },
     {
@@ -12165,7 +12145,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -12600,7 +12580,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -13035,7 +13015,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -13401,7 +13381,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -13521,8 +13501,8 @@
       "killing_vector_ids": [
         "format-ngl-0.1-stored"
       ],
-      "first_killing_index": 809,
-      "vectors_checked": 810,
+      "first_killing_index": 815,
+      "vectors_checked": 816,
       "first_problem": "ini bytes 223 -> 213, first difference at byte 128\n      baseline: \"-penalty = 1.05\\npresence-penalty = 0.00\\nngl = 0.1\\nthreads = 12\\nn-cpu-moe = 8\\npar\"\n      candidate: \"-penalty = 1.05\\npresence-penalty = 0.00\\nthreads = 12\\nn-cpu-moe = 8\\nparallel = 1\\n\""
     },
     {
@@ -13676,7 +13656,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -13796,8 +13776,8 @@
       "killing_vector_ids": [
         "format-threads-0.1-stored"
       ],
-      "first_killing_index": 810,
-      "vectors_checked": 811,
+      "first_killing_index": 816,
+      "vectors_checked": 817,
       "first_problem": "ini bytes 227 -> 213, first difference at byte 141\n      baseline: \"= 1.05\\npresence-penalty = 0.00\\nngl = 99\\nthreads = 0.1\\nn-cpu-moe = 8\\nparallel = 1\"\n      candidate: \"= 1.05\\npresence-penalty = 0.00\\nngl = 99\\nn-cpu-moe = 8\\nparallel = 1\\nload-mode = n\""
     },
     {
@@ -13951,7 +13931,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -14071,8 +14051,8 @@
       "killing_vector_ids": [
         "format-ncpumoe-0.1-stored"
       ],
-      "first_killing_index": 816,
-      "vectors_checked": 817,
+      "first_killing_index": 822,
+      "vectors_checked": 823,
       "first_problem": "ini bytes 228 -> 212, first difference at byte 154\n      baseline: \"ce-penalty = 0.00\\nngl = 99\\nthreads = 12\\nn-cpu-moe = 0.1\\nparallel = 1\\nload-mode =\"\n      candidate: \"ce-penalty = 0.00\\nngl = 99\\nthreads = 12\\nparallel = 1\\nload-mode = none\\ncache-ram \""
     },
     {
@@ -14475,12 +14455,14 @@
       "before": "!==",
       "after": "!=",
       "line": 81,
-      "status": "survived",
-      "killed_on_tier": "full",
-      "killing_vector_ids": [],
-      "first_killing_index": -1,
-      "vectors_checked": 2746,
-      "first_problem": null
+      "status": "killed",
+      "killed_on_tier": "tier1",
+      "killing_vector_ids": [
+        "shrunk-mutation-probe-0026-f653f8fa"
+      ],
+      "first_killing_index": 250,
+      "vectors_checked": 251,
+      "first_problem": "ini bytes 242 -> 225, first difference at byte 175\n      baseline: \"threads = 12\\nn-cpu-moe = 8\\nparallel = 1\\nload-mode = null\\ncache-ram = 8192\\nfa = a\"\n      candidate: \"threads = 12\\nn-cpu-moe = 8\\nparallel = 1\\ncache-ram = 8192\\nfa = auto\\nspec-type = d\""
     },
     {
       "id": "M-ini-082-0000-statement-removal-6bf874c228",
@@ -14594,7 +14576,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -14642,7 +14624,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -14815,7 +14797,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -14863,7 +14845,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -15064,8 +15046,8 @@
       "killing_vector_ids": [
         "format-cacheram-null-stored"
       ],
-      "first_killing_index": 1065,
-      "vectors_checked": 1066,
+      "first_killing_index": 1071,
+      "vectors_checked": 1072,
       "first_problem": "ini bytes 228 -> 211, first difference at byte 200\n      baseline: \"u-moe = 8\\nparallel = 1\\nload-mode = none\\ncache-ram = null\\nfa = auto\\n\\n\"\n      candidate: \"u-moe = 8\\nparallel = 1\\nload-mode = none\\nfa = auto\\n\\n\""
     },
     {
@@ -15109,7 +15091,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -15259,7 +15241,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -15307,7 +15289,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -15574,7 +15556,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -15622,7 +15604,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -15795,7 +15777,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -15843,7 +15825,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -16016,7 +15998,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -16064,7 +16046,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -16331,7 +16313,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -16352,7 +16334,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -16494,7 +16476,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -16636,7 +16618,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -16846,7 +16828,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -16868,8 +16850,8 @@
       "killing_vector_ids": [
         "cover2-011"
       ],
-      "first_killing_index": 256,
-      "vectors_checked": 257,
+      "first_killing_index": 262,
+      "vectors_checked": 263,
       "first_problem": "ini bytes 422 -> 432, first difference at byte 369\n      baseline: \"TCH_ROOT\\\\fixtures\\\\models\\\\a\\\\model-a.gguf\\nctkd = bf16\\nctvd = f32\\nspec-type = \\nreas\"\n      candidate: \"TCH_ROOT\\\\fixtures\\\\models\\\\a\\\\model-a.gguf\\nngld = -1\\nctkd = bf16\\nctvd = f32\\nspec-ty\""
     },
     {
@@ -16891,8 +16873,8 @@
       "killing_vector_ids": [
         "cover2-011"
       ],
-      "first_killing_index": 256,
-      "vectors_checked": 257,
+      "first_killing_index": 262,
+      "vectors_checked": 263,
       "first_problem": "ini bytes 422 -> 432, first difference at byte 369\n      baseline: \"TCH_ROOT\\\\fixtures\\\\models\\\\a\\\\model-a.gguf\\nctkd = bf16\\nctvd = f32\\nspec-type = \\nreas\"\n      candidate: \"TCH_ROOT\\\\fixtures\\\\models\\\\a\\\\model-a.gguf\\nngld = -1\\nctkd = bf16\\nctvd = f32\\nspec-ty\""
     },
     {
@@ -17382,7 +17364,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -17430,7 +17412,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -17666,7 +17648,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -17789,7 +17771,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -18318,12 +18300,14 @@
       "before": "0",
       "after": "1",
       "line": 149,
-      "status": "survived",
-      "killed_on_tier": "full",
-      "killing_vector_ids": [],
-      "first_killing_index": -1,
-      "vectors_checked": 2746,
-      "first_problem": null
+      "status": "killed",
+      "killed_on_tier": "tier1",
+      "killing_vector_ids": [
+        "shrunk-mutation-probe-0272"
+      ],
+      "first_killing_index": 245,
+      "vectors_checked": 246,
+      "first_problem": "ini bytes 79 -> 58, first difference at byte 57\n      baseline: \"unk-mutation-probe-0272]\\nspec-type = -1\\nspec-draft-n-max = 1\\n\\n\"\n      candidate: \"unk-mutation-probe-0272]\\nspec-type = -1\\n\\n\""
     },
     {
       "id": "M-ini-149-0045-boolean-operator-9fddb5be0d",
@@ -18367,8 +18351,8 @@
       "killing_vector_ids": [
         "cover2-012"
       ],
-      "first_killing_index": 257,
-      "vectors_checked": 258,
+      "first_killing_index": 263,
+      "vectors_checked": 264,
       "first_problem": "ini bytes 366 -> 387, first difference at byte 350\n      baseline: \"ze-n = 24\\ndraft-min = 48\\ndraft-max = 64\\nreasoning = on\\n\\n\"\n      candidate: \"ze-n = 24\\ndraft-min = 48\\ndraft-max = 64\\nspec-draft-n-max = 4\\nreasoning = on\\n\\n\""
     },
     {
@@ -18416,7 +18400,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -18445,8 +18429,8 @@
       "killing_vector_ids": [
         "cover2-012"
       ],
-      "first_killing_index": 257,
-      "vectors_checked": 258,
+      "first_killing_index": 263,
+      "vectors_checked": 264,
       "first_problem": "ini bytes 366 -> 387, first difference at byte 350\n      baseline: \"ze-n = 24\\ndraft-min = 48\\ndraft-max = 64\\nreasoning = on\\n\\n\"\n      candidate: \"ze-n = 24\\ndraft-min = 48\\ndraft-max = 64\\nspec-draft-n-max = 4\\nreasoning = on\\n\\n\""
     },
     {
@@ -18641,12 +18625,14 @@
       "before": "!==",
       "after": "!=",
       "line": 155,
-      "status": "survived",
-      "killed_on_tier": "full",
-      "killing_vector_ids": [],
-      "first_killing_index": -1,
-      "vectors_checked": 2746,
-      "first_problem": null
+      "status": "killed",
+      "killed_on_tier": "tier1",
+      "killing_vector_ids": [
+        "shrunk-mutation-probe-0026"
+      ],
+      "first_killing_index": 247,
+      "vectors_checked": 248,
+      "first_problem": "ini bytes 237 -> 220, first difference at byte 219\n      baseline: \"-mode = none\\ncache-ram = 8192\\nfa = auto\\nreasoning = null\\n\\n\"\n      candidate: \"-mode = none\\ncache-ram = 8192\\nfa = auto\\n\\n\""
     },
     {
       "id": "M-ini-155-0047-boolean-operator-27e09dcc0f",
@@ -18735,7 +18721,7 @@
       "killed_on_tier": "full",
       "killing_vector_ids": [],
       "first_killing_index": -1,
-      "vectors_checked": 2746,
+      "vectors_checked": 2752,
       "first_problem": null
     },
     {
@@ -18928,12 +18914,14 @@
       "before": "!==",
       "after": "!=",
       "line": 157,
-      "status": "survived",
-      "killed_on_tier": "full",
-      "killing_vector_ids": [],
-      "first_killing_index": -1,
-      "vectors_checked": 2746,
-      "first_problem": null
+      "status": "killed",
+      "killed_on_tier": "tier1",
+      "killing_vector_ids": [
+        "shrunk-mutation-probe-0025"
+      ],
+      "first_killing_index": 248,
+      "vectors_checked": 249,
+      "first_problem": "ini bytes 235 -> 220, first difference at byte 219\n      baseline: \"-mode = none\\ncache-ram = 8192\\nfa = auto\\nreasoning = on\\n\\n\"\n      candidate: \"-mode = none\\ncache-ram = 8192\\nfa = auto\\n\\n\""
     },
     {
       "id": "M-ini-158-0000-statement-removal-7837d994ba",

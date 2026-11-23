@@ -1,0 +1,52 @@
+{
+  "survivor_id": "M-ini-118-0062-boolean-operator-ef0077864a",
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "goldens_impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "mutated_sha256": "876c8c92f97a91b5e0987d4a052b5d95d71f9e8370eac09035725bf9df9be7e1",
+  "site": {
+    "region": "ini",
+    "line": 118,
+    "start": 62,
+    "end": 64
+  },
+  "killed_in_run": {
+    "status": "survived",
+    "vectors_checked": 2752
+  },
+  "status": "equivalent-proven",
+  "method": "dynamic-exhaustive",
+  "row_ids": [
+    "INI-71"
+  ],
+  "class": "boolean-operator",
+  "region": "ini",
+  "before": "??",
+  "after": "||",
+  "probes": {
+    "run": 27,
+    "scope": {
+      "variables": [
+        "fastAttention"
+      ],
+      "domains": [
+        {
+          "key": "fastAttention",
+          "size": 27
+        }
+      ],
+      "model_sets": [
+        "recorded"
+      ],
+      "config_counts": [
+        1
+      ],
+      "full_product": 27,
+      "enumerated": 27,
+      "exhaustive_over_enumerated": true,
+      "truncated": false
+    }
+  },
+  "argument": "over all 27 inputs in the enumerated domain (the product of every value the site reads takes across the recorded vectors plus the boundary set, times every recorded /models payload), the mutant and the unmutated baseline produce byte-identical ini output, including identical throw messages where the baseline throws."
+}

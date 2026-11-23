@@ -1,0 +1,53 @@
+{
+  "survivor_id": "M-args-032-0078-equality-strictness-4a7242bf03",
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "goldens_impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "mutated_sha256": "b9568e01fc3bc958e8c16348dc6499b2f5cd03858bf4263d668b41b912b8034b",
+  "site": {
+    "region": "args",
+    "line": 32,
+    "start": 78,
+    "end": 80
+  },
+  "killed_in_run": {
+    "status": "survived",
+    "vectors_checked": 2752
+  },
+  "status": "equivalent-proven",
+  "method": "dynamic-exhaustive",
+  "row_ids": [
+    "BA-44",
+    "BA-46"
+  ],
+  "class": "equality-strictness",
+  "region": "args",
+  "before": "!=",
+  "after": "!==",
+  "probes": {
+    "run": 27,
+    "scope": {
+      "variables": [
+        "repeatPenalty"
+      ],
+      "domains": [
+        {
+          "key": "repeatPenalty",
+          "size": 27
+        }
+      ],
+      "model_sets": [
+        "recorded"
+      ],
+      "config_counts": [
+        1
+      ],
+      "full_product": 27,
+      "enumerated": 27,
+      "exhaustive_over_enumerated": true,
+      "truncated": false
+    }
+  },
+  "argument": "over all 27 inputs in the enumerated domain (the product of every value the site reads takes across the recorded vectors plus the boundary set, times every recorded /models payload), the mutant and the unmutated baseline produce byte-identical argv output, including identical throw messages where the baseline throws."
+}

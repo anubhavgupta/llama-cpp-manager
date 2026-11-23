@@ -1,0 +1,57 @@
+{
+  "survivor_id": "M-args-170-0027-equality-strictness-8e1cacedfd",
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "goldens_impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "mutated_sha256": "ecce677998ef4f4ef710faea0b8aefacf68a622a56ef1780e822e8cdc4c5ef87",
+  "site": {
+    "region": "args",
+    "line": 170,
+    "start": 27,
+    "end": 30
+  },
+  "killed_in_run": {
+    "status": "survived",
+    "vectors_checked": 2752
+  },
+  "status": "equivalent-proven",
+  "method": "dynamic-exhaustive",
+  "row_ids": [
+    "BA-100",
+    "BA-101"
+  ],
+  "class": "equality-strictness",
+  "region": "args",
+  "before": "===",
+  "after": "==",
+  "probes": {
+    "run": 130,
+    "scope": {
+      "variables": [
+        "modelPath"
+      ],
+      "domains": [
+        {
+          "key": "modelPath",
+          "size": 26
+        }
+      ],
+      "model_sets": [
+        "empty",
+        "no-mmproj",
+        "recorded",
+        "mutation-probe-models-mmproj",
+        "mutation-probe-models-empty"
+      ],
+      "config_counts": [
+        1
+      ],
+      "full_product": 130,
+      "enumerated": 130,
+      "exhaustive_over_enumerated": true,
+      "truncated": false
+    }
+  },
+  "argument": "over all 130 inputs in the enumerated domain (the product of every value the site reads takes across the recorded vectors plus the boundary set, times every recorded /models payload), the mutant and the unmutated baseline produce byte-identical argv output, including identical throw messages where the baseline throws."
+}

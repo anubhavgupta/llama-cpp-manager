@@ -1,0 +1,52 @@
+{
+  "survivor_id": "M-ini-089-0016-negation-insertion-38ae0dcda7",
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "goldens_impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "mutated_sha256": "681121518c604d735e9a6eb9233d2ea93e94085e84fc11b906e484073950060a",
+  "site": {
+    "region": "ini",
+    "line": 89,
+    "start": 16,
+    "end": 38
+  },
+  "killed_in_run": {
+    "status": "survived",
+    "vectors_checked": 2752
+  },
+  "status": "equivalent-proven",
+  "method": "dynamic-exhaustive",
+  "row_ids": [
+    "INI-52"
+  ],
+  "class": "negation-insertion",
+  "region": "ini",
+  "before": "config.noMmprojOffload",
+  "after": "!(config.noMmprojOffload)",
+  "probes": {
+    "run": 26,
+    "scope": {
+      "variables": [
+        "noMmprojOffload"
+      ],
+      "domains": [
+        {
+          "key": "noMmprojOffload",
+          "size": 26
+        }
+      ],
+      "model_sets": [
+        "recorded"
+      ],
+      "config_counts": [
+        1
+      ],
+      "full_product": 26,
+      "enumerated": 26,
+      "exhaustive_over_enumerated": true,
+      "truncated": false
+    }
+  },
+  "argument": "over all 26 inputs in the enumerated domain (the product of every value the site reads takes across the recorded vectors plus the boundary set, times every recorded /models payload), the mutant and the unmutated baseline produce byte-identical ini output, including identical throw messages where the baseline throws."
+}

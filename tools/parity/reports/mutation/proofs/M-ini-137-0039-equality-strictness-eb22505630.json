@@ -1,0 +1,43 @@
+{
+  "survivor_id": "M-ini-137-0039-equality-strictness-eb22505630",
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "goldens_impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "mutated_sha256": "9e4b2de1d590eeba1b79b7f64a47cee91d73bd9e166221ec63a008eeaa23804a",
+  "site": {
+    "region": "ini",
+    "line": 137,
+    "start": 39,
+    "end": 42
+  },
+  "killed_in_run": {
+    "status": "survived",
+    "vectors_checked": 2752
+  },
+  "status": "equivalent-proven",
+  "method": "static",
+  "row_ids": [
+    "INI-82",
+    "INI-83"
+  ],
+  "class": "equality-strictness",
+  "region": "ini",
+  "before": "!==",
+  "after": "!=",
+  "static": {
+    "kind": "static",
+    "case": "nan-string-literal",
+    "argument": "`!==` and `!=` agree against `'none'`: it is a string literal whose Number() is NaN, so a loose comparison against it either compares two strings (where == and === are the same test) or coerces the other side to NaN and is false on both forms. This holds for every value the saved-config path can deliver, including a type-drifted number or boolean (Q19).",
+    "operands": {
+      "left": "config.speculationType",
+      "left_type": "unknown",
+      "right": "'none'",
+      "right_type": "string"
+    }
+  },
+  "probes": {
+    "run": 0,
+    "scope": null
+  }
+}

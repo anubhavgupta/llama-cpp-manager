@@ -1,0 +1,57 @@
+{
+  "survivor_id": "M-args-127-0033-relational-boundary-a8471235f6",
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "goldens_impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "mutated_sha256": "6027bc0a60c527e04437aa71a6f28ace907e7f552080e1c55b83e49c93a94cf3",
+  "site": {
+    "region": "args",
+    "line": 127,
+    "start": 33,
+    "end": 34
+  },
+  "killed_in_run": {
+    "status": "survived",
+    "vectors_checked": 2752
+  },
+  "status": "equivalent-proven",
+  "method": "dynamic-exhaustive",
+  "row_ids": [
+    "BA-85"
+  ],
+  "class": "relational-boundary",
+  "region": "args",
+  "before": ">",
+  "after": ">=",
+  "probes": {
+    "run": 702,
+    "scope": {
+      "variables": [
+        "ngramMod",
+        "speculationType"
+      ],
+      "domains": [
+        {
+          "key": "ngramMod",
+          "size": 26
+        },
+        {
+          "key": "speculationType",
+          "size": 27
+        }
+      ],
+      "model_sets": [
+        "recorded"
+      ],
+      "config_counts": [
+        1
+      ],
+      "full_product": 702,
+      "enumerated": 702,
+      "exhaustive_over_enumerated": true,
+      "truncated": false
+    }
+  },
+  "argument": "over all 702 inputs in the enumerated domain (the product of every value the site reads takes across the recorded vectors plus the boundary set, times every recorded /models payload), the mutant and the unmutated baseline produce byte-identical argv output, including identical throw messages where the baseline throws."
+}

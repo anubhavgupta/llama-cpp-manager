@@ -1,0 +1,249 @@
+{
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js --apply",
+  "note": "row claims for promoted repros; equivalence.js --verify merges these into coverage-map.json instead of rewriting a file gen-vectors.js owns",
+  "map": {
+    "BA-28": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "BA-29": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "BA-80": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "BA-81": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "BA-84": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "BA-85": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "BA-87": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "BA-88": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "BA-89": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "BA-95": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "INI-10": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-11": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-12": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-13": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-14": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-15": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-16": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-17": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-18": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-19": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-22": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-23": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-25": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-26": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-27": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-30": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-31": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-32": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-34": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-35": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-36": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-37": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-38": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-39": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-40": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-41": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-42": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-43": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-45": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-46": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-48": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-51": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-53": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-54": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-57": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-61": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-64": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-67": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-69": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-70": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-75": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0163",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "INI-77": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-78": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-79": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-80": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-81": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-82": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0163",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "INI-83": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0163",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "INI-86": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0163",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "INI-87": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0163",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "INI-89": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0163"
+    ],
+    "INI-90": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0163"
+    ],
+    "INI-91": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0163",
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "INI-93": [
+      "shrunk-mutation-probe-0272"
+    ],
+    "INI-94": [
+      "shrunk-mutation-probe-0272",
+      "shrunk-mutation-probe-0026"
+    ],
+    "INI-92": [
+      "shrunk-mutation-probe-0026"
+    ],
+    "INI-95": [
+      "shrunk-mutation-probe-0025"
+    ],
+    "BA-96": [
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ],
+    "INI-76": [
+      "shrunk-mutation-probe-0003",
+      "shrunk-mutation-probe-0026-f653f8fa"
+    ]
+  }
+}

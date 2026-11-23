@@ -1,0 +1,10 @@
+{
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js",
+  "status": "PROPOSED — not applied by this tool. fixtures/** is hash-pinned (C8): applying means appending boundary/shrunk-mutation.jsonl + its goldens + a coverage-promotions.json row claim (node tools/parity/equiv-prove.js --apply --root <copy>), then regenerating the hash-pinned fixtures/vectors/MANIFEST.json and refreshing fixtures/HASH-PIN.json, which needs the ledger entry. See APPLIED.json for what an apply actually wrote.",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "proposed_promotions": 0,
+  "survivors_with_a_synthesized_killer": 0,
+  "unresolved_gaps": [],
+  "promotions": []
+}

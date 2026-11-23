@@ -51,3 +51,8 @@ fixtures/corpus/.pathmap-local.json
 .claude/
 # fixture logs are recorded gate material, not runtime logs
 !fixtures/**/*.log
+
+# mutation worker private input snapshot (regenerable from git)
+tools/parity/reports/mutation/.snapshot/
+# nightly/l2 scratch output
+tests/*/out/

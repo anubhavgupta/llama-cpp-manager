@@ -27,6 +27,8 @@ const vectors = require('./gen-vectors.js');
 
 const REPO = slices.REPO;
 const GOLDEN_REGEN = 'node tools/parity/gen-goldens.js';
+const PROMOTED_REGEN = 'node tools/parity/equiv-prove.js --apply (append-only promotion; the goldens '
+    + 'are recorded from parity-baseline by gen-goldens.js record)';
 
 function baselineSha() {
     // A tag object sha would name the tag, not the text: the golden must name the commit whose
@@ -127,7 +129,19 @@ function build() {
 
 // fixtures/vectors/MANIFEST.json: every vectors + goldens file, its sha256, and the exact command
 // that regenerates it. This is the artifact an Auditor re-checks without rerunning anything.
+// Promoted repros (equivalence.js promote, equiv-prove.js --apply) are permanent boundary vectors
+// with their own goldens twin, and coverage-promotions.json records the rows they claim.
+// checkManifest requires every fixture .jsonl/.json to be listed, so the writer has to name them too
+// — otherwise a promotion can never pass `--check`.
+function promotedFiles() {
+    const fs = require('fs');
+    const dir = path.join(vectors.VECTORS, 'boundary');
+    if (!fs.existsSync(dir)) return [];
+    return fs.readdirSync(dir).filter((name) => /^shrunk-.*\.jsonl$/.test(name)).sort();
+}
+
 function manifest() {
+    const fs = require('fs');
     const list = [];
     for (const family of vectors.FAMILIES) {
         list.push({ file: 'fixtures/vectors/' + family + '/vectors.jsonl',
@@ -142,6 +156,19 @@ function manifest() {
         list.push({ file: 'fixtures/goldens/' + family + '/goldens.jsonl', command: GOLDEN_REGEN,
             sha256: vectors.sha256(slices.readText(path.join(vectors.GOLDENS, family,
                 'goldens.jsonl'))) });
+    }
+    for (const name of promotedFiles()) {
+        const vectorsFile = 'fixtures/vectors/boundary/' + name;
+        const goldenFile = 'fixtures/goldens/boundary/' + name.replace(/\.jsonl$/, '.goldens.jsonl');
+        list.push({ file: vectorsFile, command: PROMOTED_REGEN,
+            sha256: vectors.sha256(slices.readText(path.join(REPO, vectorsFile))) });
+        list.push({ file: goldenFile, command: PROMOTED_REGEN,
+            sha256: vectors.sha256(slices.readText(path.join(REPO, goldenFile))) });
+    }
+    const promotionMap = 'fixtures/vectors/coverage-promotions.json';
+    if (fs.existsSync(path.join(REPO, promotionMap))) {
+        list.push({ file: promotionMap, command: PROMOTED_REGEN,
+            sha256: vectors.sha256(slices.readText(path.join(REPO, promotionMap))) });
     }
     list.push({ file: 'fixtures/vectors/MANIFEST.json', command: GOLDEN_REGEN + ' (writes this file)',
         sha256: null, note: 'a manifest cannot carry its own hash; every other entry is checkable' });

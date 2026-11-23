@@ -1,0 +1,52 @@
+{
+  "survivor_id": "M-config-004-0038-operand-removal-17d0e57dcf",
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "goldens_impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "mutated_sha256": "807d505bcf3b5b7c0892b91dba960ae17c1f48a9b42c02abea7c16264647aabc",
+  "site": {
+    "region": "config",
+    "line": 4,
+    "start": 38,
+    "end": 42
+  },
+  "killed_in_run": {
+    "status": "survived",
+    "vectors_checked": 2752
+  },
+  "status": "equivalent-proven",
+  "method": "dynamic-exhaustive",
+  "row_ids": [
+    "BA-7"
+  ],
+  "class": "operand-removal",
+  "region": "config",
+  "before": "|| 0",
+  "after": "",
+  "probes": {
+    "run": 27,
+    "scope": {
+      "variables": [
+        "ngl"
+      ],
+      "domains": [
+        {
+          "key": "ngl",
+          "size": 27
+        }
+      ],
+      "model_sets": [
+        "recorded"
+      ],
+      "config_counts": [
+        1
+      ],
+      "full_product": 27,
+      "enumerated": 27,
+      "exhaustive_over_enumerated": true,
+      "truncated": false
+    }
+  },
+  "argument": "over all 27 inputs in the enumerated domain (the product of every value the site reads takes across the recorded vectors plus the boundary set, times every recorded /models payload), the mutant and the unmutated baseline produce byte-identical argv output, including identical throw messages where the baseline throws."
+}

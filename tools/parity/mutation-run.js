@@ -57,7 +57,7 @@ const PROGRESS_EVERY = 25;
 // Vectors paired with their goldens, read from the snapshot only. The pairing is positional and
 // asserted: a golden that belongs to a different vector_id would silently turn every mutant green.
 function loadSnapshot() {
-    const bag = { vectors: [], goldens: new Map(), families: {}, impls: new Set() };
+    const bag = { vectors: [], goldens: new Map(), families: {}, impls: new Set(), promoted: 0 };
     for (const family of vectors.FAMILIES) {
         const vectorFile = path.join(SNAPSHOT, 'vectors', family, 'vectors.jsonl');
         const goldenFile = path.join(SNAPSHOT, 'goldens', family, 'goldens.jsonl');
@@ -84,6 +84,7 @@ function loadSnapshot() {
             bag.goldens.set(vector.id, golden);
         }
         bag.families[family] = list.length;
+        if (family === 'boundary') bag.promoted = loadPromoted(bag, goldenLines[0].impl);
     }
     vectors.assert(bag.impls.size === 1, 'snapshot goldens name ' + bag.impls.size
         + ' different impls; the mutation baseline is one text');
@@ -98,6 +99,43 @@ function loadSnapshot() {
 // buildArgs, the settings blob, the /models payload, the saved configs the ini generator receives. None
 // of it depends on the mutant; mutantRunner still rebuilds the config literal per mutant because a
 // config-region mutant changes exactly that step.
+// Promoted killers (`fixtures/vectors/boundary/shrunk-*.jsonl` and their goldens twin) are permanent
+// vectors, so they belong to the kill set. They are read from the live tree because a promotion lands
+// after the snapshot was taken; every promoted golden must name the snapshot's own baseline impl, so
+// a promotion recorded against a different text cannot join this run.
+function loadPromoted(bag, impl, root) {
+    const base = root || REPO;
+    const dir = path.join(base, 'fixtures', 'vectors', 'boundary');
+    if (!fs.existsSync(dir)) return 0;
+    let added = 0;
+    for (const name of fs.readdirSync(dir).filter((n) => /^shrunk-.*\.jsonl$/.test(n)).sort()) {
+        const vectorLines = vectors.readJsonl(path.join(dir, name));
+        const goldenFile = path.join(base, 'fixtures', 'goldens', 'boundary',
+            name.replace(/\.jsonl$/, '.goldens.jsonl'));
+        if (!fs.existsSync(goldenFile)) {
+            throw new Error(name + ': promoted vectors have no goldens twin at ' + goldenFile);
+        }
+        const goldenLines = vectors.readJsonl(goldenFile);
+        vectors.assert(vectorLines[0].kind === 'header' && goldenLines[0].kind === 'header',
+            name + ': a promoted file has no header');
+        vectors.assert(goldenLines.length - 1 === vectorLines.length - 1,
+            name + ': promoted golden count != vector count');
+        const goldens = new Map(goldenLines.slice(1).map((line) => [line.vector_id, line]));
+        for (const vector of vectorLines.slice(1)) {
+            const golden = goldens.get(vector.id);
+            vectors.assert(golden, name + ': no golden recorded for ' + vector.id);
+            vectors.assert(golden.impl === impl, name + ': ' + vector.id + ' was recorded from '
+                + golden.impl + ' but this run measures ' + impl);
+            vectors.assert(!bag.goldens.has(vector.id), name + ': ' + vector.id
+                + ' is already in the vector set — a promoted id must be new');
+            bag.vectors.push(vector);
+            bag.goldens.set(vector.id, golden);
+            added += 1;
+        }
+    }
+    return added;
+}
+
 function prepare(bag, gen) {
     return bag.vectors.map((vector) => ({
         vector: vector,
@@ -289,6 +327,7 @@ function runMain(options, rerun) {
         + control.length + ' vector(s) disagree with their own golden unmutated. First: '
         + (control[0] ? control[0].vector_id + ' ' + control[0].channel + ': ' + control[0].problems[0]
             : 'n/a'));
+    const controlResult = { vectors: items.length, channels: 2, disagreements: control.length };
     console.log('baseline control: ' + items.length + ' vectors x 2 channels, 0 disagreements ['
         + ((Date.now() - t0) / 1000).toFixed(1) + 's]');
 
@@ -310,7 +349,8 @@ function runMain(options, rerun) {
     let started = 0;
     return new Promise((resolve, reject) => {
         if (pending.length === 0) {
-            resolve(finish(options, gen, bag, items, list, all, verdicts, t0, gate, 0, ''));
+            resolve(finish(options, gen, bag, items, list, all, verdicts, t0, gate, 0, '',
+                controlResult));
             return;
         }
         let open = shardCount;
@@ -369,7 +409,7 @@ function runMain(options, rerun) {
                         }
                     });
                     resolve(finish(options, gen, bag, items, list, all, verdicts, t0, gate, shardCount,
-                        stderr));
+                        stderr, controlResult));
                 }
             });
         }
@@ -443,7 +483,8 @@ function compactJournal(mutants) {
     }
 }
 
-function finish(options, gen, bag, items, list, all, verdicts, t0, gate, shardCount, stderr) {
+function finish(options, gen, bag, items, list, all, verdicts, t0, gate, shardCount, stderr,
+    controlResult) {
     const tier1Count = Math.min(options.tier1, items.length);
     const control = verifyTierSample(options, gen, items, all, verdicts);
 
@@ -484,7 +525,8 @@ function finish(options, gen, bag, items, list, all, verdicts, t0, gate, shardCo
         snapshot: { dir: 'tools/parity/reports/mutation/.snapshot',
             files: snapshotManifest.files.length, taken_from_commit: snapshotManifest.taken_from_commit,
             mismatched_against_commit: snapshotManifest.files.filter((f) => !f.matches_9d6a767).length },
-        vectors: { total: items.length, tier1: tier1Count, rest: items.length - tier1Count },
+        vectors: { total: items.length, tier1: tier1Count, rest: items.length - tier1Count,
+            promoted: bag.promoted },
         mutants: { enumerated: list.mutants.length, run: mutants.length,
             killed: mutants.filter((m) => m.status === 'killed').length, survived: survivors.length,
             score: (100 * mutants.filter((m) => m.status === 'killed').length / mutants.length)
@@ -495,6 +537,7 @@ function finish(options, gen, bag, items, list, all, verdicts, t0, gate, shardCo
                 return acc;
             }, {}) },
         tier_control: control,
+        baseline_control: controlResult,
         runtime_ms: Date.now() - t0,
         workers: shardCount,
         rows: byRow,
@@ -585,7 +628,8 @@ function main() {
     });
 }
 
-module.exports = { loadSnapshot, prepare, observe, checkMutant, baselineControl, runMain, selftest,
+module.exports = { loadSnapshot, loadPromoted, prepare, observe, checkMutant, baselineControl, runMain,
+    selftest,
     options, readJournal, appendVerdict, compactJournal, verifyTierSample, NAMED_KILLS, SNAPSHOT,
     RESULTS, RUN_FILE };
 

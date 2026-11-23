@@ -1,0 +1,53 @@
+{
+  "survivor_id": "M-ini-055-0086-equality-strictness-2bc2f7aaae",
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "goldens_impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "mutated_sha256": "63b9a29ffbe9dc394e1724e5c1d31ebcbbe3305ba67a748cd32a49ddcac2c9c6",
+  "site": {
+    "region": "ini",
+    "line": 55,
+    "start": 86,
+    "end": 88
+  },
+  "killed_in_run": {
+    "status": "survived",
+    "vectors_checked": 2752
+  },
+  "status": "equivalent-proven",
+  "method": "dynamic-exhaustive",
+  "row_ids": [
+    "INI-31",
+    "INI-33"
+  ],
+  "class": "equality-strictness",
+  "region": "ini",
+  "before": "!=",
+  "after": "!==",
+  "probes": {
+    "run": 26,
+    "scope": {
+      "variables": [
+        "presencePenalty"
+      ],
+      "domains": [
+        {
+          "key": "presencePenalty",
+          "size": 26
+        }
+      ],
+      "model_sets": [
+        "recorded"
+      ],
+      "config_counts": [
+        1
+      ],
+      "full_product": 26,
+      "enumerated": 26,
+      "exhaustive_over_enumerated": true,
+      "truncated": false
+    }
+  },
+  "argument": "over all 26 inputs in the enumerated domain (the product of every value the site reads takes across the recorded vectors plus the boundary set, times every recorded /models payload), the mutant and the unmutated baseline produce byte-identical ini output, including identical throw messages where the baseline throws."
+}

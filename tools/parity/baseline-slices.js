@@ -114,7 +114,13 @@ function readShape(expr, elements) {
     assert(id, 'element variable ' + read[1] + ' is not a getElementById declaration');
     prop = read[2];
     shape = shape.split(read[0]).join('@');
-    assert(shape.indexOf(read[1]) < 0, 'expression reads more than one element: ' + expr);
+    // A guard on the same element (`chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : ''`)
+    // mentions the variable twice; only a SECOND element's variable would change what is read.
+    for (const [otherId, otherName] of elements) {
+        if (otherId === id) continue;
+        assert(!new RegExp('\\b' + otherName + '\\b').test(shape),
+            'expression reads more than one element: ' + expr);
+    }
     return { id, prop, coercion: shape };
 }
 
@@ -127,7 +133,12 @@ const ANCHORS = {
     ARGS_END: "        showOutput(`Command arguments: ${args.join(' ')}`);",
     INI_START: "        let presetContent = 'version = 1\\n\\n';\n",
     INI_END: "        showOutput('Generated models-preset.ini content:');",
-    FIELDS_START: '    const fields = {\n'
+    FIELDS_START: '    const fields = {\n',
+    // The whole baseline saveCurrentValues function: the writer whose localStorage bytes the L2
+    // re-save test compares against (Q16 orphan-key drop happens here, because it builds a fresh
+    // object rather than mutating the stored one).
+    SAVE_START: 'function saveCurrentValues(configId) {',
+    SAVE_END: '\n\n// Load configuration values into form'
 };
 
 // Slice the three baseline regions and compile them as callable functions. `config` takes a fake
@@ -139,7 +150,8 @@ function slicedGenerators() {
         config: slice(baseline, ANCHORS.CONFIG_START, ANCHORS.CONFIG_END, 'config literal',
             BASELINE + ':script.js'),
         args: slice(baseline, ANCHORS.ARGS_START, ANCHORS.ARGS_END, 'argv block', BASELINE + ':script.js'),
-        ini: slice(baseline, ANCHORS.INI_START, ANCHORS.INI_END, 'ini block', BASELINE + ':script.js')
+        ini: slice(baseline, ANCHORS.INI_START, ANCHORS.INI_END, 'ini block', BASELINE + ':script.js'),
+        save: slice(baseline, ANCHORS.SAVE_START, ANCHORS.SAVE_END, 'saveCurrentValues', BASELINE + ':script.js')
     };
     const elements = elementNameMap(baseline);
     const elementNames = [];
@@ -147,15 +159,28 @@ function slicedGenerators() {
         const name = elements.get(readShape(entry.expr, elements).id);
         if (name && elementNames.indexOf(name) < 0) elementNames.push(name);
     }
+    // The saved field set is not the launch field set (Q7): serverPath and chatTemplateKwargs are
+    // read here and nowhere in the argv block, so the save slice needs its own element list.
+    const saveElementNames = [];
+    for (const entry of literalEntries(slices.save)) {
+        const name = elements.get(readShape(entry.expr, elements).id);
+        if (name && saveElementNames.indexOf(name) < 0) saveElementNames.push(name);
+    }
     /* eslint-disable no-new-func */
     const compiled = {
         config: new Function('document', ...elementNames, slices.config + '\n        return config;'),
         args: new Function('config', 'settings', 'modelPathSelect', 'window',
             slices.args + '\n        return args;'),
-        ini: new Function('configs', 'window', slices.ini + '\n        return presetContent;')
+        ini: new Function('configs', 'window', slices.ini + '\n        return presetContent;'),
+        // `configurations`, `saveConfigurations` and `console` are the free variables the baseline
+        // function body uses; the caller passes fakes, so the slice's own writes are what get read.
+        // The slice is the whole function declaration, so the wrapper calls it with the config id.
+        save: new Function('configurations', 'document', 'saveConfigurations', 'console', 'configId',
+            ...saveElementNames,
+            slices.save + '\n    saveCurrentValues(configId);\n    return configurations;')
     };
     /* eslint-enable no-new-func */
-    return { baseline, elements, elementNames, slices, compiled };
+    return { baseline, elements, elementNames, saveElementNames, slices, compiled };
 }
 
 // ------------------------------------------------------------------ lib side ----------------
@@ -197,6 +222,26 @@ function runBaselineArgv(gen, fields, settings, models) {
 // the lib. Goldens compare what the generators return.
 function runBaselineIni(gen, configs, models) {
     return gen.compiled.ini(configs, { models });
+}
+
+// Run the baseline saveCurrentValues over a fields map (the recorded form state) and return both
+// the mutated configurations map and every localStorage string the baseline itself wrote through
+// saveConfigurations. The stored map is passed in by reference because that is how the baseline
+// mutates it: an existing key keeps its position in the insertion order, and orphan keys that the
+// 35-entry literal does not read are gone from the re-saved entry (Q16).
+function runBaselineSave(gen, fields, configurations, configId) {
+    const kinds = fieldKinds();
+    const read = (id) => (kinds.get(id) === 'checked'
+        ? { value: 'on', checked: fields[id] }
+        : { value: fields[id], checked: false });
+    const byName = {};
+    for (const [id, name] of gen.elements) byName[name] = read(id);
+    const written = [];
+    const saveConfigurations = () => written.push(JSON.stringify(configurations));
+    const out = gen.compiled.save(configurations, { getElementById: read }, saveConfigurations,
+        { log() {} }, configId, ...gen.saveElementNames.map((name) => byName[name]));
+    assert(out === configurations, 'the sliced saveCurrentValues returned a different map than it wrote');
+    return { configs: configurations, written };
 }
 
 // ---------------------------------------------------------------- recorded inputs ---------
@@ -402,18 +447,44 @@ function selftest() {
     const ini = runBaselineIni(gen, { one: { modelPath: 'x/a.gguf' } }, []);
     assert(ini === 'version = 1\n\n[one]\nmodel = x/a.gguf\nspec-type = \n\n',
         'the sliced ini generator output moved: ' + JSON.stringify(ini));
+    // The save slice is what the re-save goldens are recorded from, so its own output shape is
+    // pinned here: 36 keys (Q7: not the launch set, and equal to SPEC's persistedIntoConfigs count),
+    // the stored key order kept, orphan keys dropped.
+    const saved = runBaselineSave(gen, fresh.fields, {
+        keep: { ngl: 1 },
+        target: { ngl: 7, mlock: true, noMmap: false, ndio: false, dio: false, draftMin: 5, draftPMin: 0.1,
+            disableReasoning: false, draftMax: 10 }
+    }, 'target');
+    assert(saved.written.length === 1, 'the sliced saveCurrentValues did not call saveConfigurations once');
+    const savedEntry = saved.configs.target;
+    const savedKeys = Object.keys(savedEntry);
+    assert(savedKeys.length === 36, 'the sliced saveCurrentValues wrote ' + savedKeys.length
+        + ' keys, expected the 36-key saved field set');
+    for (const orphan of ['mlock', 'noMmap', 'ndio', 'dio', 'draftMin', 'draftMax', 'draftPMin',
+        'disableReasoning']) {
+        assert(!(orphan in savedEntry), 'the sliced saveCurrentValues kept orphan key ' + orphan
+            + ' (Q16 says it is dropped on re-save)');
+    }
+    assert(savedKeys[0] === 'serverPath' && savedKeys[1] === 'modelPath',
+        'the sliced saveCurrentValues key order moved: ' + savedKeys.slice(0, 3).join(','));
+    assert(Object.keys(saved.configs).join(',') === 'keep,target',
+        're-saving an existing key moved it in the insertion order: ' + Object.keys(saved.configs).join(','));
+    assert(saved.written[0] === JSON.stringify(saved.configs),
+        'the sliced saveConfigurations did not capture the string the baseline wrote');
     return {
         argvLines: normLines(argsSubstituted).split('\n').length,
         iniLines: normLines(iniSubstituted).split('\n').length,
         configEntries: entries.length,
-        elementNames: gen.elementNames.length
+        elementNames: gen.elementNames.length,
+        saveKeys: savedKeys.length,
+        saveElementNames: gen.saveElementNames.length
     };
 }
 
 module.exports = {
     REPO, BASELINE, ANCHORS, sha256, readText, readJson, assert,
     slice, normLines, firstLineDiff, baselineScript, elementNameMap, literalEntries, readShape,
-    slicedGenerators, loadLib, fieldKinds, runBaselineArgv, runBaselineIni,
+    slicedGenerators, loadLib, fieldKinds, runBaselineArgv, runBaselineIni, runBaselineSave,
     walk, modelsVectors, storageBlobs, settingsVectors, formStates, fieldsFromControls,
     fieldsFromConfig, selftest
 };
@@ -425,4 +496,6 @@ if (require.main === module) {
     console.log('  ini block    ' + result.iniLines + ' normalised lines == legacy/lib/buildPresetIni.js body');
     console.log('  config literal ' + result.configEntries + ' entries, ' + result.elementNames
         + ' element variables');
+    console.log('  saveCurrentValues ' + result.saveKeys + ' saved keys, ' + result.saveElementNames
+        + ' element variables (Q7/Q16 shape pinned)');
 }

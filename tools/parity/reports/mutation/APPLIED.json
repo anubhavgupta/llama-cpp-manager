@@ -1,0 +1,212 @@
+{
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js --apply --root C:\\projects\\Cline-demo",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "goldens_impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "vectors_file": "fixtures/vectors/boundary/shrunk-mutation.jsonl",
+  "goldens_file": "fixtures/goldens/boundary/shrunk-mutation.goldens.jsonl",
+  "coverage_file": "fixtures/vectors/coverage-promotions.json",
+  "promoted_vectors": 6,
+  "row_claims": 104,
+  "killers": [
+    {
+      "survivor_id": "M-args-137-0039-numeric-literal-3baaf26df7",
+      "vector_id": "shrunk-mutation-probe-0272",
+      "class": "numeric-literal",
+      "region": "args",
+      "rows": [
+        "BA-28",
+        "BA-29",
+        "BA-80",
+        "BA-81",
+        "BA-84",
+        "BA-85",
+        "BA-87",
+        "BA-88",
+        "BA-89",
+        "BA-95",
+        "INI-10",
+        "INI-11",
+        "INI-12",
+        "INI-13",
+        "INI-14",
+        "INI-15",
+        "INI-16",
+        "INI-17",
+        "INI-18",
+        "INI-19",
+        "INI-22",
+        "INI-23",
+        "INI-25",
+        "INI-26",
+        "INI-27",
+        "INI-30",
+        "INI-31",
+        "INI-32",
+        "INI-34",
+        "INI-35",
+        "INI-36",
+        "INI-37",
+        "INI-38",
+        "INI-39",
+        "INI-40",
+        "INI-41",
+        "INI-42",
+        "INI-43",
+        "INI-45",
+        "INI-46",
+        "INI-48",
+        "INI-51",
+        "INI-53",
+        "INI-54",
+        "INI-57",
+        "INI-61",
+        "INI-64",
+        "INI-67",
+        "INI-69",
+        "INI-70",
+        "INI-75",
+        "INI-77",
+        "INI-78",
+        "INI-79",
+        "INI-80",
+        "INI-81",
+        "INI-82",
+        "INI-83",
+        "INI-86",
+        "INI-87",
+        "INI-89",
+        "INI-90",
+        "INI-91",
+        "INI-93",
+        "INI-94"
+      ],
+      "shrunk": true,
+      "fields_dropped": 33,
+      "difference": [
+        "argv length 35 -> 33, first divergence at index 27: baseline \"--spec-draft-n-max\" vs candidate \"--host\""
+      ]
+    },
+    {
+      "survivor_id": "M-ini-149-0043-numeric-literal-d479f9603b",
+      "vector_id": "shrunk-mutation-probe-0163",
+      "class": "numeric-literal",
+      "region": "ini",
+      "rows": [
+        "INI-75",
+        "INI-82",
+        "INI-83",
+        "INI-86",
+        "INI-87",
+        "INI-89",
+        "INI-90",
+        "INI-91"
+      ],
+      "shrunk": false,
+      "fields_dropped": 0,
+      "difference": [
+        "ini bytes 262 -> 223, first difference at byte 222\n      baseline: \"cache-ram = 8192\\nfa = auto\\nspec-type = \\nspec-draft-n-max = 0.30000000000000004\\n\\n\"\n      candidate: \"cache-ram = 8192\\nfa = auto\\nspec-type = \\n\\n\""
+      ]
+    },
+    {
+      "survivor_id": "M-ini-155-0033-equality-strictness-d0d635d9c8",
+      "vector_id": "shrunk-mutation-probe-0026",
+      "class": "equality-strictness",
+      "region": "ini",
+      "rows": [
+        "INI-92",
+        "INI-94"
+      ],
+      "shrunk": false,
+      "fields_dropped": 0,
+      "difference": [
+        "ini bytes 226 -> 209, first difference at byte 208\n      baseline: \"-mode = none\\ncache-ram = 8192\\nfa = auto\\nreasoning = null\\n\\n\"\n      candidate: \"-mode = none\\ncache-ram = 8192\\nfa = auto\\n\\n\""
+      ]
+    },
+    {
+      "survivor_id": "M-ini-157-0047-equality-strictness-f5ab958a60",
+      "vector_id": "shrunk-mutation-probe-0025",
+      "class": "equality-strictness",
+      "region": "ini",
+      "rows": [
+        "INI-95"
+      ],
+      "shrunk": false,
+      "fields_dropped": 0,
+      "difference": [
+        "ini bytes 224 -> 209, first difference at byte 208\n      baseline: \"-mode = none\\ncache-ram = 8192\\nfa = auto\\nreasoning = on\\n\\n\"\n      candidate: \"-mode = none\\ncache-ram = 8192\\nfa = auto\\n\\n\""
+      ]
+    },
+    {
+      "survivor_id": "M-ini-004-0043-loop-first-iteration-591318a098",
+      "vector_id": "shrunk-mutation-probe-0003",
+      "class": "loop-first-iteration",
+      "credited_by_delta": "speculationType=\"draft-mtp\"",
+      "region": "ini",
+      "rows": [
+        "BA-80",
+        "BA-81",
+        "BA-84",
+        "BA-85",
+        "BA-89",
+        "BA-95",
+        "BA-96",
+        "INI-75",
+        "INI-76",
+        "INI-82",
+        "INI-83",
+        "INI-86",
+        "INI-87",
+        "INI-91"
+      ],
+      "shrunk": false,
+      "fields_dropped": 0,
+      "difference": [
+        "ini bytes 407 -> 210, first difference at byte 210\n      baseline: \"mode = none\\ncache-ram = 8192\\nfa = auto\\n\\n[probe-3-2]\\ntemp = 0.7\\nc = 16384\\ntop-k =\"\n      candidate: \"mode = none\\ncache-ram = 8192\\nfa = auto\\n\\n\""
+      ]
+    },
+    {
+      "survivor_id": "M-ini-081-0032-equality-strictness-56f653f8fa",
+      "vector_id": "shrunk-mutation-probe-0026-f653f8fa",
+      "class": "equality-strictness",
+      "credited_by_delta": "speculationType=\"draft-mtp\"",
+      "region": "ini",
+      "rows": [
+        "BA-80",
+        "BA-81",
+        "BA-84",
+        "BA-85",
+        "BA-89",
+        "BA-95",
+        "BA-96",
+        "INI-75",
+        "INI-76",
+        "INI-82",
+        "INI-83",
+        "INI-86",
+        "INI-87",
+        "INI-91"
+      ],
+      "shrunk": false,
+      "fields_dropped": 0,
+      "difference": [
+        "ini bytes 209 -> 192, first difference at byte 164\n      baseline: \"threads = 12\\nn-cpu-moe = 8\\nparallel = 1\\nload-mode = null\\ncache-ram = 8192\\nfa = a\"\n      candidate: \"threads = 12\\nn-cpu-moe = 8\\nparallel = 1\\ncache-ram = 8192\\nfa = auto\\n\\n\""
+      ]
+    }
+  ],
+  "unpromotable_gaps": [],
+  "manifest_gap": [],
+  "manifest_note": "running gen-goldens.js today rewrites MANIFEST.json byte-identically, because manifest() enumerates only the five generator families — so promoting these files needs no hash-pin move. It does mean gen-goldens.js --check reports them as \"on disk but not in the manifest\" until that writer covers promoted files.",
+  "not_written": [
+    "fixtures/vectors/MANIFEST.json",
+    "fixtures/HASH-PIN.json",
+    "fixtures/vectors/coverage-map.json",
+    "fixtures/vectors/coverage-exceptions.json",
+    "SPEC/SPEC-ROWS.csv",
+    "PARITY.md"
+  ],
+  "still_required": [
+    "extend gen-goldens.js manifest() to list boundary/shrunk-*.jsonl, its goldens twin and coverage-promotions.json (the fixture owner), then rerun node tools/parity/gen-goldens.js; that changes the hash-pinned MANIFEST.json, so it needs the ledger entry and a bash tools/parity/hash-pin.sh refresh"
+  ],
+  "note": "Applied inside the mutation owner's scope: append-only vector + golden files and the promotion map. The hash-pinned artifacts listed under not_written belong to the ledger holder; an unpromotable gap needs one of them changed."
+}
