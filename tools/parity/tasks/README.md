@@ -16,14 +16,17 @@ Task specs in this directory are the exact prompts each worker phase ran on.
 | 2.3–2.5 vectors/goldens | 9d6a767 (+promotions 657bce5) | `node tools/parity/gen-vectors.js --check`, `gen-goldens.js --check`, `equivalence.js`, `equivalence.js --verify`, `equivalence.js --selftest` (<60 s) |
 | 2.6 mutation ceiling | 657bce5 | see `tools/parity/reports/mutation/REPORT.md` gates (mutate/mutation-run/equiv-prove --selftest + 7 report gates); 648/706 killed + 58 proven, 0 gaps |
 | 3 SPEC pack | 9e34878 (+re-derive 6a9994e) | `node tools/parity/spec-reconcile.js` → unreconciled=0; `SPEC/CONSISTENCY.md` |
+| 4 L1 backend suite | 34644b1 | `node tests/L1-backend/run.js --verify-against-selftest` (~100 s) green ×3; 63 checks |
 
-## IN FLIGHT at time of writing (2026-11-23 ~23:50) — workers may or may not survive restart
+## IN FLIGHT
 
-- **L1 backend suite** (`tools/parity/tasks/task-l1.md`): 6 check modules exist under `tests/L1-backend/checks/`,
-  near self-test battery. Resume: relaunch `worker` with task line from task-l1.md + "continue from disk state".
-  Gate: `node tests/L1-backend/run.js --verify-against-selftest` green x3, zero app-code imports.
-  NOTE: this worker holds uncommitted edits to `tools/parity/{fake-llama-server.js,standin-llama-server.cs,selftest-fake.js}`
-  (PARITY_CHUNK_LOG knob additions) — do not revert; they are authorized by the task spec.
+- **L2 UI suite + corpus round-trip** (`task-l2.md`): mid-work snapshot committed inside 34644b1 (15 files +
+  fixtures/goldens/resave inputs; HASH-PIN gained pins — verified additions-only). Remaining per its spec:
+  corpus round-trip green vs recorded-from-legacy expectations, DISAGREEMENTS.md, ini-order 2-config subset,
+  2× `--verify-selftest`. Landing commit MUST include: final hash-pin refresh + PARITY ledger row for the
+  resave family (C8 event). It was steered about the snapshot.
+
+## Next after L2 (specs ready)
 - **L2 UI suite + corpus round-trip** (`task-l2.md`): 7 check modules exist; recording `fixtures/goldens/resave/`
   from parity-baseline page. Supervisor decisions in force: recorded-from-legacy corpus expectations (NOT raw
   goldens/corpus equality; emit DISAGREEMENTS.md classifying divergences to Q17/Q18/Q19); mechanical /models
