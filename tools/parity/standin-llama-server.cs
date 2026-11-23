@@ -125,7 +125,32 @@ class StandInLlamaServer
 
     // Raw byte forwarding: BaseStream, never OutputDataReceived, so the relay does not reassemble
     // lines or trim anything (plan.md §9 cross-stack trap 2).
-    static void Relay(Stream from, Stream to)
+    static readonly object ChunkLogLock = new object();
+    static readonly string ChunkLog = Environment.GetEnvironmentVariable("PARITY_CHUNK_LOG");
+    static int ChunkSeq = 0;
+
+    // Same jsonl contract as tools/parity/fake-llama-server.js, tagged source:"relay": one line per
+    // byte block this process writes to its own stdout/stderr, i.e. exactly what the manager's
+    // child.stdout reader is handed. Recorded, never reshaped, so L1 can byte-compare the
+    // socket.io client's reassembled stream against it.
+    static void RecordChunk(string stream, byte[] buffer, int count)
+    {
+        if (string.IsNullOrEmpty(ChunkLog)) return;
+        StringBuilder sb = new StringBuilder();
+        lock (ChunkLogLock)
+        {
+            ChunkSeq += 1;
+            sb.Append("{\"pid\":").Append(Process.GetCurrentProcess().Id)
+              .Append(",\"source\":\"relay\",\"stream\":\"").Append(stream)
+              .Append("\",\"seq\":").Append(ChunkSeq)
+              .Append(",\"byteLength\":").Append(count)
+              .Append(",\"bytesBase64\":\"").Append(Convert.ToBase64String(buffer, 0, count))
+              .Append("\"}");
+            File.AppendAllText(ChunkLog, sb.ToString() + "\n", new UTF8Encoding(false));
+        }
+    }
+
+    static void Relay(Stream from, Stream to, string stream)
     {
         byte[] buffer = new byte[16384];
         try
@@ -136,6 +161,7 @@ class StandInLlamaServer
                 if (read <= 0) break;
                 to.Write(buffer, 0, read);
                 to.Flush();
+                RecordChunk(stream, buffer, read);
             }
         }
         catch { }
@@ -186,8 +212,8 @@ class StandInLlamaServer
             AssignProcessToJobObject(job, child.Handle);
         }
 
-        Thread outThread = new Thread(delegate() { Relay(child.StandardOutput.BaseStream, Console.OpenStandardOutput()); });
-        Thread errThread = new Thread(delegate() { Relay(child.StandardError.BaseStream, Console.OpenStandardError()); });
+        Thread outThread = new Thread(delegate() { Relay(child.StandardOutput.BaseStream, Console.OpenStandardOutput(), "stdout"); });
+        Thread errThread = new Thread(delegate() { Relay(child.StandardError.BaseStream, Console.OpenStandardError(), "stderr"); });
         outThread.IsBackground = true;
         errThread.IsBackground = true;
         outThread.Start();

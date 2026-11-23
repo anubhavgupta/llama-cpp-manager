@@ -60,6 +60,7 @@ function spawnFake(args, env, exe) {
     const childEnv = { ...process.env };
     delete childEnv.PARITY_ARGV_LOG;
     delete childEnv.PARITY_BIND_LOG;
+    delete childEnv.PARITY_CHUNK_LOG;
     for (const [key, value] of Object.entries(env || {})) {
         if (value === undefined) delete childEnv[key];
         else childEnv[key] = String(value);
@@ -444,6 +445,86 @@ async function main() {
         assert(result.code === 0, 'expected exit 0, got ' + show(result));
         assert(run.out.join('') === expectedLog(), 'unexpected lines: ' + show(run.out.join('')));
         return 'default count 0, startup log unchanged';
+    });
+
+    await check('chunklog: PARITY_CHUNK_LOG records every emitted write with stream, seq and bytes', async () => {
+        const chunkLog = path.join(tmpDir, 'chunks-' + process.hrtime.bigint().toString(36) + '.jsonl');
+        const model = 'C:\\models\\test\\model.gguf';
+        const run = spawnFake(['--model', model, '--parity-chunks', '5', '--parity-exit-code', '0'],
+            { PARITY_CHUNK_LOG: chunkLog });
+        const result = await finish(run, 20000);
+        assert(result.code === 0, 'expected exit 0, got ' + show(result));
+        const records = readLines(chunkLog).map((line) => JSON.parse(line));
+        assert(records.length > 0, 'no chunk record was written to ' + chunkLog);
+        assert(records.every((record) => record.pid === run.child.pid),
+            'a chunk record carries a pid other than the emitter: ' + show(records.slice(0, 2)));
+        assert(records.every((record) => record.stream === 'stdout'),
+            'stdout writes were recorded under another stream name');
+        assert(records.map((record) => record.seq).join(',') ===
+            records.map((_, index) => index + 1).join(','),
+            'seq is not 1..N in write order: ' + show(records.map((record) => record.seq)));
+        const emitted = Buffer.concat(records.map((record) => Buffer.from(record.bytesBase64, 'base64')));
+        const expected = Buffer.from(expectedLog({ model }), 'utf8');
+        assert(emitted.equals(expected), 'recorded chunk bytes are not the emitted stdout:\n    got      '
+            + show(emitted.toString('utf8')) + '\n    expected ' + show(expected.toString('utf8')));
+        // The recorded blocks are the emitter's OWN writes: with --parity-chunks 5 every logical
+        // line has to be spread over several records, which is the property L1 compares against.
+        assert(records.length > expectedLog({ model }).trimEnd().split('\n').length,
+            'expected more records than logical lines with --parity-chunks 5, got ' + records.length);
+        assert(records.every((record) => record.byteLength ===
+            Buffer.from(record.bytesBase64, 'base64').length),
+            'byteLength does not match the recorded bytes');
+        return records.length + ' writes recorded, byteLength + seq consistent, bytes == stdout';
+    });
+
+    await check('chunklog: --parity-stderr-only records the writes under stream stderr', async () => {
+        const chunkLog = path.join(tmpDir, 'chunks-err-' + process.hrtime.bigint().toString(36) + '.jsonl');
+        const run = spawnFake(['--parity-stderr-only', '--parity-chunks', '0', '--parity-exit-code', '0'],
+            { PARITY_CHUNK_LOG: chunkLog });
+        const result = await finish(run, 20000);
+        assert(result.code === 0, 'expected exit 0, got ' + show(result));
+        const records = readLines(chunkLog).map((line) => JSON.parse(line));
+        assert(records.every((record) => record.stream === 'stderr'),
+            'stderr-only run recorded a non-stderr stream: ' + show(records.map((r) => r.stream)));
+        const emitted = Buffer.concat(records.map((record) => Buffer.from(record.bytesBase64, 'base64')));
+        assert(emitted.equals(Buffer.from(expectedLog(), 'utf8')), 'recorded stderr bytes mismatch');
+        return records.length + ' stderr writes recorded under stream "stderr"';
+    });
+
+    await check('chunklog: unset writes no file and changes no output', async () => {
+        const chunkLog = path.join(tmpDir, 'chunks-unset-' + process.hrtime.bigint().toString(36) + '.jsonl');
+        const run = spawnFake(['--parity-chunks', '0', '--parity-exit-code', '0'],
+            { PARITY_CHUNK_LOG: undefined });
+        const result = await finish(run, 20000);
+        assert(result.code === 0, 'expected exit 0, got ' + show(result));
+        assert(!fs.existsSync(chunkLog), 'a chunk log appeared without the env being set: ' + chunkLog);
+        assert(run.out.join('') === expectedLog(), 'output changed with the knob unset: ' + show(run.out.join('')));
+        return 'no chunk log, startup text unchanged';
+    });
+
+    await check('standin: PARITY_CHUNK_LOG records the relayed byte blocks, not reshaped lines', async () => {
+        const built = buildStandIn(path.join(tmpDir, 'fake-llama-server-chunk.exe'));
+        const chunkLog = path.join(tmpDir, 'chunks-relay-' + process.hrtime.bigint().toString(36) + '.jsonl');
+        const model = 'C:\\models\\test\\model.gguf';
+        const run = spawnFake(['--model', model, '--parity-chunks', '0', '--parity-exit-code', '0'],
+            { PARITY_CHUNK_LOG: chunkLog, PARITY_NODE: process.execPath, PARITY_FAKE_SCRIPT: FAKE },
+            built.exe);
+        const result = await finish(run, 30000);
+        assert(result.code === 0, 'expected exit 0, got ' + show(result));
+        const records = readLines(chunkLog).map((line) => JSON.parse(line));
+        assert(records.length > 0, 'the relay wrote no chunk record');
+        const relayRecords = records.filter((record) => record.source === 'relay');
+        assert(relayRecords.length > 0, 'no record is tagged source:"relay": ' + show(records.slice(0, 2)));
+        const relayed = Buffer.concat(relayRecords.map((record) =>
+            Buffer.from(record.bytesBase64, 'base64')));
+        // The relay sees the child's writes in OS-sized blocks, so the record count is buffering;
+        // the bytes are the claim: what the relay forwarded is what its own stdout carried.
+        assert(relayed.equals(Buffer.from(run.out.join(''), 'utf8')),
+            'the relayed blocks are not the bytes the relay wrote to stdout');
+        assert(relayRecords.every((record) => record.stream === 'stdout'),
+            'a stdout block was recorded under another stream name');
+        return relayRecords.length + ' relayed blocks, concatenated bytes == relay stdout (' +
+            relayed.length + ' bytes)';
     });
 
     await check('standin: relayed argv equals received argv and the fake knobs still work', async () => {

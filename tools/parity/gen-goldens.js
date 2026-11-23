@@ -20,6 +20,7 @@
 // recorded in every header, so a golden names the exact text that produced it.
 
 const path = require('path');
+const fs = require('fs');
 const { execFileSync } = require('child_process');
 
 const slices = require('./baseline-slices.js');
@@ -76,6 +77,138 @@ function record(gen, vector, models, settings) {
         ini_threw: iniThrew };
 }
 
+// fixtures/goldens/resave: the browser-side (L2) golden family.
+//
+// The generator families answer "what do the inline blocks produce from a SAVED config". The browser
+// answers a different question — what does the page post after `loadConfiguration` has run that
+// config through the DOM — and for 28 of the 48 corpus configs the answers differ (Q17/Q18/Q19; the
+// per-config table is tests/L2-ui/DISAGREEMENTS.md). This family records the browser-side answer.
+//
+// Its inputs are recorded from the parity-baseline page by tests/L2-ui/record-inputs.js: the DOM
+// state loadConfiguration produced, the saved configs the page held, and the localStorage bytes /
+// POST /start argv / native dialog text the page produced when it was clicked. Goldens are composed
+// from those recorded inputs with the same pinned baseline slices every other family uses, and every
+// composition is cross-checked against the recorded baseline output of the same session: a mismatch
+// throws here instead of becoming a golden (C4/C5).
+const RESAVE = 'resave';
+const RESAVE_INPUTS = 'fixtures/goldens/resave/inputs.jsonl';
+const RESAVE_RECORD = 'node tests/L2-ui/record-inputs.js';
+const b64 = (text) => Buffer.from(text, 'utf8').toString('base64');
+
+function resaveInputs() {
+    const file = path.join(REPO, RESAVE_INPUTS);
+    if (!fs.existsSync(file)) return null;
+    const lines = vectors.readJsonl(file);
+    const header = lines[0];
+    vectors.assert(header && header.kind === 'header' && header.role === 'inputs',
+        RESAVE_INPUTS + ' has no inputs header row');
+    if (!header.complete) {
+        vectors.assert(false, RESAVE_INPUTS + ' is a partial recording (complete: false) — rerun '
+            + RESAVE_RECORD);
+    }
+    const rows = lines.filter((row) => row.kind === 'input');
+    vectors.assert(header.count === rows.length,
+        RESAVE_INPUTS + ' header count ' + header.count + ' != ' + rows.length + ' input rows');
+    return { header, rows };
+}
+
+function buildResave(gen, impl) {
+    const inputs = resaveInputs();
+    if (!inputs) return null;
+    const kinds = slices.fieldKinds();
+    const settings = JSON.parse(slices.readText(path.join(REPO, 'fixtures', 'corpus',
+        'settings.remapped.json')));
+    const models = inputs.header.models_corpus && inputs.header.models_corpus.models;
+    vectors.assert(Array.isArray(models) && models.length > 0,
+        RESAVE_INPUTS + ' header carries no models_corpus list — rerun ' + RESAVE_RECORD);
+    const by = (op, mode) => new Map(inputs.rows.filter((row) => row.op === op
+        && (!mode || row.mode === mode)).map((row) => [row.name, row]));
+    const launched = by('launch', 'corpus');
+    const blocked = by('alert-blocked', 'recorded');
+    const resaved = by('resave');
+    const created = by('create');
+
+    const out = [JSON.stringify({
+        kind: 'header', family: RESAVE, role: 'browser-side goldens for tests/L2-ui',
+        generator: 'tools/parity/gen-goldens.js', command: GOLDEN_REGEN, record_command: RESAVE_RECORD,
+        impl: impl, inputs_file: RESAVE_INPUTS,
+        inputs_sha256: vectors.sha256(slices.readText(path.join(REPO, RESAVE_INPUTS))),
+        models_corpus_sha256: vectors.sha256(JSON.stringify(models)),
+        count: resaved.size + blocked.size + created.size,
+        op_note: 'op=resave/create carry saved_config + saved_field_order + the exact localStorage '
+            + 'bytes the composition wrote (storage_expected) and recorded (storage_actual); '
+            + 'op=launch carry the argv composed from the recorded DOM state (cross-checked against '
+            + 'the recorded POST /start bytes); op=alert-blocked carry the recorded native dialog text',
+        ini_note: 'ini is base64 of a single-config ini built from the saved config (ini_from_saved), '
+            + 'and ini_after_resave the same bytes rebuilt from the entry the re-save wrote — the '
+            + 'difference is Q16 (orphan keys dropped, loadMode/reasoning migrated in)'
+    })];
+
+    let argvItems = 0;
+    let iniChanges = 0;
+    for (const [name, row] of resaved) {
+        const fields = slices.fieldsFromControls(row.form, kinds);
+        const composed = slices.runBaselineSave(gen, fields,
+            JSON.parse(JSON.stringify(row.configurations)), row.configId);
+        vectors.assert(composed.written.length === 1, name + ': the save slice wrote '
+            + composed.written.length + ' times, expected one saveConfigurations() call');
+        vectors.assert(composed.written[0] === row.storage_after, name
+            + ': the composed localStorage bytes are not the bytes the baseline page wrote\n'
+            + slices.firstLineDiff(composed.written[0], row.storage_after));
+        const savedEntry = composed.configs[name];
+        vectors.assert(Object.keys(savedEntry).join('|') === row.saved_field_order.join('|'),
+            name + ': the composed saved-field order is not the recorded one');
+        const launch = launched.get(name);
+        vectors.assert(!!launch, name + ': recorded re-save without a recorded browser launch');
+        const argv = slices.runBaselineArgv(gen, slices.fieldsFromControls(launch.form, kinds),
+            settings, models).args;
+        vectors.assert(JSON.stringify(argv) === JSON.stringify(launch.argv),
+            name + ': the argv composed from the recorded DOM state is not the argv the baseline '
+            + 'browser posted\n' + slices.firstLineDiff(JSON.stringify(argv), JSON.stringify(launch.argv)));
+        const ini = b64(slices.runBaselineIni(gen, { [name]: row.configurations[name] }, models));
+        const iniAfter = b64(slices.runBaselineIni(gen, { [name]: savedEntry }, models));
+        if (ini !== iniAfter) iniChanges += 1;
+        argvItems += argv.length;
+        out.push(JSON.stringify({
+            kind: 'golden', family: RESAVE, op: 'resave', name: name, impl: impl,
+            input_form_sha256: row.form_sha, input_configurations_sha256: row.configurations_sha,
+            saved_config: JSON.stringify(savedEntry), saved_field_order: Object.keys(savedEntry),
+            storage_expected: composed.written[0], storage_actual: row.storage_after,
+            argv: argv, argv_recorded_sha256: vectors.sha256(JSON.stringify(launch.argv)),
+            serverPath: launch.serverPath, serverPort: launch.serverPort,
+            ini_from_saved: ini, ini_after_resave: iniAfter,
+            dialogs: launch.dialogs || []
+        }));
+    }
+    for (const [name, row] of created) {
+        const fields = slices.fieldsFromControls(row.form, kinds);
+        const composed = slices.runBaselineSave(gen, fields,
+            JSON.parse(JSON.stringify(row.configurations)), row.configId);
+        vectors.assert(composed.written[0] === row.storage_after, name
+            + ': the composed create-path bytes are not the bytes the baseline page wrote\n'
+            + slices.firstLineDiff(composed.written[0], row.storage_after));
+        out.push(JSON.stringify({
+            kind: 'golden', family: RESAVE, op: 'create', name: name, impl: impl,
+            input_form_sha256: row.form_sha, input_configurations_sha256: row.configurations_sha,
+            saved_config: JSON.stringify(composed.configs[name]),
+            saved_field_order: Object.keys(composed.configs[name]),
+            storage_expected: composed.written[0], storage_actual: row.storage_after
+        }));
+    }
+    for (const [name, row] of blocked) {
+        out.push(JSON.stringify({
+            kind: 'golden', family: RESAVE, op: 'alert-blocked', name: name, impl: impl,
+            argv: null, dialogs: row.dialogs, modelPathValue: row.modelPathValue,
+            modelSelectedIndex: row.modelSelectedIndex, input_form_sha256: row.form_sha,
+            note: 'recorded from the page fed fixtures/http/J2-models verbatim: the saved modelPath '
+                + 'has no <option>, so it blanks (Q18) and launchServer alerts before fetching'
+        }));
+    }
+    const rows = out.length - 1;
+    return { content: out.join('\n'), summary: { family: RESAVE, count: rows, argvItems: argvItems,
+        throws: 0, iniChanges: iniChanges } };
+}
+
 function build() {
     const gen = slices.slicedGenerators();
     const impl = 'parity-baseline@' + baselineSha();
@@ -124,6 +257,11 @@ function build() {
         files.set(family + '/goldens.jsonl', out.join('\n'));
         summary.push({ family: family, count: list.length, argvItems: argvItems, throws: throws });
     }
+    const resave = buildResave(gen, impl);
+    if (resave) {
+        files.set(RESAVE + '/goldens.jsonl', resave.content);
+        summary.push(resave.summary);
+    }
     return { files, impl, summary };
 }
 
@@ -169,6 +307,19 @@ function manifest() {
     if (fs.existsSync(path.join(REPO, promotionMap))) {
         list.push({ file: promotionMap, command: PROMOTED_REGEN,
             sha256: vectors.sha256(slices.readText(path.join(REPO, promotionMap))) });
+    }
+    // The browser-side family: its inputs are recorded by the L2 recorder (a browser driven by the
+    // parity-baseline page), its goldens by this tool from those inputs. checkManifest requires every
+    // file under fixtures/goldens to be listed, so all three are named here.
+    if (fs.existsSync(path.join(REPO, RESAVE_INPUTS))) {
+        list.push({ file: RESAVE_INPUTS, command: RESAVE_RECORD,
+            sha256: vectors.sha256(slices.readText(path.join(REPO, RESAVE_INPUTS))) });
+        list.push({ file: 'fixtures/goldens/resave/inputs.manifest.json', command: RESAVE_RECORD,
+            sha256: vectors.sha256(slices.readText(path.join(REPO, 'fixtures/goldens/resave',
+                'inputs.manifest.json'))) });
+        list.push({ file: 'fixtures/goldens/' + RESAVE + '/goldens.jsonl', command: GOLDEN_REGEN,
+            sha256: vectors.sha256(slices.readText(path.join(vectors.GOLDENS, RESAVE,
+                'goldens.jsonl'))) });
     }
     list.push({ file: 'fixtures/vectors/MANIFEST.json', command: GOLDEN_REGEN + ' (writes this file)',
         sha256: null, note: 'a manifest cannot carry its own hash; every other entry is checkable' });
@@ -264,12 +415,15 @@ function main() {
     fs.writeFileSync(path.join(vectors.VECTORS, 'MANIFEST.json'), manifest() + '\n', 'utf8');
     for (const row of built.summary) {
         console.log('goldens ' + row.family + ': ' + row.count + ' vectors, ' + row.argvItems
-            + ' argv items, ' + row.throws + ' recorded generator throws');
+            + ' argv items, ' + row.throws + ' recorded generator throws'
+            + (row.family === RESAVE ? ', ' + row.iniChanges
+                + ' entries whose ini changes when re-saved (Q16)' : ''));
     }
     console.log('impl ' + built.impl);
     console.log('MANIFEST.json written (fixtures/vectors/MANIFEST.json)');
 }
 
-module.exports = { build, manifest, record, baselineSha, checkManifest, dataFiles, GOLDEN_REGEN };
+module.exports = { build, manifest, record, baselineSha, checkManifest, dataFiles, buildResave,
+    resaveInputs, GOLDEN_REGEN, RESAVE_RECORD };
 
 if (require.main === module) main();

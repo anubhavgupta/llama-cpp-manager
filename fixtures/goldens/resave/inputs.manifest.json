@@ -1,0 +1,16 @@
+{
+  "generatedBy": "node tests/L2-ui/record-inputs.js",
+  "command": "node tests/L2-ui/record-inputs.js --port 7851",
+  "source": "parity-baseline",
+  "sourceSha": "c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "sandbox": "static copy of the parity-baseline public/ assets; no manager process was started",
+  "backend": "fetch replayed from fixtures/http raw bytes; io() stubbed (tests/L2-ui/helpers/mocks.js)",
+  "rows": 145,
+  "byOp": {
+    "resave": 48,
+    "alert-blocked-corpus": 48,
+    "alert-blocked-recorded": 48,
+    "create": 1
+  },
+  "note": "Every value is either read out of a browser running the parity-baseline UI or is the raw recorded fixture bytes that page was fed. Nothing is derived from the SPEC pack or from the candidate. tools/parity/gen-goldens.js composes the resave golden family from these inputs using the baseline slices pinned by tools/parity/baseline-slices.js, and cross-checks its output against the storage_after / argv / dialog bytes the baseline produced in the same sessions."
+}

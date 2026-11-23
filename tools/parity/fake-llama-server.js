@@ -117,6 +117,26 @@ function appendJsonLine(file, value) {
     fs.appendFileSync(file, JSON.stringify(value) + '\n');
 }
 
+// PARITY_CHUNK_LOG: one JSON line per stdout/stderr write this process performs, carrying the raw
+// bytes. L1 uses it to prove the manager forwards pipe chunks verbatim (plan.md §9 cross-stack
+// trap 2): the socket.io client reassembles what it received and byte-compares it against this
+// list, so a server-side split, join or trim shows up as a diff instead of a green test.
+// Unset -> no file is written and no code path changes.
+const CHUNK_LOG = process.env.PARITY_CHUNK_LOG || '';
+let chunkSeq = 0;
+function recordChunk(stream, buffer) {
+    if (!CHUNK_LOG) return;
+    chunkSeq += 1;
+    appendJsonLine(CHUNK_LOG, {
+        pid: process.pid,
+        source: 'fake',
+        stream,
+        seq: chunkSeq,
+        byteLength: buffer.length,
+        bytesBase64: buffer.toString('base64')
+    });
+}
+
 function startupLines(parsed, listenUrl) {
     const lines = [
         'ggml_backend_cpu_init: number of physical cores: 8',
@@ -156,7 +176,7 @@ function toChunks(lines, chunkBytes) {
     return chunks;
 }
 
-function emit(chunks, sink) {
+function emit(chunks, sink, streamName) {
     return new Promise((resolve) => {
         let index = 0;
         const next = () => {
@@ -164,6 +184,7 @@ function emit(chunks, sink) {
                 resolve();
                 return;
             }
+            recordChunk(streamName, chunks[index]);
             sink.write(chunks[index], () => {
                 index += 1;
                 setTimeout(next, CHUNK_DELAY_MS);
@@ -240,7 +261,8 @@ async function main() {
     });
 
     const sink = parsed.parityStderrOnly ? process.stderr : process.stdout;
-    await emit(toChunks(startupLines(parsed, listenUrl), parsed.parityChunks), sink);
+    await emit(toChunks(startupLines(parsed, listenUrl), parsed.parityChunks), sink,
+        parsed.parityStderrOnly ? 'stderr' : 'stdout');
 
     if (parsed.parityExitCode !== null) {
         process.exit(parsed.parityExitCode);
