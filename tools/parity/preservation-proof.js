@@ -652,18 +652,45 @@ function compareManifests(aRoot, bRoot, comparisonFile) {
     return 0;
 }
 
+// A green comparison of an empty or partial recording would prove nothing: these artifacts have to
+// exist in both runs, because they are where the app-built argv and the app-built ini live.
+const REQUIRED_ARTIFACTS = [
+    'ini/J4b-ui-presets-launch/presets-from-ui.ini',
+    'http/J4b-ui-presets-launch/launch-presets-from-ui.request.json',
+    'argv/J4b-ui-presets-launch/launch.jsonl',
+    'argv/J5-ui-launch/launch.jsonl',
+    'argv/J6-corpus-smoke/launch.jsonl',
+    'http/J5-ui-launch/start-from-ui.request.json',
+    'http/J5-ui-log-cap/start-from-ui.request.json'
+];
+
+function requireArtifacts(roots) {
+    for (const root of roots) {
+        for (const rel of REQUIRED_ARTIFACTS) {
+            const file = path.join(root, 'fixtures', rel);
+            assert(fs.existsSync(file), 'the proof recordings contain no ' + rel + ' in ' + root);
+            const size = fs.statSync(file).size;
+            assert(size >= 20, rel + ' is only ' + size + ' bytes in ' + root);
+        }
+    }
+    console.log('recorded artifacts present in both runs: ' + REQUIRED_ARTIFACTS.length + ' per run');
+    return 0;
+}
+
 // --------------------------------------------------------------------- main ---------------
 
 function parseArgs(argv) {
-    const out = {};
+    const out = { roots: [] };
     for (let i = 0; i < argv.length; i += 1) {
         const token = argv[i];
         if (token === '--differential') out.mode = 'differential';
         else if (token === '--write-manifest') { out.mode = 'manifest'; out.dir = argv[i += 1]; }
+        else if (token === '--required') { out.mode = 'required'; out.roots.push(argv[i += 1]); }
         else if (token === '--compare-manifests') {
             out.mode = 'compare'; out.a = argv[i += 1]; out.b = argv[i += 1];
         } else if (token === '--comparison') out.comparison = argv[i += 1];
         else if (token === '--json') out.json = path.resolve(argv[i += 1]);
+        else if (/^[A-Za-z]:/.test(token) && out.mode === 'required') out.roots.push(token);
         else throw new Error('unknown argument: ' + token);
     }
     out.comparison = out.comparison || path.join(REPO, 'fixtures', 'COMPARISON.json');
@@ -674,10 +701,11 @@ function main() {
     const options = parseArgs(process.argv.slice(2));
     if (options.mode === 'differential') return runDifferential(options);
     if (options.mode === 'manifest') return writeManifest(path.resolve(options.dir));
+    if (options.mode === 'required') return requireArtifacts(options.roots.map((root) => path.resolve(root)));
     if (options.mode === 'compare') {
         return compareManifests(path.resolve(options.a), path.resolve(options.b), path.resolve(options.comparison));
     }
-    throw new Error('choose --differential, --write-manifest DIR or --compare-manifests A B');
+    throw new Error('choose --differential, --write-manifest DIR, --required A B or --compare-manifests A B');
 }
 
 main();

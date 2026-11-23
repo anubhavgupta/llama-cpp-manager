@@ -102,30 +102,7 @@ node "$TOOLS/capture-legacy.js" --compare "$(cygpath -m "$A/fixtures")" "$(cygpa
   --comparison "$COMPARISON"
 
 # A green comparison of an empty tree would prove nothing: name the artifacts that had to be there.
-node "$TOOLS/preservation-proof.js" --differential >/dev/null
-node -e '
-  const fs = require("fs");
-  const path = require("path");
-  const required = [
-    "ini/J4b-ui-presets-launch/presets-from-ui.ini",
-    "http/J4b-ui-presets-launch/launch-presets-from-ui.request.json",
-    "argv/J4b-ui-presets-launch/launch.jsonl",
-    "argv/J5-ui-launch/launch.jsonl",
-    "argv/J6-corpus-smoke/launch.jsonl",
-    "http/J5-ui-launch/start-from-ui.request.json",
-    "http/J5-ui-log-cap/start-from-ui.request.json"
-  ];
-  const roots = process.argv.slice(1);
-  for (const root of roots) {
-    for (const rel of required) {
-      const file = path.join(root, 'fixtures', rel);
-      if (!fs.existsSync(file)) throw new Error("the proof recordings contain no " + rel + " in " + root);
-      const size = fs.statSync(file).size;
-      if (size < 20) throw new Error(rel + " is only " + size + " bytes in " + root);
-    }
-  }
-  console.log("recorded artifacts present in both runs: " + required.length + " per run");
-' "$(cygpath -m "$A")" "$(cygpath -m "$B")"
+node "$TOOLS/preservation-proof.js" --required "$(cygpath -m "$A")" "$(cygpath -m "$B")"
 
 echo
 echo "PRESERVATION PROOF GREEN"
