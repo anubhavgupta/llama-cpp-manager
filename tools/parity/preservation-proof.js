@@ -533,13 +533,15 @@ function runDifferential(options) {
 
 // ------------------------------------------------------------------- manifests ------------
 
+// Same glob semantics as the comparator in capture-legacy.js, so the two gates relax exactly the
+// same fixtures/COMPARISON.json rules and nothing else.
 function globToRegExp(glob) {
     let out = '^';
     for (let index = 0; index < glob.length; index += 1) {
         const char = glob[index];
         if (char === '*') {
             if (glob[index + 1] === '*') {
-                if (glob[index + 2] === '/') { out += '(?:.*/)?'; index += 2; } else out += '.*'; index += 1;
+                if (glob[index + 2] === '/') { out += '(?:.*/)?'; index += 2; } else { out += '.*'; index += 1; }
             } else out += '[^/]*';
         } else if (char === '?') out += '[^/]';
         else out += char.replace(/[.+^${}()|[\]\\]/g, '\\$&');
@@ -547,29 +549,35 @@ function globToRegExp(glob) {
     return new RegExp(out + '$');
 }
 
-function fixtureFiles(root) {
+function fixtureFiles(fixturesDir) {
     const out = [];
     for (const kind of KINDS) {
-        const dir = path.join(root, kind);
+        const dir = path.join(fixturesDir, kind);
         if (!fs.existsSync(dir)) continue;
-        for (const file of walk(dir)) out.push(path.relative(root, file).split(path.sep).join('/'));
+        for (const file of walk(dir)) out.push(path.relative(fixturesDir, file).split(path.sep).join('/'));
     }
     return out.sort();
 }
 
+// DIR is the run root: the recordings live under DIR/fixtures/, and the manifest lists them relative
+// to that fixtures dir so the paths match the fixtures/COMPARISON.json globs and the recorded
+// MANIFEST.json entries.
 function writeManifest(root) {
-    const files = fixtureFiles(root).map((rel) => ({
-        path: rel, sha256: sha256(fs.readFileSync(path.join(root, rel)))
+    const fixturesDir = path.join(root, 'fixtures');
+    const files = fixtureFiles(fixturesDir).map((rel) => ({
+        path: rel, sha256: sha256(fs.readFileSync(path.join(fixturesDir, rel)))
     }));
     const manifest = {
         writtenBy: 'tools/parity/preservation-proof.js --write-manifest',
         command: process.argv.slice(2).join(' '),
         root: path.basename(root),
+        fixtures: 'fixtures',
         fileCount: files.length,
         files
     };
     const out = path.join(root, 'PROOF-MANIFEST.json');
     fs.writeFileSync(out, JSON.stringify(manifest, null, 2) + '\n');
+    assert(files.length > 0, 'no recorded fixtures under ' + fixturesDir + ' — nothing to prove');
     console.log('PROOF-MANIFEST.json: ' + files.length + ' files, sha256 '
         + sha256(fs.readFileSync(out)) + ' (' + out + ')');
     return 0;
@@ -622,12 +630,18 @@ function compareManifests(aRoot, bRoot, comparisonFile) {
         if (shaA.get(rel) === shaB.get(rel)) continue;
         failures.push(rel);
         console.error('BYTE DIFF: ' + rel);
-        console.error(unifiedDiff(path.join(aRoot, rel), path.join(bRoot, rel), rel));
+        console.error(unifiedDiff(path.join(aRoot, 'fixtures', rel), path.join(bRoot, 'fixtures', rel), rel));
     }
     console.log('manifest compare: ' + all.length + ' recorded files, ' + exact.length
         + ' compared byte-for-byte (identical=' + (exact.length - failures.length) + '), '
         + relaxed.length + ' files are relaxed by fixtures/COMPARISON.json and are re-checked by'
         + ' capture-legacy.js --compare');
+    // A comparison of an almost-empty tree would be green without proving anything.
+    const ofKind = (kind) => all.filter((rel) => rel.startsWith(kind + '/')).length;
+    assert(exact.length >= 40 && ofKind('ini') >= 2 && ofKind('argv') >= 4 && ofKind('http') >= 20,
+        'the compared set is too small to mean anything: ' + JSON.stringify({
+            exact: exact.length, ini: ofKind('ini'), argv: ofKind('argv'), http: ofKind('http')
+        }));
     if (missing.length + failures.length > 0) {
         console.error('PROOF MANIFEST COMPARE FAIL: ' + missing.length + ' file-set diff(s), '
             + failures.length + ' byte diff(s)');

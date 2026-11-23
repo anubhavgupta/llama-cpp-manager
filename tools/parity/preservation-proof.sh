@@ -118,7 +118,7 @@ node -e '
   const roots = process.argv.slice(1);
   for (const root of roots) {
     for (const rel of required) {
-      const file = path.join(root, rel);
+      const file = path.join(root, 'fixtures', rel);
       if (!fs.existsSync(file)) throw new Error("the proof recordings contain no " + rel + " in " + root);
       const size = fs.statSync(file).size;
       if (size < 20) throw new Error(rel + " is only " + size + " bytes in " + root);
