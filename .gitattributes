@@ -2,6 +2,9 @@
 * text=auto eol=lf
 *.cmd -text
 *.bat -text
+# Recorded fixtures are byte-goldens: never line-ending-normalize them
+fixtures/** -text
+tools/parity/nvidia-smi-stub/nvidia-smi.cmd -text
 *.png binary
 *.ico binary
 *.gguf binary

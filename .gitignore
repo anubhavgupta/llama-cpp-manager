@@ -49,3 +49,5 @@ settings.json
 fixtures/corpus/.pathmap-local.json
 
 .claude/
+# fixture logs are recorded gate material, not runtime logs
+!fixtures/**/*.log

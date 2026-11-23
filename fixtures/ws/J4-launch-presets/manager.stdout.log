@@ -1,0 +1,23 @@
+[dotenv@17.2.2] injecting env (0) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+Server running at http://localhost:7837
+Generated models-preset.ini file: C:\Users\anubh\AppData\Local\Temp\parity-scratch\app\models-preset.ini
+Starting server with presets: [
+  '--models-preset',
+  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini',
+  '--host',
+  '0.0.0.0',
+  '--port',
+  '8080'
+]
+Server process exited with code null
+Generated models-preset.ini file: C:\Users\anubh\AppData\Local\Temp\parity-scratch\app\models-preset.ini
+Starting server with presets: [
+  '--models-preset',
+  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini',
+  '--host',
+  '0.0.0.0',
+  '--port',
+  '7838'
+]
+STDOUT: ggml_ba
+Server process exited with code null

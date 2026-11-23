@@ -1,0 +1,32 @@
+[dotenv@17.2.2] injecting env (0) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+Server running at http://localhost:7837
+Client connected for log streaming
+Starting server with args: [
+  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js',
+  '-m',
+  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf',
+  '--port',
+  '17839',
+  '--parity-chunks',
+  '0',
+  '--parity-exit-code',
+  '3'
+]
+STDOUT: ggml_backend_cpu_init: number of physical cores: 8
+
+STDOUT: ggml_backend_cpu_init: number of logical cores: 16
+
+STDOUT: load_backend: loaded CPU backend
+
+STDOUT: load_model: expecting a GGUF file in version 3
+
+STDOUT: load_model: model = C:\Users\anubh\AppData\Local\Temp\parity-scratch\fixtures\models\a\model-a.gguf
+
+STDOUT: srv    load_model: load_model: OK
+
+STDOUT: srv  update_slots: all slots idle
+
+STDOUT: main: server is listening on http://127.0.0.1:17839
+
+Server process exited with code 3
+Client disconnected from log streaming

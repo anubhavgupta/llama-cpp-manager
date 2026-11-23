@@ -1,0 +1,137 @@
+[dotenv@17.2.2] injecting env (0) from .env -- tip: 📡 version env with Radar: https://dotenvx.com/radar
+Server running at http://localhost:7837
+Client connected for log streaming
+Starting server with args: [
+  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js',
+  '-m',
+  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf',
+  '-ngl',
+  '99',
+  '-t',
+  '12',
+  '--temp',
+  '0.7',
+  '--top-k',
+  '20',
+  '--top-p',
+  '0.00',
+  '--min-p',
+  '0.05',
+  '--repeat-penalty',
+  '1.05',
+  '--parallel',
+  '1',
+  '--load-mode',
+  'mmap',
+  '-c',
+  '16384',
+  '--n-cpu-moe',
+  '8',
+  '-ctk',
+  'q8_0',
+  '-ctv',
+  'q8_0',
+  '-fa',
+  '--jinja',
+  '--chat-template-kwargs',
+  '{"preserve_thinking": true}',
+  '--chat-template-file',
+  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja',
+  '--verbose',
+  '--backend-sampling',
+  '--no-kv-offload',
+  '--no-mmproj-offload',
+  '--cache-ram',
+  '8192',
+  '--spec-type',
+  'ngram-mod,draft-mtp',
+  '--spec-ngram-mod-n-match',
+  '24',
+  '--spec-ngram-mod-n-min',
+  '48',
+  '--spec-ngram-mod-n-max',
+  '64',
+  '--reasoning',
+  'off',
+  '--host',
+  '0.0.0.0',
+  '-fit',
+  'off',
+  '--port',
+  '7838'
+]
+STDOUT: ggml_ba
+STDOUT: ckend_c
+STDOUT: pu_init
+STDOUT: : numbe
+STDOUT: r of ph
+STDOUT: ysical 
+STDOUT: cores: 
+STDOUT: 8
+
+STDOUT: ggml_ba
+STDOUT: ckend_c
+STDOUT: pu_init
+STDOUT: : numbe
+STDOUT: r of lo
+STDOUT: gical c
+STDOUT: ores: 1
+STDOUT: 6
+
+STDOUT: load_ba
+STDOUT: ckend: 
+STDOUT: loaded 
+STDOUT: CPU bac
+STDOUT: kend
+
+STDOUT: load_mo
+STDOUT: del: ex
+STDOUT: pecting
+STDOUT:  a GGUF
+STDOUT:  file i
+STDOUT: n versi
+STDOUT: on 3
+
+STDOUT: load_mo
+STDOUT: del: mo
+STDOUT: del = C:\Users\anubh\AppData
+STDOUT: \Local\
+STDOUT: Temp\pa
+STDOUT: rity-sc
+STDOUT: ratch\f
+STDOUT: ixtures
+STDOUT: \models
+STDOUT: \models
+STDOUT:  with s
+STDOUT: paces\s
+STDOUT: paced m
+STDOUT: odel Q4
+STDOUT: .gguf
+
+STDOUT: print_i
+STDOUT: nfo: n_
+STDOUT: ctx = 1
+STDOUT: 6384
+
+STDOUT: srv    
+STDOUT: load_mo
+STDOUT: del: lo
+STDOUT: ad_mode
+STDOUT: l: OK
+
+STDOUT: srv  up
+STDOUT: date_sl
+STDOUT: ots: al
+STDOUT: l slots
+STDOUT:  idle
+
+STDOUT: main: s
+STDOUT: erver i
+STDOUT: s liste
+STDOUT: ning on
+STDOUT:  http:/
+STDOUT: /0.0.0.
+STDOUT: 0:7838
+
+Server process exited with code null
+Client disconnected from log streaming
