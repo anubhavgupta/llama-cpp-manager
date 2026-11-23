@@ -1,0 +1,15 @@
+[dotenv@17.2.2] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+Server running at http://localhost:7837
+Generated models-preset.ini file: C:\Users\anubh\AppData\Local\Temp\parity-scratch\app\models-preset.ini
+Starting server with presets: [
+  '--models-preset',
+  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini',
+  '--host',
+  '0.0.0.0',
+  '--port',
+  '17844'
+]
+Client connected for log streaming
+STDOUT: ggml_ba
+Server process exited with code null
+Client disconnected from log streaming

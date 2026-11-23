@@ -2,7 +2,7 @@
   "note": "Default 7-byte chunks: each log-stream payload becomes one pane line after .trim(), so N source lines become many pane lines and whitespace-only payloads become blank lines. The exact pane line count follows socket coalescing and is shape-compared; the payload bytes are golden in ws/J5-ui-log-cap/events.json.",
   "sourceLines": 9,
   "blankPayloads": 1,
-  "paneLines": 71,
+  "paneLines": 73,
   "paneBlankLines": 1,
   "morePaneLinesThanSourceLines": true,
   "somePayloadsAreWhitespaceOnly": true

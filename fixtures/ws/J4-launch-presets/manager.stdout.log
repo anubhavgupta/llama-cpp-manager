@@ -1,4 +1,4 @@
-[dotenv@17.2.2] injecting env (0) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+[dotenv@17.2.2] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
 Server running at http://localhost:7837
 Generated models-preset.ini file: C:\Users\anubh\AppData\Local\Temp\parity-scratch\app\models-preset.ini
 Starting server with presets: [
@@ -9,6 +9,8 @@ Starting server with presets: [
   '--port',
   '8080'
 ]
+STDOUT: ggml_ba
+STDOUT: ckend_c
 Server process exited with code null
 Generated models-preset.ini file: C:\Users\anubh\AppData\Local\Temp\parity-scratch\app\models-preset.ini
 Starting server with presets: [
@@ -20,4 +22,5 @@ Starting server with presets: [
   '7838'
 ]
 STDOUT: ggml_ba
+STDOUT: ckend_c
 Server process exited with code null

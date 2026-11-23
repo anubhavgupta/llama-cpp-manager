@@ -1,4 +1,4 @@
-[dotenv@17.2.2] injecting env (0) from .env -- tip: 📡 version env with Radar: https://dotenvx.com/radar
+[dotenv@17.2.2] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
 Server running at http://localhost:7837
 Client connected for log streaming
 Starting server with args: [
@@ -60,10 +60,7 @@ Starting server with args: [
   '--port',
   '7838'
 ]
-STDOUT: ggml_ba
-STDOUT: ckend_c
-STDOUT: pu_init
-STDOUT: : numbe
+STDOUT: ggml_backend_cpu_init: numbe
 STDOUT: r of ph
 STDOUT: ysical 
 STDOUT: cores: 
@@ -94,7 +91,10 @@ STDOUT: on 3
 
 STDOUT: load_mo
 STDOUT: del: mo
-STDOUT: del = C:\Users\anubh\AppData
+STDOUT: del = C
+STDOUT: :\Users
+STDOUT: \anubh\
+STDOUT: AppData
 STDOUT: \Local\
 STDOUT: Temp\pa
 STDOUT: rity-sc

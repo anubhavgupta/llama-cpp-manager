@@ -1,4 +1,4 @@
-[dotenv@17.2.2] injecting env (0) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+[dotenv@17.2.2] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
 Server running at http://localhost:7837
 Client connected for log streaming
 Starting server with args: [

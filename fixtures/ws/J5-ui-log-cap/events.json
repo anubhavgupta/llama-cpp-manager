@@ -246,30 +246,12 @@
       "event": "log-stream",
       "payload": {
         "type": "stdout",
-        "dataBase64": "biB2ZXJzaQ==",
-        "dataLength": 7
+        "dataBase64": "biB2ZXJzaW9uIDMKbG9hZF9tbw==",
+        "dataLength": 19
       }
     },
     {
       "seq": 29,
-      "event": "log-stream",
-      "payload": {
-        "type": "stdout",
-        "dataBase64": "b24gMwo=",
-        "dataLength": 5
-      }
-    },
-    {
-      "seq": 30,
-      "event": "log-stream",
-      "payload": {
-        "type": "stdout",
-        "dataBase64": "bG9hZF9tbw==",
-        "dataLength": 7
-      }
-    },
-    {
-      "seq": 31,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -278,7 +260,7 @@
       }
     },
     {
-      "seq": 32,
+      "seq": 30,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -287,7 +269,7 @@
       }
     },
     {
-      "seq": 33,
+      "seq": 31,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -296,7 +278,7 @@
       }
     },
     {
-      "seq": 34,
+      "seq": 32,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -305,7 +287,7 @@
       }
     },
     {
-      "seq": 35,
+      "seq": 33,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -314,7 +296,7 @@
       }
     },
     {
-      "seq": 36,
+      "seq": 34,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -323,7 +305,7 @@
       }
     },
     {
-      "seq": 37,
+      "seq": 35,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -332,7 +314,7 @@
       }
     },
     {
-      "seq": 38,
+      "seq": 36,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -341,7 +323,7 @@
       }
     },
     {
-      "seq": 39,
+      "seq": 37,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -350,7 +332,7 @@
       }
     },
     {
-      "seq": 40,
+      "seq": 38,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -359,25 +341,25 @@
       }
     },
     {
+      "seq": 39,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "XG1vZGVscw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 40,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "XG1vZGVscw==",
+        "dataLength": 7
+      }
+    },
+    {
       "seq": 41,
-      "event": "log-stream",
-      "payload": {
-        "type": "stdout",
-        "dataBase64": "XG1vZGVscw==",
-        "dataLength": 7
-      }
-    },
-    {
-      "seq": 42,
-      "event": "log-stream",
-      "payload": {
-        "type": "stdout",
-        "dataBase64": "XG1vZGVscw==",
-        "dataLength": 7
-      }
-    },
-    {
-      "seq": 43,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -386,7 +368,7 @@
       }
     },
     {
-      "seq": 44,
+      "seq": 42,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -395,7 +377,7 @@
       }
     },
     {
-      "seq": 45,
+      "seq": 43,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -404,7 +386,7 @@
       }
     },
     {
-      "seq": 46,
+      "seq": 44,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -413,7 +395,7 @@
       }
     },
     {
-      "seq": 47,
+      "seq": 45,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -422,7 +404,7 @@
       }
     },
     {
-      "seq": 48,
+      "seq": 46,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -431,7 +413,7 @@
       }
     },
     {
-      "seq": 49,
+      "seq": 47,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -440,7 +422,7 @@
       }
     },
     {
-      "seq": 50,
+      "seq": 48,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -449,7 +431,7 @@
       }
     },
     {
-      "seq": 51,
+      "seq": 49,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -458,7 +440,7 @@
       }
     },
     {
-      "seq": 52,
+      "seq": 50,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -467,7 +449,7 @@
       }
     },
     {
-      "seq": 53,
+      "seq": 51,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -476,7 +458,7 @@
       }
     },
     {
-      "seq": 54,
+      "seq": 52,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -485,7 +467,7 @@
       }
     },
     {
-      "seq": 55,
+      "seq": 53,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -494,7 +476,7 @@
       }
     },
     {
-      "seq": 56,
+      "seq": 54,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -503,7 +485,7 @@
       }
     },
     {
-      "seq": 57,
+      "seq": 55,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -512,7 +494,7 @@
       }
     },
     {
-      "seq": 58,
+      "seq": 56,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -521,7 +503,7 @@
       }
     },
     {
-      "seq": 59,
+      "seq": 57,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -530,7 +512,7 @@
       }
     },
     {
-      "seq": 60,
+      "seq": 58,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -539,7 +521,7 @@
       }
     },
     {
-      "seq": 61,
+      "seq": 59,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -548,12 +530,30 @@
       }
     },
     {
+      "seq": 60,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "bWFpbjogcw==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 61,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
+        "dataBase64": "ZXJ2ZXIgaQ==",
+        "dataLength": 7
+      }
+    },
+    {
       "seq": 62,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
-        "dataBase64": "bWFpbjogc2VydmVyIGlzIGxpc3RlbmluZyBvbg==",
-        "dataLength": 28
+        "dataBase64": "cyBsaXN0ZQ==",
+        "dataLength": 7
       }
     },
     {
@@ -561,7 +561,7 @@
       "event": "log-stream",
       "payload": {
         "type": "stdout",
-        "dataBase64": "IGh0dHA6Lw==",
+        "dataBase64": "bmluZyBvbg==",
         "dataLength": 7
       }
     },
@@ -570,7 +570,7 @@
       "event": "log-stream",
       "payload": {
         "type": "stdout",
-        "dataBase64": "LzAuMC4wLg==",
+        "dataBase64": "IGh0dHA6Lw==",
         "dataLength": 7
       }
     },
@@ -579,7 +579,7 @@
       "event": "log-stream",
       "payload": {
         "type": "stdout",
-        "dataBase64": "MDoxNzg0MQ==",
+        "dataBase64": "LzAuMC4wLg==",
         "dataLength": 7
       }
     },
@@ -588,12 +588,21 @@
       "event": "log-stream",
       "payload": {
         "type": "stdout",
+        "dataBase64": "MDoxNzg0MQ==",
+        "dataLength": 7
+      }
+    },
+    {
+      "seq": 67,
+      "event": "log-stream",
+      "payload": {
+        "type": "stdout",
         "dataBase64": "Cg==",
         "dataLength": 1
       }
     },
     {
-      "seq": 67,
+      "seq": 68,
       "event": "disconnect",
       "payload": "io client disconnect"
     }

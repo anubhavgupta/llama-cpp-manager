@@ -1,5 +1,5 @@
 {
-  "windowMs": 12017,
+  "windowMs": 12018,
   "running": true,
   "counts": {
     "/metrics": 12,
@@ -10,100 +10,100 @@
     {
       "url": "http://localhost:7837/metrics",
       "path": "/metrics",
-      "tMs": 1795388390565,
+      "tMs": 1795407885327,
       "gapFromAnyMs": null,
       "gapFromSamePathMs": null
     },
     {
       "url": "http://localhost:7837/metrics",
       "path": "/metrics",
-      "tMs": 1795388391565,
-      "gapFromAnyMs": 1000,
-      "gapFromSamePathMs": 1000
+      "tMs": 1795407886314,
+      "gapFromAnyMs": 987,
+      "gapFromSamePathMs": 987
     },
     {
       "url": "http://localhost:7837/metrics",
       "path": "/metrics",
-      "tMs": 1795388392571,
-      "gapFromAnyMs": 1006,
-      "gapFromSamePathMs": 1006
+      "tMs": 1795407887316,
+      "gapFromAnyMs": 1002,
+      "gapFromSamePathMs": 1002
     },
     {
       "url": "http://localhost:7837/metrics",
       "path": "/metrics",
-      "tMs": 1795388393571,
-      "gapFromAnyMs": 1000,
-      "gapFromSamePathMs": 1000
+      "tMs": 1795407888318,
+      "gapFromAnyMs": 1002,
+      "gapFromSamePathMs": 1002
     },
     {
       "url": "http://localhost:7837/status",
       "path": "/status",
-      "tMs": 1795388393572,
-      "gapFromAnyMs": 1,
+      "tMs": 1795407888336,
+      "gapFromAnyMs": 18,
       "gapFromSamePathMs": null
     },
     {
       "url": "http://localhost:7837/metrics",
       "path": "/metrics",
-      "tMs": 1795388394566,
-      "gapFromAnyMs": 994,
-      "gapFromSamePathMs": 995
+      "tMs": 1795407889322,
+      "gapFromAnyMs": 986,
+      "gapFromSamePathMs": 1004
     },
     {
       "url": "http://localhost:7837/metrics",
       "path": "/metrics",
-      "tMs": 1795388395568,
+      "tMs": 1795407890318,
+      "gapFromAnyMs": 996,
+      "gapFromSamePathMs": 996
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795407891317,
+      "gapFromAnyMs": 999,
+      "gapFromSamePathMs": 999
+    },
+    {
+      "url": "http://localhost:7837/metrics",
+      "path": "/metrics",
+      "tMs": 1795407892319,
       "gapFromAnyMs": 1002,
       "gapFromSamePathMs": 1002
     },
     {
       "url": "http://localhost:7837/metrics",
       "path": "/metrics",
-      "tMs": 1795388396570,
-      "gapFromAnyMs": 1002,
-      "gapFromSamePathMs": 1002
-    },
-    {
-      "url": "http://localhost:7837/metrics",
-      "path": "/metrics",
-      "tMs": 1795388397570,
-      "gapFromAnyMs": 1000,
-      "gapFromSamePathMs": 1000
-    },
-    {
-      "url": "http://localhost:7837/metrics",
-      "path": "/metrics",
-      "tMs": 1795388398563,
-      "gapFromAnyMs": 993,
-      "gapFromSamePathMs": 993
+      "tMs": 1795407893315,
+      "gapFromAnyMs": 996,
+      "gapFromSamePathMs": 996
     },
     {
       "url": "http://localhost:7837/status",
       "path": "/status",
-      "tMs": 1795388398569,
-      "gapFromAnyMs": 6,
-      "gapFromSamePathMs": 4997
+      "tMs": 1795407893334,
+      "gapFromAnyMs": 19,
+      "gapFromSamePathMs": 4998
     },
     {
       "url": "http://localhost:7837/metrics",
       "path": "/metrics",
-      "tMs": 1795388399568,
-      "gapFromAnyMs": 999,
+      "tMs": 1795407894320,
+      "gapFromAnyMs": 986,
       "gapFromSamePathMs": 1005
     },
     {
       "url": "http://localhost:7837/metrics",
       "path": "/metrics",
-      "tMs": 1795388400566,
-      "gapFromAnyMs": 998,
-      "gapFromSamePathMs": 998
+      "tMs": 1795407895321,
+      "gapFromAnyMs": 1001,
+      "gapFromSamePathMs": 1001
     },
     {
       "url": "http://localhost:7837/metrics",
       "path": "/metrics",
-      "tMs": 1795388401569,
-      "gapFromAnyMs": 1003,
-      "gapFromSamePathMs": 1003
+      "tMs": 1795407896318,
+      "gapFromAnyMs": 997,
+      "gapFromSamePathMs": 997
     }
   ]
 }
