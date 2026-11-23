@@ -4,291 +4,291 @@
   "rows": [
     {
       "name": "Qwen 3 Q4 64K - 28TPS",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "GPT-OSS-20B 16K 125TPS",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "GPT-OSS-20B 100K 52TPS",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "GPT-20B 131K(full) - 50TPS",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen 3 0.6b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmstudio-community\\Qwen3-0.6B-GGUF\\Qwen3-0.6B-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\lmstudio-community\\Qwen3-0.6B-GGUF\\Qwen3-0.6B-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen 3 Q4 10K - 38TPS",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen3VL - 30B",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-30B-A3B-Instruct-GGUF\\Qwen3-VL-30B-A3B-Instruct-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-30B-A3B-Instruct-GGUF\\Qwen3-VL-30B-A3B-Instruct-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen3VL-30B-Thinking",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-30B-A3B-Thinking-GGUF\\Qwen3-VL-30B-A3B-Thinking-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-30B-A3B-Thinking-GGUF\\Qwen3-VL-30B-A3B-Thinking-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen3VL-2B",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-2B-Instruct-GGUF\\Qwen3-VL-2B-Instruct-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-2B-Instruct-GGUF\\Qwen3-VL-2B-Instruct-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen3VL-4B",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-4B-Instruct-GGUF\\Qwen3-VL-4B-Instruct-Q4_K_S.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-4B-Instruct-GGUF\\Qwen3-VL-4B-Instruct-Q4_K_S.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen3VL-8B",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-8B-Instruct-GGUF\\Qwen3-VL-8B-Instruct-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-8B-Instruct-GGUF\\Qwen3-VL-8B-Instruct-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen 3 - 4b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-4B-Instruct-2507-GGUF\\Qwen3-4B-Instruct-2507-Q6_K.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-4B-Instruct-2507-GGUF\\Qwen3-4B-Instruct-2507-Q6_K.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Mistral -14B Thinking",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmstudio-community\\Ministral-3-14B-Reasoning-2512-GGUF\\Ministral-3-14B-Reasoning-2512-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\lmstudio-community\\Ministral-3-14B-Reasoning-2512-GGUF\\Ministral-3-14B-Reasoning-2512-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Nvidia-orchestrator-8b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\bartowski\\nvidia_Orchestrator-8B-GGUF\\nvidia_Orchestrator-8B-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\bartowski\\nvidia_Orchestrator-8B-GGUF\\nvidia_Orchestrator-8B-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen3VL-2B-thinking",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-2B-Thinking-GGUF\\Qwen3-VL-2B-Thinking-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-2B-Thinking-GGUF\\Qwen3-VL-2B-Thinking-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen 3 Q4 64K - Draft",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen3-coder-480b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwe3-Coder-480B\\Qwen3-Coder-30B-A3B-Instruct-480B-Distill-V2-Fp32.i1-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwe3-Coder-480B\\Qwen3-Coder-30B-A3B-Instruct-480B-Distill-V2-Fp32.i1-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Nemotron-3-nano",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Nemotron\\Nemotron-3-Nano-30B-A3B-Q4_0.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Nemotron\\Nemotron-3-Nano-30B-A3B-Q4_0.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen3 - 4b Thinking",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-4B-Thinking-2507-GGUF\\Qwen3-4B-Thinking-2507-Q6_K.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-4B-Thinking-2507-GGUF\\Qwen3-4B-Thinking-2507-Q6_K.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen3-coder-480b-draft",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwe3-Coder-480B\\Qwen3-Coder-30B-A3B-Instruct-480B-Distill-V2-Fp32.i1-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwe3-Coder-480B\\Qwen3-Coder-30B-A3B-Instruct-480B-Distill-V2-Fp32.i1-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "nemotron-cascade-14b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Nemotron\\nvidia_Nemotron-Cascade-14B-Thinking-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Nemotron\\nvidia_Nemotron-Cascade-14B-Thinking-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "GLM-4.7-flash",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\glm7.5 flash\\GLM-4.7-Flash-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\glm7.5 flash\\GLM-4.7-Flash-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen3-coder-80b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3-coder-80b\\Qwen3-Coder-Next-MXFP4_MOE.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwen3-coder-80b\\Qwen3-Coder-Next-MXFP4_MOE.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "Qwen3-coder-80b-full",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3-coder-80b\\Qwen3-Coder-Next-MXFP4_MOE.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwen3-coder-80b\\Qwen3-Coder-Next-MXFP4_MOE.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.5-0.8b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\qwen3.5-0.8b\\Qwen3.5-0.8B-Q4_K_M-MTP.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\unsloth\\qwen3.5-0.8b\\Qwen3.5-0.8B-Q4_K_M-MTP.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.5-9b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\Qwen3.5-9B-Q6_K.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\Qwen3.5-9B-Q6_K.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.6-35b-mtp",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-UD-Q4_K_M-MTP-unsloth.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-UD-Q4_K_M-MTP-unsloth.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.6-35b-mtp-n",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.6-35b-n",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.6-35b-q2",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-IQ2_S-2.17bpw.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-IQ2_S-2.17bpw.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "ornith-9b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\ornith-9b\\Ornith-1.5-9B-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\ornith-9b\\Ornith-1.5-9B-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "ornith-35b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\ornith-35b\\ornith-1.0-35b-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\ornith-35b\\ornith-1.0-35b-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.8-27b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_XS.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_XS.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.8-27b-mtp",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S-mtp.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S-mtp.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.8-27b-beellama",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.6-35b-beellama",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-UD-Q4_K_M-MTP-unsloth.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-UD-Q4_K_M-MTP-unsloth.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.6-35b-q2-beellama",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-IQ2_S-2.17bpw.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-IQ2_S-2.17bpw.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "LFM-2.5",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmf-2.5\\LFM2.5-230M-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\lmf-2.5\\LFM2.5-230M-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "ornith-1.5-35b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Ornith-1.5-35B-Q4_K_M\\Ornith-1.5-35B-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Ornith-1.5-35B-Q4_K_M\\Ornith-1.5-35B-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.8-27b-beellama-fast",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S-mtp.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S-mtp.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "spark-v2.5-4b",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\spark-x2.5\\Spark-X2.5-4B-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\spark-x2.5\\Spark-X2.5-4B-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.6-35b-uncensored",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.8-27b-bonsai",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Ternary-Bonsai-2-27B-PQ2_0.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Ternary-Bonsai-2-27B-PQ2_0.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.8-27b-bonsai-q1",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Ternary-Bonsai-2-27B-PQ2_0.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Ternary-Bonsai-2-27B-PQ2_0.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.5-9b-mimo",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "spark.X2.5-single",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\spark-x2.5\\Spark-X2.5-4B-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\spark-x2.5\\Spark-X2.5-4B-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "qwen3.8-flash-next",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.8-flash-next\\Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\qwen3.8-flash-next\\Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "name": "inkling-2-mini",
-      "modelPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Inkling-2-Mini-UD-Q4_K_M\\Inkling-2-Mini-UD-Q4_K_M.gguf",
+      "modelPath": "C:\\parity-scratch\\fixtures\\models\\Inkling-2-Mini-UD-Q4_K_M\\Inkling-2-Mini-UD-Q4_K_M.gguf",
       "matchesOption": true,
-      "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
     }
   ]
 }

@@ -11,5 +11,5 @@
     "sec-ch-ua-mobile": "?0",
     "sec-ch-ua-platform": "\"Windows\""
   },
-  "postData": "{\"serverPath\":\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\bin\\\\fake-llama-server.exe\",\"args\":[\"-m\",\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\fixtures\\\\models\\\\unsloth\\\\gpt-oss-20b-GGUF\\\\gpt-oss-20b-Q4_K_M.gguf\",\"-ngl\",\"99\",\"-t\",\"15\",\"--temp\",\"1\",\"--top-p\",\"1\",\"--parallel\",\"1\",\"--load-mode\",\"mlock\",\"-c\",\"16384\",\"-fa\",\"off\",\"--jinja\",\"--cache-ram\",\"8192\",\"--host\",\"0.0.0.0\",\"-fit\",\"off\",\"--port\",\"7838\"]}"
+  "postData": "{\"serverPath\":\"C:\\\\parity-scratch\\\\bin\\\\fake-llama-server.exe\",\"args\":[\"-m\",\"C:\\\\parity-scratch\\\\fixtures\\\\models\\\\unsloth\\\\gpt-oss-20b-GGUF\\\\gpt-oss-20b-Q4_K_M.gguf\",\"-ngl\",\"99\",\"-t\",\"15\",\"--temp\",\"1\",\"--top-p\",\"1\",\"--parallel\",\"1\",\"--load-mode\",\"mlock\",\"-c\",\"16384\",\"-fa\",\"off\",\"--jinja\",\"--cache-ram\",\"8192\",\"--host\",\"0.0.0.0\",\"-fit\",\"off\",\"--port\",\"7838\"]}"
 }

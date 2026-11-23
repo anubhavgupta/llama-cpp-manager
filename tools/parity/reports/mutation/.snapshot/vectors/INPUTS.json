@@ -1,0 +1,609 @@
+{
+  "generated_by": "tools/parity/gen-vectors.js",
+  "command": "node tools/parity/gen-vectors.js",
+  "seed": 20261123,
+  "baseline": "parity-baseline",
+  "field_keys": [
+    "modelPath",
+    "ngl",
+    "threads",
+    "temp",
+    "topK",
+    "topP",
+    "minP",
+    "repeatPenalty",
+    "presencePenalty",
+    "parallel",
+    "loadMode",
+    "swaFull",
+    "backendSampling",
+    "contextSize",
+    "nCpuMoe",
+    "cpuMoe",
+    "noKvOffload",
+    "noMmprojOffload",
+    "cacheRam",
+    "speculationType",
+    "ngramMod",
+    "specDraftNMax",
+    "ctkEnable",
+    "contextTokenKey",
+    "contextTokenValue",
+    "fastAttention",
+    "jinja",
+    "verbose",
+    "reasoning",
+    "loadCustomChatTemplate",
+    "chatTemplateKwargs",
+    "draftModelPath",
+    "ngld",
+    "ctkd",
+    "ctvd",
+    "serverPath",
+    "mlock",
+    "noMmap",
+    "ndio",
+    "disableReasoning",
+    "draftPMin",
+    "draftMin",
+    "draftMax",
+    "dio"
+  ],
+  "field_count": 44,
+  "field_kinds": {
+    "modelPath": "select",
+    "ngl": "number",
+    "threads": "number",
+    "temp": "number",
+    "topK": "number",
+    "topP": "number",
+    "minP": "number",
+    "repeatPenalty": "number",
+    "presencePenalty": "number",
+    "parallel": "number",
+    "loadMode": "select",
+    "swaFull": "checkbox",
+    "backendSampling": "checkbox",
+    "contextSize": "number",
+    "nCpuMoe": "number",
+    "cpuMoe": "checkbox",
+    "noKvOffload": "checkbox",
+    "noMmprojOffload": "checkbox",
+    "cacheRam": "number",
+    "speculationType": "select",
+    "ngramMod": "checkbox",
+    "specDraftNMax": "number",
+    "ctkEnable": "checkbox",
+    "contextTokenKey": "select",
+    "contextTokenValue": "select",
+    "fastAttention": "select",
+    "jinja": "checkbox",
+    "verbose": "checkbox",
+    "reasoning": "select",
+    "loadCustomChatTemplate": "checkbox",
+    "chatTemplateKwargs": "text",
+    "draftModelPath": "select",
+    "ngld": "number",
+    "ctkd": "select",
+    "ctvd": "select",
+    "serverPath": "text",
+    "mlock": "stored",
+    "noMmap": "stored",
+    "ndio": "stored",
+    "disableReasoning": "stored",
+    "draftPMin": "stored",
+    "draftMin": "stored",
+    "draftMax": "stored",
+    "dio": "stored"
+  },
+  "reference_fields": {
+    "modelPath": "",
+    "ngl": "99",
+    "threads": "12",
+    "temp": "0.7",
+    "topK": "20",
+    "topP": "0.00",
+    "minP": "0",
+    "repeatPenalty": "1.05",
+    "presencePenalty": "0.00",
+    "parallel": "1",
+    "loadMode": "none",
+    "swaFull": false,
+    "backendSampling": false,
+    "contextSize": "16384",
+    "nCpuMoe": "8",
+    "cpuMoe": false,
+    "noKvOffload": false,
+    "noMmprojOffload": false,
+    "cacheRam": "8192",
+    "speculationType": "none",
+    "ngramMod": false,
+    "specDraftNMax": "0",
+    "ctkEnable": false,
+    "contextTokenKey": "f16",
+    "contextTokenValue": "f16",
+    "fastAttention": "auto",
+    "jinja": false,
+    "verbose": false,
+    "reasoning": "auto",
+    "loadCustomChatTemplate": false,
+    "chatTemplateKwargs": "",
+    "draftModelPath": "",
+    "ngld": "0",
+    "ctkd": "f16",
+    "ctvd": "f16",
+    "serverPath": ""
+  },
+  "value_classes": {
+    "modelPath": [
+      "",
+      "SCRATCH_ROOT\\fixtures\\models\\a\\model-a.gguf",
+      "SCRATCH_ROOT/fixtures/models/a/model-a.gguf",
+      "C:/parity-fixture/models/a/model-a.gguf",
+      "C:\\parity-fixture\\models\\a\\model-a.gguf",
+      "<omit key>"
+    ],
+    "ngl": [
+      "",
+      "0",
+      "99",
+      "-1",
+      "100",
+      "<omit key>"
+    ],
+    "threads": [
+      "",
+      "0",
+      "12",
+      "-1",
+      "15",
+      "<omit key>"
+    ],
+    "temp": [
+      "",
+      "0",
+      "0.7",
+      "-1",
+      "1",
+      "<omit key>"
+    ],
+    "topK": [
+      "",
+      "0",
+      "20",
+      "-1",
+      "40",
+      "<omit key>"
+    ],
+    "topP": [
+      "",
+      "0",
+      "0.00",
+      "-1",
+      "0.01",
+      "<omit key>"
+    ],
+    "minP": [
+      "",
+      "0",
+      "-1",
+      "0.00",
+      "0.0",
+      "<omit key>"
+    ],
+    "repeatPenalty": [
+      "",
+      "0",
+      "1.05",
+      "-1",
+      "0.00",
+      "<omit key>"
+    ],
+    "presencePenalty": [
+      "",
+      "0",
+      "0.00",
+      "-1",
+      "1.5",
+      "<omit key>"
+    ],
+    "parallel": [
+      "",
+      "0",
+      "1",
+      "-1",
+      "2",
+      "<omit key>"
+    ],
+    "loadMode": [
+      "",
+      "none",
+      "mmap",
+      "mlock",
+      "mmap+mlock",
+      "<omit key>"
+    ],
+    "swaFull": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "backendSampling": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "contextSize": [
+      "",
+      "0",
+      "16384",
+      "-1",
+      "64000",
+      "<omit key>"
+    ],
+    "nCpuMoe": [
+      "",
+      "0",
+      "8",
+      "-1",
+      "26",
+      "<omit key>"
+    ],
+    "cpuMoe": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "noKvOffload": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "noMmprojOffload": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "cacheRam": [
+      "",
+      "0",
+      "8192",
+      "-1",
+      "20000",
+      "<omit key>"
+    ],
+    "speculationType": [
+      "",
+      "none",
+      "draft-mtp",
+      "draft-dflash",
+      "draft-dspark",
+      "<omit key>"
+    ],
+    "ngramMod": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "specDraftNMax": [
+      "",
+      "0",
+      "-1",
+      "2",
+      "4",
+      "<omit key>"
+    ],
+    "ctkEnable": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "contextTokenKey": [
+      "",
+      "f32",
+      "f16",
+      "bf16",
+      "q8_0",
+      "<omit key>"
+    ],
+    "contextTokenValue": [
+      "",
+      "f32",
+      "f16",
+      "bf16",
+      "q8_0",
+      "<omit key>"
+    ],
+    "fastAttention": [
+      "",
+      "auto",
+      "on",
+      "off",
+      "<omit key>"
+    ],
+    "jinja": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "verbose": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "reasoning": [
+      "",
+      "auto",
+      "on",
+      "off",
+      "<omit key>"
+    ],
+    "loadCustomChatTemplate": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "chatTemplateKwargs": [
+      "",
+      "{\"preserve_thinking\": true, \"reasoning_effort\": \"xhigh\"}",
+      "{\"preserve_thinking\": true}",
+      "<omit key>"
+    ],
+    "draftModelPath": [
+      "",
+      "SCRATCH_ROOT\\fixtures\\models\\a\\model-a.gguf",
+      "SCRATCH_ROOT/fixtures/models/a/model-a.gguf",
+      "C:/parity-fixture/models/a/model-a.gguf",
+      "C:\\parity-fixture\\models\\a\\model-a.gguf",
+      "<omit key>"
+    ],
+    "ngld": [
+      "",
+      "0",
+      "-1",
+      "99",
+      "<omit key>"
+    ],
+    "ctkd": [
+      "",
+      "f32",
+      "f16",
+      "bf16",
+      "q8_0",
+      "<omit key>"
+    ],
+    "ctvd": [
+      "",
+      "f32",
+      "f16",
+      "bf16",
+      "q8_0",
+      "<omit key>"
+    ],
+    "serverPath": [
+      "",
+      "FIXTURE_ROOT/bin/fake-llama-server.cmd",
+      "SCRATCH_ROOT\\fixtures\\models\\a\\model-a.gguf",
+      "SCRATCH_ROOT/fixtures/models/a/model-a.gguf",
+      "C:/parity-fixture/models/a/model-a.gguf",
+      "<omit key>"
+    ],
+    "mlock": [
+      true,
+      false,
+      "<omit key>"
+    ],
+    "noMmap": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "ndio": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "disableReasoning": [
+      false,
+      true,
+      "<omit key>"
+    ],
+    "draftPMin": [
+      0.1,
+      0.9,
+      0,
+      false,
+      true,
+      "<omit key>"
+    ],
+    "draftMin": [
+      5,
+      2,
+      0,
+      false,
+      true,
+      "<omit key>"
+    ],
+    "draftMax": [
+      10,
+      16,
+      0,
+      false,
+      true,
+      "<omit key>"
+    ],
+    "dio": [
+      false,
+      true,
+      "<omit key>"
+    ]
+  },
+  "settings_sets": [
+    {
+      "id": "settings-0",
+      "port": "8080",
+      "source": "fixtures/http/J0-baseline/settings-first-run.response",
+      "settings": {
+        "modelsDirectory": "C:\\Users\\anubh\\.lmstudio\\models",
+        "serverPort": 8080
+      }
+    },
+    {
+      "id": "settings-1",
+      "port": "7838",
+      "source": "fixtures/localstorage/J5-ui-launch/after-ui-launch.json [llamaCppSettings]",
+      "settings": {
+        "serverPort": 7838,
+        "modelsDirectory": "SCRATCH_ROOT\\fixtures\\models"
+      }
+    },
+    {
+      "id": "settings-2",
+      "port": "17852",
+      "source": "fixtures/localstorage/J5-ui-states/after-delete.json [llamaCppSettings]",
+      "settings": {
+        "serverPort": 17852,
+        "modelsDirectory": "SCRATCH_ROOT\\fixtures\\models"
+      }
+    }
+  ],
+  "model_sets": [
+    {
+      "id": "recorded",
+      "source": "fixtures/http/J2-models/models.response (scratch root tokenized as SCRATCH_ROOT)",
+      "models": [
+        {
+          "name": "deep-b-model.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\a\\b\\deep-b-model.gguf",
+          "relativePath": "a\\b\\deep-b-model.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "model-a.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\a\\model-a.gguf",
+          "relativePath": "a\\model-a.gguf",
+          "mmprojFile": "SCRATCH_ROOT\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+        },
+        {
+          "name": "llama-bench-benchmarks.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\Bench\\llama-bench-benchmarks.gguf",
+          "relativePath": "Bench\\llama-bench-benchmarks.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "long-path-model.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\longdir-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\long-path-model.gguf",
+          "relativePath": "longdir-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\long-path-model.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "case-probe-model.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\MMProj-case-only\\case-probe-model.gguf",
+          "relativePath": "MMProj-case-only\\case-probe-model.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "model-root.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\model-root.gguf",
+          "relativePath": "model-root.gguf",
+          "mmprojFile": "SCRATCH_ROOT\\fixtures\\models\\mmproj-root.gguf"
+        },
+        {
+          "name": "spaced model Q4.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "relativePath": "models with spaces\\spaced model Q4.gguf",
+          "mmprojFile": "SCRATCH_ROOT\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+        },
+        {
+          "name": "multi-model.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\multi-mmproj\\multi-model.gguf",
+          "relativePath": "multi-mmproj\\multi-model.gguf",
+          "mmprojFile": "SCRATCH_ROOT\\fixtures\\models\\multi-mmproj\\mmproj-a.gguf"
+        },
+        {
+          "name": "UPPERCASE-EXT.GGUF",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\uppercase-ext\\UPPERCASE-EXT.GGUF",
+          "relativePath": "uppercase-ext\\UPPERCASE-EXT.GGUF",
+          "mmprojFile": null
+        },
+        {
+          "name": "ünïcødé-model.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\ünïcødé-тест\\ünïcødé-model.gguf",
+          "relativePath": "ünïcødé-тест\\ünïcødé-model.gguf",
+          "mmprojFile": null
+        }
+      ]
+    },
+    {
+      "id": "no-mmproj",
+      "source": "fixtures/http/J2-models/models.response (mmprojFile stripped)",
+      "models": [
+        {
+          "name": "deep-b-model.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\a\\b\\deep-b-model.gguf",
+          "relativePath": "a\\b\\deep-b-model.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "model-a.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\a\\model-a.gguf",
+          "relativePath": "a\\model-a.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "llama-bench-benchmarks.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\Bench\\llama-bench-benchmarks.gguf",
+          "relativePath": "Bench\\llama-bench-benchmarks.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "long-path-model.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\longdir-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\long-path-model.gguf",
+          "relativePath": "longdir-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\long-path-model.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "case-probe-model.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\MMProj-case-only\\case-probe-model.gguf",
+          "relativePath": "MMProj-case-only\\case-probe-model.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "model-root.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\model-root.gguf",
+          "relativePath": "model-root.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "spaced model Q4.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "relativePath": "models with spaces\\spaced model Q4.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "multi-model.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\multi-mmproj\\multi-model.gguf",
+          "relativePath": "multi-mmproj\\multi-model.gguf",
+          "mmprojFile": null
+        },
+        {
+          "name": "UPPERCASE-EXT.GGUF",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\uppercase-ext\\UPPERCASE-EXT.GGUF",
+          "relativePath": "uppercase-ext\\UPPERCASE-EXT.GGUF",
+          "mmprojFile": null
+        },
+        {
+          "name": "ünïcødé-model.gguf",
+          "path": "SCRATCH_ROOT\\fixtures\\models\\ünïcødé-тест\\ünïcødé-model.gguf",
+          "relativePath": "ünïcødé-тест\\ünïcødé-model.gguf",
+          "mmprojFile": null
+        }
+      ]
+    },
+    {
+      "id": "empty",
+      "source": "no /models payload (BA-100/INI-7 false side)",
+      "models": []
+    }
+  ]
+}

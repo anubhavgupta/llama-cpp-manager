@@ -729,7 +729,7 @@
               }
             },
             "launchAttempts": {
-              "argvLog": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl",
+              "argvLog": "C:\\parity-scratch\\argv\\J5-ui-launch.jsonl",
               "attempts": [
                 {
                   "argvLinesAfter": 2,
@@ -740,15 +740,15 @@
                   "form": {
                     "launchDisabled": false,
                     "modelPathIsAnOption": true,
-                    "modelPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+                    "modelPathValue": "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
                     "optionCount": 11,
-                    "serverPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+                    "serverPathValue": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
                   },
                   "requestBlockedWith": null,
                   "requestBody": {
                     "args": [
                       "-m",
-                      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+                      "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
                       "-ngl",
                       "99",
                       "-t",
@@ -776,7 +776,7 @@
                       "--chat-template-kwargs",
                       "{\"preserve_thinking\": true}",
                       "--chat-template-file",
-                      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+                      "C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
                       "--cache-ram",
                       "8192",
                       "--reasoning",
@@ -788,9 +788,9 @@
                       "--port",
                       "7838",
                       "--mmproj",
-                      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+                      "C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
                     ],
-                    "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+                    "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
                   },
                   "requestObserved": true,
                   "requestStatus": 200,
@@ -809,15 +809,15 @@
                   "form": {
                     "launchDisabled": true,
                     "modelPathIsAnOption": true,
-                    "modelPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+                    "modelPathValue": "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
                     "optionCount": 11,
-                    "serverPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+                    "serverPathValue": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
                   },
                   "requestBlockedWith": null,
                   "requestBody": {
                     "args": [
                       "-m",
-                      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+                      "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
                       "-t",
                       "4",
                       "--temp",
@@ -862,9 +862,9 @@
                       "--port",
                       "7838",
                       "--mmproj",
-                      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+                      "C:\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
                     ],
-                    "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+                    "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
                   },
                   "requestObserved": true,
                   "requestStatus": 200,
@@ -889,104 +889,104 @@
                 "gapFromAnyMs": null,
                 "gapFromSamePathMs": null,
                 "path": "/metrics",
-                "tMs": 1795407885327,
+                "tMs": 1795443445575,
                 "url": "http://localhost:7837/metrics"
               },
               {
-                "gapFromAnyMs": 987,
-                "gapFromSamePathMs": 987,
+                "gapFromAnyMs": 992,
+                "gapFromSamePathMs": 992,
                 "path": "/metrics",
-                "tMs": 1795407886314,
-                "url": "http://localhost:7837/metrics"
-              },
-              {
-                "gapFromAnyMs": 1002,
-                "gapFromSamePathMs": 1002,
-                "path": "/metrics",
-                "tMs": 1795407887316,
-                "url": "http://localhost:7837/metrics"
-              },
-              {
-                "gapFromAnyMs": 1002,
-                "gapFromSamePathMs": 1002,
-                "path": "/metrics",
-                "tMs": 1795407888318,
-                "url": "http://localhost:7837/metrics"
-              },
-              {
-                "gapFromAnyMs": 18,
-                "gapFromSamePathMs": null,
-                "path": "/status",
-                "tMs": 1795407888336,
-                "url": "http://localhost:7837/status"
-              },
-              {
-                "gapFromAnyMs": 986,
-                "gapFromSamePathMs": 1004,
-                "path": "/metrics",
-                "tMs": 1795407889322,
-                "url": "http://localhost:7837/metrics"
-              },
-              {
-                "gapFromAnyMs": 996,
-                "gapFromSamePathMs": 996,
-                "path": "/metrics",
-                "tMs": 1795407890318,
+                "tMs": 1795443446567,
                 "url": "http://localhost:7837/metrics"
               },
               {
                 "gapFromAnyMs": 999,
                 "gapFromSamePathMs": 999,
                 "path": "/metrics",
-                "tMs": 1795407891317,
+                "tMs": 1795443447566,
                 "url": "http://localhost:7837/metrics"
               },
               {
-                "gapFromAnyMs": 1002,
-                "gapFromSamePathMs": 1002,
+                "gapFromAnyMs": 1013,
+                "gapFromSamePathMs": 1013,
                 "path": "/metrics",
-                "tMs": 1795407892319,
+                "tMs": 1795443448579,
                 "url": "http://localhost:7837/metrics"
               },
               {
-                "gapFromAnyMs": 996,
-                "gapFromSamePathMs": 996,
-                "path": "/metrics",
-                "tMs": 1795407893315,
-                "url": "http://localhost:7837/metrics"
-              },
-              {
-                "gapFromAnyMs": 19,
-                "gapFromSamePathMs": 4998,
+                "gapFromAnyMs": 3,
+                "gapFromSamePathMs": null,
                 "path": "/status",
-                "tMs": 1795407893334,
+                "tMs": 1795443448582,
                 "url": "http://localhost:7837/status"
               },
               {
-                "gapFromAnyMs": 986,
-                "gapFromSamePathMs": 1005,
-                "path": "/metrics",
-                "tMs": 1795407894320,
-                "url": "http://localhost:7837/metrics"
-              },
-              {
-                "gapFromAnyMs": 1001,
-                "gapFromSamePathMs": 1001,
-                "path": "/metrics",
-                "tMs": 1795407895321,
-                "url": "http://localhost:7837/metrics"
-              },
-              {
                 "gapFromAnyMs": 997,
-                "gapFromSamePathMs": 997,
+                "gapFromSamePathMs": 1000,
                 "path": "/metrics",
-                "tMs": 1795407896318,
+                "tMs": 1795443449579,
+                "url": "http://localhost:7837/metrics"
+              },
+              {
+                "gapFromAnyMs": 989,
+                "gapFromSamePathMs": 989,
+                "path": "/metrics",
+                "tMs": 1795443450568,
+                "url": "http://localhost:7837/metrics"
+              },
+              {
+                "gapFromAnyMs": 1007,
+                "gapFromSamePathMs": 1007,
+                "path": "/metrics",
+                "tMs": 1795443451575,
+                "url": "http://localhost:7837/metrics"
+              },
+              {
+                "gapFromAnyMs": 1004,
+                "gapFromSamePathMs": 1004,
+                "path": "/metrics",
+                "tMs": 1795443452579,
+                "url": "http://localhost:7837/metrics"
+              },
+              {
+                "gapFromAnyMs": 987,
+                "gapFromSamePathMs": 987,
+                "path": "/metrics",
+                "tMs": 1795443453566,
+                "url": "http://localhost:7837/metrics"
+              },
+              {
+                "gapFromAnyMs": 20,
+                "gapFromSamePathMs": 5004,
+                "path": "/status",
+                "tMs": 1795443453586,
+                "url": "http://localhost:7837/status"
+              },
+              {
+                "gapFromAnyMs": 991,
+                "gapFromSamePathMs": 1011,
+                "path": "/metrics",
+                "tMs": 1795443454577,
+                "url": "http://localhost:7837/metrics"
+              },
+              {
+                "gapFromAnyMs": 991,
+                "gapFromSamePathMs": 991,
+                "path": "/metrics",
+                "tMs": 1795443455568,
+                "url": "http://localhost:7837/metrics"
+              },
+              {
+                "gapFromAnyMs": 1008,
+                "gapFromSamePathMs": 1008,
+                "path": "/metrics",
+                "tMs": 1795443456576,
                 "url": "http://localhost:7837/metrics"
               }
             ],
             "note": "fetch URLs the page issued while a server was running, in arrival order, with wall-clock gaps. public/script.js polls /status every 5 s (init) and /metrics every 1 s (startMetricUpdates).",
             "running": true,
-            "windowMs": 12018
+            "windowMs": 12029
           },
           "firstRun": {
             "observation": "GET /settings with no settings.json in the sandbox answers from server.js own default branch. The personal path in the recorded response is the string hardcoded in server.js at parity-baseline, recorded from the app (C5) — it is not corpus data.",
@@ -997,7 +997,7 @@
             "launchPresetsWithServerPort": {
               "argv": [
                 "--models-preset",
-                "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+                "C:\\parity-scratch\\app\\models-preset.ini",
                 "--host",
                 "0.0.0.0",
                 "--port",
@@ -1008,7 +1008,7 @@
             "launchPresetsWithoutServerPort": {
               "argv": [
                 "--models-preset",
-                "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+                "C:\\parity-scratch\\app\\models-preset.ini",
                 "--host",
                 "0.0.0.0",
                 "--port",
@@ -1047,7 +1047,7 @@
               "fixture": "ini/J1-settings/settings.after-with-port.json",
               "kind": "with-port",
               "value": {
-                "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+                "modelsDirectory": "C:\\parity-scratch\\fixtures\\models",
                 "serverPort": 7838
               }
             },
@@ -1056,7 +1056,7 @@
               "fixture": "ini/J1-settings/settings.after-without-port.json",
               "kind": "without-port",
               "value": {
-                "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+                "modelsDirectory": "C:\\parity-scratch\\fixtures\\models",
                 "serverPort": 8080
               }
             }

@@ -6,7 +6,7 @@
     "Accept": "*/*"
   },
   "body": {
-    "presets": "version = 1\n\n[capture-alpha]\nmodel = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf\nmmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf\ntemp = 0.7\nc = 16384\nspec-type = ngram-mod\nspec-ngram-size-n = 24\ndraft-min = 48\ndraft-max = 64\n\n[capture-beta]\nmodel = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf\ntop-k = 20\nreasoning = off\n\nport = 7838\n",
-    "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+    "presets": "version = 1\n\n[capture-alpha]\nmodel = C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf\nmmproj = C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf\ntemp = 0.7\nc = 16384\nspec-type = ngram-mod\nspec-ngram-size-n = 24\ndraft-min = 48\ndraft-max = 64\n\n[capture-beta]\nmodel = C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf\ntop-k = 20\nreasoning = off\n\nport = 7838\n",
+    "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe"
   }
 }

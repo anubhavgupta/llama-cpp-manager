@@ -32,7 +32,7 @@ Base URL: `http://localhost:7837` — the origin every recorded request was issu
 
 - restart settle: POST /restart answers 200 success:true, but /status settles on running:false: the killed child's close handler clears runningProcess after /restart as
 - metrics degradation: With nvidia-smi replying "not a csv", getSystemMetrics() parses the line, finds fewer than 3 comma fields, and returns WITHOUT throwing — so the Math.
-- client polling: {"/metrics":12,"/status":2} per 12018 ms window
+- client polling: {"/metrics":12,"/status":2} per 12029 ms window
 - launch-presets port source: 7838
 
 ## Where the recordings are silent

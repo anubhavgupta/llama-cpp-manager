@@ -3547,13 +3547,13 @@
             ],
             "values": [
               "",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\qwen35-9b-dflash-Q2_K.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-DFlash2-Q2_K_S-MIX.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-DSpark-Q2_K.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmstudio\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-DSpark-Q8_0.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmstudio\\undefined",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-DFlash-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.8-flash-next\\mtp-Qwen3.8-Flash-Next-shared-Q4_K_M.gguf"
+              "C:\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\qwen35-9b-dflash-Q2_K.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-DFlash2-Q2_K_S-MIX.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-DSpark-Q2_K.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\lmstudio\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-DSpark-Q8_0.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\lmstudio\\undefined",
+              "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-DFlash-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\qwen3.8-flash-next\\mtp-Qwen3.8-Flash-Next-shared-Q4_K_M.gguf"
             ]
           }
         },
@@ -5545,44 +5545,44 @@
             ],
             "values": [
               "",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Inkling-2-Mini-UD-Q4_K_M\\Inkling-2-Mini-UD-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Nemotron\\Nemotron-3-Nano-30B-A3B-Q4_0.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Nemotron\\nvidia_Nemotron-Cascade-14B-Thinking-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Ornith-1.5-35B-Q4_K_M\\Ornith-1.5-35B-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwe3-Coder-480B\\Qwen3-Coder-30B-A3B-Instruct-480B-Distill-V2-Fp32.i1-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3-coder-80b\\Qwen3-Coder-Next-MXFP4_MOE.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\Qwen3.5-9B-Q6_K.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S-mtp.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_XS.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Ternary-Bonsai-2-27B-PQ2_0.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\bartowski\\nvidia_Orchestrator-8B-GGUF\\nvidia_Orchestrator-8B-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\glm7.5 flash\\GLM-4.7-Flash-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmf-2.5\\LFM2.5-230M-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmstudio-community\\Ministral-3-14B-Reasoning-2512-GGUF\\Ministral-3-14B-Reasoning-2512-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\lmstudio-community\\Qwen3-0.6B-GGUF\\Qwen3-0.6B-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\ornith-35b\\ornith-1.0-35b-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\ornith-9b\\Ornith-1.5-9B-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-IQ2_S-2.17bpw.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-UD-Q4_K_M-MTP-unsloth.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\qwen3.8-flash-next\\Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\spark-x2.5\\Spark-X2.5-4B-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-4B-Instruct-2507-GGUF\\Qwen3-4B-Instruct-2507-Q6_K.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-4B-Thinking-2507-GGUF\\Qwen3-4B-Thinking-2507-Q6_K.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-2B-Instruct-GGUF\\Qwen3-VL-2B-Instruct-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-2B-Thinking-GGUF\\Qwen3-VL-2B-Thinking-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-30B-A3B-Instruct-GGUF\\Qwen3-VL-30B-A3B-Instruct-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-30B-A3B-Thinking-GGUF\\Qwen3-VL-30B-A3B-Thinking-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-4B-Instruct-GGUF\\Qwen3-VL-4B-Instruct-Q4_K_S.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-8B-Instruct-GGUF\\Qwen3-VL-8B-Instruct-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\qwen3.5-0.8b\\Qwen3.5-0.8B-Q4_K_M-MTP.gguf"
+              "C:\\parity-scratch\\fixtures\\models\\Inkling-2-Mini-UD-Q4_K_M\\Inkling-2-Mini-UD-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Nemotron\\Nemotron-3-Nano-30B-A3B-Q4_0.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Nemotron\\nvidia_Nemotron-Cascade-14B-Thinking-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Ornith-1.5-35B-Q4_K_M\\Ornith-1.5-35B-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Qwe3-Coder-480B\\Qwen3-Coder-30B-A3B-Instruct-480B-Distill-V2-Fp32.i1-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Qwen3-coder-80b\\Qwen3-Coder-Next-MXFP4_MOE.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\MiMo-V2.6-Distill-Qwen-9B-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Qwen3.5-9b\\Qwen3.5-9B-Q6_K.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S-mtp.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_S.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Qwen3.8-27B-GSQ-RCO-IQ2_XS.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\Qwen3.8-27B-UD-IQ2_XXS\\Ternary-Bonsai-2-27B-PQ2_0.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\bartowski\\nvidia_Orchestrator-8B-GGUF\\nvidia_Orchestrator-8B-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\glm7.5 flash\\GLM-4.7-Flash-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\lmf-2.5\\LFM2.5-230M-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\lmstudio-community\\Ministral-3-14B-Reasoning-2512-GGUF\\Ministral-3-14B-Reasoning-2512-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\lmstudio-community\\Qwen3-0.6B-GGUF\\Qwen3-0.6B-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\ornith-35b\\ornith-1.0-35b-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\ornith-9b\\Ornith-1.5-9B-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-IQ2_S-2.17bpw.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-UD-Q4_K_M-MTP-unsloth.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\qwen3.6-35b\\Qwen3.6-35B-A3B-uncensored-heretic-Native-MTP-Preserved-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\qwen3.8-flash-next\\Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\spark-x2.5\\Spark-X2.5-4B-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-4B-Instruct-2507-GGUF\\Qwen3-4B-Instruct-2507-Q6_K.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-4B-Thinking-2507-GGUF\\Qwen3-4B-Thinking-2507-Q6_K.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-2B-Instruct-GGUF\\Qwen3-VL-2B-Instruct-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-2B-Thinking-GGUF\\Qwen3-VL-2B-Thinking-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-30B-A3B-Instruct-GGUF\\Qwen3-VL-30B-A3B-Instruct-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-30B-A3B-Thinking-GGUF\\Qwen3-VL-30B-A3B-Thinking-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-4B-Instruct-GGUF\\Qwen3-VL-4B-Instruct-Q4_K_S.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-VL-8B-Instruct-GGUF\\Qwen3-VL-8B-Instruct-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+              "C:\\parity-scratch\\fixtures\\models\\unsloth\\qwen3.5-0.8b\\Qwen3.5-0.8B-Q4_K_M-MTP.gguf"
             ]
           }
         },
@@ -5871,7 +5871,7 @@
               "screenshots/J5-ui-states/delete-confirm-1280x800.render.json"
             ],
             "observedValues": [
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models"
+              "C:\\parity-scratch\\fixtures\\models"
             ],
             "tag": "input",
             "type": null
@@ -5895,8 +5895,8 @@
               "localstorage/J5-ui-states/after-save-config.json"
             ],
             "values": [
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\"
+              "C:\\parity-scratch\\fixtures\\models",
+              "C:\\parity-scratch\\fixtures\\models\\"
             ]
           }
         },
@@ -9022,7 +9022,7 @@
             ],
             "values": [
               "",
-              "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+              "C:\\parity-scratch\\bin\\fake-llama-server.exe"
             ]
           }
         },

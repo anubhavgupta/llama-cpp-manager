@@ -137,7 +137,7 @@
         {
           "flag": "-m",
           "position": 0,
-          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf"
+          "value": "C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf"
         },
         {
           "flag": "-ngl",
@@ -217,7 +217,7 @@
         {
           "flag": "-m",
           "position": 0,
-          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf"
+          "value": "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf"
         },
         {
           "flag": "-ngl",
@@ -322,7 +322,7 @@
         {
           "flag": "-m",
           "position": 0,
-          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf"
+          "value": "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf"
         },
         {
           "flag": "-ngl",
@@ -403,7 +403,7 @@
         {
           "flag": "--chat-template-file",
           "position": 15,
-          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja"
+          "value": "C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja"
         },
         {
           "flag": "--cache-ram",
@@ -433,14 +433,14 @@
         {
           "flag": "--mmproj",
           "position": 21,
-          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+          "value": "C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
         }
       ],
       "capture-beta@J5-ui-launch": [
         {
           "flag": "-m",
           "position": 0,
-          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf"
+          "value": "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf"
         },
         {
           "flag": "-t",
@@ -580,7 +580,7 @@
         {
           "flag": "--mmproj",
           "position": 25,
-          "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+          "value": "C:\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
         }
       ]
     },
@@ -652,7 +652,7 @@
       ],
       "pairedBy": null,
       "valuesObserved": [
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja"
+        "C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja"
       ]
     },
     "--chat-template-kwargs": {
@@ -809,8 +809,8 @@
       ],
       "pairedBy": null,
       "valuesObserved": [
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+        "C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+        "C:\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
       ]
     },
     "--n-cpu-moe": {
@@ -1361,10 +1361,10 @@
       ],
       "pairedBy": "recorded value identity, every recorded launch agrees",
       "valuesObserved": [
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf"
+        "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+        "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+        "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
+        "C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf"
       ]
     },
     "-ngl": {

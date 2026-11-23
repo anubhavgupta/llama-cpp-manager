@@ -12,30 +12,12 @@
       "event": "log-stream",
       "payload": {
         "type": "stdout",
-        "dataBase64": "Z2dtbF9iYWNrZW5kX2NwdV9pbml0OiBudW1iZXIgb2YgcGh5c2ljYWwgY29yZXM6IDgK",
-        "dataLength": 51
+        "dataBase64": "Z2dtbF9iYWNrZW5kX2NwdV9pbml0OiBudW1iZXIgb2YgcGh5c2ljYWwgY29yZXM6IDgKZ2dtbF9iYWNrZW5kX2NwdV9pbml0OiBudW1iZXIgb2YgbG9naWNhbCBjb3JlczogMTYKbG9hZF9iYWNrZW5kOiBsb2FkZWQgQ1BVIGJhY2tlbmQK",
+        "dataLength": 135
       }
     },
     {
       "seq": 3,
-      "event": "log-stream",
-      "payload": {
-        "type": "stdout",
-        "dataBase64": "Z2dtbF9iYWNrZW5kX2NwdV9pbml0OiBudW1iZXIgb2YgbG9naWNhbCBjb3JlczogMTYK",
-        "dataLength": 51
-      }
-    },
-    {
-      "seq": 4,
-      "event": "log-stream",
-      "payload": {
-        "type": "stdout",
-        "dataBase64": "bG9hZF9iYWNrZW5kOiBsb2FkZWQgQ1BVIGJhY2tlbmQK",
-        "dataLength": 33
-      }
-    },
-    {
-      "seq": 5,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -44,16 +26,16 @@
       }
     },
     {
-      "seq": 6,
+      "seq": 4,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
-        "dataBase64": "bG9hZF9tb2RlbDogbW9kZWwgPSBDOlxVc2Vyc1xhbnViaFxBcHBEYXRhXExvY2FsXFRlbXBccGFyaXR5LXNjcmF0Y2hcZml4dHVyZXNcbW9kZWxzXGFcbW9kZWwtYS5nZ3VmCg==",
-        "dataLength": 100
+        "dataBase64": "bG9hZF9tb2RlbDogbW9kZWwgPSBDOlxwYXJpdHktc2NyYXRjaFxmaXh0dXJlc1xtb2RlbHNcYVxtb2RlbC1hLmdndWYK",
+        "dataLength": 69
       }
     },
     {
-      "seq": 7,
+      "seq": 5,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -62,7 +44,7 @@
       }
     },
     {
-      "seq": 8,
+      "seq": 6,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -71,7 +53,7 @@
       }
     },
     {
-      "seq": 9,
+      "seq": 7,
       "event": "log-stream",
       "payload": {
         "type": "stdout",
@@ -80,14 +62,14 @@
       }
     },
     {
-      "seq": 10,
+      "seq": 8,
       "event": "server-ended",
       "payload": {
         "message": "Server process has ended"
       }
     },
     {
-      "seq": 11,
+      "seq": 9,
       "event": "disconnect",
       "payload": "io client disconnect"
     }

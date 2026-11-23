@@ -40,6 +40,20 @@ Non-determinism addenda discovered during capture (beyond §8): dotenv v17 print
 
 ## Ledger notes (machine-auditable history)
 
+- 2026-11-23 DONE (clears the PENDING entry below): NEUTRAL-ROOT RE-RECORD executed from `parity-baseline`
+  (C5-compliant): scratch root now `C:/parity-scratch`; 193 files re-recorded, determinism OK (148 exact +
+  24 shape), MANIFEST regenerated (193/193 hashes re-verified independently by Verifier), SPEC re-derived
+  (unreconciled=0), leak-check CLEAN across fixtures+SPEC (237 files). Remaining username occurrences = the
+  exempt oracle-truth constant `C:\Users\anubh\.lmstudio\models` emitted by legacy code itself (server.js
+  default; recorded bytes may not be sanitized, C5) plus derived quotes of it.
+- 2026-11-23 RESOLVED (clears the QUARANTINE entry below): `logPane.startsWithTimestamp` — measured 8×
+  legacy-vs-legacy: cap-head prefix is decided by pipe coalescing counters (§8 chunk boundaries), invariant
+  under quiescence (pane reads identical 8/8 while ISO/bare entry counts vary every run) ⇒ masked in exactly
+  the capped state with the existing digit-masking idiom (`<chunk-boundary>`), plus a new deterministic
+  pane-level claim `anyEntryTimestamped`; 9 uncapped fingerprints keep the real boolean. COMPARISON.json
+  NOT touched — no new shape rule, no relaxation of a pinned assertion. Backed by capture-legacy producer
+  change + this entry.
+
 - 2026-11-23 PENDING (planned, Verifier-owned): (1) re-record fixtures/{http,ws,argv,ini,localstorage,screenshots}
   from a NEUTRAL default `PARITY_SCRATCH` root (e.g. `C:/parity-fix/`) — recorded bytes embed
   `C:\Users\<user>\AppData\Local\Temp\parity-scratch` paths (username exposure + same-root comparability

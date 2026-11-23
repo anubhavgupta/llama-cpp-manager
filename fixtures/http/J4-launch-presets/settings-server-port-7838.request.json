@@ -6,7 +6,7 @@
     "Accept": "*/*"
   },
   "body": {
-    "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+    "modelsDirectory": "C:\\parity-scratch\\fixtures\\models",
     "serverPort": 7838
   }
 }

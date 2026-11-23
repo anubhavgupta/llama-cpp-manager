@@ -1,10 +1,10 @@
-[dotenv@17.2.2] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+[dotenv@17.2.2] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
 Server running at http://localhost:7837
 Client connected for log streaming
 Starting server with args: [
-  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js',
+  'C:\\parity-scratch\\bin\\fake-llama-server.js',
   '-m',
-  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf',
+  'C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf',
   '--port',
   '17839',
   '--parity-chunks',
@@ -13,14 +13,12 @@ Starting server with args: [
   '3'
 ]
 STDOUT: ggml_backend_cpu_init: number of physical cores: 8
-
-STDOUT: ggml_backend_cpu_init: number of logical cores: 16
-
-STDOUT: load_backend: loaded CPU backend
+ggml_backend_cpu_init: number of logical cores: 16
+load_backend: loaded CPU backend
 
 STDOUT: load_model: expecting a GGUF file in version 3
 
-STDOUT: load_model: model = C:\Users\anubh\AppData\Local\Temp\parity-scratch\fixtures\models\a\model-a.gguf
+STDOUT: load_model: model = C:\parity-scratch\fixtures\models\a\model-a.gguf
 
 STDOUT: srv    load_model: load_model: OK
 

@@ -32,104 +32,104 @@
         "gapFromAnyMs": null,
         "gapFromSamePathMs": null,
         "path": "/metrics",
-        "tMs": 1795407885327,
+        "tMs": 1795443445575,
         "url": "http://localhost:7837/metrics"
       },
       {
-        "gapFromAnyMs": 987,
-        "gapFromSamePathMs": 987,
+        "gapFromAnyMs": 992,
+        "gapFromSamePathMs": 992,
         "path": "/metrics",
-        "tMs": 1795407886314,
-        "url": "http://localhost:7837/metrics"
-      },
-      {
-        "gapFromAnyMs": 1002,
-        "gapFromSamePathMs": 1002,
-        "path": "/metrics",
-        "tMs": 1795407887316,
-        "url": "http://localhost:7837/metrics"
-      },
-      {
-        "gapFromAnyMs": 1002,
-        "gapFromSamePathMs": 1002,
-        "path": "/metrics",
-        "tMs": 1795407888318,
-        "url": "http://localhost:7837/metrics"
-      },
-      {
-        "gapFromAnyMs": 18,
-        "gapFromSamePathMs": null,
-        "path": "/status",
-        "tMs": 1795407888336,
-        "url": "http://localhost:7837/status"
-      },
-      {
-        "gapFromAnyMs": 986,
-        "gapFromSamePathMs": 1004,
-        "path": "/metrics",
-        "tMs": 1795407889322,
-        "url": "http://localhost:7837/metrics"
-      },
-      {
-        "gapFromAnyMs": 996,
-        "gapFromSamePathMs": 996,
-        "path": "/metrics",
-        "tMs": 1795407890318,
+        "tMs": 1795443446567,
         "url": "http://localhost:7837/metrics"
       },
       {
         "gapFromAnyMs": 999,
         "gapFromSamePathMs": 999,
         "path": "/metrics",
-        "tMs": 1795407891317,
+        "tMs": 1795443447566,
         "url": "http://localhost:7837/metrics"
       },
       {
-        "gapFromAnyMs": 1002,
-        "gapFromSamePathMs": 1002,
+        "gapFromAnyMs": 1013,
+        "gapFromSamePathMs": 1013,
         "path": "/metrics",
-        "tMs": 1795407892319,
+        "tMs": 1795443448579,
         "url": "http://localhost:7837/metrics"
       },
       {
-        "gapFromAnyMs": 996,
-        "gapFromSamePathMs": 996,
-        "path": "/metrics",
-        "tMs": 1795407893315,
-        "url": "http://localhost:7837/metrics"
-      },
-      {
-        "gapFromAnyMs": 19,
-        "gapFromSamePathMs": 4998,
+        "gapFromAnyMs": 3,
+        "gapFromSamePathMs": null,
         "path": "/status",
-        "tMs": 1795407893334,
+        "tMs": 1795443448582,
         "url": "http://localhost:7837/status"
       },
       {
-        "gapFromAnyMs": 986,
-        "gapFromSamePathMs": 1005,
-        "path": "/metrics",
-        "tMs": 1795407894320,
-        "url": "http://localhost:7837/metrics"
-      },
-      {
-        "gapFromAnyMs": 1001,
-        "gapFromSamePathMs": 1001,
-        "path": "/metrics",
-        "tMs": 1795407895321,
-        "url": "http://localhost:7837/metrics"
-      },
-      {
         "gapFromAnyMs": 997,
-        "gapFromSamePathMs": 997,
+        "gapFromSamePathMs": 1000,
         "path": "/metrics",
-        "tMs": 1795407896318,
+        "tMs": 1795443449579,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 989,
+        "gapFromSamePathMs": 989,
+        "path": "/metrics",
+        "tMs": 1795443450568,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 1007,
+        "gapFromSamePathMs": 1007,
+        "path": "/metrics",
+        "tMs": 1795443451575,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 1004,
+        "gapFromSamePathMs": 1004,
+        "path": "/metrics",
+        "tMs": 1795443452579,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 987,
+        "gapFromSamePathMs": 987,
+        "path": "/metrics",
+        "tMs": 1795443453566,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 20,
+        "gapFromSamePathMs": 5004,
+        "path": "/status",
+        "tMs": 1795443453586,
+        "url": "http://localhost:7837/status"
+      },
+      {
+        "gapFromAnyMs": 991,
+        "gapFromSamePathMs": 1011,
+        "path": "/metrics",
+        "tMs": 1795443454577,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 991,
+        "gapFromSamePathMs": 991,
+        "path": "/metrics",
+        "tMs": 1795443455568,
+        "url": "http://localhost:7837/metrics"
+      },
+      {
+        "gapFromAnyMs": 1008,
+        "gapFromSamePathMs": 1008,
+        "path": "/metrics",
+        "tMs": 1795443456576,
         "url": "http://localhost:7837/metrics"
       }
     ],
     "note": "fetch URLs the page issued while a server was running, in arrival order, with wall-clock gaps. public/script.js polls /status every 5 s (init) and /metrics every 1 s (startMetricUpdates).",
     "running": true,
-    "windowMs": 12018
+    "windowMs": 12029
   },
   "restartEffect": {
     "bodies": [
@@ -184,7 +184,7 @@
       {
         "argCount": 55,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
           "-ngl",
           "99",
           "-t",
@@ -216,7 +216,7 @@
           "--chat-template-kwargs",
           "{\"preserve_thinking\": true}",
           "--chat-template-file",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
           "--verbose",
           "--backend-sampling",
           "--no-kv-offload",
@@ -242,13 +242,13 @@
         ],
         "fixture": "argv/J3-start-stop/launch.jsonl",
         "line": 1,
-        "pid": 24096,
+        "pid": 37560,
         "program": "-m"
       },
       {
         "argCount": 7,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
           "--port",
           "17839",
           "--parity-chunks",
@@ -258,25 +258,25 @@
         ],
         "fixture": "argv/J3b-exit-code/launch.jsonl",
         "line": 1,
-        "pid": 32120,
+        "pid": 35684,
         "program": "-m"
       },
       {
         "argCount": 3,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
           "--parity-chunks",
           "0"
         ],
         "fixture": "argv/J3d-restart/after-start.jsonl",
         "line": 1,
-        "pid": 30816,
+        "pid": 10624,
         "program": "-m"
       },
       {
         "argCount": 5,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "C:\\parity-scratch\\app\\models-preset.ini",
           "--host",
           "0.0.0.0",
           "--port",
@@ -284,13 +284,13 @@
         ],
         "fixture": "argv/J4-launch-presets/launch.jsonl",
         "line": 1,
-        "pid": 34032,
+        "pid": 21024,
         "program": "--models-preset"
       },
       {
         "argCount": 5,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "C:\\parity-scratch\\app\\models-preset.ini",
           "--host",
           "0.0.0.0",
           "--port",
@@ -298,13 +298,13 @@
         ],
         "fixture": "argv/J4-launch-presets/launch.jsonl",
         "line": 2,
-        "pid": 24000,
+        "pid": 24492,
         "program": "--models-preset"
       },
       {
         "argCount": 5,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "C:\\parity-scratch\\app\\models-preset.ini",
           "--host",
           "0.0.0.0",
           "--port",
@@ -312,13 +312,13 @@
         ],
         "fixture": "argv/J4-launch-presets/launch.jsonl",
         "line": 3,
-        "pid": 31308,
+        "pid": 35880,
         "program": "--models-preset"
       },
       {
         "argCount": 5,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "C:\\parity-scratch\\app\\models-preset.ini",
           "--host",
           "0.0.0.0",
           "--port",
@@ -326,13 +326,13 @@
         ],
         "fixture": "argv/J4-launch-presets/launch.jsonl",
         "line": 4,
-        "pid": 30828,
+        "pid": 35280,
         "program": "--models-preset"
       },
       {
         "argCount": 5,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "C:\\parity-scratch\\app\\models-preset.ini",
           "--host",
           "0.0.0.0",
           "--port",
@@ -340,13 +340,13 @@
         ],
         "fixture": "argv/J4b-ui-presets-launch/launch.jsonl",
         "line": 1,
-        "pid": 27660,
+        "pid": 36532,
         "program": "--models-preset"
       },
       {
         "argCount": 5,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+          "C:\\parity-scratch\\app\\models-preset.ini",
           "--host",
           "0.0.0.0",
           "--port",
@@ -354,13 +354,13 @@
         ],
         "fixture": "argv/J4b-ui-presets-launch/launch.jsonl",
         "line": 2,
-        "pid": 1696,
+        "pid": 36604,
         "program": "--models-preset"
       },
       {
         "argCount": 41,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
           "-ngl",
           "99",
           "-t",
@@ -388,7 +388,7 @@
           "--chat-template-kwargs",
           "{\"preserve_thinking\": true}",
           "--chat-template-file",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
           "--cache-ram",
           "8192",
           "--reasoning",
@@ -400,17 +400,17 @@
           "--port",
           "7838",
           "--mmproj",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
         ],
         "fixture": "argv/J5-ui-launch/launch.jsonl",
         "line": 1,
-        "pid": 712,
+        "pid": 12316,
         "program": "-m"
       },
       {
         "argCount": 41,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
           "-ngl",
           "99",
           "-t",
@@ -438,7 +438,7 @@
           "--chat-template-kwargs",
           "{\"preserve_thinking\": true}",
           "--chat-template-file",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
           "--cache-ram",
           "8192",
           "--reasoning",
@@ -450,17 +450,17 @@
           "--port",
           "7838",
           "--mmproj",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
         ],
         "fixture": "argv/J5-ui-launch/launch.jsonl",
         "line": 2,
-        "pid": 3256,
+        "pid": 16816,
         "program": "-m"
       },
       {
         "argCount": 46,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
           "-t",
           "4",
           "--temp",
@@ -505,17 +505,17 @@
           "--port",
           "7838",
           "--mmproj",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+          "C:\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
         ],
         "fixture": "argv/J5-ui-launch/launch.jsonl",
         "line": 3,
-        "pid": 31812,
+        "pid": 29188,
         "program": "-m"
       },
       {
         "argCount": 46,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
           "-t",
           "4",
           "--temp",
@@ -560,17 +560,17 @@
           "--port",
           "7838",
           "--mmproj",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+          "C:\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
         ],
         "fixture": "argv/J5-ui-launch/launch.jsonl",
         "line": 4,
-        "pid": 30164,
+        "pid": 37468,
         "program": "-m"
       },
       {
         "argCount": 41,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
           "-ngl",
           "99",
           "-t",
@@ -598,7 +598,7 @@
           "--chat-template-kwargs",
           "{\"preserve_thinking\": true}",
           "--chat-template-file",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
           "--cache-ram",
           "8192",
           "--reasoning",
@@ -610,17 +610,17 @@
           "--port",
           "17841",
           "--mmproj",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
         ],
         "fixture": "argv/J5-ui-log-cap/launches.jsonl",
         "line": 1,
-        "pid": 34340,
+        "pid": 35168,
         "program": "-m"
       },
       {
         "argCount": 41,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
           "-ngl",
           "99",
           "-t",
@@ -648,7 +648,7 @@
           "--chat-template-kwargs",
           "{\"preserve_thinking\": true}",
           "--chat-template-file",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
           "--cache-ram",
           "8192",
           "--reasoning",
@@ -660,18 +660,18 @@
           "--port",
           "17841",
           "--mmproj",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
         ],
         "fixture": "argv/J5-ui-log-cap/launches.jsonl",
         "line": 2,
-        "pid": 17996,
+        "pid": 37764,
         "program": "-m"
       },
       {
         "argCount": 8,
         "args": [
           "-m",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
           "--parity-chunks",
           "0",
           "--parity-repeat-line",
@@ -681,14 +681,14 @@
         ],
         "fixture": "argv/J5-ui-log-cap/launches.jsonl",
         "line": 3,
-        "pid": 27116,
-        "program": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js"
+        "pid": 22956,
+        "program": "C:\\parity-scratch\\bin\\fake-llama-server.js"
       },
       {
         "argCount": 8,
         "args": [
           "-m",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
           "--parity-chunks",
           "0",
           "--parity-repeat-line",
@@ -698,13 +698,13 @@
         ],
         "fixture": "argv/J5-ui-log-cap/launches.jsonl",
         "line": 4,
-        "pid": 26612,
-        "program": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js"
+        "pid": 34944,
+        "program": "C:\\parity-scratch\\bin\\fake-llama-server.js"
       },
       {
         "argCount": 38,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
           "-ngl",
           "99",
           "-t",
@@ -745,13 +745,13 @@
         ],
         "fixture": "argv/J6-corpus-smoke/launch.jsonl",
         "line": 1,
-        "pid": 32992,
+        "pid": 37096,
         "program": "-m"
       },
       {
         "argCount": 38,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf",
           "-ngl",
           "99",
           "-t",
@@ -792,13 +792,13 @@
         ],
         "fixture": "argv/J6-corpus-smoke/launch.jsonl",
         "line": 2,
-        "pid": 3784,
+        "pid": 37120,
         "program": "-m"
       },
       {
         "argCount": 26,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
           "-ngl",
           "99",
           "-t",
@@ -827,13 +827,13 @@
         ],
         "fixture": "argv/J6-corpus-smoke/launch.jsonl",
         "line": 3,
-        "pid": 22876,
+        "pid": 35992,
         "program": "-m"
       },
       {
         "argCount": 26,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
           "-ngl",
           "99",
           "-t",
@@ -862,13 +862,13 @@
         ],
         "fixture": "argv/J6-corpus-smoke/launch.jsonl",
         "line": 4,
-        "pid": 1076,
+        "pid": 29640,
         "program": "-m"
       },
       {
         "argCount": 28,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
           "-ngl",
           "99",
           "-t",
@@ -899,13 +899,13 @@
         ],
         "fixture": "argv/J6-corpus-smoke/launch.jsonl",
         "line": 5,
-        "pid": 3520,
+        "pid": 14988,
         "program": "-m"
       },
       {
         "argCount": 28,
         "args": [
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
           "-ngl",
           "99",
           "-t",
@@ -936,7 +936,7 @@
         ],
         "fixture": "argv/J6-corpus-smoke/launch.jsonl",
         "line": 6,
-        "pid": 20192,
+        "pid": 36704,
         "program": "-m"
       }
     ]

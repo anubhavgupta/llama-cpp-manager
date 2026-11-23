@@ -47,10 +47,13 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-# Default scratch lives next to the OS temp dir, OUTSIDE the repo: fixture-tree.sh refuses to
-# build a tree inside a repository, and the app must never run from the repo working tree.
+# Default scratch is a neutral, username-free root OUTSIDE the repo (and outside any user home):
+# the recorded bytes embed the scratch root, and a %TEMP%-based root put the Windows username into
+# every committed fixture. fixture-tree.sh refuses to build a tree inside a repository, and the app
+# must never run from the repo working tree. PARITY_SCRATCH or --scratch override it; the root must
+# keep the 'parity-scratch' name, which is what tools/parity/gen-vectors.js tokenizes to SCRATCH_ROOT.
 if [ -z "$SCRATCH" ]; then
-  SCRATCH=$(node -p "require('path').join(require('os').tmpdir(), 'parity-scratch').split(String.fromCharCode(92)).join('/')")
+  SCRATCH=C:/parity-scratch
 fi
 case "$SCRATCH" in
   [A-Za-z]:/*) ;;

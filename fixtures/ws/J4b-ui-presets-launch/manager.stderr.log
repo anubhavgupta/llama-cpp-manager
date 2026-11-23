@@ -1,11 +1,11 @@
-Error reading directory C:\Users\anubh\AppData\Local\Temp\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\Users\anubh\AppData\Local\Temp\parity-scratch\fixtures\models\unreadable'
+Error reading directory C:\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\parity-scratch\fixtures\models\unreadable'
     at async Object.readdir (node:internal/fs/promises:958:18)
-    at async searchDirectory (C:\Users\anubh\AppData\Local\Temp\parity-scratch\app\server.js:218:31)
-    at async searchDirectory (C:\Users\anubh\AppData\Local\Temp\parity-scratch\app\server.js:225:25)
-    at async findGGUFFiles (C:\Users\anubh\AppData\Local\Temp\parity-scratch\app\server.js:257:9)
-    at async C:\Users\anubh\AppData\Local\Temp\parity-scratch\app\server.js:392:24 {
+    at async searchDirectory (C:\parity-scratch\app\server.js:218:31)
+    at async searchDirectory (C:\parity-scratch\app\server.js:225:25)
+    at async findGGUFFiles (C:\parity-scratch\app\server.js:257:9)
+    at async C:\parity-scratch\app\server.js:392:24 {
   errno: -4048,
   code: 'EPERM',
   syscall: 'scandir',
-  path: 'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unreadable'
+  path: 'C:\\parity-scratch\\fixtures\\models\\unreadable'
 }

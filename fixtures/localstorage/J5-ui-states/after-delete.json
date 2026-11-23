@@ -7,11 +7,11 @@
     "entries": [
       [
         "llamaCppSettings",
-        "{\"serverPort\":17852,\"modelsDirectory\":\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\fixtures\\\\models\"}"
+        "{\"serverPort\":17852,\"modelsDirectory\":\"C:\\\\parity-scratch\\\\fixtures\\\\models\"}"
       ],
       [
         "llamaCppConfigs",
-        "{\"capture-alpha\":{\"serverPath\":\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\bin\\\\fake-llama-server.exe\",\"modelPath\":\"C:\\\\Users\\\\anubh\\\\AppData\\\\Local\\\\Temp\\\\parity-scratch\\\\fixtures\\\\models\\\\models with spaces\\\\spaced model Q4.gguf\",\"ngl\":99,\"threads\":12,\"temp\":0.7,\"topK\":20,\"topP\":0,\"minP\":0.05,\"repeatPenalty\":\"1.05\",\"presencePenalty\":0,\"parallel\":1,\"loadMode\":\"mmap\",\"swaFull\":false,\"backendSampling\":false,\"contextSize\":16384,\"nCpuMoe\":8,\"cpuMoe\":false,\"ctkEnable\":false,\"contextTokenKey\":\"f16\",\"contextTokenValue\":\"f16\",\"fastAttention\":\"auto\",\"jinja\":true,\"verbose\":false,\"noKvOffload\":false,\"noMmprojOffload\":false,\"cacheRam\":8192,\"speculationType\":\"none\",\"ngramMod\":false,\"specDraftNMax\":0,\"reasoning\":\"off\",\"loadCustomChatTemplate\":true,\"chatTemplateKwargs\":\"{\\\"preserve_thinking\\\": true}\",\"draftModelPath\":\"\",\"ngld\":0,\"ctkd\":\"f16\",\"ctvd\":\"f16\"}}"
+        "{\"capture-alpha\":{\"serverPath\":\"C:\\\\parity-scratch\\\\bin\\\\fake-llama-server.exe\",\"modelPath\":\"C:\\\\parity-scratch\\\\fixtures\\\\models\\\\models with spaces\\\\spaced model Q4.gguf\",\"ngl\":99,\"threads\":12,\"temp\":0.7,\"topK\":20,\"topP\":0,\"minP\":0.05,\"repeatPenalty\":\"1.05\",\"presencePenalty\":0,\"parallel\":1,\"loadMode\":\"mmap\",\"swaFull\":false,\"backendSampling\":false,\"contextSize\":16384,\"nCpuMoe\":8,\"cpuMoe\":false,\"ctkEnable\":false,\"contextTokenKey\":\"f16\",\"contextTokenValue\":\"f16\",\"fastAttention\":\"auto\",\"jinja\":true,\"verbose\":false,\"noKvOffload\":false,\"noMmprojOffload\":false,\"cacheRam\":8192,\"speculationType\":\"none\",\"ngramMod\":false,\"specDraftNMax\":0,\"reasoning\":\"off\",\"loadCustomChatTemplate\":true,\"chatTemplateKwargs\":\"{\\\"preserve_thinking\\\": true}\",\"draftModelPath\":\"\",\"ngld\":0,\"ctkd\":\"f16\",\"ctvd\":\"f16\"}}"
       ]
     ]
   },

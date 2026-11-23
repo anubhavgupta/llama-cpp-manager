@@ -1,10 +1,10 @@
-[dotenv@17.2.2] injecting env (0) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+[dotenv@17.2.2] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
 Server running at http://localhost:7837
 Client connected for log streaming
 Starting server with args: [
-  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js',
+  'C:\\parity-scratch\\bin\\fake-llama-server.js',
   '-m',
-  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf',
+  'C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf',
   '-ngl',
   '99',
   '-t',
@@ -36,7 +36,7 @@ Starting server with args: [
   '--chat-template-kwargs',
   '{"preserve_thinking": true}',
   '--chat-template-file',
-  'C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja',
+  'C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja',
   '--verbose',
   '--backend-sampling',
   '--no-kv-offload',
@@ -60,7 +60,10 @@ Starting server with args: [
   '--port',
   '7838'
 ]
-STDOUT: ggml_backend_cpu_init: numbe
+STDOUT: ggml_ba
+STDOUT: ckend_c
+STDOUT: pu_init
+STDOUT: : numbe
 STDOUT: r of ph
 STDOUT: ysical 
 STDOUT: cores: 
@@ -92,21 +95,17 @@ STDOUT: on 3
 STDOUT: load_mo
 STDOUT: del: mo
 STDOUT: del = C
-STDOUT: :\Users
-STDOUT: \anubh\
-STDOUT: AppData
-STDOUT: \Local\
-STDOUT: Temp\pa
-STDOUT: rity-sc
-STDOUT: ratch\f
-STDOUT: ixtures
-STDOUT: \models
-STDOUT: \models
-STDOUT:  with s
-STDOUT: paces\s
-STDOUT: paced m
-STDOUT: odel Q4
-STDOUT: .gguf
+STDOUT: :\parit
+STDOUT: y-scrat
+STDOUT: ch\fixt
+STDOUT: ures\mo
+STDOUT: dels\mo
+STDOUT: dels wi
+STDOUT: th spac
+STDOUT: es\spac
+STDOUT: ed mode
+STDOUT: l Q4.gg
+STDOUT: uf
 
 STDOUT: print_i
 STDOUT: nfo: n_
@@ -130,8 +129,7 @@ STDOUT: erver i
 STDOUT: s liste
 STDOUT: ning on
 STDOUT:  http:/
-STDOUT: /0.0.0.
-STDOUT: 0:7838
+STDOUT: /0.0.0.0:7838
 
 Server process exited with code null
 Client disconnected from log streaming

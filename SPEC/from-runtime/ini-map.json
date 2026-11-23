@@ -3,15 +3,15 @@
     "claims": {
       "legacyReasoningOff": "[capture-legacy-disable-true]",
       "legacyReasoningOn": "[capture-legacy-disable-false]",
-      "mmproj": "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+      "mmproj": "mmproj = C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
       "ngramKeys": "spec-ngram-size-n = 24\ndraft-min = 48\ndraft-max = 64\n",
       "trailingPort": "port = 17844\n",
       "versionHeader": "version = 1\n\n[capture-alpha]\n"
     },
     "existedBefore": true,
-    "fileByteLength": 2432,
+    "fileByteLength": 2122,
     "note": "launchModelPresets prints the sections to the log pane BEFORE appending the trailing port line, so the pane and the POST body differ by that line; the posted bytes and the file bytes are identical (recorded here). The two capture-legacy-disable-* sections are the Q17 legacy-disableReasoning pair, the mmproj line comes from window.models. Section order is Object.entries(localStorage) insertion order (§9 trap 6).",
-    "postedByteLength": 2432,
+    "postedByteLength": 2122,
     "sectionOrder": [
       "[capture-alpha]",
       "[capture-beta]",
@@ -26,8 +26,8 @@
       "sections": [
         {
           "keys": [
-            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
-            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "model = C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
             "temp = 0.7",
             "c = 16384",
             "spec-type = ngram-mod",
@@ -39,7 +39,7 @@
         },
         {
           "keys": [
-            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "model = C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
             "top-k = 20",
             "reasoning = off",
             "port = 7838"
@@ -56,8 +56,8 @@
       "sections": [
         {
           "keys": [
-            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
-            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "model = C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
             "temp = 0.7",
             "c = 16384",
             "spec-type = ngram-mod",
@@ -69,7 +69,7 @@
         },
         {
           "keys": [
-            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "model = C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
             "top-k = 20",
             "reasoning = off",
             "port = 7838"
@@ -86,8 +86,8 @@
       "sections": [
         {
           "keys": [
-            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
-            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "model = C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
             "temp = 0.7",
             "c = 16384",
             "top-k = 20",
@@ -103,7 +103,7 @@
             "cache-ram = 8192",
             "jinja = true",
             "chat-template-kwargs = {\"preserve_thinking\": true}",
-            "chat-template-file = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+            "chat-template-file = C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
             "fa = auto",
             "reasoning = off"
           ],
@@ -111,8 +111,8 @@
         },
         {
           "keys": [
-            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
-            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf",
+            "model = C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "mmproj = C:\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf",
             "temp = 0",
             "c = 1",
             "top-p = 0",
@@ -138,8 +138,8 @@
         },
         {
           "keys": [
-            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
-            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf",
+            "model = C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+            "mmproj = C:\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf",
             "temp = 0.7",
             "c = 16384",
             "top-k = 20",
@@ -155,7 +155,7 @@
             "cache-ram = 8192",
             "jinja = true",
             "chat-template-kwargs = {\"preserve_thinking\": true}",
-            "chat-template-file = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\chat-template.jinja",
+            "chat-template-file = C:\\parity-scratch\\fixtures\\models\\a\\chat-template.jinja",
             "fa = auto",
             "reasoning = on"
           ],
@@ -163,8 +163,8 @@
         },
         {
           "keys": [
-            "model = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
-            "mmproj = C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+            "model = C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+            "mmproj = C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
             "temp = 0",
             "c = 1",
             "top-p = 0",
@@ -258,8 +258,8 @@
       ],
       "pairedBy": null,
       "valuesObserved": [
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\chat-template.jinja"
+        "C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+        "C:\\parity-scratch\\fixtures\\models\\a\\chat-template.jinja"
       ]
     },
     "chat-template-kwargs": {
@@ -375,8 +375,8 @@
       ],
       "pairedBy": null,
       "valuesObserved": [
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+        "C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+        "C:\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
       ]
     },
     "model": {
@@ -388,8 +388,8 @@
       ],
       "pairedBy": "recorded value identity, every recorded section agrees",
       "valuesObserved": [
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
-        "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf"
+        "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+        "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf"
       ]
     },
     "n-cpu-moe": {

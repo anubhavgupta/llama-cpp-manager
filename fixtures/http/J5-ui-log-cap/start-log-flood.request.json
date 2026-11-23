@@ -6,11 +6,11 @@
     "Accept": "*/*"
   },
   "body": {
-    "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe",
+    "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe",
     "args": [
-      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js",
+      "C:\\parity-scratch\\bin\\fake-llama-server.js",
       "-m",
-      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+      "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
       "--parity-chunks",
       "0",
       "--parity-repeat-line",

@@ -658,18 +658,30 @@ class Capture {
                 return row;
             });
             const pane = document.getElementById('modelOutput');
+            const entries = pane.textContent.split('\n');
+            // showOutput caps the pane at its last 1000 entries, and that boundary can fall inside a
+            // coalesced payload, which leaves the tail of a streamed line as the head entry. At the cap
+            // the head's prefix is therefore pipe coalescing (plan.md §8 'websocket log chunk
+            // boundaries') and is masked the way digits are; below the cap the head entry is the first
+            // line the pane ever wrote, so the claim stays byte-compared.
+            const atCap = entries.length === 1000;
             return { title: document.title, elementCount: elements.length,
                 scrollHeight: Math.round(document.documentElement.scrollHeight),
-                logPane: { lineCount: pane.textContent.split('\n').length,
-                    startsWithTimestamp: /^\[\d{4}-/.test(pane.textContent) },
+                logPane: { lineCount: entries.length,
+                    startsWithTimestamp: atCap ? '<chunk-boundary>' : /^\[\d{4}-/.test(pane.textContent),
+                    anyEntryTimestamped: entries.some((entry) => /^\[\d{4}-\d{2}-\d{2}T/.test(entry)) },
                 elements };
         });
         this.out.json('screenshots', journey, name + '.render.json', {
             viewport, focus: null, elements: render.elements, logPane: render.logPane,
             title: render.title, scrollHeight: render.scrollHeight,
             note: 'Compared artifact behind ' + name + '.png: geometry and control state of every'
-                + ' [id] element, with the log pane reduced to its entry count because streamed text'
-                + ' depends on pipe coalescing. Canvases were display:none for the shot.'
+                + ' [id] element, with the log pane reduced to logPane (entry count, head-line shape,'
+                + ' whether any entry carries the showOutput timestamp) because streamed text depends on'
+                + ' pipe coalescing. logPane.startsWithTimestamp is the mask <chunk-boundary> exactly in'
+                + ' the capped state, where which fragment the 1000-entry boundary leaves at the head is'
+                + ' §8 websocket log chunk boundaries; lineCount and anyEntryTimestamped stay compared.'
+                + ' Canvases were display:none for the shot.'
         }, this.describeSession('render fingerprint of the same page state as ' + name + '.png'));
         return this.out.write('screenshots', journey, name + '.png', png, this.describeSession(
             'Playwright chromium page.screenshot({fullPage:true}) viewport=' + JSON.stringify(viewport)

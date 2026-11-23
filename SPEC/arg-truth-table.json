@@ -2483,7 +2483,7 @@
           "http/J6-corpus-smoke/start-from-ui-config-2.request.json",
           "http/J6-corpus-smoke/start-from-ui-config-3.request.json"
         ],
-        "note": "emitted values recorded: C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf, C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf, C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf, C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
+        "note": "emitted values recorded: C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf, C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf, C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf, C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf",
         "resolution": "agree",
         "sources": [
           "a",

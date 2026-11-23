@@ -8,9 +8,9 @@
   "body": {
     "serverPath": "C:\\nvm4w\\nodejs\\node.exe",
     "args": [
-      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js",
+      "C:\\parity-scratch\\bin\\fake-llama-server.js",
       "-m",
-      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+      "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
       "--parity-chunks",
       "0"
     ]

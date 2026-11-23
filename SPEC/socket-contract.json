@@ -156,17 +156,17 @@
       "chunkByteSizes": [
         1,
         2,
+        3,
         5,
         6,
         7,
-        19,
-        28,
-        33,
+        14,
+        26,
         34,
         47,
-        51,
         52,
-        100
+        69,
+        135
       ],
       "keys": [
         "dataBase64",
@@ -190,7 +190,7 @@
       "morePaneLinesThanSourceLines": true,
       "note": "Default 7-byte chunks: each log-stream payload becomes one pane line after .trim(), so N source lines become many pane lines and whitespace-only payloads become blank lines. The exact pane line count follows socket coalescing and is shape-compared; the payload bytes are golden in ws/J5-ui-log-cap/events.json.",
       "paneBlankLines": 1,
-      "paneLines": 73,
+      "paneLines": 67,
       "somePayloadsAreWhitespaceOnly": true,
       "sourceLines": 9
     },
@@ -237,7 +237,7 @@
       "counts": {
         "connect": 1,
         "disconnect": 1,
-        "log-stream": 64,
+        "log-stream": 62,
         "server-ended": 1
       },
       "eventNames": [
@@ -256,7 +256,7 @@
       "counts": {
         "connect": 1,
         "disconnect": 1,
-        "log-stream": 8,
+        "log-stream": 6,
         "server-ended": 1
       },
       "eventNames": [
@@ -275,7 +275,7 @@
       "counts": {
         "connect": 1,
         "disconnect": 1,
-        "log-stream": 66
+        "log-stream": 61
       },
       "eventNames": [
         "connect",

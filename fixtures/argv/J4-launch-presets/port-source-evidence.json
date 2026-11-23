@@ -3,7 +3,7 @@
   "launchPresetsWithoutServerPort": {
     "argv": [
       "--models-preset",
-      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+      "C:\\parity-scratch\\app\\models-preset.ini",
       "--host",
       "0.0.0.0",
       "--port",
@@ -14,7 +14,7 @@
   "launchPresetsWithServerPort": {
     "argv": [
       "--models-preset",
-      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+      "C:\\parity-scratch\\app\\models-preset.ini",
       "--host",
       "0.0.0.0",
       "--port",

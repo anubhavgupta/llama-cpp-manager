@@ -1,0 +1,97 @@
+{
+  "taken_from_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "worktree_head": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "note": "private read-only snapshot of fixtures/vectors + fixtures/goldens. A concurrent fixture re-record may rewrite fixtures/**; the mutation baseline is the committed 9d6a767 state, byte-verified against git here. All mutation tooling reads vectors and goldens from this directory.",
+  "files": [
+    {
+      "file": "fixtures/goldens/boundary/goldens.jsonl",
+      "snapshot_sha256": "a1c129d8e275fa6cd7c55039b686e96d038e9e1ae54d62348c7ca3a27db0e349",
+      "git_sha256": "a1c129d8e275fa6cd7c55039b686e96d038e9e1ae54d62348c7ca3a27db0e349",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/goldens/corpus/goldens.jsonl",
+      "snapshot_sha256": "80187d91a587bfa03f5c8a7dd54143c98f1423e3aa78d658f2dd7c5bc2a13f96",
+      "git_sha256": "80187d91a587bfa03f5c8a7dd54143c98f1423e3aa78d658f2dd7c5bc2a13f96",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/goldens/cover/goldens.jsonl",
+      "snapshot_sha256": "2e78b776de058f8417e1c2b0d390a9a4b6af8d084259f795b39b572b2c312131",
+      "git_sha256": "2e78b776de058f8417e1c2b0d390a9a4b6af8d084259f795b39b572b2c312131",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/goldens/format/goldens.jsonl",
+      "snapshot_sha256": "9230217b64108e4971ba940c5a9eb10df0efab6d4c6cdcf8c5c136e67b75543a",
+      "git_sha256": "9230217b64108e4971ba940c5a9eb10df0efab6d4c6cdcf8c5c136e67b75543a",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/goldens/random/goldens.jsonl",
+      "snapshot_sha256": "b8db7fab1da8b8af180a16b1eac89b6f732e35369cec442dc63d40108be85cdd",
+      "git_sha256": "b8db7fab1da8b8af180a16b1eac89b6f732e35369cec442dc63d40108be85cdd",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/vectors/INPUTS.json",
+      "snapshot_sha256": "8dcfc3a6dc418095818b9cd05b48f792a036f3fd8095d5474cf04c5a83f5c418",
+      "git_sha256": "8dcfc3a6dc418095818b9cd05b48f792a036f3fd8095d5474cf04c5a83f5c418",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/vectors/MANIFEST.json",
+      "snapshot_sha256": "189f93352567ab4f6bb8077e68bc9622fe63d13ba149cd353bee0c27d87ea8c5",
+      "git_sha256": "189f93352567ab4f6bb8077e68bc9622fe63d13ba149cd353bee0c27d87ea8c5",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/vectors/README.md",
+      "snapshot_sha256": "00e44e87c2e05c04cdb1609eefc7a5ec19806862037e17ca181a320697501aa3",
+      "git_sha256": "00e44e87c2e05c04cdb1609eefc7a5ec19806862037e17ca181a320697501aa3",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/vectors/boundary/vectors.jsonl",
+      "snapshot_sha256": "5f94f038d56940e89610f1a30785399a50296e70dd4b189e4e618efc001f013c",
+      "git_sha256": "5f94f038d56940e89610f1a30785399a50296e70dd4b189e4e618efc001f013c",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/vectors/corpus/vectors.jsonl",
+      "snapshot_sha256": "d65cb268b661d9edb02b09ff703321bc8726c2de6ce0888b53e1e7ac6a356f51",
+      "git_sha256": "d65cb268b661d9edb02b09ff703321bc8726c2de6ce0888b53e1e7ac6a356f51",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/vectors/cover/vectors.jsonl",
+      "snapshot_sha256": "79f0fc770b35730a0f409ba9212edbf7dca2e5acca8109a2a27bcb0cb6de568e",
+      "git_sha256": "79f0fc770b35730a0f409ba9212edbf7dca2e5acca8109a2a27bcb0cb6de568e",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/vectors/coverage-exceptions.json",
+      "snapshot_sha256": "61b0c54dbc3c71653eb87dd2ba3035c8cef2a44969d304254294fb24152df016",
+      "git_sha256": "61b0c54dbc3c71653eb87dd2ba3035c8cef2a44969d304254294fb24152df016",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/vectors/coverage-map.json",
+      "snapshot_sha256": "9c8841c5a8d47e22dea2e19e321bcdf7a48e6b0dbfad8362a2cba084748fcf3a",
+      "git_sha256": "9c8841c5a8d47e22dea2e19e321bcdf7a48e6b0dbfad8362a2cba084748fcf3a",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/vectors/format/vectors.jsonl",
+      "snapshot_sha256": "e798da74336a4010155f7f52df10c784edc070013e93facd1547ab7a82f52ee7",
+      "git_sha256": "e798da74336a4010155f7f52df10c784edc070013e93facd1547ab7a82f52ee7",
+      "matches_9d6a767": true
+    },
+    {
+      "file": "fixtures/vectors/random/vectors.jsonl",
+      "snapshot_sha256": "232cf5004af10af31c0ceab34b01aab6b8e1a2569aa06eee5a01a06bf7c81c12",
+      "git_sha256": "232cf5004af10af31c0ceab34b01aab6b8e1a2569aa06eee5a01a06bf7c81c12",
+      "matches_9d6a767": true
+    }
+  ]
+}

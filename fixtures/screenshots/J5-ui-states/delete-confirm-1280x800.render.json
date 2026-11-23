@@ -230,7 +230,7 @@
         900,
         41
       ],
-      "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe",
+      "value": "C:\\parity-scratch\\bin\\fake-llama-server.exe",
       "checked": false,
       "disabled": false,
       "text": ""
@@ -245,7 +245,7 @@
         900,
         41
       ],
-      "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+      "value": "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
       "disabled": false,
       "text": "-- Select a Model --a\\b\\deep-b-model.ggufa\\model-a.ggufBench\\llama-bench-benchmarks.gguflongdir-xxxxxxxxxxxxxxxxxxxxxxxx"
     },
@@ -828,7 +828,7 @@
       ],
       "value": "",
       "disabled": false,
-      "text": "-- Select Server Path --C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe"
+      "text": "-- Select Server Path --C:\\parity-scratch\\bin\\fake-llama-server.exe"
     },
     {
       "id": "launchPresetsBtn",
@@ -878,7 +878,7 @@
         0,
         0
       ],
-      "value": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+      "value": "C:\\parity-scratch\\fixtures\\models",
       "checked": false,
       "disabled": false,
       "text": ""
@@ -929,9 +929,10 @@
   ],
   "logPane": {
     "lineCount": 1,
-    "startsWithTimestamp": false
+    "startsWithTimestamp": false,
+    "anyEntryTimestamped": false
   },
   "title": "LLaMA CPP Manager",
   "scrollHeight": 800,
-  "note": "Compared artifact behind delete-confirm-1280x800.png: geometry and control state of every [id] element, with the log pane reduced to its entry count because streamed text depends on pipe coalescing. Canvases were display:none for the shot."
+  "note": "Compared artifact behind delete-confirm-1280x800.png: geometry and control state of every [id] element, with the log pane reduced to logPane (entry count, head-line shape, whether any entry carries the showOutput timestamp) because streamed text depends on pipe coalescing. logPane.startsWithTimestamp is the mask <chunk-boundary> exactly in the capped state, where which fragment the 1000-entry boundary leaves at the head is §8 websocket log chunk boundaries; lineCount and anyEntryTimestamped stay compared. Canvases were display:none for the shot."
 }

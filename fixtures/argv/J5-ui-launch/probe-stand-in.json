@@ -1,10 +1,10 @@
 {
   "why": "server.js spawns serverPath without a shell. A copy of node.exe renamed to the app path parses the app-built arg vector as its own CLI options and dies before any preload; node refuses to spawn .cmd/.bat without shell:true. The compiled relay in tools/parity/standin-llama-server.cs is the only stand-in either path can launch.",
   "nodeExeCopyWithAppArgVector": {
-    "exe": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\probe-node-copy.exe",
+    "exe": "C:\\parity-scratch\\bin\\probe-node-copy.exe",
     "args": [
       "--models-preset",
-      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+      "C:\\parity-scratch\\app\\models-preset.ini",
       "--host",
       "0.0.0.0",
       "--port",
@@ -13,11 +13,11 @@
     "code": 9,
     "signal": null,
     "stdout": "",
-    "stderr": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\probe-node-copy.exe: bad option: --models-preset\r\n",
+    "stderr": "C:\\parity-scratch\\bin\\probe-node-copy.exe: bad option: --models-preset\r\n",
     "spawnError": null
   },
   "nodeExeCopyWithFakeKnob": {
-    "exe": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\probe-node-copy.exe",
+    "exe": "C:\\parity-scratch\\bin\\probe-node-copy.exe",
     "args": [
       "--parity-exit-code",
       "0"
@@ -25,14 +25,14 @@
     "code": 9,
     "signal": null,
     "stdout": "",
-    "stderr": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\probe-node-copy.exe: bad option: --parity-exit-code\r\n",
+    "stderr": "C:\\parity-scratch\\bin\\probe-node-copy.exe: bad option: --parity-exit-code\r\n",
     "spawnError": null
   },
   "cmdShim": {
-    "exe": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\probe-shim.cmd",
+    "exe": "C:\\parity-scratch\\bin\\probe-shim.cmd",
     "args": [
       "--models-preset",
-      "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\app\\models-preset.ini",
+      "C:\\parity-scratch\\app\\models-preset.ini",
       "--host",
       "0.0.0.0",
       "--port",
@@ -49,8 +49,8 @@
     }
   },
   "relayUsedInstead": {
-    "exe": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe",
-    "fakeScript": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.js"
+    "exe": "C:\\parity-scratch\\bin\\fake-llama-server.exe",
+    "fakeScript": "C:\\parity-scratch\\bin\\fake-llama-server.js"
   },
   "relayKillSemantics": {
     "port": 17899,

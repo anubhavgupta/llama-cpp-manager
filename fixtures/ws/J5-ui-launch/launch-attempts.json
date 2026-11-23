@@ -1,24 +1,24 @@
 {
   "note": "One entry per #launchBtn click. launchServer validates serverPath then the modelPath <select> (script.js:413-420) and alerts instead of posting /start, and loadConfiguration blanks a modelPath with no matching <option> (Q18), so the form state and the dialog list are recorded next to the argv evidence rather than assumed.",
-  "argvLog": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\argv\\J5-ui-launch.jsonl",
+  "argvLog": "C:\\parity-scratch\\argv\\J5-ui-launch.jsonl",
   "attempts": [
     {
       "config": "capture-alpha",
       "form": {
-        "modelPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+        "modelPathValue": "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
         "modelPathIsAnOption": true,
         "optionCount": 11,
-        "serverPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe",
+        "serverPathValue": "C:\\parity-scratch\\bin\\fake-llama-server.exe",
         "launchDisabled": false
       },
       "requestObserved": true,
       "requestBlockedWith": null,
       "requestStatus": 200,
       "requestBody": {
-        "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe",
+        "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe",
         "args": [
           "-m",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf",
           "-ngl",
           "99",
           "-t",
@@ -46,7 +46,7 @@
           "--chat-template-kwargs",
           "{\"preserve_thinking\": true}",
           "--chat-template-file",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja",
           "--cache-ram",
           "8192",
           "--reasoning",
@@ -58,7 +58,7 @@
           "--port",
           "7838",
           "--mmproj",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+          "C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
         ]
       },
       "responseBody": {
@@ -74,20 +74,20 @@
     {
       "config": "capture-beta",
       "form": {
-        "modelPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+        "modelPathValue": "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
         "modelPathIsAnOption": true,
         "optionCount": 11,
-        "serverPathValue": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe",
+        "serverPathValue": "C:\\parity-scratch\\bin\\fake-llama-server.exe",
         "launchDisabled": true
       },
       "requestObserved": true,
       "requestBlockedWith": null,
       "requestStatus": 200,
       "requestBody": {
-        "serverPath": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\bin\\fake-llama-server.exe",
+        "serverPath": "C:\\parity-scratch\\bin\\fake-llama-server.exe",
         "args": [
           "-m",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
+          "C:\\parity-scratch\\fixtures\\models\\a\\model-a.gguf",
           "-t",
           "4",
           "--temp",
@@ -132,7 +132,7 @@
           "--port",
           "7838",
           "--mmproj",
-          "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
+          "C:\\parity-scratch\\fixtures\\models\\a\\mmproj-model-a-F16.gguf"
         ]
       },
       "responseBody": {

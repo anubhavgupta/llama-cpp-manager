@@ -744,28 +744,28 @@
       {
         "fixture": "localstorage/J5-ui-launch/after-ui-launch.json",
         "settings": {
-          "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+          "modelsDirectory": "C:\\parity-scratch\\fixtures\\models",
           "serverPort": 7838
         }
       },
       {
         "fixture": "localstorage/J5-ui-states/after-corpus-seed.json",
         "settings": {
-          "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models\\",
+          "modelsDirectory": "C:\\parity-scratch\\fixtures\\models\\",
           "serverPort": 7838
         }
       },
       {
         "fixture": "localstorage/J5-ui-states/after-delete.json",
         "settings": {
-          "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+          "modelsDirectory": "C:\\parity-scratch\\fixtures\\models",
           "serverPort": 17852
         }
       },
       {
         "fixture": "localstorage/J5-ui-states/after-save-config.json",
         "settings": {
-          "modelsDirectory": "C:\\Users\\anubh\\AppData\\Local\\Temp\\parity-scratch\\fixtures\\models",
+          "modelsDirectory": "C:\\parity-scratch\\fixtures\\models",
           "serverPort": 17852
         }
       }
