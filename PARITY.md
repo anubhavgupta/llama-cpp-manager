@@ -40,6 +40,17 @@ Non-determinism addenda discovered during capture (beyond §8): dotenv v17 print
 
 ## Ledger notes (machine-auditable history)
 
+- 2026-11-23 PENDING (planned, Verifier-owned): (1) re-record fixtures/{http,ws,argv,ini,localstorage,screenshots}
+  from a NEUTRAL default `PARITY_SCRATCH` root (e.g. `C:/parity-fix/`) — recorded bytes embed
+  `C:\Users\<user>\AppData\Local\Temp\parity-scratch` paths (username exposure + same-root comparability
+  limitation noted in MANIFEST); recorded bytes may not be edited (C5) so a from-tag re-record is the only
+  lawful fix, bundled with (2). (2) flake-protocol fix for quarantined `logPane.startsWithTimestamp` (mask the
+  derived boolean in render fingerprints + `shape` rule with this entry as backing). (3) `fixtures/vectors/**`
+  inputs tokenized to `SCRATCH_ROOT/` (vectors are authored inputs — tokenization lawful; goldens regenerated
+  from baseline for tokenized inputs; literal-path coverage kept via username-free absolute paths).
+  Leak scanner: tools/parity/leak-check.js (from scratchpad); exception list documents the legacy `.lmstudio`
+  constant as oracle truth.
+
 - 2026-11-23 `bdd883e` — AUTHORIZED FIXTURE RE-RECORD (C8 backing entry): added journey `J4b-ui-presets-launch`
   because no recorded journey had ever produced app-generated `models-preset.ini` bytes (the ini generator had
   zero live coverage). Full re-record FROM `parity-baseline` (C5: recorded, not authored): 180→193 fixtures,
