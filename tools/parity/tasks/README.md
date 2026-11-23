@@ -27,14 +27,6 @@ Task specs in this directory are the exact prompts each worker phase ran on.
   resave family (C8 event). It was steered about the snapshot.
 
 ## Next after L2 (specs ready)
-- **L2 UI suite + corpus round-trip** (`task-l2.md`): 7 check modules exist; recording `fixtures/goldens/resave/`
-  from parity-baseline page. Supervisor decisions in force: recorded-from-legacy corpus expectations (NOT raw
-  goldens/corpus equality; emit DISAGREEMENTS.md classifying divergences to Q17/Q18/Q19); mechanical /models
-  fill for corpus launch mode + recorded-J2-payload mode asserted separately; ini-order assertion from all-48
-  AND one 2-config subset; gen-goldens resave family extension → MANIFEST 17 entries → **Verifier re-pins
-  HASH-PIN.json + ledger row in the SAME landing commit** (worker must not touch HASH-PIN/PARITY).
-
-## Next after L1/L2 (specs ready)
 
 1. `task-l3l4.md` — L3 seam suite (real server+browser+fake), L4 dual-run scaffold with self-mode (A=B=tag ⇒
    empty diff), nightly job (schtasks, 03:00), negative controls (mutant patches ⇒ named reds ⇒ fixtures/NEGATIVES.md).
