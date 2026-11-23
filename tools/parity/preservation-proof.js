@@ -661,7 +661,7 @@ const REQUIRED_ARTIFACTS = [
     'argv/J5-ui-launch/launch.jsonl',
     'argv/J6-corpus-smoke/launch.jsonl',
     'http/J5-ui-launch/start-from-ui.request.json',
-    'http/J5-ui-log-cap/start-from-ui.request.json'
+    'http/J5-ui-log-cap/start-log-flood.request.json'
 ];
 
 function requireArtifacts(roots) {
