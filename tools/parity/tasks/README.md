@@ -59,15 +59,21 @@ Supervisor standing orders (apply on every subagent_control_notice):
    have frozen runs for 9+ h).
 
 Watchdog worker procedure (runs every 20 min via schedule `parity-watchdog`):
-1. Read `tools/parity/tasks/WATCHDOG.json`; for each tracked id run
-   `subagent({action:"status", id})` — note state and activity timestamp.
+NOTE: the watchdog worker may LACK subagent control tools. Therefore it DETECTS AND REPORTS;
+the supervisor session (woken by the schedule's non-quiet completion) performs interrupt/resume.
+1. Read `tools/parity/tasks/WATCHDOG.json`; for each tracked id read
+   `C:/Users/anubh/AppData/Local/Temp/pi-subagents-user-anubh/async-subagent-runs/<id>/status.json`
+   (state, lastActivityAt, turn/tool counts) and output-0.log mtime.
 2. Freshness = newer of (status activity) and output-0.log mtime under
    `C:/Users/anubh/AppData/Local/Temp/pi-subagents-user-anubh/async-subagent-runs/<id>/output-0.log`.
    Local compute check: node/chrome whose CommandLine matches the layer keyword (L1/L2/tests/parity).
 3. Stall = freshness older than the entry's stallAfterMin AND no local compute. Then:
-   `interrupt`; poll `status` every 30 s (≤4 min) until state=paused; then
-   `resume` with message: "Watchdog auto-revival: provider stall detected <UTC time>. Continue your
-   task spec from disk state (see this README + git status); do not redo green work; medium turns."
+   write `tools/parity/reports/watchdog-alert.json` = {at, id, layer, freshMin, state, evidence}
+   and END THE RUN WITH THE FIRST LINE `STALL <id8> <layer> freshMin=<n>` (this wakes the supervisor,
+   who interrupts/revives per the standing orders above). If control tools ARE available, the
+   watchdog may itself: `interrupt`; poll ≤4 min for paused; `resume` with message: "Watchdog
+   auto-revival: provider stall detected <UTC>. Continue your task spec from disk state (see this
+   README + git status); do not redo green work; medium turns." and log the action instead.
 4. Log one line per tracked id per fire to `tools/parity/reports/watchdog.log`:
    `<UTC> <id8> <layer> <state> <freshMin> <action>`.
 5. Never touch ignoreIds, completed runs, or files outside watchdog.log. If a control action is

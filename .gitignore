@@ -56,3 +56,4 @@ fixtures/corpus/.pathmap-local.json
 tools/parity/reports/mutation/.snapshot/
 # nightly/l2 scratch output
 tests/*/out/
+tools/parity/reports/watchdog-alert.json
