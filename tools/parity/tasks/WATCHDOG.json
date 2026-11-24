@@ -1,7 +1,14 @@
 {
-  "tracked": [],
+  "tracked": [
+    {
+      "id": "05052cc5-435f-4959-aedd-2d06e8b86892",
+      "layer": "L3 L4 nightly negatives",
+      "stallAfterMin": 15
+    }
+  ],
   "ignoreIds": [
-    "00b1d77e-4c11-43dd-b269-de700b5f4853"
+    "00b1d77e-4c11-43dd-b269-de700b5f4853",
+    "a18b6211-1cfc-4334-9f08-38c0a74c1a26"
   ],
   "notes": "Supervisor updates this file when workers launch/pause/land. stallAfterMin = no growth in output-0.log AND no matching local compute process before intervening."
 }

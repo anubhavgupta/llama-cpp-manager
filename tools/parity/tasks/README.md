@@ -20,13 +20,18 @@ Task specs in this directory are the exact prompts each worker phase ran on.
 
 ## IN FLIGHT
 
-- **L2 UI suite + corpus round-trip** (`task-l2.md`): mid-work snapshot committed inside 34644b1 (15 files +
-  fixtures/goldens/resave inputs; HASH-PIN gained pins — verified additions-only). Remaining per its spec:
-  corpus round-trip green vs recorded-from-legacy expectations, DISAGREEMENTS.md, ini-order 2-config subset,
-  2× `--verify-selftest`. Landing commit MUST include: final hash-pin refresh + PARITY ledger row for the
-  resave family (C8 event). It was steered about the snapshot.
+- **L3 seam + L4 dual-run + nightly + negative controls** (`task-l3l4.md`), run 05052cc5 (launched
+  2026-11-24 ~12:00Z). Gates: L3 `--verify-against-selftest` x2 vs parity-baseline; L4 `--self-mode`
+  (A=B=tag ⇒ zero diffs); nightly ParityNightly 03:00 registered via schtasks; fixtures/NEGATIVES.md
+  with 6 named-red mutant proofs (worker has exception for that ONE file under fixtures/ only).
 
-## Next after L2 (specs ready)
+## Landed since launch
+
+| Phase | Commit | Gate |
+|---|---|---|
+| 4b L2 UI suite | ca7fa8e | `node tests/L2-ui/run.js --verify-selftest` GREEN vs legacy; corpus 48/48; DISAGREEMENTS.md 28/48 classified; C8 resave re-pin row in PARITY.md |
+
+## Next after L3/L4 (specs ready)
 
 1. `task-l3l4.md` — L3 seam suite (real server+browser+fake), L4 dual-run scaffold with self-mode (A=B=tag ⇒
    empty diff), nightly job (schtasks, 03:00), negative controls (mutant patches ⇒ named reds ⇒ fixtures/NEGATIVES.md).
