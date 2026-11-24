@@ -62,6 +62,10 @@ Supervisor standing orders (apply on every subagent_control_notice):
    move finished ones out — the watchdog never edits this file itself).
 4. Overnight rule: a worker silent >30 min is presumed dead regardless of notices (provider hangs
    have frozen runs for 9+ h).
+5. REPEATED "bash open 240s" notices for the same worker while local compute is alive = normal
+   long suite/mutant runs (worker redirects output to scratchpad logs). Do NOT inspect per notice;
+   act only on (a) completion notice, (b) watchdog STALL (>stallAfterMin silence AND no compute),
+   or (c) needs-attention with NO compute for two consecutive notices.
 
 Watchdog worker procedure (runs every 20 min via schedule `parity-watchdog`):
 NOTE: the watchdog worker may LACK subagent control tools. Therefore it DETECTS AND REPORTS;
