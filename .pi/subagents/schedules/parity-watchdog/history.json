@@ -3,6 +3,121 @@
   "runs": [
     {
       "schemaVersion": 1,
+      "id": "998f549b",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-24T16:16:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-24T16:16:56.721Z",
+      "completedAt": "2026-11-24T16:16:56.721Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "d6270eff",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-24T15:56:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-24T15:56:56.709Z",
+      "completedAt": "2026-11-24T15:56:56.709Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "c2881b56",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-24T15:36:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-24T15:36:56.703Z",
+      "completedAt": "2026-11-24T15:36:56.703Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "c825a7ba",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-24T15:16:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-24T15:16:56.706Z",
+      "completedAt": "2026-11-24T15:16:56.706Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "5d1fa95d",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-24T14:56:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-24T14:56:56.706Z",
+      "completedAt": "2026-11-24T14:56:56.706Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "81ae8661",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-24T14:36:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-24T14:36:56.704Z",
+      "completedAt": "2026-11-24T14:36:56.704Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "d557b2e2",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-24T14:16:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-24T14:16:56.706Z",
+      "completedAt": "2026-11-24T14:16:56.706Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "3b530a65",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-24T13:56:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-24T13:56:56.707Z",
+      "completedAt": "2026-11-24T13:56:56.707Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "cb1e33f0",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-24T13:36:56.701Z",
+      "dueReason": "timer",
+      "state": "running",
+      "startedAt": "2026-11-24T13:36:56.710Z",
+      "asyncId": "a6bd1e39-882d-4f46-a544-5ca70a5c8763",
+      "asyncDir": "C:\\Users\\anubh\\AppData\\Local\\Temp\\pi-subagents-user-anubh\\async-subagent-runs\\a6bd1e39-882d-4f46-a544-5ca70a5c8763"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "37a605bf",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-24T13:16:56.701Z",
+      "dueReason": "timer",
+      "state": "completed",
+      "startedAt": "2026-11-24T13:16:56.712Z",
+      "asyncId": "e3f4ea7c-22eb-4f9c-98e7-ed8a42113a8a",
+      "asyncDir": "C:\\Users\\anubh\\AppData\\Local\\Temp\\pi-subagents-user-anubh\\async-subagent-runs\\e3f4ea7c-22eb-4f9c-98e7-ed8a42113a8a",
+      "completedAt": "2026-11-24T13:21:00.549Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "cf08d697",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-24T12:56:56.701Z",
+      "dueReason": "timer",
+      "state": "completed",
+      "startedAt": "2026-11-24T12:56:56.716Z",
+      "asyncId": "e7477e42-e3bb-4458-8525-c26b8f4006ca",
+      "asyncDir": "C:\\Users\\anubh\\AppData\\Local\\Temp\\pi-subagents-user-anubh\\async-subagent-runs\\e7477e42-e3bb-4458-8525-c26b8f4006ca",
+      "completedAt": "2026-11-24T13:04:29.152Z"
+    },
+    {
+      "schemaVersion": 1,
       "id": "4e45f11c",
       "scheduleId": "parity-watchdog",
       "plannedAt": "2026-11-24T12:36:56.701Z",

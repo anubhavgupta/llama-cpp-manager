@@ -20,16 +20,14 @@ Task specs in this directory are the exact prompts each worker phase ran on.
 
 ## IN FLIGHT
 
-- **L3 seam + L4 dual-run + nightly + negative controls** (`task-l3l4.md`), run 05052cc5 (launched
-  2026-11-24 ~12:00Z). Gates: L3 `--verify-against-selftest` x2 vs parity-baseline; L4 `--self-mode`
-  (A=B=tag ⇒ zero diffs); nightly ParityNightly 03:00 registered via schtasks; fixtures/NEGATIVES.md
-  with 6 named-red mutant proofs (worker has exception for that ONE file under fixtures/ only).
+(none — next: Verifier L2 harness fixes, PARITY sweep, exit checklist, Auditor)
 
 ## Landed since launch
 
 | Phase | Commit | Gate |
 |---|---|---|
 | 4b L2 UI suite | ca7fa8e | `node tests/L2-ui/run.js --verify-selftest` GREEN vs legacy; corpus 48/48; DISAGREEMENTS.md 28/48 classified; C8 resave re-pin row in PARITY.md |
+| 5 L3 seam + L4 dual + nightly + negatives | (this commit) | L3 `--verify-against-selftest` GREEN; L4 `--self-mode` GREEN (62 fields, 0 diffs); `negative-controls.js --all` 6/6 red-as-named (fixtures/NEGATIVES.md); ParityNightly 03:00 registered |
 
 ## Next after L3/L4 (specs ready)
 

@@ -1,0 +1,13 @@
+diff --git a/public/script.js b/public/script.js
+index 8704476..253331d 100644
+--- a/public/script.js
++++ b/public/script.js
+@@ -423,7 +423,7 @@ async function launchServer() {
+     // Collect all configuration values
+     const config = {
+         modelPath: modelPathSelect.value.trim(),  // Use select value instead of input value
+-        ngl: parseInt(nglInput.value) || 0,
++        ngl: !(parseInt(nglInput.value)) || 0,
+         threads: parseInt(threadsInput.value) || 1,
+         temp: parseFloat(tempInput.value) || 0,
+         topK: parseInt(topKInput.value) || 0,

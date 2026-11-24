@@ -1,0 +1,13 @@
+diff --git a/public/script.js b/public/script.js
+index 8704476..81f9182 100644
+--- a/public/script.js
++++ b/public/script.js
+@@ -694,7 +694,7 @@ async function launchModelPresets() {
+         let presetContent = 'version = 1\n\n';
+         
+         // Process each configuration
+-        for (const [configName, config] of Object.entries(configs)) {
++        for (const [configName, config] of Object.entries(configs).slice(0, 1)) {
+             // Create a section name based on the model path or configuration name
+             let sectionName = configName;
+             // if (config.modelPath) {

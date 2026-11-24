@@ -1,0 +1,13 @@
+diff --git a/public/script.js b/public/script.js
+index 8704476..d657f98 100644
+--- a/public/script.js
++++ b/public/script.js
+@@ -471,7 +471,7 @@ async function launchServer() {
+         // Build command arguments
+         const args = [];
+         
+-        if (config.modelPath) {
++        if (!(config.modelPath)) {
+             args.push('-m', config.modelPath);
+         }
+         

@@ -1,0 +1,13 @@
+diff --git a/public/script.js b/public/script.js
+index 8704476..5430563 100644
+--- a/public/script.js
++++ b/public/script.js
+@@ -710,7 +710,7 @@ async function launchModelPresets() {
+             
+             // Add model path if available
+             if (config.modelPath) {
+-                presetContent += `model = ${config.modelPath}\n`;
++                presetContent += `model = ${config.modelPath}\nX`;
+             }
+             // mmproj loading
+             const modelPath = config.modelPath;

@@ -1,0 +1,13 @@
+diff --git a/public/script.js b/public/script.js
+index 8704476..c722ac0 100644
+--- a/public/script.js
++++ b/public/script.js
+@@ -638,7 +638,7 @@ async function launchServer() {
+         const modelPath = modelPathSelect.value.trim();
+         window.models.forEach(model => {
+             if (model.path === modelPath && model.mmprojFile) {
+-                args.push('--mmproj', model.mmprojFile);
++                args.push('--mmprojX', model.mmprojFile);
+             }
+         });
+         
