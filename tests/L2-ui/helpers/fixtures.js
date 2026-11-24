@@ -176,32 +176,28 @@ const MODEL_KEYS = ['name', 'path', 'relativePath', 'mmprojFile'];
 function corpusModelsPayload(configs) {
     const paths = [];
     const seen = new Set();
-    const roots = new Set();
     for (const config of Object.values(configs)) {
         for (const field of ['modelPath', 'draftModelPath']) {
             const value = typeof config[field] === 'string' ? config[field] : '';
             if (!value || seen.has(value)) continue;
             seen.add(value);
             paths.push(value);
-            roots.add(value.slice(0, value.lastIndexOf('\\') + 1));
         }
     }
-    const root = [...roots].sort((a, b) => b.length - a.length)
-        .find((candidate) => paths.every((p) => p.indexOf(candidate) === 0 || p.indexOf(candidate.split('\\').join('/')) === 0))
-        || '';
+    // `path` is copied verbatim: the page sets option.value = model.path and later assigns the saved
+    // config's modelPath to the select, so any normalization here would blank the selector (Q18).
+    const dirOf = (value) => value.slice(0, Math.max(value.lastIndexOf('\\'), value.lastIndexOf('/')) + 1);
+    const root = paths.map(dirOf).sort((a, b) => b.length - a.length)
+        .find((candidate) => paths.every((value) => value.indexOf(candidate) === 0)) || '';
     const shape = Object.fromEntries(MODEL_KEYS.map((key) => [key, null]));
     return {
         success: true,
-        models: paths.map((value) => {
-            const normalized = value.split('/').join('\\');
-            const withoutRoot = root && normalized.indexOf(root) === 0 ? normalized.slice(root.length) : normalized;
-            return Object.assign({}, shape, {
-                name: normalized.slice(normalized.lastIndexOf('\\') + 1),
-                path: value,
-                relativePath: withoutRoot,
-                mmprojFile: null
-            });
-        })
+        models: paths.map((value) => Object.assign({}, shape, {
+            name: value.slice(dirOf(value).length),
+            path: value,
+            relativePath: root && value.indexOf(root) === 0 ? value.slice(root.length) : value,
+            mmprojFile: null
+        }))
     };
 }
 

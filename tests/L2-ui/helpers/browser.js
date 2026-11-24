@@ -53,6 +53,8 @@ async function openPage(browser, options) {
     if (options.mocks) await options.mocks.install(context);
 
     const page = await context.newPage();
+    // A hung selector must surface as a red assertion in seconds, not as a 30 s stall per check.
+    page.setDefaultTimeout(options.timeoutMs || 15000);
     const state = { context, page, dialogs: [], navigations: 0, dialogAction: 'dismiss',
         consoleErrors: [], pageErrors: [] };
     page.on('dialog', (dialog) => {

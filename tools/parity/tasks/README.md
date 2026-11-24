@@ -45,3 +45,30 @@ Task specs in this directory are the exact prompts each worker phase ran on.
 - Windows facts baked into tooling: no SIGTERM delivery to node children (TerminateProcess), .cmd unspawnable
   without shell (CVE-2024-27980), stand-in = csc-compiled relay exe with KILL_ON_JOB_CLOSE job object;
   scratch root default `C:/parity-scratch`.
+
+## Watchdog procedure (standing instructions — executed by scheduled watchdog, and by the SUPERVISOR session)
+
+Supervisor standing orders (apply on every subagent_control_notice):
+1. First "idle 300s" notice for a worker: check log mtime + local compute (node/chrome via
+   `Get-CimInstance Win32_Process`); if active → no action.
+2. SECOND stall notice for the SAME worker within 15 min, or any silence >12 min with no compute:
+   interrupt → on pause notice, resume with "continue from disk state, do not redo green work".
+3. Keep `WATCHDOG.json` tracked list exact at every worker launch/pause/landing (add run ids;
+   move finished ones out — the watchdog never edits this file itself).
+4. Overnight rule: a worker silent >30 min is presumed dead regardless of notices (provider hangs
+   have frozen runs for 9+ h).
+
+Watchdog worker procedure (runs every 20 min via schedule `parity-watchdog`):
+1. Read `tools/parity/tasks/WATCHDOG.json`; for each tracked id run
+   `subagent({action:"status", id})` — note state and activity timestamp.
+2. Freshness = newer of (status activity) and output-0.log mtime under
+   `C:/Users/anubh/AppData/Local/Temp/pi-subagents-user-anubh/async-subagent-runs/<id>/output-0.log`.
+   Local compute check: node/chrome whose CommandLine matches the layer keyword (L1/L2/tests/parity).
+3. Stall = freshness older than the entry's stallAfterMin AND no local compute. Then:
+   `interrupt`; poll `status` every 30 s (≤4 min) until state=paused; then
+   `resume` with message: "Watchdog auto-revival: provider stall detected <UTC time>. Continue your
+   task spec from disk state (see this README + git status); do not redo green work; medium turns."
+4. Log one line per tracked id per fire to `tools/parity/reports/watchdog.log`:
+   `<UTC> <id8> <layer> <state> <freshMin> <action>`.
+5. Never touch ignoreIds, completed runs, or files outside watchdog.log. If a control action is
+   denied, log it and move on. Finish within ~5 minutes.
