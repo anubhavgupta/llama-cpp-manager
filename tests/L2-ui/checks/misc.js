@@ -19,11 +19,11 @@ async function defaultPort(ctx) {
     if (posted) {
         t.eq('L2-PORT-default-8080', '8080', posted.args[posted.args.indexOf('--port') + 1],
             'Q5: with no llamaCppSettings the client uses DEFAULT_PORT 8080');
-        t.eq('L2-PORT-always-appended', ['-fit', 'off', '--host', '0.0.0.0'].slice().sort(),
-            posted.args.slice(-6, -2).sort(),
-            'Q14: -fit off and --host 0.0.0.0 are always appended, in that order before --port');
-        t.eq('L2-PORT-argv-tail', ['--host', '0.0.0.0', '-fit', 'off', '--port', '8080'],
-            posted.args.slice(-6), 'Q14/Q5: the argv tail is exactly host, fit, port');
+        const model = fixtures.modelsPayload().models[1];
+        t.eq('L2-PORT-argv-tail', ['--host', '0.0.0.0', '-fit', 'off', '--port', '8080',
+            '--mmproj', model.mmprojFile], posted.args.slice(-8),
+            'Q14/Q5/Q21: --host 0.0.0.0, then -fit off, then --port, then the selected model mmproj —'
+            + ' the order the recorded goldens end with (cover2-006)');
     }
     await ctx.close();
 }
@@ -62,16 +62,20 @@ async function presetsDropdown(ctx) {
     const t = ctx.results;
     t.group('misc');
     const corpus = fixtures.corpusSeed();
-    const distinct = [...new Set(corpus.names.map((name) => corpus.configs[name].serverPath))];
+    // populateLaunchPresetsDropdown trims each path before adding it to its Set, so paths that differ
+    // only by surrounding whitespace collapse into one option.
+    const distinct = [...new Set(corpus.names.map((name) => String(corpus.configs[name].serverPath || '')
+        .trim()).filter((value) => value !== ''))];
     const { page } = await ctx.open({ seed: corpus, models: 'corpus', settleMs: 800 });
     const options = await browser.optionValues(page, 'launchPresetsSelect');
     t.eq('L2-PRESETS-distinct-count', distinct.length, options.length - 1,
-        'the presets dropdown holds one option per distinct stored serverPath (' + distinct.length + ')');
+        'the presets dropdown holds one option per distinct TRIMMED stored serverPath (' + distinct.length
+        + ' of ' + corpus.names.length + ' configs)');
+    t.eq('L2-PRESETS-values', distinct, options.slice(1),
+        'the option values are the trimmed stored paths, in Set (insertion) order');
     t.eq('L2-PRESETS-placeholder-first', '-- Select Server Path --',
         await page.$$eval('#launchPresetsSelect option', (nodes) => nodes[0].textContent),
         'the dropdown keeps its placeholder option');
-    t.eq('L2-PRESETS-no-duplicates', options.slice(1).filter((value, index) => options.indexOf(value) === index),
-        options.slice(1), 'the Set de-duplicates the stored paths');
     await ctx.close();
 }
 
@@ -83,28 +87,30 @@ async function restartButtonEverywhere(ctx) {
         restartAttribute: document.getElementById('restartBtn').hasAttribute('disabled')
     }));
     const { page } = await ctx.open({ seed: fixtures.smallSeed() });
-    t.eq('L2-Q1-fresh', { restart: true, restartAttribute: false }, await disabled(page),
-        'Q1: rendered, disabled by the script never enabling it (no disabled attribute in markup)');
+    const everyState = { restart: true, restartAttribute: true };
+    t.eq('L2-Q1-fresh', everyState, await disabled(page),
+        'Q1: disabled in the markup, and the line in updateButtonStates that would enable it is'
+        + ' commented out, so the attribute never leaves');
     await browser.clickConfig(page, 'capture-alpha');
-    t.eq('L2-Q1-config-selected', { restart: true, restartAttribute: false }, await disabled(page),
+    t.eq('L2-Q1-config-selected', everyState, await disabled(page),
         'Q1 holds after selecting a config');
     await page.fill('#serverPath', 'C:/parity-scratch/bin/fake-llama-server.exe');
     await page.selectOption('#modelPath', fixtures.modelsPayload().models[1].path);
     await page.click('#launchBtn');
     await ctx.mocks.waitFor('POST /start', 1, 5000);
-    t.eq('L2-Q1-running', { restart: true, restartAttribute: false }, await disabled(page),
-        'Q1 holds while the page believes a server is running (the line that would enable it is commented out)');
+    t.eq('L2-Q1-running', everyState, await disabled(page),
+        'Q1 holds while the page believes a server is running (updateButtonStates(true) skips restartBtn)');
     await page.click('#settingsBtn');
     await page.waitForSelector('dialog.settings-dialog[open]');
-    t.eq('L2-Q1-settings-dialog', { restart: true, restartAttribute: false }, await disabled(page),
+    t.eq('L2-Q1-settings-dialog', everyState, await disabled(page),
         'Q1 holds with a modal dialog open');
     await page.click('#cancelSettingsBtn');
     await page.click('#stopBtn');
     await ctx.mocks.waitFor('POST /stop', 1, 5000);
-    t.eq('L2-Q1-stopped', { restart: true, restartAttribute: false }, await disabled(page),
+    t.eq('L2-Q1-stopped', everyState, await disabled(page),
         'Q1 holds after stopping');
     await browser.clickConfig(page, 'capture-alpha', '.delete-btn');
-    t.eq('L2-Q1-after-delete-prompt', { restart: true, restartAttribute: false }, await disabled(page),
+    t.eq('L2-Q1-after-delete-prompt', everyState, await disabled(page),
         'Q1 holds while the delete confirm is up (dismissed by the harness)');
     await ctx.close();
 }

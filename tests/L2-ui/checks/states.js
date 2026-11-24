@@ -46,6 +46,16 @@ async function applySteps(ctx, state, steps) {
         await page.waitForTimeout(400);
     }
     if (steps === 'flood') {
+        // The recorded J5-ui-log-cap state is a RUNNING page: a config was loaded, the server started,
+        // and the flood filled the pane to its 1000-entry cap. The fingerprint compares the pane only by
+        // its claims (lineCount, timestamped entries), so the launch state is what has to match too.
+        await browser.clickConfig(page, 'capture-alpha');
+        await page.waitForSelector('#configList .config-item.active');
+        await page.waitForTimeout(300);
+        await page.waitForSelector('#launchBtn:not([disabled])');
+        await page.click('#launchBtn');
+        await ctx.mocks.waitFor('POST /start', 1, 5000);
+        await page.waitForTimeout(300);
         await browser.floodPane(page, fixtures.logPaneClaims().repeatLine, 1203);
         await page.waitForTimeout(200);
     }
@@ -63,7 +73,7 @@ async function stateSnapshots(ctx) {
             const viewport = { width, height: width === 1280 ? 800 : 1080 };
             const label = spec.journey ? spec.name : spec.name + '-' + width + 'x' + viewport.height;
             const journey = spec.journey || 'J5-ui-states';
-            const file = path.join(FIXTURE_LABEL(journey, label));
+            const file = path.join(fixtures.FIXTURES, 'screenshots', journey, label + '.render.json');
             if (!fs.existsSync(file)) {
                 t.fail('L2-STATE-' + label, 'recorded render.json present', file,
                     'the suite expects a recorded fingerprint for every state it rebuilds');
@@ -75,7 +85,13 @@ async function stateSnapshots(ctx) {
                     : { configsKey: 'llamaCppConfigs', configsJson: '{}', settingsKey: 'llamaCppSettings',
                         settingsJson: null },
                 viewport,
-                freezeClock: true
+                freezeClock: true,
+                // A launched state must stay launched while the fingerprint is taken: the recorded page
+                // had a real server running, so its status poll answered running:true.
+                statusPair: spec.steps === 'flood',
+                // The recorded fingerprints were captured against capture-legacy's canned /metrics
+                // body; the metric readouts are part of the compared geometry and text.
+                mocks: { 'GET /metrics': JSON.stringify(fixtures.screenshotMetrics()) }
             });
             if (spec.steps) await applySteps(ctx, stateHandle(ctx, page), spec.steps);
             const shot = await browser.fingerprint(page, { png: true });
@@ -101,10 +117,6 @@ async function stateSnapshots(ctx) {
         compared + ' recorded fingerprints compared (J4b presets-selected is not rebuildable from fixtures)');
 }
 
-function FIXTURE_LABEL(journey, label) {
-    return [fixtures.FIXTURES, 'screenshots', journey, label + '.render.json'];
-}
-
 function stateHandle(ctx, page) {
     return { page };
 }
@@ -118,11 +130,16 @@ async function headingOrder(ctx) {
         settingsKey: 'llamaCppSettings', settingsJson: null } });
     const facts = await browser.controlFacts(page);
     const pack = fixtures.fieldManifest();
-    const specSections = [...new Set(pack.fields
-        .filter((field) => typeof field.attributes.section.value === 'string'
-            && field.attributes.section.value.indexOf('none -') < 0
-            && field.attributes.section.value.indexOf('Settings dialog') < 0)
-        .map((field) => field.attributes.section.value))];
+    // SPEC's `order` column is a per-field document position; the section sequence is the order in
+    // which the sections' first field appears in that order.
+    const ordered = pack.fields.slice().sort((a, b) => pack.value(a, 'order') - pack.value(b, 'order'));
+    const specSections = [];
+    for (const field of ordered) {
+        const section = pack.value(field, 'section');
+        if (typeof section !== 'string' || section.indexOf('none -') === 0) continue;
+        if (section.indexOf('Settings dialog') === 0) continue;
+        if (!specSections.includes(section)) specSections.push(section);
+    }
     const renderedSections = [];
     for (const row of facts.rows.filter((control) => control.id)) {
         if (!renderedSections.includes(row.section)) renderedSections.push(row.section);
@@ -132,7 +149,8 @@ async function headingOrder(ctx) {
         'every SPEC section that owns a rendered field appears as a heading in the document');
     const specOrder = specSections.filter((section) => renderedSections.includes(section));
     t.eq('L2-HEADINGS-order', specOrder, renderedSections,
-        'the sections appear in the order SPEC orders their first field');
+        'the sections appear in the order SPEC orders their first field, including the create-config'
+        + ' dialog section, whose dialog is open in this state');
     await ctx.close();
 }
 

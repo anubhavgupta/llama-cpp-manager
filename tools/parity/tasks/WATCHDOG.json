@@ -1,11 +1,5 @@
 {
-  "tracked": [
-    {
-      "id": "a18b6211-1cfc-4334-9f08-38c0a74c1a26",
-      "layer": "L2 UI suite",
-      "stallAfterMin": 12
-    }
-  ],
+  "tracked": [],
   "ignoreIds": [
     "00b1d77e-4c11-43dd-b269-de700b5f4853"
   ],

@@ -68,19 +68,21 @@ async function createFlow(ctx) {
     const rows = await browser.configRows(page);
     t.eq('L2-CRUD-create-listed', [{ name: 'L2 New Config', active: false, hasEdit: true,
         hasDelete: true }], rows, 'the created config is rendered, and not marked active');
-    if (goldens && goldens.byName.has('__create-new__')) {
-        const golden = goldens.byName.get('__create-new__');
-        t.eq('L2-CRUD-create-storage-bytes', golden.storage_json, written,
-            'the exact localStorage bytes the baseline saveCurrentValues writes for a fresh form '
-            + '(fixtures/goldens/resave, recorded from parity-baseline)');
+    const saved = JSON.parse(written)['L2 New Config'];
+    if (goldens && goldens.byName.has('parity-ui-check')) {
+        // The recorder created a config named parity-ui-check from the same blank form; the entry it
+        // wrote is the byte claim (the surrounding storage map differs by this run's config name).
+        const golden = goldens.byName.get('parity-ui-check');
+        t.eq('L2-CRUD-create-storage-bytes', golden.saved_config, JSON.stringify(saved),
+            'the exact localStorage entry the baseline writes for a fresh form save '
+            + '(fixtures/goldens/resave, op=create)');
+        t.eq('L2-CRUD-create-field-order', golden.saved_field_order, Object.keys(saved),
+            'the saved object carries the 36-field set in the order saveCurrentValues writes it'
+            + ' (Q7: not the launch set)');
     } else {
-        t.fail('L2-CRUD-create-storage-bytes', 'golden present', 'fixtures/goldens/resave/goldens.jsonl missing',
+        t.fail('L2-CRUD-create-storage-bytes', 'op=create golden parity-ui-check present', 'missing',
             'run node tests/L2-ui/record-inputs.js && node tools/parity/gen-goldens.js');
     }
-    const saved = JSON.parse(written)['L2 New Config'];
-    t.eq('L2-CRUD-create-field-order', goldens ? goldens.byName.get('Qwen 3 Q4 64K - 28TPS').saved_field_order
-        : Object.keys(saved), Object.keys(saved),
-    'the saved object carries the 36-field set in the order saveCurrentValues writes it (Q7: not the launch set)');
     t.eq('L2-CRUD-create-no-orphans', [], ORPHAN_KEYS.filter((key) => key in saved),
         'a fresh save writes no orphan keys (Q16: saveCurrentValues builds a fresh object)');
     t.eq('L2-CRUD-create-form-cleared', ['', 'Create New Configuration'],
@@ -175,8 +177,16 @@ async function editSaveAndDelete(ctx) {
         'the delete confirm text is legacy wording with the config name interpolated (Q13)');
     t.eq('L2-CRUD-delete-removes-one', beforeCount - 1, rowsAfter.length,
         'accepting the confirm removes exactly that config');
-    t.eq('L2-CRUD-delete-storage', JSON.stringify({ 'capture-alpha': recordedStorage['capture-alpha'] }),
-        savedRebuild(savedJson), 'the remaining stored bytes are the untouched other config');
+    // The surviving entry is NOT the seed entry: the edit-save earlier in this check rewrote
+    // capture-alpha through saveCurrentValues, and the recorded after-save-config.json holds exactly
+    // that state, so the expectation comes from the fixture minus the deleted config.
+    const afterSaveMap = JSON.parse(recordedStorageAfterSave());
+    const storedAfterDelete = await browser.storageValue(page, 'llamaCppConfigs');
+    t.eq('L2-CRUD-delete-storage', JSON.stringify({ 'capture-alpha': afterSaveMap['capture-alpha'] }),
+        savedRebuild(storedAfterDelete),
+        'the remaining stored bytes are the other config, exactly as the recorded edit-save wrote it');
+    t.eq('L2-CRUD-delete-only-that-key', ['capture-alpha'],
+        Object.keys(JSON.parse(storedAfterDelete)), 'and only the deleted key left the store');
 
     const afterFields = await browser.fieldMap(page);
     const recordedRows = recordedAfterDelete.fields.filter((row) => row.id);
@@ -191,24 +201,57 @@ async function editSaveAndDelete(ctx) {
         'Q8: after deleting the active config EVERY control reads the value the recording has, '
         + 'including the controls deleteConfiguration does NOT reset');
 
-    // The reset list itself, recomputed here and compared with the recorded diff.
+    // The reset list itself. deleteConfiguration (parity-baseline public/script.js) resets a
+    // hard-coded list to hard-coded values, so the expectation is that list — not the recorded diff,
+    // which only shows the controls that were not already at their reset value in that run's state.
+    const RESET = {
+        serverPath: { value: '' }, modelPath: { value: '' }, ngl: { value: '99' },
+        threads: { value: '12' }, temp: { value: '0.7' }, topK: { value: '20' },
+        topP: { value: '0.00' }, repeatPenalty: { value: '1.05' }, loadMode: { value: 'mmap' },
+        swaFull: { checked: false }, noMmprojOffload: { checked: false },
+        contextSize: { value: '16384' }, nCpuMoe: { value: '8' }, cpuMoe: { checked: false },
+        cacheRam: { value: '8192' }, ctkEnable: { checked: false },
+        speculationType: { value: 'none' }, ngramMod: { checked: false },
+        specDraftNMax: { value: '0' }, loadCustomChatTemplate: { checked: false },
+        draftModelPath: { value: '' }, ngld: { value: '0' }, ctkd: { value: 'f16' },
+        ctvd: { value: 'f16' }
+    };
     const rows = recordedRows.map((row) => {
         const before = beforeDelete.byId[row.id] || {};
         const after = afterFields.byId[row.id] || {};
         const defaults = fixtures.uiFieldState('fresh').fields.find((control) => control.id === row.id) || {};
+        const reset = RESET[row.id];
+        const isReset = (control) => (reset.value !== undefined ? control.value === reset.value
+            : control.checked === reset.checked);
         return { id: row.id, before: { value: before.value, checked: before.checked },
             after: { value: after.value, checked: after.checked },
             changed: before.value !== after.value || before.checked !== after.checked,
+            onResetValue: reset ? isReset(after) : false,
+            isResetTarget: !!reset,
+            offListValue: reset ? null : after.value,
             equalsHtmlDefault: defaults.value === after.value && defaults.checked === after.checked };
-    }).filter((row) => row.changed);
-    t.eq('L2-Q8-reset-rows', recordedQ8.rows.map((row) => row.id), rows.map((row) => row.id),
-        'the set of controls the delete reset touches equals the recorded set ('
-        + recordedQ8.rows.map((row) => row.id).join(', ') + ')');
-    t.eq('L2-Q8-reset-row-detail', recordedQ8.rows.map((row) => [row.id, row.after, row.changed,
-        row.equalsHtmlDefault]), rows.map((row) => [row.id, row.after, row.changed, row.equalsHtmlDefault]),
-    'and each reset row lands on the same value the recording shows, which is NOT always the HTML default');
+    });
+    const touched = rows.filter((row) => row.changed);
+    t.eq('L2-Q8-reset-only-list', [], touched.filter((row) => !row.isResetTarget)
+        .map((row) => row.id + ' → ' + JSON.stringify(row.offListValue)),
+        'every control the delete changed is one of the 24 controls deleteConfiguration resets'
+        + ' (parity-baseline script.js, hard-coded list)');
+    t.eq('L2-Q8-reset-values', [], touched.filter((row) => !row.onResetValue)
+        .map((row) => row.id + ' → ' + JSON.stringify(row.after)),
+        'and each of them holds exactly the value the list assigns');
+    t.eq('L2-Q8-reset-misses', [], rows.filter((row) => row.isResetTarget && !row.changed
+        && !row.onResetValue).map((row) => row.id),
+        'no reset-list control was left off its reset value (a control can be unchanged because it'
+        + ' already held the reset value, which is why "changed" is not the claim)');
+    const recordedLoadMode = recordedQ8.rows.find((row) => row.id === 'loadMode');
+    const loadMode = rows.find((row) => row.id === 'loadMode');
+    t.eq('L2-Q8-loadMode-recorded-row', [recordedLoadMode.after.value, recordedLoadMode.changed,
+        recordedLoadMode.equalsHtmlDefault],
+        [loadMode.after.value, loadMode.changed, loadMode.equalsHtmlDefault],
+        'the recorded q8-delete-reset row for loadMode is reproduced: reset to "mmap", and that is not'
+        + ' the HTML default option (Q8: the reset list diverges from the markup defaults)');
     t.ok('L2-Q8-loadMode-divergence',
-        rows.some((row) => row.id === 'loadMode' && !row.equalsHtmlDefault),
+        touched.some((row) => row.id === 'loadMode' && !row.equalsHtmlDefault),
         'Q8: loadMode is reset to mmap while the HTML default option is none (the divergence this row is about)');
     t.eq('L2-Q8-control-count', recordedQ8.controlCount, afterFields.rows.length,
         'the comparison covers the same number of controls as the recording');
@@ -235,22 +278,22 @@ async function orphanKeys(ctx) {
     t.ok('L2-Q16-corpus-has-orphans', withOrphans.length >= 28,
         'the corpus carries orphan keys in ' + withOrphans.length + '/48 configs (Q16 evidence: 28)');
     const target = withOrphans[0];
-    const present = ORPHAN_KEYS.filter((key) => key in target.config);
+    // Order follows the stored entry, so the assertion also proves the load did not rekey it.
+    const storedOrphans = (entry) => Object.keys(entry).filter((key) => ORPHAN_KEYS.includes(key));
     const seedJson = JSON.stringify({ [target.name]: target.config });
     const { page } = await ctx.open({ seed: { configsKey: 'llamaCppConfigs', configsJson: seedJson,
         settingsKey: 'llamaCppSettings', settingsJson: corpus.settingsJson } });
-    t.eq('L2-Q16-before-seed', present,
-        Object.keys(JSON.parse(await browser.storageValue(page, 'llamaCppConfigs'))[target.name])
-            .filter((key) => ORPHAN_KEYS.includes(key)),
-        'the orphan keys are present in the seeded storage exactly as the corpus stores them');
+    t.eq('L2-Q16-before-seed', storedOrphans(target.config),
+        storedOrphans(JSON.parse(await browser.storageValue(page, 'llamaCppConfigs'))[target.name]),
+        'the orphan keys are present in the seeded storage exactly as the corpus stores them'
+        + ' (' + storedOrphans(target.config).join(', ') + ')');
     await browser.clickConfig(page, target.name);
     await page.waitForSelector('#configList .config-item.active');
     t.eq('L2-Q16-load-does-not-clean', seedJson, await browser.storageValue(page, 'llamaCppConfigs'),
         'loading a config does NOT migrate or clean the orphan keys (Q16: candidate must not clean on load)');
-    t.eq('L2-Q16-load-keeps-keys', present,
-        Object.keys(JSON.parse(await browser.storageValue(page, 'llamaCppConfigs'))[target.name])
-            .filter((key) => ORPHAN_KEYS.includes(key)),
-        'the stored entry is byte-identical after the load');
+    t.eq('L2-Q16-load-keeps-keys', storedOrphans(target.config),
+        storedOrphans(JSON.parse(await browser.storageValue(page, 'llamaCppConfigs'))[target.name]),
+        'the stored entry still holds the same orphan keys, in the same order, after the load');
 
     await browser.clickConfig(page, target.name, '.edit-btn');
     await page.waitForSelector('#configFormContainer[open]');

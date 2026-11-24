@@ -106,6 +106,9 @@ async function conditionalCheck(ctx) {
     t.eq('L2-KVARN-all-present', 4, initial.filter((row) => row.exists).length,
         'each of the four dropdowns has its own .kvarn-warning element');
 
+    // #ctkd and #ctvd live inside #draftModelSection, which speculationType hides; the user reaches
+    // them by choosing a draft speculation type, and they must be shown to be acted on.
+    await second.page.selectOption('#speculationType', 'draft-dflash');
     for (const id of CACHE_TYPES) {
         await second.page.selectOption('#' + id, 'kvarn5');
         const row = (await warnings()).find((entry) => entry.id === id);

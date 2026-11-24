@@ -95,5 +95,15 @@ Non-determinism addenda discovered during capture (beyond §8): dotenv v17 print
   and row-id set preserved; file/line columns drifted by design. Also `server.js` +1 line serving `/lib` —
   part of candidate surface, must be ported.
 
+- 2026-11-24 C8 L2 LANDING (Verifier): new golden family `fixtures/goldens/resave/` (inputs.jsonl +
+  inputs.manifest.json + goldens.jsonl) recorded from the `parity-baseline` settings page by
+  `tests/L2-ui/record-inputs.js` (command recorded in inputs.manifest.json; C5). `fixtures/vectors/MANIFEST.json`
+  refreshed (gen-goldens --check: VERIFIED 20 entries, prior goldens byte-identical). `fixtures/HASH-PIN.json`
+  re-pinned accordingly (partially swept early into 34644b1, completed at landing; additions + expected hash
+  refreshes only, zero gate-artifact drops). L2 suite self-test GREEN against legacy (corpus round-trip
+  48/48 argv+serverPath+form-sha, resave bytes/Q16, ini order all-48 + 2-config both seeds, Q18 alert-block
+  mode 48/48). `tests/L2-ui/out/DISAGREEMENTS.md`: 28/48 browser-vs-goldens divergences classified
+  (Q16/Q17/Q18/Q19 + speculationType); no golden moved (C4).
+
 Out of scope (C2 dead code, recorded not ported): `createDefaultConfigName` (script.js:205),
 client `restartServer` (script.js:968). `/restart` HTTP endpoint IS live and must be ported.

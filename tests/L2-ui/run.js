@@ -152,6 +152,18 @@ function writeDisagreements(outDir, rows) {
     return path.join(outDir, 'DISAGREEMENTS.md');
 }
 
+// A Chromium process can be taken out by the OS or by a cleanup pass between runs. The suite
+// asserts recorded expectations either way, so it relaunches instead of failing every remaining
+// assertion with "browser has been closed".
+async function ensureBrowser(context) {
+    if (!context.browser || !context.browser.isConnected()) {
+        const { chromium } = require('playwright');
+        console.log('  browser connection lost — relaunching Chromium');
+        context.browser = await chromium.launch();
+    }
+    return context.browser;
+}
+
 async function runOnce(options, context) {
     const results = new Results();
     const checks = loadChecks().filter((check) => !options.only || options.only.has(check.id));
@@ -176,19 +188,28 @@ async function runOnce(options, context) {
                     ? openOptions.seed.configs
                     : JSON.parse(openOptions.seed.configsJson);
                 channel.route('GET /models', JSON.stringify(fixtures.corpusModelsPayload(configs)),
-                    'INPUT: recorded fixtures/http/J2-models entry shape, filled with the corpus paths'
-                    + ' (the corpus-mode option set; expectations still come from recorded legacy output)');
+                    'INPUT: recorded J2 entry shape, filled with the corpus paths (the corpus-mode'
+                    + ' option set; expectations still come from recorded legacy output)');
             }
-            const state = await browserHelpers.openPage(context.browser, Object.assign({}, openOptions, {
+            if (openOptions && openOptions.statusPair) {
+                channel.routeOnStartStop('GET /status',
+                    fixtures.httpBody('J1-settings', 'status'),
+                    fixtures.httpBody('J5-ui-launch', 'start-from-ui-status'),
+                    'recorded GET /status pair (J1-settings idle, J5-ui-launch while running)');
+            }
+            const state = await browserHelpers.openPage(await ensureBrowser(context),
+                Object.assign({}, openOptions, {
                 base: context.base,
                 mocks: channel,
                 seed: openOptions && openOptions.seed
             }));
             current.state = state;
             current.mocks = channel;
+            // `dialogs` is the live array the page's dialog handler pushes to, so a check can read it
+            // as a list; `navigations` is a counter and comes back as a getter.
             return Object.assign({}, state, {
                 mocks: channel,
-                dialogs: () => state.dialogs,
+                dialogs: state.dialogs,
                 navigations: () => state.navigations
             });
         },
@@ -246,8 +267,38 @@ async function runOnce(options, context) {
         'no L2 file requires public/script.js, legacy/lib or server.js (plan §6 rule 1)');
     results.eq('L2-STATIC-404', [], context.server.missing,
         'the page requested no asset the sandbox failed to serve');
-    await context.stopCounters();
+    // The browser and the static server outlive a single run: --repeat reuses them, and main()
+    // releases both in its finally.
     return { results, disagreementRows, notes: ctx.notes, checks: checks.map((check) => check.id) };
+}
+
+function reportRun(attempt, options, run, sandbox, server) {
+    const summary = run.results.summary();
+    console.log('\nrun ' + attempt + '/' + options.repeat + ': ' + summary.passed + '/'
+        + summary.total + ' assertions passed');
+    for (const group of summary.groups) {
+        console.log('  ' + (group.failed ? 'FAIL' : ' ok ') + ' ' + group.group + ': '
+            + (group.total - group.failed) + '/' + group.total);
+    }
+    for (const failure of run.results.failures.slice(0, 40)) {
+        console.log('\n  RED ' + failure.id + ' [' + failure.group + ']');
+        if (failure.note) console.log('       claim   : ' + failure.note);
+        console.log('       expected: ' + inspect(failure.expected).slice(0, 600));
+        console.log('       actual  : ' + inspect(failure.actual).slice(0, 600));
+        if (failure.difference) console.log('       at      : ' + failure.difference);
+    }
+    if (run.results.failures.length > 40) {
+        console.log('\n  ... ' + (run.results.failures.length - 40) + ' more failures');
+    }
+    const reportPath = path.join(options.out, 'run-' + attempt + '.json');
+    fs.writeFileSync(reportPath, JSON.stringify({
+        target: { base: server.base, ref: sandbox.ref || sandbox.kind, sha: sandbox.sha, app: sandbox.app },
+        summary, failures: run.results.failures, notes: run.notes, checks: run.checks,
+        assertions: run.results.rows.map((row) => ({ id: row.id, group: row.group, pass: row.pass,
+            note: row.note }))
+    }, null, 2));
+    const disagreements = writeDisagreements(options.out, run.disagreementRows);
+    console.log('  report: ' + reportPath + '\n  disagreements: ' + disagreements);
 }
 
 async function main() {
@@ -263,18 +314,19 @@ async function main() {
     const server = await app.startStaticServer(sandbox.app, options.port);
     const { chromium } = require('playwright');
     const browser = await chromium.launch();
+    browser.on('disconnected', () => console.log('  [diag] browser connection dropped'));
     mocks.resetIoRequestsTotal();
     const context = {
         base: server.base,
         fileFor: (urlPath) => {
             const mapped = app.fileFor(sandbox.app, urlPath);
-            return { serve: !!mapped.full, file: mapped.rel };
+            return { exists: mapped.exists, rel: mapped.rel };
         },
         browser,
         server,
         ioRequests: () => mocks.ioRequestsTotal(),
         stopCounters: async () => {
-            await browser.close();
+            if (context.browser.isConnected()) await context.browser.close();
             await server.close();
         }
     };
@@ -284,47 +336,26 @@ async function main() {
 
     let worst = 0;
     const runs = [];
-    for (let attempt = 1; attempt <= options.repeat; attempt += 1) {
-        const run = await runOnce(options, context);
-        runs.push(run);
-        const summary = run.results.summary();
-        console.log('\nrun ' + attempt + '/' + options.repeat + ': ' + summary.passed + '/'
-            + summary.total + ' assertions passed');
-        for (const group of summary.groups) {
-            console.log('  ' + (group.failed ? 'FAIL' : ' ok ') + ' ' + group.group + ': '
-                + (group.total - group.failed) + '/' + group.total);
+    // The browser and the static server are released even when a check throws: a leaked Chromium tree
+    // contends for ports and profiles with the next run.
+    try {
+        for (let attempt = 1; attempt <= options.repeat; attempt += 1) {
+            const run = await runOnce(options, context);
+            runs.push(run);
+            reportRun(attempt, options, run, sandbox, server);
+            worst = Math.max(worst, run.results.failures.length);
+            if (run.results.failures.length && options.repeat > 1) break;
         }
-        for (const failure of run.results.failures.slice(0, 40)) {
-            console.log('\n  RED ' + failure.id + ' [' + failure.group + ']');
-            if (failure.note) console.log('       claim   : ' + failure.note);
-            console.log('       expected: ' + inspect(failure.expected).slice(0, 600));
-            console.log('       actual  : ' + inspect(failure.actual).slice(0, 600));
-            if (failure.difference) console.log('       at      : ' + failure.difference);
-        }
-        if (run.results.failures.length > 40) {
-            console.log('\n  ... ' + (run.results.failures.length - 40) + ' more failures');
-        }
-        const reportPath = path.join(options.out, 'run-' + attempt + '.json');
-        fs.writeFileSync(reportPath, JSON.stringify({
-            target: { base: server.base, ref: sandbox.ref || sandbox.kind, sha: sandbox.sha, app: sandbox.app },
-            summary, failures: run.results.failures, notes: run.notes, checks: run.checks,
-            assertions: run.results.rows.map((row) => ({ id: row.id, group: row.group, pass: row.pass,
-                note: row.note }))
-        }, null, 2));
-        const disagreements = writeDisagreements(options.out, run.disagreementRows);
-        console.log('  report: ' + reportPath + '\n  disagreements: ' + disagreements);
-        worst = Math.max(worst, run.results.failures.length);
-        if (run.results.failures.length && options.repeat > 1) break;
+    } finally {
+        await context.stopCounters();
     }
 
     if (options.verifySelftest) {
         const green = worst === 0 && runs.every((run) => run.results.summary().total > 200);
         console.log('\nL2 SELF-TEST ' + (green ? 'GREEN' : 'RED') + ' against '
             + (sandbox.ref || sandbox.kind) + ' (' + runs.length + ' consecutive run(s))');
-        await context.stopCounters();
         return green ? 0 : 1;
     }
-    await context.stopCounters();
     return worst ? 1 : 0;
 }
 

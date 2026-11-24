@@ -90,6 +90,21 @@
       "sha256": "d564291f485c45c62e7de6642cbd8d7b355d3881a025f63a2569169d5bc0df98"
     },
     {
+      "file": "fixtures/goldens/resave/inputs.jsonl",
+      "command": "node tests/L2-ui/record-inputs.js",
+      "sha256": "34f2bda994dc04b6799b0cc3214408af334f0891da5683bd6d44ce90ef0cccac"
+    },
+    {
+      "file": "fixtures/goldens/resave/inputs.manifest.json",
+      "command": "node tests/L2-ui/record-inputs.js",
+      "sha256": "1e414e484099ee644a6473f68aa6f21259d527c9a97b16c0ffa5c8fa6f0b4719"
+    },
+    {
+      "file": "fixtures/goldens/resave/goldens.jsonl",
+      "command": "node tools/parity/gen-goldens.js",
+      "sha256": "53b34b1a3613135fd8d50f51a139bcde0a497fe4572a9fac6ca9f16fccc8cb1d"
+    },
+    {
       "file": "fixtures/vectors/MANIFEST.json",
       "command": "node tools/parity/gen-goldens.js (writes this file)",
       "sha256": null,

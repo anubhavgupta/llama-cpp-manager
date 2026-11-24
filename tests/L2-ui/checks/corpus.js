@@ -95,6 +95,10 @@ const selectConfig = async (page, name) => {
     await page.waitForTimeout(60);
 };
 
+// The buttons swap on the page's own 5 s status poll; a check that clicks blind races the harness, so
+// it waits for the state it is about to act on.
+const enabled = async (page, id) => page.waitForSelector('#' + id + ':not([disabled])');
+
 async function listAndOrder(ctx) {
     const t = ctx.results;
     t.group('corpus');
@@ -124,9 +128,12 @@ async function launchEveryConfig(ctx) {
         return;
     }
     const inputs = fixtures.inputsRecorded();
-    const byName = new Map((inputs ? inputs.rows : []).filter((row) => row.op === 'resave')
+    // The form state the recorded LAUNCH session captured (the DOM right before #launchBtn was
+    // clicked) is the state this loop reproduces; the re-save rows hold the edit-form state instead.
+    const byName = new Map((inputs ? inputs.rows : [])
+        .filter((row) => row.op === 'launch' && row.mode === 'corpus')
         .map((row) => [row.name, row]));
-    const { page, corpus } = await openCorpus(ctx);
+    const { page, corpus } = await openCorpus(ctx, { statusPair: true });
     const disagreements = [];
     const alertBlocked = [];
     const launched = [];
@@ -153,11 +160,16 @@ async function launchEveryConfig(ctx) {
             if (differences.length) {
                 formStateProblems.push({ name, differences });
             }
+            t.eq('L2-CORPUS-form-sha-' + name, golden.launch_form_sha256,
+                fixtures.sha256(JSON.stringify(input.form)),
+                'the recorded form state that this launch expectation was composed from is '
+                + 'the state the page is in now (golden launch_form_sha256)');
         }
 
         const postsBefore = ctx.mocks.of('POST /start').length;
         const stopsBefore = ctx.mocks.of('POST /stop').length;
         const dialogsBefore = (await ctx.dialogs()).length;
+        await enabled(page, 'launchBtn');
         await page.click('#launchBtn');
         const posted = await ctx.mocks.waitFor('POST /start', postsBefore + 1, 3000);
         await page.waitForTimeout(60);
@@ -192,6 +204,7 @@ async function launchEveryConfig(ctx) {
         }
         // Stop through the UI so the next Launch click is enabled again (launchBtn is disabled while
         // the page believes a server is running).
+        await enabled(page, 'stopBtn');
         await page.click('#stopBtn');
         const stopped = await ctx.mocks.waitFor('POST /stop', stopsBefore + 1, 3000);
         if (!stopped) throw new Error('clicking Stop did not post /stop after ' + name);
@@ -219,22 +232,21 @@ async function launchEveryConfig(ctx) {
 async function alertBlockedMode(ctx) {
     const t = ctx.results;
     t.group('corpus');
-    const inputs = fixtures.inputsRecorded();
-    const rows = new Map((inputs ? inputs.rows : []).filter((row) => row.op === 'alert-blocked')
-        .map((row) => [row.name, row]));
+    const resave = fixtures.resaveGoldens();
+    const blocked = resave ? resave.blocked : new Map();
     const { page, corpus } = await openCorpus(ctx, { models: 'recorded' });
     const options = await browser.optionValues(page, 'modelPath');
     const recordedModels = fixtures.modelsPayload().models.map((model) => model.path);
     t.eq('L2-CORPUS-Q18-options', recordedModels, options.slice(1),
         'the /models mock replayed the recorded J2 payload (placeholder option aside)');
-    const blanked = [];
+    const observed = [];
     const alerts = [];
     const postsBefore = () => ctx.mocks.of('POST /start').length;
     for (const name of corpus.names) {
         await selectConfig(page, name);
         const value = await page.inputValue('#modelPath');
         const selectedIndex = await page.evaluate(() => document.getElementById('modelPath').selectedIndex);
-        if (value === '' && selectedIndex === -1) blanked.push(name);
+        observed.push([name, value, selectedIndex]);
         const before = postsBefore();
         const dialogsBefore = (await ctx.dialogs()).length;
         await page.click('#launchBtn');
@@ -242,16 +254,23 @@ async function alertBlockedMode(ctx) {
         const freshDialogs = (await ctx.dialogs()).slice(dialogsBefore);
         if (postsBefore() === before) alerts.push({ name, dialogs: freshDialogs });
     }
-    t.eq('L2-CORPUS-Q18-blanked-count', 48, blanked.length,
-        'Q18: with the recorded J2 option set every corpus modelPath is missing from the <option> list'
-        + ' and blanks on load');
+    const expected = corpus.names.map((name) => {
+        const golden = blocked.get(name);
+        return golden ? [name, golden.modelPathValue, golden.modelSelectedIndex] : [name, null, null];
+    });
+    t.eq('L2-CORPUS-Q18-blanked', expected, observed,
+        'Q18: with the recorded J2 option set every corpus modelPath is missing from the <option> list,'
+        + ' so it blanks on load (value "", selectedIndex -1) exactly as the recording shows');
     t.eq('L2-CORPUS-Q18-alert-count', 48, alerts.length,
         'and every Launch click alerts instead of posting /start');
     const texts = [...new Set(alerts.map((row) => row.dialogs.map((dialog) => dialog.message).join('|')))];
-    const recordedAlerts = rows.size ? [...new Set([...rows.values()].map((row) => row.dialogs
-        .map((dialog) => dialog.message).join('|')))] : texts;
-    t.eq('L2-CORPUS-Q18-alert-text', recordedAlerts, texts,
-        'the alert text matches what the legacy page alerted with (recorded by tests/L2-ui/record-inputs.js)');
+    const recordedAlerts = blocked.size
+        ? [...new Set([...blocked.values()].map((row) => row.dialogs
+            .map((dialog) => dialog.message).join('|')))].sort()
+        : texts;
+    t.eq('L2-CORPUS-Q18-alert-text', recordedAlerts.sort(), texts,
+        'the alert text matches what the legacy page alerted with (fixtures/goldens/resave,'
+        + ' op=alert-blocked)');
     t.eq('L2-CORPUS-Q18-no-posts', 0, ctx.mocks.of('POST /start').length,
         'nothing was posted in this mode (launchServer returns before fetch)');
     ctx.note('corpus-alert-blocked', 'all 48 configs alert-blocked with: ' + texts.join(' | '));
@@ -366,11 +385,21 @@ async function iniBytesFromAll(ctx) {
     t.eq('L2-INI-all48-section-order', corpus.names.map((name) => '[' + name + ']'),
         posted.presets.split('\n').filter((line) => /^\[.+\]$/.test(line)),
         '§9 trap 6: ini section order is Object.entries(localStorage) order, not the alphabetical render order');
-    const sections = posted.presets.slice(INI_HEADER.length).split('\n\n').filter((block) => block !== '');
+    // The generated ini has no blank line between sections, so the blocks are header-delimited.
+    // The trailing `port = ` line is appended straight after the last section (Q10) and belongs to
+    // no section of its own.
+    const portLine = 'port = ' + corpus.settings.serverPort + '\n';
+    const sections = posted.presets.slice(INI_HEADER.length).split(/(?=^\[)/m)
+        .filter((block) => block !== '')
+        .map((block) => (block.endsWith(portLine) ? block.slice(0, -portLine.length) : block));
     const perConfig = [];
     corpus.names.forEach((name, index) => {
-        const want = iniSection(goldens.byName.get(name).golden).replace(/\n$/, '');
-        if (sections[index] !== want) perConfig.push(name + ': section ' + index + ' differs');
+        const want = iniSection(goldens.byName.get(name).golden);
+        if (sections[index] !== want) {
+            perConfig.push(name + ': section ' + index + ' differs — got '
+                + JSON.stringify((sections[index] || '').slice(0, 120)) + ' want '
+                + JSON.stringify(want.slice(0, 120)));
+        }
     });
     t.eq('L2-INI-all48-per-section', [], perConfig,
         'each of the 48 ini sections equals its own corpus golden (the composition is per-config)');
@@ -419,9 +448,10 @@ async function iniTwoConfigSubset(ctx) {
     const reverse = results[pair.slice().reverse().join('>')];
     t.ok('L2-INI-2config-order-matters', forward && reverse && forward.presets !== reverse.presets,
         'the two seeds produce different bytes: the order claim is real, not vacuous');
-    const swapped = forward.presets.replace(new RegExp('\\[' + pair[0] + '\\]\\n'), '[SWAPPED]\n');
-    t.ok('L2-INI-2config-only-order-differs', swapped.includes('[SWAPPED]'),
-        'sanity: both section names are present in the forward seed');
+    const bothSections = forward.presets.includes('[' + pair[0] + ']')
+        && forward.presets.includes('[' + pair[1] + ']');
+    t.ok('L2-INI-2config-only-order-differs', bothSections,
+        'sanity: both section names appear in the forward seed (' + pair.join(', ') + ')');
 }
 
 const checks = [

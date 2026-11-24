@@ -15,6 +15,14 @@ function git(args) {
     return spawnSync('git', args, { cwd: REPO, encoding: 'utf8' }).stdout.trim();
 }
 
+function isFile(candidate) {
+    try {
+        return fs.statSync(candidate).isFile();
+    } catch (error) {
+        return false;
+    }
+}
+
 function isDir(candidate) {
     try {
         return fs.statSync(candidate).isDirectory();
@@ -111,7 +119,10 @@ function fileFor(app, urlPath) {
     const leaf = rel.startsWith('lib/') ? rel.slice('lib/'.length) : rel;
     const full = path.resolve(root, leaf);
     const within = full === root || full.startsWith(root + path.sep);
-    return { full: within ? full : null, rel };
+    // `exists` is what the fetch mock asks before standing aside: `full` is only a candidate path, and
+    // treating it as "served" sent /models and /status to the static server (404) instead of to the
+    // recorded fixture bytes.
+    return { full: within ? full : null, rel, exists: within && isFile(full) };
 }
 
 function startStaticServer(app, port) {
@@ -120,7 +131,7 @@ function startStaticServer(app, port) {
     const server = http.createServer((req, res) => {
         const mapped = fileFor(app, req.url);
         served.push({ method: req.method, url: req.url, file: mapped.rel });
-        if (!mapped.full || !fs.existsSync(mapped.full) || fs.statSync(mapped.full).isDirectory()) {
+        if (!mapped.exists) {
             missing.push(req.url);
             res.writeHead(404, { 'Content-Type': 'text/plain' });
             res.end('not found: ' + mapped.rel);

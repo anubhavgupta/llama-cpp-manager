@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "parity-watchdog",
+  "name": "parity-port stall watchdog",
+  "cwd": "C:\\projects\\Cline-demo",
+  "trigger": {
+    "kind": "interval",
+    "every": "20m",
+    "everyMs": 1200000,
+    "anchorAt": "2026-11-24T03:56:56.701Z",
+    "nextRunAt": "2026-11-24T12:56:56.701Z"
+  },
+  "target": {
+    "workflowScript": "// Watchdog: revive stalled parity-port workers. See tools/parity/tasks/README.md (Watchdog procedure).\nconst report = await runs.run(\"main\", {\n  agent: \"worker\",\n  task:\n    \"You are the parity-port watchdog. Repo C:/projects/Cline-demo. Read tools/parity/tasks/README.md section '## Watchdog procedure' and tools/parity/tasks/WATCHDOG.json, then execute the procedure exactly for every tracked run id. If control actions are denied by policy, do not force anything: record that in tools/parity/reports/watchdog.log and stop. Never interrupt runs listed in ignoreIds. Medium-sized tool calls; you must finish within ~5 minutes.\",\n});\nconst summary = (report && report.output ? String(report.output) : \"\").slice(0, 1500);\nreturn { ok: !!report.ok, ranAt: new Date().toISOString(), summary };",
+    "args": {}
+  },
+  "overlap": "skip",
+  "catchUp": "latest",
+  "paused": false,
+  "createdAt": "2026-11-24T03:56:56.701Z",
+  "updatedAt": "2026-11-24T12:40:10.324Z",
+  "lastRunId": "4e45f11c"
+}

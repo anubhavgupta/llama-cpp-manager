@@ -135,10 +135,13 @@ function buildResave(gen, impl) {
         inputs_sha256: vectors.sha256(slices.readText(path.join(REPO, RESAVE_INPUTS))),
         models_corpus_sha256: vectors.sha256(JSON.stringify(models)),
         count: resaved.size + blocked.size + created.size,
-        op_note: 'op=resave/create carry saved_config + saved_field_order + the exact localStorage '
-            + 'bytes the composition wrote (storage_expected) and recorded (storage_actual); '
-            + 'op=launch carry the argv composed from the recorded DOM state (cross-checked against '
-            + 'the recorded POST /start bytes); op=alert-blocked carry the recorded native dialog text',
+        op_note: 'op=resave carries saved_config + saved_field_order + the exact localStorage bytes '
+            + 'the composition wrote (storage_expected) and the baseline page wrote (storage_actual); '
+            + 'op=launch-side values (argv, serverPath, serverPort) are composed from the recorded DOM '
+            + 'state and cross-checked against the recorded POST /start bytes; op=create and '
+            + 'op=alert-blocked are recorded-only (create is written by saveConfiguration, not '
+            + 'saveCurrentValues; alert-blocked configs never posted anything, so argv is null and the '
+            + 'recorded native dialog text is the expectation)',
         ini_note: 'ini is base64 of a single-config ini built from the saved config (ini_from_saved), '
             + 'and ini_after_resave the same bytes rebuilt from the entry the re-save wrote — the '
             + 'difference is Q16 (orphan keys dropped, loadMode/reasoning migrated in)'
@@ -172,6 +175,7 @@ function buildResave(gen, impl) {
         out.push(JSON.stringify({
             kind: 'golden', family: RESAVE, op: 'resave', name: name, impl: impl,
             input_form_sha256: row.form_sha, input_configurations_sha256: row.configurations_sha,
+            launch_form_sha256: launch.form_sha,
             saved_config: JSON.stringify(savedEntry), saved_field_order: Object.keys(savedEntry),
             storage_expected: composed.written[0], storage_actual: row.storage_after,
             argv: argv, argv_recorded_sha256: vectors.sha256(JSON.stringify(launch.argv)),
@@ -181,18 +185,19 @@ function buildResave(gen, impl) {
         }));
     }
     for (const [name, row] of created) {
-        const fields = slices.fieldsFromControls(row.form, kinds);
-        const composed = slices.runBaselineSave(gen, fields,
-            JSON.parse(JSON.stringify(row.configurations)), row.configId);
-        vectors.assert(composed.written[0] === row.storage_after, name
-            + ': the composed create-path bytes are not the bytes the baseline page wrote\n'
-            + slices.firstLineDiff(composed.written[0], row.storage_after));
+        // The create path is recorded, not composed: `saveCurrentValues(configId)` returns immediately
+        // without a configId, so a new entry is written by saveConfiguration() — a different function,
+        // outside the pinned slices. The recorded bytes are still legacy output (C5).
+        const written = JSON.parse(row.storage_after);
+        vectors.assert(written[name], name + ': the recorded create bytes hold no ' + name + ' entry');
         out.push(JSON.stringify({
             kind: 'golden', family: RESAVE, op: 'create', name: name, impl: impl,
             input_form_sha256: row.form_sha, input_configurations_sha256: row.configurations_sha,
-            saved_config: JSON.stringify(composed.configs[name]),
-            saved_field_order: Object.keys(composed.configs[name]),
-            storage_expected: composed.written[0], storage_actual: row.storage_after
+            saved_config: JSON.stringify(written[name]),
+            saved_field_order: Object.keys(written[name]),
+            storage_expected: null, storage_actual: row.storage_after,
+            note: 'recorded only: saveCurrentValues returns without a configId, so the new entry is '
+                + 'written by saveConfiguration(); no slice composes this row'
         }));
     }
     for (const [name, row] of blocked) {

@@ -25,10 +25,24 @@ const IO_STUB = `
 const host = { calls: [], sockets: [] };
 function makeSocket() {
     const handlers = {};
+    let connectSent = false;
+    const sendConnect = function () {
+        if (connectSent) return;
+        connectSent = true;
+        setTimeout(function () {
+            for (const fn of (handlers.connect || [])) fn();
+        }, 0);
+    };
     const socket = {
         connected: true,
         id: 'l2-stub',
-        on(event, fn) { (handlers[event] = handlers[event] || []).push(fn); return socket; },
+        on(event, fn) {
+            (handlers[event] = handlers[event] || []).push(fn);
+            // socket.io emits 'connect' after the handler exists; the app's banner line is part of the
+            // recorded pane output, so the stub reproduces that emission.
+            if (event === 'connect') sendConnect();
+            return socket;
+        },
         off(event, fn) {
             handlers[event] = (handlers[event] || []).filter((entry) => entry !== fn);
             return socket;
@@ -73,6 +87,8 @@ class MockChannel {
         this.violations = [];
         this.blockedExternal = [];
         this.ioRequests = 0;
+        this.stateRoutes = new Map();
+        this.serverRunning = false;
         for (const [key, journey, name] of DEFAULT_ROUTES) {
             this.route(key, fixtures.httpBody(journey, name), 'fixtures/http/' + journey + '/' + name + '.response');
         }
@@ -107,6 +123,19 @@ class MockChannel {
         return this;
     }
 
+    // Answer `key` from one of two recorded bodies, switched by the page's own POST /start and
+    // POST /stop calls. The legacy page saw exactly this pair: `{"running":false}` while idle
+    // (fixtures/http/J1-settings/status.response) and `{"running":true}` after it started a server
+    // (fixtures/http/J5-ui-launch/start-from-ui-status.response). A static body would let the page's
+    // 5 s status poll flip Launch/Stop under a check mid-iteration, which is a harness race, not a
+    // claim about the app.
+    routeOnStartStop(key, idle, running, sources) {
+        const body = (value) => (Buffer.isBuffer(value) ? value
+            : Buffer.from(typeof value === 'string' ? value : JSON.stringify(value), 'utf8'));
+        this.stateRoutes.set(key, { idle: body(idle), running: body(running), source: sources });
+        return this;
+    }
+
     keyFor(url) {
         const parsed = new URL(url);
         return parsed.search ? parsed.pathname + parsed.search : parsed.pathname;
@@ -138,8 +167,19 @@ class MockChannel {
                 return route.fulfill({ status: 200, contentType: 'text/javascript; charset=utf-8', body: IO_STUB });
             }
             const mapped = this.fileFor(parsed.pathname);
-            if (mapped.serve) return route.continue();
+            // Only a real asset on disk stands aside; anything else is answered from the mock table,
+            // and an untabled path is a violation rather than a silent static 404.
+            if (mapped.exists) return route.continue();
             const path = this.keyFor(url);
+            const stateful = this.stateRoutes.get(method + ' ' + parsed.pathname);
+            if (stateful) {
+                const stateBody = this.serverRunning ? stateful.running : stateful.idle;
+                this.requests.push({ method, url, path: parsed.pathname, search: parsed.search,
+                    key: method + ' ' + path, body: request.postData(), at: Date.now(),
+                    resourceType: request.resourceType(), mocked: true,
+                    source: stateful.source + (this.serverRunning ? ' (running)' : ' (idle)') });
+                return route.fulfill({ status: 200, contentType: 'application/json', body: stateBody });
+            }
             const lookupKey = (this.routes.has(method + ' ' + path) || this.routes.has(method + ' ' + parsed.pathname))
                 ? (this.routes.has(method + ' ' + path) ? method + ' ' + path : method + ' ' + parsed.pathname)
                 : null;
@@ -154,6 +194,10 @@ class MockChannel {
                 return route.fulfill({ status: 500, contentType: 'application/json',
                     body: JSON.stringify({ success: false, error: 'L2 mock has no recording for ' + method + ' ' + path }) });
             }
+            // The start/stop pair switches the stateful /status answer; both recorded bodies answer
+            // `{"success":true}`, so the switch follows the page's own clicks.
+            if (method === 'POST' && parsed.pathname === '/start') this.serverRunning = true;
+            if (method === 'POST' && parsed.pathname === '/stop') this.serverRunning = false;
             return route.fulfill({ status: 200, contentType: 'application/json', body: entry.body });
         });
     }

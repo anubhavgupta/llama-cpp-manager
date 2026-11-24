@@ -163,6 +163,15 @@ function iniBytes() {
     return readBuffer('ini', 'J4b-ui-presets-launch', 'presets-from-ui.ini').toString('utf8');
 }
 
+// The canned /metrics body the recorded screenshots were taken with. Provenance: SCREENSHOT_METRICS in
+// tools/parity/capture-legacy.js — "left live it would repaint the charts and the metric readouts
+// differently in every recorded pixel". It is an INPUT the recording names, and the readout digit count
+// (cpu 10 → two digits) is what the recorded element geometry encodes, so a fingerprint rebuild has to
+// serve the same body to match.
+function screenshotMetrics() {
+    return { cpu: 10, ram: 20, gpu: 30, vram: 40, vramUsage: '12345/24576' };
+}
+
 // The recorded /models payload, used as-is for the normal mock and as the entry SHAPE for the
 // corpus-mode payload (paths from the corpus, same five keys, no mmproj association).
 function modelsPayload() {
@@ -187,8 +196,13 @@ function corpusModelsPayload(configs) {
     // `path` is copied verbatim: the page sets option.value = model.path and later assigns the saved
     // config's modelPath to the select, so any normalization here would blank the selector (Q18).
     const dirOf = (value) => value.slice(0, Math.max(value.lastIndexOf('\\'), value.lastIndexOf('/')) + 1);
-    const root = paths.map(dirOf).sort((a, b) => b.length - a.length)
-        .find((candidate) => paths.every((value) => value.indexOf(candidate) === 0)) || '';
+    // Longest common prefix of every path, cut back to its last separator: that is the models
+    // directory the recorded payload's relativePath is relative to.
+    let common = paths.length ? paths[0] : '';
+    for (const value of paths) {
+        while (common && value.indexOf(common) !== 0) common = common.slice(0, -1);
+    }
+    const root = dirOf(common);
     const shape = Object.fromEntries(MODEL_KEYS.map((key) => [key, null]));
     return {
         success: true,
@@ -223,8 +237,12 @@ function resaveGoldens() {
     const file = path.join(FIXTURES, 'goldens', 'resave', 'goldens.jsonl');
     if (!fs.existsSync(file)) return null;
     const lines = jsonl(file);
-    return { header: lines[0], byName: new Map(lines.filter((row) => row.kind === 'golden')
-        .map((row) => [row.name, row])) };
+    const rows = lines.filter((row) => row.kind === 'golden');
+    // Two rows share a name: the re-save/launch row and the alert-blocked row (the same config in the
+    // recorded-J2 /models mode), so they are keyed separately.
+    return { header: lines[0],
+        byName: new Map(rows.filter((row) => row.op !== 'alert-blocked').map((row) => [row.name, row])),
+        blocked: new Map(rows.filter((row) => row.op === 'alert-blocked').map((row) => [row.name, row])) };
 }
 
 function inputsRecorded() {
@@ -265,6 +283,6 @@ module.exports = {
     httpRequest, jsonBuffer, recordedStorage, smallSeed, corpusSeed, corpusSubsetSeed,
     corpusConfigList, corpusSelectSurvey, uiFieldState, uiStateNotes, q8DeleteReset, renderArtifact,
     wsEvents, logPaneClaims, chunkBoundaryClaims, recordedDialogs, launchAttempts, iniClaims,
-    iniBytes, modelsPayload, corpusModelsPayload, jsonl, corpusGoldens, resaveGoldens,
+    iniBytes, modelsPayload, corpusModelsPayload, screenshotMetrics, jsonl, corpusGoldens, resaveGoldens,
     inputsRecorded, fieldManifest, savedFieldOrder, comparisonPolicy, baseline
 };

@@ -24,7 +24,11 @@ async function openPage(browser, options) {
     });
     if (options.seed) {
         const seed = options.seed;
+        // Seeded once per context. A check that makes the page reload (Q13) must NOT re-run the seed:
+        // re-seeding on reload would overwrite what the page itself wrote.
         await context.addInitScript((data) => {
+            if (sessionStorage.getItem('l2-seeded')) return;
+            sessionStorage.setItem('l2-seeded', '1');
             if (data.configsJson !== null && data.configsJson !== undefined) {
                 localStorage.setItem(data.configsKey, data.configsJson);
             }
@@ -244,9 +248,11 @@ const controlFacts = (page) => page.evaluate(() => {
             disabledAttr: element.hasAttribute('disabled'),
             disabled: !!element.disabled,
             value: element.type === 'checkbox' ? null : element.value,
-            defaultValue: element.type === 'checkbox' ? null : attribute('value'),
+            // SPEC states markup DEFAULTS as DOM properties (a text input with no value attribute has
+            // defaultValue ""), so the rendered side reads the property, not the attribute.
+            defaultValue: element.type === 'checkbox' ? null : element.defaultValue,
             checked: element.type === 'checkbox' ? element.checked : null,
-            defaultChecked: element.type === 'checkbox' ? element.hasAttribute('checked') : null,
+            defaultChecked: element.type === 'checkbox' ? element.defaultChecked : null,
             label: label ? (label.textContent || '').replace(/\s+/g, ' ').trim() : null,
             section: sectionOf(element),
             options: element.tagName === 'SELECT'

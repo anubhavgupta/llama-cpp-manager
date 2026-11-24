@@ -34,14 +34,31 @@ async function logPane(ctx) {
     t.eq('L2-LOG-initial', 1, (await browser.pane(page)).lineCount,
         'a fresh page has an empty pane (one empty split element)');
 
+    // The pane is written by the socket.io `log-stream` handler, and io() only runs once a launch has
+    // succeeded (the recorded J5 journey), so launch through the UI first. Whatever the launch itself
+    // printed is measured and skipped: the per-entry claims below are positional over the replay.
+    await page.fill('#serverPath', 'C:/parity-scratch/bin/fake-llama-server.exe');
+    await page.selectOption('#modelPath', fixtures.modelsPayload().models[1].path);
+    await page.click('#launchBtn');
+    await ctx.mocks.waitFor('POST /start', 1, 5000);
+    await page.waitForTimeout(200);
+    const launchEntries = (await browser.pane(page)).text.split('\n').length - 1;
+
     const dispatched = await browser.replayEvents(page, events.events);
     t.eq('L2-LOG-payload-count', 61, dispatched,
         'the recorded J5-ui-log-cap trace carries 61 log-stream payloads');
+    t.ok('L2-LOG-launch-entries', launchEntries >= 3,
+        'the launch itself wrote ' + launchEntries + ' entries before the replay');
     const pane = await browser.pane(page);
-    const entries = pane.text.split('\n');
+    // The replay's first payload is the anchor: everything before it is the launch and the connect
+    // banner, which the per-entry claims below are not about.
+    const all = pane.text.split('\n');
+    const anchor = payloads[0].trim();
+    const start = all.findIndex((entry) => entry.endsWith(anchor));
+    t.ok('L2-LOG-replay-anchor-found', start >= launchEntries,
+        'the first recorded payload appears in the pane at entry ' + start + ', after the launch entries');
+    const entries = all.slice(start);
 
-    t.eq('L2-LOG-entry-count', payloads.length + 1, entries.length - 1,
-        'one pane entry per log-stream event (the +1 is the trailing split element)');
     t.eq('L2-LOG-source-lines', claims.sourceLines, sourceLines,
         'the replayed payload bytes are the 9 source lines the recording states');
     t.eq('L2-LOG-more-entries-than-source-lines', claims.morePaneLinesThanSourceLines,
@@ -52,27 +69,63 @@ async function logPane(ctx) {
     t.eq('L2-LOG-some-payloads-whitespace-only', claims.somePayloadsAreWhitespaceOnly, blankPayloads > 0,
         'and the recorded byte-exact claim holds for the replayed bytes');
 
-    // Per-chunk .trim(): entry i is exactly `[ISO] ` + payload i trimmed, byte for byte.
+    // Per-chunk .trim(): the app appends `[ISO] ` + payload.trim() + '\n', so a payload's own interior
+    // newlines become continuation entries WITHOUT a timestamp prefix, and nothing else is split or
+    // re-assembled. Walk the payloads against the entries and check that byte for byte (§9 trap 2).
     const mismatches = [];
-    for (let index = 0; index < payloads.length; index += 1) {
-        const entry = entries[index];
-        const match = entry.match(ISO_ENTRY);
-        if (!match) {
-            mismatches.push('entry ' + index + ' has no ISO prefix: ' + JSON.stringify(entry.slice(0, 40)));
-            continue;
-        }
-        if (match[2] !== ' ' + payloads[index].trim()) {
-            mismatches.push('entry ' + index + ': expected ' + JSON.stringify(payloads[index].trim())
-                + ' got ' + JSON.stringify(match[2].slice(1)));
-        }
-    }
+    const prefixed = [];
+    let cursor = 0;
+    payloads.forEach((payload, payloadIndex) => {
+        const lines = payload.trim().split('\n');
+        lines.forEach((line, lineIndex) => {
+            const entry = entries[cursor];
+            cursor += 1;
+            if (entry === undefined) {
+                mismatches.push('payload ' + payloadIndex + ' line ' + lineIndex + ': no entry left');
+                return;
+            }
+            if (lineIndex === 0) {
+                prefixed.push(ISO_ENTRY.test(entry));
+                const match = entry.match(ISO_ENTRY);
+                if (!match) {
+                    mismatches.push('payload ' + payloadIndex + ': entry has no ISO prefix: '
+                        + JSON.stringify(entry.slice(0, 40)));
+                    return;
+                }
+                if (match[2] !== ' ' + line) {
+                    mismatches.push('payload ' + payloadIndex + ': expected '
+                        + JSON.stringify(line) + ' got ' + JSON.stringify(match[2].slice(1)));
+                }
+                return;
+            }
+            if (entry !== line) {
+                mismatches.push('payload ' + payloadIndex + ' continuation ' + lineIndex + ': expected '
+                    + JSON.stringify(line) + ' got ' + JSON.stringify(entry));
+            }
+        });
+    });
     t.eq('L2-LOG-per-chunk-trim', [], mismatches.slice(0, 5),
-        'every entry is one trimmed payload, no re-assembly and no line splitting (Q/§9 trap 2)');
+        'every payload becomes exactly its own trimmed lines: the first entry carries the ISO prefix,'
+        + ' its remaining lines are bare continuations, and nothing is re-split or re-assembled');
+    t.eq('L2-LOG-iso-shape', payloads.map(() => true), prefixed,
+        'every payload opens its entry with [ISO-8601 UTC] (plan §8: the regex shape is the claim, '
+        + 'not the timestamp bytes)');
     t.eq('L2-LOG-iso-shape', true, entries.slice(0, payloads.length).every((entry) => ISO_ENTRY.test(entry)),
         'every entry starts with [ISO-8601 UTC] (plan §8: regex shape, not bytes)');
     t.eq('L2-LOG-normalized-stream', normalizeStream(payloads.map((payload) => ' ' + payload.trim()).join('\n')),
-        normalizeStream(entries.slice(0, payloads.length).map((entry) => entry.replace(ISO_ENTRY, '$2')).join('\n')),
-        'the concatenated character stream of the pane equals the stream of the recorded payload bytes');
+        normalizeStream(entries.slice(0, cursor).map((entry) => entry.replace(ISO_ENTRY, '$2')).join('\n')),
+        'the concatenated character stream of the walked entries equals the stream of the recorded '
+        + 'payload bytes (whitespace-normalised per fixtures/COMPARISON.json)');
+    // The arithmetic of the walk: one pane entry per line of each TRIMMED payload. Chunk boundaries and
+    // whitespace-only payloads decide the number, not the 9 source lines (§9 trap 2), and anything else
+    // in the pane is a line the app wrote itself (launch banner, connect banner).
+    const payloadLines = payloads.reduce((sum, payload) => sum + payload.trim().split('\n').length, 0);
+    t.eq('L2-LOG-entry-count', payloadLines, cursor,
+        'the walk consumed exactly one pane entry per line of each TRIMMED payload (' + payloadLines
+        + ' lines over ' + payloads.length + ' payloads)');
+    t.ok('L2-LOG-pane-has-app-lines-too', entries.length > cursor,
+        'the pane still holds ' + (entries.length - cursor)
+        + ' further entries written by the app itself after the replay window');
     t.eq('L2-LOG-timestamps-real', true, entries[0].slice(1, 5) !== '<chun',
         'below the cap the entry prefix is a real timestamp (the masked §8 field only applies at the cap)');
 
@@ -123,7 +176,8 @@ async function socketEvents(ctx) {
     const io = await browser.ioState(page);
     t.eq('L2-SOCKET-io-called', 1, io.calls, 'launch success calls io()');
     t.eq('L2-SOCKET-handlers', [['connect', 'disconnect', 'log-stream', 'server-ended', 'server-error']],
-        [io.handlerEvents.sort()], 'the app registers the five socket.io handlers it records');
+        io.handlerEvents,
+        'the app registers the five socket.io handlers it records (one set per socket)');
     let pane = await browser.pane(page);
     t.ok('L2-SOCKET-connect-banner', pane.text.includes('Connected to server for real-time logging'),
         'the connect handler prints the recorded banner line (C6: user-visible reconnect choreography)');
@@ -308,7 +362,7 @@ async function dialogsAndReload(ctx) {
     await page.waitForTimeout(200);
     t.eq('L2-DIALOG-modelsdir-alert', [recorded.dialogs[1]], observed.slice(at, at + 1),
         'Q13: saving an empty models directory alerts with the recorded text');
-    const navigationsBefore = navigations.count();
+    const navigationsBefore = navigations();
     await page.fill('#modelsDirectory', 'C:/parity-scratch/fixtures/models');
     await page.fill('#serverPort', '7838');
     await page.click('#saveSettingsBtn');
@@ -316,7 +370,7 @@ async function dialogsAndReload(ctx) {
     const reloaded = await ctx.waitForNavigation(navigationsBefore, 10000);
     t.ok('L2-Q13-reload-after-settings-save', reloaded,
         'Q13: location.reload() after a successful settings save (main-frame navigations '
-        + navigationsBefore + ' → ' + navigations.count() + ')');
+        + navigationsBefore + ' → ' + navigations() + ')');
     const posted = mocks.lastJson('POST /settings');
     t.eq('L2-DIALOG-settings-post', { modelsDirectory: 'C:/parity-scratch/fixtures/models', serverPort: 7838 },
         posted, 'the settings POST body is the two dialog fields');

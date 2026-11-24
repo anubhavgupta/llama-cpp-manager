@@ -38,11 +38,22 @@ const freshBase = (form) => {
     return base;
 };
 
+// The browser and the static server outlive every failure path: main holds them and releases them in
+// a finally, so an aborted recording cannot leave a Chromium tree behind.
 async function main() {
     const sandbox = await app.prepareSandbox('parity-baseline', { refresh: true });
     const server = await app.startStaticServer(sandbox.app, PORT);
     const { chromium } = require('playwright');
     const browser = await chromium.launch();
+    try {
+        await record(browser, sandbox, server);
+    } finally {
+        await browser.close().catch(() => {});
+        await server.close().catch(() => {});
+    }
+}
+
+async function record(browser, sandbox, server) {
     const rows = [];
     // Checkpoint after every session: a recorded session is expensive (a real browser driving the
     // baseline page), and a partial file is recoverable while an unflushed run is not.
@@ -75,11 +86,16 @@ async function main() {
     const open = async (options) => {
         const channel = new mocks.MockChannel({ base: server.base, fileFor: (urlPath) => {
             const mapped = app.fileFor(sandbox.app, urlPath);
-            return { serve: !!mapped.full, file: mapped.rel };
+            return { exists: mapped.exists, rel: mapped.rel };
         } });
         if (options.models === 'corpus') {
             channel.route('GET /models', JSON.stringify(fixtures.corpusModelsPayload(options.configs)),
                 'INPUT: recorded fixtures/http/J2-models entry shape, filled with the corpus paths');
+        }
+        if (options.statusPair) {
+            channel.routeOnStartStop('GET /status', fixtures.httpBody('J1-settings', 'status'),
+                fixtures.httpBody('J5-ui-launch', 'start-from-ui-status'),
+                'recorded GET /status pair (J1-settings idle, J5-ui-launch while running)');
         }
         const state = await browserHelpers.openPage(browser, Object.assign({ base: server.base,
             mocks: channel, viewport: { width: 1280, height: 800 }, settleMs: 700 }, options));
@@ -119,7 +135,7 @@ async function main() {
     // 2. Launch every config in both /models modes: the argv the browser posted, or the dialog it raised.
     for (const mode of ['corpus', 'recorded']) {
         const session = await open({ seed, models: mode === 'corpus' ? 'corpus' : 'recorded',
-            configs: seed.configs });
+            configs: seed.configs, statusPair: true });
         for (const name of seed.names) {
             await browserHelpers.clickConfig(session.page, name);
             await session.page.waitForSelector('#configList .config-item.active');
@@ -127,6 +143,8 @@ async function main() {
             const form = await browserHelpers.fields(session.page);
             const postsBefore = session.mocks.of('POST /start').length;
             const dialogsBefore = session.dialogs.length;
+            // The buttons swap on the page's own status poll, so wait for the state being acted on.
+            await session.page.waitForSelector('#launchBtn:not([disabled])');
             await session.page.click('#launchBtn');
             await session.page.waitForTimeout(120);
             const posted = session.mocks.of('POST /start').length > postsBefore;
@@ -135,9 +153,10 @@ async function main() {
             if (posted) {
                 const body = session.mocks.lastJson('POST /start');
                 rows.push({ op: 'launch', mode, name, argv: body.args, serverPath: body.serverPath,
-                    serverPort: body.serverPort, form_sha: formSha,
+                    serverPort: body.serverPort, form: form, form_sha: formSha,
                     storage_after: await browserHelpers.storageValue(session.page, 'llamaCppConfigs') });
                 const stopsBefore = session.mocks.of('POST /stop').length;
+                await session.page.waitForSelector('#stopBtn:not([disabled])');
                 await session.page.click('#stopBtn');
                 const stopped = await session.mocks.waitFor('POST /stop', stopsBefore + 1, 5000);
                 if (!stopped) throw new Error('clicking Stop did not post /stop for ' + name);
@@ -198,8 +217,6 @@ async function main() {
     }, null, 2) + '\n');
     console.log('recorded ' + rows.length + ' rows to fixtures/goldens/resave/inputs.jsonl');
     console.log(JSON.stringify(byOp, null, 2));
-    await browser.close();
-    await server.close();
 }
 
 main().catch((error) => {
