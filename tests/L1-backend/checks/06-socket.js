@@ -196,5 +196,45 @@ module.exports = {
             return 'a client connected after the cleanup is served and gets ' +
                 JSON.stringify(control.payload);
         });
+
+        // `server-error` has exactly one emit site per launch route in the oracle — server.js:317 on
+        // POST /start, :477 on POST /restart, :642 on POST /launch-presets — inside the spawned child's
+        // 'error' handler. No frame under fixtures/ws carries it, because every recorded legacy launch
+        // spawns successfully; SPEC/socket-contract.json lists the event but nothing pinned it. This
+        // check drives the one state that reaches that handler — a serverPath the OS cannot spawn — so a
+        // candidate that drops the emit, or answers the failure with an HTTP error the oracle does not
+        // send, goes red.
+        await ctx.check('L1.SOCKET.SERVER-ERROR-UNSPAWNABLE-PATH', 'contract', async () => {
+            const client = await ctx.connectSocket('L1-server-error');
+            const missing = winPath(path.join(ctx.sandbox.app, 'no-such-llama-server.exe'));
+            const res = await ctx.post('/start', { serverPath: missing, args: ['-m', 'x.gguf'] });
+            // The oracle answers /start before the spawn reports anything, so a failed spawn still
+            // answers 200 with success:true; the failure is only ever visible on the socket.
+            assert(res.status === 200, 'L1.SOCKET.SERVER-ERROR-STATUS',
+                'POST /start with an unspawnable serverPath returned ' + res.status + ', the oracle sends'
+                + ' 200 because spawn() reports failure asynchronously: ' + res.raw.toString('utf8'));
+            assert(JSON.parse(res.raw.toString('utf8')).success === true,
+                'L1.SOCKET.SERVER-ERROR-RESPONSE',
+                'the /start body reports ' + res.raw.toString('utf8') + ', the oracle body says'
+                + ' success:true');
+            const got = await waitFor('the spawn failure reaches the socket', 15000,
+                () => client.count('server-error') > 0);
+            assert(got, 'L1.SOCKET.SERVER-ERROR-EMITTED',
+                'no server-error frame after spawning ' + missing + '; events were '
+                + JSON.stringify(client.events.map((entry) => entry.event)));
+            const payload = client.events.find((entry) => entry.event === 'server-error').payload;
+            assert(typeof payload.message === 'string'
+                && payload.message.indexOf('Failed to start server: ') === 0,
+                'L1.SOCKET.SERVER-ERROR-PAYLOAD',
+                'server-error payload is ' + JSON.stringify(payload) + ', the oracle emits '
+                + '{"message":"Failed to start server: " + error.message}');
+            const cleared = await ctx.waitForRunning(false);
+            assert(cleared, 'L1.SOCKET.SERVER-ERROR-STATE-CLEARED',
+                'GET /status still reports running:true after the spawn failed, so the handler did not'
+                + ' clear runningProcess');
+            await client.close();
+            return 'unspawnable serverPath: ' + res.status + ' success:true on HTTP, socket got '
+                + JSON.stringify(payload) + ', /status back to running:false';
+        });
     }
 };

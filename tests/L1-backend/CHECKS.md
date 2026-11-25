@@ -130,6 +130,7 @@ socket.io families, relay byte forwarding, connectedClients. Session: one sessio
 | `L1.SOCKET.SERVER-ENDED-ON-EVERY-CLIENT` | contract | SPEC contract (behaviour the SPEC/ fixtures describe, no quirk) |
 | `L1.SOCKET.CONNECTED-CLIENTS-CLEANUP` | contract | SPEC contract (behaviour the SPEC/ fixtures describe, no quirk) |
 | `L1.SOCKET.DISCONNECT-REMOVES-CLIENT` | contract | SPEC contract (behaviour the SPEC/ fixtures describe, no quirk) |
+| `L1.SOCKET.SERVER-ERROR-UNSPAWNABLE-PATH` | contract | SPEC contract (behaviour the SPEC/ fixtures describe, no quirk) |
 
 ## Notes on the recorded evidence
 
