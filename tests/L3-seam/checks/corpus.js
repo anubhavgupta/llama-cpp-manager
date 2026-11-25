@@ -334,7 +334,9 @@ async function tokenFormIni(ctx) {
                     .slice(INI_HEADER.length)).join('')
                 + 'port = ' + settingsPort + '\n';
             assert(onDisk === expected, 'L3.CORPUS-INI-TOKEN-BYTES',
-                'the ini bytes are not the recorded corpus ini in token form; '
+                'the ini bytes are not the recorded corpus ini in token form; the file on disk held '
+                + Buffer.byteLength(onDisk) + ' byte(s) leading '
+                + JSON.stringify(onDisk.slice(0, 60)) + '; '
                 + diffText(expected, onDisk,
                     'the corpus ini composed from fixtures/goldens/resave in token form'));
             const mixed = expected.split('\n').filter((line) => /^chat-template-file = /.test(line)

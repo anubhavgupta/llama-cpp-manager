@@ -45,6 +45,15 @@ const Q24 = {
 const spawnEinval = { retries: 0, note: 'manager logged spawn EINVAL at attempt 1' };
 const SPAWN_EINVAL_CAP = 2;
 
+// The ini write is not atomic, so a single read of models-preset.ini can land on a truncated file
+// (see waitForIniChange). INI_STABLE_MS is the margin two reads of the same bytes must be separated
+// by before the wait believes them: measured here with the recorded payload size (19386 bytes) and a
+// reader in a second process, the zero-byte state a truncate-then-write leaves behind was observable
+// for up to 205 ms while the box was 100% busy, so a shorter margin could still pair two truncated
+// reads. The cost is one margin per ini write per check.
+const INI_POLL_MS = 25;         // the cadence waitFor used before this condition replaced it
+const INI_STABLE_MS = 250;
+
 // Signal 0 answers ESRCH for a pid that is already gone; anything else means it is still there.
 function processGone(pid) {
     try {
@@ -110,13 +119,29 @@ class SeamSandbox extends Sandbox {
 
     // Wait for POST /launch-presets to have rewritten the ini: `previous` is the bytes to move away
     // from (null when the file is not expected to exist yet).
+    //
+    // Resolving on the first visible byte change was the M5 flake (re-audit-2 of AUDIT-2026-11-25):
+    // server.js writes the ini with fs.writeFileSync, which truncates the file and THEN writes the
+    // payload, so a poll inside that window sees 0 bytes, the wait answers 'rewritten', and the
+    // check's single read compares "" against 19386 recorded bytes — 'L3.CORPUS-INI-TOKEN-BYTES …
+    // expected 19386 bytes, got 0' with L3.CORPUS-INI-TOKEN-WRITTEN green in the same check run, twice
+    // on record and never reproducible on demand. So a candidate is accepted only when it is NON-EMPTY
+    // and repeats byte-for-byte INI_STABLE_MS later: the truncated state this race actually produces
+    // is zero bytes (measured: 476 zero-byte reads, 0 partial reads, out of 1283 reads taken inside
+    // the window), and no such state survives the re-read.
     async waitForIniChange(previous, timeoutMs) {
-        const waitFor = require('../../L1-backend/lib/sandbox').waitFor;
-        return waitFor('models-preset.ini rewritten', timeoutMs || 20000, () => {
-            const now = this.iniBytes();
-            if (!now) return false;
-            return previous === null || !now.equals(previous);
-        });
+        const deadline = Date.now() + (timeoutMs || 20000);
+        for (;;) {
+            const first = this.iniBytes();
+            if (first && first.length > 0) {
+                await delay(INI_STABLE_MS);
+                const second = this.iniBytes();
+                if (second && second.length > 0 && second.equals(first)
+                    && (previous === null || !second.equals(previous))) return true;
+            }
+            if (Date.now() >= deadline) return false;
+            await delay(INI_POLL_MS);
+        }
     }
 
     // §9A remapped mode needs the corpus's own model files to exist: fixture-tree.sh builds a
