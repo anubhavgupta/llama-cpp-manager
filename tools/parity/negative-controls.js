@@ -459,15 +459,26 @@ async function runOne(entry, mutants, options) {
     return { entry, mutant, verdict, patch: path.relative(REPO, patch), named, run };
 }
 
+// One row hands its mutation to L1 as a git ref, so the commit is made fresh inside the scratch
+// worktree and its sha differs on every legitimate run. Writing the sha here would move this
+// pinned file every time `--all` runs — the churn finding 6 says hides real tampering — so the
+// Command column carries a placeholder and the row's .log keeps the literal command.
+function recordedCommand(command) {
+    return command.replace(/\b[0-9a-f]{40}\b/g, '<throwaway-commit>');
+}
+
 function writeNegativesMd(records) {
     const unresolved = records.filter((record) => record.verdict !== 'RED-AS-NAMED');
     const lines = [];
     lines.push('# NEGATIVES — recorded negative controls for the Part-1 suites');
     lines.push('');
     lines.push('Written by `node tools/parity/negative-controls.js --all`. The rows below are that run\'s');
-    lines.push('recorded output, not hand-authored assertions (rule C5). Each row applies ONE mutant from');
-    lines.push('`tools/parity/reports/mutation/mutants.json` to a scratch git worktree of `' + BASELINE + '`,');
-    lines.push('runs the narrowest check group that should see it, then reverts the worktree. A mutant is');
+    lines.push('recorded output, not hand-authored assertions (rule C5). Each row applies ONE behaviour');
+    lines.push('change to a scratch git worktree of `' + BASELINE + '`, runs the narrowest check group that');
+    lines.push('should see it, then reverts the worktree. Six rows take a recorded mutant from');
+    lines.push('`tools/parity/reports/mutation/mutants.json`; the `server` row carries its own edit, because');
+    lines.push('the server region is enumerated but not in that inventory (see');
+    lines.push('`tools/parity/reports/mutation/SERVER-REGION-ENUMERATION.json`). A mutant is');
     lines.push('never committed and never touches this checkout\'s `public/script.js`.');
     lines.push('');
     lines.push('Reproduce one row (each patch is a `git diff` of the scratch worktree):');
@@ -480,21 +491,22 @@ function writeNegativesMd(records) {
     lines.push('git worktree remove --force C:/parity-scratch/repro/checkout');
     lines.push('```');
     lines.push('');
-    lines.push('| mutant | region / class | edit | Command | red assertion | verdict |');
+    lines.push('| mutant | layer / region / class | edit | Command | red assertion | verdict |');
     lines.push('|---|---|---|---|---|---|');
     for (const record of records) {
         const edit = (JSON.stringify(record.mutant.before) + ' -> '
             + JSON.stringify(record.mutant.after)).replace(/\|/g, '\\|');
-        lines.push('| `' + record.entry.mutant + '` | ' + record.mutant.region + ' / '
+        lines.push('| `' + (record.entry.mutant || record.entry.id) + '` | ' + record.entry.layer
+            + ' ' + record.mutant.region + ' / '
             + record.mutant.class + ' | ' + edit + ' | `'
-            + record.run.command.replace(/\|/g, '\\|') + '` | `' + (record.named[0]
+            + recordedCommand(record.run.command).replace(/\|/g, '\\|') + '` | `' + (record.named[0]
                 || record.run.reds[0] || 'none') + '` | ' + record.verdict + ' |');
     }
     lines.push('');
     lines.push('## What each row proves');
     lines.push('');
     for (const record of records) {
-        lines.push('- **' + record.entry.mutant + '** (' + record.entry.layer + ') — '
+        lines.push('- **' + (record.entry.mutant || record.entry.id) + '** (' + record.entry.layer + ') — '
             + record.entry.claim);
         lines.push('  Red: `' + (record.named[0] || record.run.reds[0] || 'NONE') + '`; exit '
             + record.run.code + '. Full log: `tools/parity/reports/negatives/'
@@ -509,7 +521,9 @@ function writeNegativesMd(records) {
         + '. L1 is covered by a server-region row: the mutation is made in a throwaway commit and handed'
         + ' to L1 as `--ref <commit>`, because L1 materialises its sandbox with `git archive <ref>` and'
         + ' will not take a dirty directory. The mutated checkout therefore lives outside the L1'
-        + ' suite scratch root (C:/parity-neg-l1), which that suite cleanTrees.');
+        + ' suite scratch root (C:/parity-neg-l1), which that suite cleanTrees. That commit exists only'
+        + ' for its run, so the Command column prints `--ref <throwaway-commit>` instead of a sha, and'
+        + ' the literal command with the sha it actually used is the first line of the row\'s .log.');
     lines.push('');
     lines.push('Open gap, measured 2026-11-25: the **L4** differential does not yet have a control.');
     lines.push('The argv mutant above was committed and run as side A against a clean side B');
@@ -585,9 +599,13 @@ async function run(options) {
     if (options.mode === 'plan') {
         for (const entry of selected) {
             const mutant = describe(entry, mutants);
-            console.log(entry.layer + '  ' + (entry.mutant || entry.id) + '  [' + mutant.region
-                + ' line ' + mutant.line
-                + ' cols ' + mutant.start + '-' + mutant.end + ']  expect red ' + entry.expect);
+            // A server-region row is a file + line edit rather than a region-relative span, so it
+            // carries no cols; printing them anyway put `undefined` in the plan output.
+            const where = mutant.line === undefined ? '[' + mutant.region + ' ' + mutant.class + ']'
+                : '[' + mutant.region + ' line ' + mutant.line + ' cols ' + mutant.start + '-' + mutant.end
+                + ']';
+            console.log(entry.layer + '  ' + (entry.mutant || entry.id) + '  ' + where
+                + '  expect red ' + entry.expect);
             console.log('     ' + JSON.stringify(mutant.before) + ' => ' + JSON.stringify(mutant.after));
             console.log('     ' + entry.command('<worktree>').join(' '));
         }
