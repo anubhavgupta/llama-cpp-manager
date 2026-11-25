@@ -3,6 +3,18 @@
   "runs": [
     {
       "schemaVersion": 1,
+      "id": "166b8394",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-25T02:56:56.701Z",
+      "dueReason": "timer",
+      "state": "completed",
+      "startedAt": "2026-11-25T02:56:56.707Z",
+      "asyncId": "3781819e-7d39-45d3-96d7-10f631a24246",
+      "asyncDir": "C:\\Users\\anubh\\AppData\\Local\\Temp\\pi-subagents-user-anubh\\async-subagent-runs\\3781819e-7d39-45d3-96d7-10f631a24246",
+      "completedAt": "2026-11-25T03:01:21.151Z"
+    },
+    {
+      "schemaVersion": 1,
       "id": "6115768a",
       "scheduleId": "parity-watchdog",
       "plannedAt": "2026-11-25T02:36:56.701Z",
