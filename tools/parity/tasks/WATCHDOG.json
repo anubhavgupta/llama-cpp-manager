@@ -1,9 +1,9 @@
 {
   "tracked": [
     {
-      "id": "43626678-b564-490e-bc5c-edadf6535933",
-      "layer": "Remediate-2 N1+ (2nd revival)",
-      "stallAfterMin": 35
+      "id": "6a76df11-6e62-4ec4-ace5-11c5dd85e655",
+      "layer": "Remediate-2 close phase (3rd revival)",
+      "stallAfterMin": 25
     }
   ],
   "ignoreIds": [
