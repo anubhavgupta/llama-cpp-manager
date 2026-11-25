@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "8a70503e",
+  "scheduleId": "parity-watchdog",
+  "plannedAt": "2026-11-24T16:56:56.701Z",
+  "dueReason": "timer",
+  "state": "skipped",
+  "startedAt": "2026-11-24T16:56:56.711Z",
+  "completedAt": "2026-11-24T16:56:56.711Z"
+}

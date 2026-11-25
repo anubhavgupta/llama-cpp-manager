@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "a57ef5c7",
+  "scheduleId": "parity-watchdog",
+  "plannedAt": "2026-11-25T02:16:56.701Z",
+  "dueReason": "timer",
+  "state": "completed",
+  "startedAt": "2026-11-25T02:16:56.714Z",
+  "asyncId": "c42a354f-0eab-42e9-b55c-00db40fb8ff7",
+  "asyncDir": "C:\\Users\\anubh\\AppData\\Local\\Temp\\pi-subagents-user-anubh\\async-subagent-runs\\c42a354f-0eab-42e9-b55c-00db40fb8ff7",
+  "completedAt": "2026-11-25T02:18:25.247Z"
+}

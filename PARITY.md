@@ -105,5 +105,16 @@ Non-determinism addenda discovered during capture (beyond §8): dotenv v17 print
   mode 48/48). `tests/L2-ui/out/DISAGREEMENTS.md`: 28/48 browser-vs-goldens divergences classified
   (Q16/Q17/Q18/Q19 + speculationType); no golden moved (C4).
 
+- 2026-11-24 C8 VERIFIER HARNESS FIX + SUITE PINNING (Verifier): (a) `tests/L2-ui/helpers/page.js`
+  in-repo-sandbox guard was dead code — `normalized.startsWith(REPO.toLowerCase()+sep)` never
+  matches a drive-lettered candidate; fixed to lowercase the candidate (measured: REFUSED, no dir
+  leak). (b) `tests/L2-ui/run.js` static server leaked on browser-launch failure (runner zombie,
+  held port); now closed before rethrow. (c) Worker claim "`--ref <dir>` does not serve that dir"
+  DISPROVED by decisive probe (mutated `#addConfigBtn` in served dir ⇒ `crud-create` RED); retained
+  as measurement, no code change. HASH-PIN re-pin: hashes for (a)/(b) + new pinned gate artifacts
+  tests/L3-seam, tests/L4-dual, tools/parity/{negative-controls.js,nightly/*}. Evidence:
+  `fixtures/NEGATIVES.md` 6/6 red-as-named; nightly GREEN 400 s (L1+L2+L3+L4); ParityNightly 03:00
+  registered (schtasks /query Ready).
+
 Out of scope (C2 dead code, recorded not ported): `createDefaultConfigName` (script.js:205),
 client `restartServer` (script.js:968). `/restart` HTTP endpoint IS live and must be ported.
