@@ -9,32 +9,32 @@ Rows seeded from plan §8 (Q1–Q15) and §9A (Q16–Q22). `frozen-by` names the
 
 | ID | Quirk | Location | Frozen by | Status | Evidence |
 |----|-------|----------|-----------|--------|----------|
-| Q1 | Restart button rendered but permanently disabled (listener commented out) | index.html:390, script.js:1186,1190 | L2 UI assert `disabled === true` in all states | baseline-open | |
-| Q2 | POST /settings TDZ bug — existing settings never read; serverPort falls back to 8080 | server.js /settings | L1 POST-without-serverPort → file says 8080 even if it said 7838 | baseline-open | |
-| Q3 | /start while running → 200 `success:false`; missing path → 400 | server.js /start | L1 contract tests, both branches | baseline-open | |
-| Q4 | /restart → 400 after manager restart (`lastLaunchConfig` in-memory only) | server.js /restart | L1 process integration test | baseline-open | |
-| Q5 | `--port` from settings.serverPort on /start; DEFAULT_PORT 8080 on /launch-presets | server.js, script.js | L1/L3 dual-path argv test | baseline-open | |
-| Q6 | GPU/VRAM are Math.random() off-Windows / on nvidia-smi failure | server.js:getSystemMetrics | L1 shape test (range+type, never real values or zeros) | baseline-open | |
-| Q7 | saveCurrentValues ≠ launchServer field sets; launchServer re-reads DOM, not saved config | script.js:213,409 | L2 config-then-launch argv test | baseline-open | |
-| Q8 | deleteConfiguration partial reset to hard-coded list diverging from HTML defaults | script.js:1111 | L2 snapshot of all 41 values incl. those NOT reset | baseline-open | |
-| Q9 | fastAttention `<select>` read via `.value`; `auto` → bare `-fa` | index.html:266 | L1 boundary argv vectors auto/on/off | baseline-open | |
-| Q10 | ini keys `spec-ngram-size-n`/`draft-min`/`draft-max` ≠ CLI `--spec-ngram-mod-*`; trailing `port = ` | script.js | ini byte diff goldens | baseline-open | |
-| Q11 | settings.serverPort never changes manager port (hard-coded 7837) | server.js:11 | L1 port assertion | baseline-open | |
-| Q12 | External Google Fonts `<link>`; no service worker | index.html:7-8 | L2 asset/DOM test (no offline support added) | baseline-open | |
-| Q13 | Native alert/confirm; location.reload() after settings save | script.js | L2 Playwright dialog handlers | baseline-open | |
-| Q14 | `-fit off` and `--host 0.0.0.0` always appended | script.js | argv goldens (every vector ends with both) | baseline-open | |
-| Q15 | ngram-mod emits hard-coded 24/48/64 | script.js | argv + ini vectors | baseline-open | |
-| Q16 | Orphan keys persist in localStorage, never read, dropped on re-save | corpus (8 keys, 28/48 configs) | corpus re-save byte test, both states | baseline-open | |
-| Q17 | ini reads legacy `disableReasoning` when `reasoning` absent → ini has `reasoning`, argv omits `--reasoning` | corpus (15 configs) | corpus ini+argv pair | baseline-open | |
-| Q18 | Saved enum value missing from `<option>` list silently blanks on load → flag dropped from argv | corpus (`loadMode`: dio/mlock/none) | per-config corpus argv test | baseline-open | |
-| Q19 | repeatPenalty/presencePenalty stored as numbers AND strings; `!= "0"` treats 0/"0"/"0.0"/"0.00" differently | corpus (22 num + 26 str) | corpus vectors + format probes | baseline-open | |
-| Q20 | serverPath/modelPath mix `\` and `/` verbatim; client chat-template regex output varies by input style | corpus (11 mixed-separator paths) | argv vectors both styles | baseline-open | |
-| Q21 | Truthy-but-broken paths emitted as-is (e.g. trailing `\undefined`), no validation | corpus (1 draft path) | corpus argv test | baseline-open | |
-| Q22 | topK:-1, ngl:0, ngl:100, topP:0 occur in real data; emission follows predicates, not sanity | corpus | corpus argv tests | baseline-open | |
+| Q1 | Restart button rendered but permanently disabled (listener commented out) | index.html:390, script.js:1186,1190 | L2 UI assert `disabled === true` in all states | baseline-verified suite checks: L2:fields L2:socket-events L2:q1-states | |
+| Q2 | POST /settings TDZ bug — existing settings never read; serverPort falls back to 8080 | server.js /settings | L1 POST-without-serverPort → file says 8080 even if it said 7838 | baseline-verified suite checks: L1:L1.SETTINGS.TDZ-PORT-8080 L3:L3.PORT-q2-resets-file-to-8080 | |
+| Q3 | /start while running → 200 `success:false`; missing path → 400 | server.js /start | L1 contract tests, both branches | baseline-verified suite checks: L1:L1.START.MISSING-PATH-400 L1:L1.STOP.WHILE-IDLE-200 L1:L1.START.ALREADY-RUNNING-200 L1:L1.RESTART.OK-200-TRUE (+1 more) | |
+| Q4 | /restart → 400 after manager restart (`lastLaunchConfig` in-memory only) | server.js /restart | L1 process integration test | baseline-verified suite checks: L1:L1.RESTART.NO-CONFIG-400 L1:L1.RESTART.AFTER-MANAGER-RESTART-400 L1:L1.PRESETS.RESTART-STILL-400 | |
+| Q5 | `--port` from settings.serverPort on /start; DEFAULT_PORT 8080 on /launch-presets | server.js, script.js | L1/L3 dual-path argv test | baseline-verified suite checks: L1:L1.PRESETS.SEED-PORT-7838 L1:L1.PRESETS.DEFAULT-PORT-BYTES L1:L1.PRESETS.ARGV-PORT-8080 L1:L1.PRESETS.EXPLICIT-PORT-7838 (+4 more) | |
+| Q6 | GPU/VRAM are Math.random() off-Windows / on nvidia-smi failure | server.js:getSystemMetrics | L1 shape test (range+type, never real values or zeros) | baseline-verified suite checks: L1:L1.METRICS.SIMULATED-SHAPE L1:L1.METRICS.SIMULATED-NOT-REAL L1:L1.METRICS.GARBAGE-ZEROS L1:L1.METRICS.GARBAGE-RECORDED-NOTE (+1 more) | |
+| Q7 | saveCurrentValues ≠ launchServer field sets; launchServer re-reads DOM, not saved config | script.js:213,409 | L2 config-then-launch argv test | baseline-verified suite checks: L3:L3.CORPUS-argv-goldens L2:q7-launch L2:corpus-launch | |
+| Q8 | deleteConfiguration partial reset to hard-coded list diverging from HTML defaults | script.js:1111 | L2 snapshot of all 41 values incl. those NOT reset | baseline-verified suite checks: L2:crud-edit-delete | |
+| Q9 | fastAttention `<select>` read via `.value`; `auto` → bare `-fa` | index.html:266 | L1 boundary argv vectors auto/on/off | baseline-verified vectors+goldens (gen-goldens --check 20 entries) + mutation proofs (tools/parity/reports/mutation/) | |
+| Q10 | ini keys `spec-ngram-size-n`/`draft-min`/`draft-max` ≠ CLI `--spec-ngram-mod-*`; trailing `port = ` | script.js | ini byte diff goldens | baseline-verified suite checks: L1:L1.PRESETS.INI-BYTES L3:L3.CORPUS-INI-bytes L3:L3.CORPUS-INI-token-bytes L3:L3.INI-presets-from-ui-bytes (+1 more) | |
+| Q11 | settings.serverPort never changes manager port (hard-coded 7837) | server.js:11 | L1 port assertion | baseline-verified suite checks: L1:L1.PORT.HARD-CODED-7837 L3:L3.SETTINGS-point-at-tree L3:L3.ARGV-port-from-localStorage-settings L3:L3.PORT-Q11-manager-still-7837 | |
+| Q12 | External Google Fonts `<link>`; no service worker | index.html:7-8 | L2 asset/DOM test (no offline support added) | baseline-verified suite checks: L2:fields L2:state-snapshots | |
+| Q13 | Native alert/confirm; location.reload() after settings save | script.js | L2 Playwright dialog handlers | baseline-verified suite checks: L3:L3.CORPUS-Q18-alert L3:L3.PORT-cancel-keeps-localStorage L2:dialogs L2:corpus-alerts | |
+| Q14 | `-fit off` and `--host 0.0.0.0` always appended | script.js | argv goldens (every vector ends with both) | baseline-verified suite checks: L2:default-port | |
+| Q15 | ngram-mod emits hard-coded 24/48/64 | script.js | argv + ini vectors | baseline-verified vectors+goldens (gen-goldens --check 20 entries) + mutation proofs (tools/parity/reports/mutation/) | |
+| Q16 | Orphan keys persist in localStorage, never read, dropped on re-save | corpus (8 keys, 28/48 configs) | corpus re-save byte test, both states | baseline-verified suite checks: L3:L3.CORPUS-resave-bytes L3:L3.CORPUS-resave-orphans L2:crud-create L2:crud-orphans (+2 more) | |
+| Q17 | ini reads legacy `disableReasoning` when `reasoning` absent → ini has `reasoning`, argv omits `--reasoning` | corpus (15 configs) | corpus ini+argv pair | baseline-verified suite checks: L3:L3.CORPUS-INI-bytes L2:corpus-ini | |
+| Q18 | Saved enum value missing from `<option>` list silently blanks on load → flag dropped from argv | corpus (`loadMode`: dio/mlock/none) | per-config corpus argv test | baseline-verified suite checks: L3:L3.CORPUS-launched-count L3:L3.CORPUS-argv-goldens L3:L3.CORPUS-Q18-alert L2:corpus-launch (+1 more) | |
+| Q19 | repeatPenalty/presencePenalty stored as numbers AND strings; `!= "0"` treats 0/"0"/"0.0"/"0.00" differently | corpus (22 num + 26 str) | corpus vectors + format probes | baseline-verified suite checks: L3:L3.CORPUS-argv-goldens L2:corpus-launch | |
+| Q20 | serverPath/modelPath mix `\` and `/` verbatim; client chat-template regex output varies by input style | corpus (11 mixed-separator paths) | argv vectors both styles | baseline-verified suite checks: L3:L3.CORPUS-argv-goldens L3:L3.CORPUS-spawn-target L3:L3.CORPUS-INI-token-bytes L3:L3.ARGV-chat-template-file-separators (+1 more) | |
+| Q21 | Truthy-but-broken paths emitted as-is (e.g. trailing `\undefined`), no validation | corpus (1 draft path) | corpus argv test | baseline-verified suite checks: L3:L3.CORPUS-argv-goldens L3:L3.CORPUS-spawn-target L2:corpus-launch | |
+| Q22 | topK:-1, ngl:0, ngl:100, topP:0 occur in real data; emission follows predicates, not sanity | corpus | corpus argv tests | baseline-verified suite checks: L3:L3.CORPUS-argv-goldens L2:corpus-launch | |
 
-| Q23 | POST /restart returns 200 success:true, but the killed child's close handler nulls module-level `runningProcess` after the replacement is assigned ⇒ /status settles `running:false`, next /stop returns 200 success:false, and the deferred SIGTERM→1s→SIGKILL timer (server.js:437-445) reads the same variable — replacement survival is a win32 race. GET /restart is Express 404, not app JSON. Recorded on win32 | server.js /restart | fixtures/ws/J3d-restart/* + argv/J3d-restart/* (shape: race ordering; bytes: all else) | baseline-open | captured 2026-11-23 |
+| Q23 | POST /restart returns 200 success:true, but the killed child's close handler nulls module-level `runningProcess` after the replacement is assigned ⇒ /status settles `running:false`, next /stop returns 200 success:false, and the deferred SIGTERM→1s→SIGKILL timer (server.js:437-445) reads the same variable — replacement survival is a win32 race. GET /restart is Express 404, not app JSON. Recorded on win32 | server.js /restart | fixtures/ws/J3d-restart/* + argv/J3d-restart/* (shape: race ordering; bytes: all else) | baseline-verified suite checks: L1:L1.RESTART.GET-IS-EXPRESS-404 L1:L1.RESTART.STATUS-SETTLES-FALSE L1:L1.RESTART.STOP-AFTER-RESTART-200-FALSE L1:L1.RESTART.ARGV-GAINED-ONE-SPAWN (+2 more) | captured 2026-11-23 |
 
-| Q24 | /stop arms SIGTERM→1s→SIGKILL on the module-level `runningProcess`, so a relaunch within ~1 s can be killed by the stale timer (harness waits 1.5 s where relaunch follows stop — legacy behavior recorded, not worked around) | server.js /stop | fixtures/http/J3* relaunch pair + ws order trace | baseline-open | captured 2026-11-23 |
+| Q24 | /stop arms SIGTERM→1s→SIGKILL on the module-level `runningProcess`, so a relaunch within ~1 s can be killed by the stale timer (harness waits 1.5 s where relaunch follows stop — legacy behavior recorded, not worked around) | server.js /stop | fixtures/http/J3* relaunch pair + ws order trace | baseline-verified suite checks: L1:L1.STOP.STALE-TIMER-WINDOW L1:L1.PRESETS.STOP-AFTER-DEFAULT-PORT | captured 2026-11-23 |
 
 Non-determinism addenda discovered during capture (beyond §8): dotenv v17 prints a rotating marketing tip into manager stdout; manager stdout interleaves its own console.log with forwarded child chunks in OS write order ⇒ manager console logs recorded complete, byte claims live in paired ws payload traces. Corpus recordings are comparable only with the same `PARITY_SCRATCH` root (documented in MANIFEST).
 
@@ -115,6 +115,14 @@ Non-determinism addenda discovered during capture (beyond §8): dotenv v17 print
   tests/L3-seam, tests/L4-dual, tools/parity/{negative-controls.js,nightly/*}. Evidence:
   `fixtures/NEGATIVES.md` 6/6 red-as-named; nightly GREEN 400 s (L1+L2+L3+L4); ParityNightly 03:00
   registered (schtasks /query Ready).
+
+- 2026-11-24 VERIFIER SWEEP (Verifier): all 24 quirk rows flipped `baseline-open` ⇒
+  `baseline-verified` citing machine evidence — per-row check ids from
+  `tools/parity/reports/PARITY-EVIDENCE.csv` (extracted from the three suites' check tables; each
+  suite green in self-test against `parity-baseline`: L1 63/63, L2 full corpus+resave+ini,
+  L3 29/29, L4 self-mode 0 diffs). Q9/Q15 cite the argv/ini vector gate instead of a Q-tagged UI
+  check (goldens baseline-recorded, `gen-goldens --check` 20 entries, mutation-proven rows in
+  `tools/parity/reports/mutation/`). No row flipped without at least one named machine artifact.
 
 Out of scope (C2 dead code, recorded not ported): `createDefaultConfigName` (script.js:205),
 client `restartServer` (script.js:968). `/restart` HTTP endpoint IS live and must be ported.

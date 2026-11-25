@@ -1,0 +1,25 @@
+quirk,count,checks
+Q1,3,L2:fields L2:socket-events L2:q1-states
+Q2,2,L1:L1.SETTINGS.TDZ-PORT-8080 L3:L3.PORT-q2-resets-file-to-8080
+Q3,5,L1:L1.START.MISSING-PATH-400 L1:L1.STOP.WHILE-IDLE-200 L1:L1.START.ALREADY-RUNNING-200 L1:L1.RESTART.OK-200-TRUE L2:start-error
+Q4,3,L1:L1.RESTART.NO-CONFIG-400 L1:L1.RESTART.AFTER-MANAGER-RESTART-400 L1:L1.PRESETS.RESTART-STILL-400
+Q5,8,L1:L1.PRESETS.SEED-PORT-7838 L1:L1.PRESETS.DEFAULT-PORT-BYTES L1:L1.PRESETS.ARGV-PORT-8080 L1:L1.PRESETS.EXPLICIT-PORT-7838 L3:L3.ARGV-port-from-localStorage-settings L3:L3.PORT-presets-ui-argv L3:L3.PORT-start-vs-presets L2:default-port
+Q6,5,L1:L1.METRICS.SIMULATED-SHAPE L1:L1.METRICS.SIMULATED-NOT-REAL L1:L1.METRICS.GARBAGE-ZEROS L1:L1.METRICS.GARBAGE-RECORDED-NOTE L1:L1.METRICS.STUB-CANNED
+Q7,3,L3:L3.CORPUS-argv-goldens L2:q7-launch L2:corpus-launch
+Q8,1,L2:crud-edit-delete
+Q9,0,
+Q10,5,L1:L1.PRESETS.INI-BYTES L3:L3.CORPUS-INI-bytes L3:L3.CORPUS-INI-token-bytes L3:L3.INI-presets-from-ui-bytes L2:corpus-ini
+Q11,4,L1:L1.PORT.HARD-CODED-7837 L3:L3.SETTINGS-point-at-tree L3:L3.ARGV-port-from-localStorage-settings L3:L3.PORT-Q11-manager-still-7837
+Q12,2,L2:fields L2:state-snapshots
+Q13,4,L3:L3.CORPUS-Q18-alert L3:L3.PORT-cancel-keeps-localStorage L2:dialogs L2:corpus-alerts
+Q14,1,L2:default-port
+Q15,0,
+Q16,6,L3:L3.CORPUS-resave-bytes L3:L3.CORPUS-resave-orphans L2:crud-create L2:crud-orphans L2:corpus-resave L2:corpus-resave-whole
+Q17,2,L3:L3.CORPUS-INI-bytes L2:corpus-ini
+Q18,5,L3:L3.CORPUS-launched-count L3:L3.CORPUS-argv-goldens L3:L3.CORPUS-Q18-alert L2:corpus-launch L2:corpus-alerts
+Q19,2,L3:L3.CORPUS-argv-goldens L2:corpus-launch
+Q20,5,L3:L3.CORPUS-argv-goldens L3:L3.CORPUS-spawn-target L3:L3.CORPUS-INI-token-bytes L3:L3.ARGV-chat-template-file-separators L2:corpus-launch
+Q21,3,L3:L3.CORPUS-argv-goldens L3:L3.CORPUS-spawn-target L2:corpus-launch
+Q22,2,L3:L3.CORPUS-argv-goldens L2:corpus-launch
+Q23,6,L1:L1.RESTART.GET-IS-EXPRESS-404 L1:L1.RESTART.STATUS-SETTLES-FALSE L1:L1.RESTART.STOP-AFTER-RESTART-200-FALSE L1:L1.RESTART.ARGV-GAINED-ONE-SPAWN L1:L1.RESTART.EVENT-IDENTITY L1:L1.RESTART.SETTLE-RULE-BOUNDS
+Q24,2,L1:L1.STOP.STALE-TIMER-WINDOW L1:L1.PRESETS.STOP-AFTER-DEFAULT-PORT
