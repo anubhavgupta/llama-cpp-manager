@@ -336,6 +336,19 @@ function writePatch(dir, entry) {
     return file;
 }
 
+// The tracked evidence file has to survive a re-run byte-identically (AUDIT-2026-11-25 finding N3).
+// Three things in a legitimate run's output move between two legitimate runs: the suites' wall-clock
+// durations, the sha of the throwaway commit a row is handed to L1 as, and the timestamped name of the
+// run summary the suite prints. Masked here, at the one place these logs are written, so NEGATIVES.md
+// can keep citing a row's .log as evidence without a clean `--all` looking like an edit.
+function stableLog(text) {
+    return text
+        .replace(/\bin \d+(?:\.\d+)? s\b/g, 'in <elapsed> s')
+        .replace(/\b[0-9a-f]{40}\b/g, '<throwaway-commit>')
+        .replace(/l1-\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}Z-(selftest|run|attach)\.json/g,
+            'l1-<run-utc>-$1.json');
+}
+
 function runTarget(entry, dir) {
     const argv = entry.command(dir.replace(/\\/g, '/')).map((token) => token
         .replace(/SEAM_SLUG/g, seamSlug(entry)));
@@ -361,7 +374,7 @@ function runTarget(entry, dir) {
             const text = output.join('');
             fs.mkdirSync(REPORTS, { recursive: true });
             fs.writeFileSync(path.join(REPORTS, evidenceName(entry) + '.log'),
-                '$ node ' + argv.join(' ') + '\n\n' + text);
+                stableLog('$ node ' + argv.join(' ') + '\n\n' + text));
             resolve({ command: 'node ' + argv.join(' '), code, seconds: (Date.now() - started) / 1000,
                 reds: redIds(text), excerpt: excerpt(text) });
         });
@@ -462,7 +475,8 @@ async function runOne(entry, mutants, options) {
 // One row hands its mutation to L1 as a git ref, so the commit is made fresh inside the scratch
 // worktree and its sha differs on every legitimate run. Writing the sha here would move this
 // pinned file every time `--all` runs — the churn finding 6 says hides real tampering — so the
-// Command column carries a placeholder and the row's .log keeps the literal command.
+// Command column carries a placeholder, and stableLog() puts the same placeholder in the row's .log
+// (N3), where the literal sha used to make every clean re-run look like a change.
 function recordedCommand(command) {
     return command.replace(/\b[0-9a-f]{40}\b/g, '<throwaway-commit>');
 }
@@ -523,7 +537,9 @@ function writeNegativesMd(records) {
         + ' will not take a dirty directory. The mutated checkout therefore lives outside the L1'
         + ' suite scratch root (C:/parity-neg-l1), which that suite cleanTrees. That commit exists only'
         + ' for its run, so the Command column prints `--ref <throwaway-commit>` instead of a sha, and'
-        + ' the literal command with the sha it actually used is the first line of the row\'s .log.');
+        + ' the row\'s .log carries the same placeholder (a fresh sha for the same mutation would'
+        + ' otherwise look like tampering, N3). Durations and the timestamped run-summary name are'
+        + ' masked the same way, so two clean `--all` runs leave these files byte-identical.');
     lines.push('');
     lines.push('Open gap, measured 2026-11-25: the **L4** differential does not yet have a control.');
     lines.push('The argv mutant above was committed and run as side A against a clean side B');

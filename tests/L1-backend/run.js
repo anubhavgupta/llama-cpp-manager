@@ -368,9 +368,11 @@ function printResults(registry, startedAt) {
 // ------------------------------------------------------------------------------ main --------
 
 // The scratch root is deleted on success, so a green nightly L1 run used to leave no artifact
-// behind at all. One JSON per run, next to the nightly logs (tools/parity/reports/nightly/ is
-// git-visible), so the cadence trail exists independently of the suite's own stdout.
-const SUMMARY_DIR = path.join(REPO, 'tools', 'parity', 'reports', 'nightly');
+// behind at all. One JSON per run so the cadence trail exists independently of the suite's own
+// stdout. It lands in the suite's gitignored out/ directory: a timestamped file per run inside
+// tools/parity/reports/ would dirty the tree on every run of anything that calls this suite
+// (negative controls included), and a tracked trail must be a decision, not a side effect.
+const SUMMARY_DIR = path.join(__dirname, 'out');
 
 function summaryFile(options) {
     const mode = options.attach ? 'attach' : (options.verify ? 'selftest' : 'run');
