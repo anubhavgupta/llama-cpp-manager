@@ -82,7 +82,10 @@ async function prepareSandbox(ref, options) {
     if (resolved.kind !== 'ref') return { ...resolved, app: resolved.dir, cached: true };
     const scratch = options.scratch || process.env.L2_SCRATCH || 'C:/parity-l2';
     const normalized = path.resolve(scratch);
-    if (normalized.startsWith(REPO.toLowerCase() + path.sep.toLowerCase()) || normalized === REPO.toLowerCase()) {
+    // Lowercase the CANDIDATE too: startsWith against a lowercased needle can never match a
+    // drive-lettered 'C:\...' — the original order made this guard dead code.
+    const norm = normalized.toLowerCase();
+    if (norm.startsWith((REPO + path.sep).toLowerCase()) || norm === REPO.toLowerCase()) {
         throw new Error('refusing to use a sandbox inside the repo: ' + normalized);
     }
     const app = path.join(normalized, 'app');

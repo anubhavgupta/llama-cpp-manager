@@ -313,7 +313,15 @@ async function main() {
     const sandbox = await app.prepareSandbox(options.ref, options);
     const server = await app.startStaticServer(sandbox.app, options.port);
     const { chromium } = require('playwright');
-    const browser = await chromium.launch();
+    let browser;
+    try {
+        browser = await chromium.launch();
+    } catch (error) {
+        // A failed launch must not leave the static server holding the event loop open:
+        // the runner would print L2 RUNNER FAILED and then never exit.
+        await server.close();
+        throw error;
+    }
     browser.on('disconnected', () => console.log('  [diag] browser connection dropped'));
     mocks.resetIoRequestsTotal();
     const context = {
