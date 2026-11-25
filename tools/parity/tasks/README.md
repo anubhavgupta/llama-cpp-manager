@@ -37,15 +37,14 @@ candidate run is the candidate's own red.
 
 ## REMAINING (exit sequence, no builders left)
 
-0. REMEDIATION per AUDIT-2026-11-25 (blocker: schtasks bash path in sandbox.js build+unlock; majors:
-   pin tools/parity deciders + drop volatile pins; L1/L2 negative controls via server.js+save regions;
-   server-error L1 check; --repeat 2 nightly; doc coherence) -> green SCHEDULED fire -> delta re-audit.
-
-1. PARITY sweep: every Q-row -> `baseline-verified` citing the pinning checks (Verifier).
-2. Exit checklist plan §2: L1-L4 self-tests, gen-goldens --check (20), spec-reconcile unreconciled=0,
-   mutation --check, determinism gate, MANIFEST 193/196 re-hash, HASH-PIN verify --check, ESCALATION empty.
-3. Auditor cold-start go/no-go (fresh context, BUILD-FROM.md only).
-4. Report Part-1 verdict to user. Part 2 needs separate authorization.
+0. DONE 2026-11-25: REMEDIATION rounds 1+2 (AUDIT-2026-11-25 findings 1-13 CLOSED per delta audit;
+   N1-N5 closed by remediation-2, green interactive + SCHEDULED fires banked).
+1. DONE 2026-11-25: PARITY sweep 24/24 baseline-verified (+Q25 environmental row, harness affordance).
+2. Delta re-audit #2 (N1-N5 closure verification + no-regression battery) — RUNNING (a94cba27 successor).
+3. Exit checklist plan SS2 re-run inside that audit: L1-L4 self-tests, gen-goldens --check, spec-reconcile,
+   mutation ceiling, MANIFEST 196/196, HASH-PIN --check (incl. fresh-worktree clone-stability), ESCALATION empty.
+4. Auditor cold-start go/no-go (fresh context, BUILD-FROM.md only).
+5. Report Part-1 verdict to user. Part 2 needs separate authorization.
 
 ## Next after L3/L4 (specs ready)
 

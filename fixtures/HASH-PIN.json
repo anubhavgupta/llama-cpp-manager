@@ -1,5 +1,5 @@
 {
-  "pinnedAt": "2026-11-25T17:31:46Z",
+  "pinnedAt": "2026-11-25T17:36:49Z",
   "files": {
     "AGENTS.md": "81f92bd2d4ed409e518b8310d50d4dc31db19a7cc896b2e26ea5fbaf9377213e",
     "PARITY.md": "8b723f5c758b760c1a92adc8b56f96c27ef1197e39dab89bda923f55b2e2bd11",
@@ -46,7 +46,7 @@
     "fixtures/BASELINE.json": "1cbaff26a50dc3ecf1e82bfc1087a354a252937539c55ad5d9a32e49625bd991",
     "fixtures/COMPARISON.json": "49d894777f5216a7f6e0e19b057c986ea866a2b88397b4ef20c19559401d9f16",
     "fixtures/EXTRACT-PROOF.json": "187af83fb45a0a6b5e05badedeff0885403b50183d39ed254b7083dfda3312b7",
-    "fixtures/HASH-PIN.json": "4d277742db9860691207cb7532a3c10c56ebb0b6db6bdf39971e8a8714ea53ce",
+    "fixtures/HASH-PIN.json": "9b9bc96e9d17a07eceb846fd19433c26eac629fec0331d430346390adee4bce5",
     "fixtures/MANIFEST.json": "2055489ccae0b2fd5457eff741be59198106ede357d2faeacc0678e02af3e1c2",
     "fixtures/NEGATIVES.md": "540e30c130eb7532a025bfe800adb432f62bea2b3b61d69d00ac09008fab9e00",
     "fixtures/PATH-MAP.json": "451183bed9711f8a0d3a3d6cc4b18b608b80f9c6e3c0eaf7a056127376acd981",
