@@ -1,15 +1,16 @@
 {
   "tracked": [
     {
-      "id": "8b1bde62-0fb0-4718-aae4-28460cfd53b1",
-      "layer": "Remediation executor-2",
-      "stallAfterMin": 20
+      "id": "5e486df8-c6fa-4edc-84b4-2de729d6a20b",
+      "layer": "Remediation executor-3 closure",
+      "stallAfterMin": 25
     }
   ],
   "ignoreIds": [
     "12e18884-960c-4426-9a33-a41fc73987bc",
     "7964b51e-a7dd-4d37-aca2-30076a2819ea",
-    "e8a8c382-f796-45c2-943b-ad7822448c78"
+    "e8a8c382-f796-45c2-943b-ad7822448c78",
+    "8b1bde62-0fb0-4718-aae4-28460cfd53b1"
   ],
   "notes": "Supervisor updates this file when workers launch/pause/land. stallAfterMin = no growth in output-0.log AND no matching local compute process before intervening."
 }
