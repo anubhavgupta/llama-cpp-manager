@@ -20,7 +20,7 @@ Task specs in this directory are the exact prompts each worker phase ran on.
 
 ## IN FLIGHT
 
-(none) — Auditor 12e18884 running the cold-start go/no-go battery (exit steps 1-2 complete: sweep 32eead9, pins cd3f2b1)
+(none) — both audits complete (NO-GO; archived in tools/parity/reports/AUDIT-2026-11-25/). Remediation batch next.
 
 ## Landed since launch
 
@@ -31,6 +31,10 @@ Task specs in this directory are the exact prompts each worker phase ran on.
 | 5b Verifier harness fixes + pin sweep | 174201e + ff4eff0 | in-repo scratch guard REFUSED (was dead code); zombie closed; C8 row; L3/L4 pinned |
 
 ## REMAINING (exit sequence, no builders left)
+
+0. REMEDIATION per AUDIT-2026-11-25 (blocker: schtasks bash path in sandbox.js build+unlock; majors:
+   pin tools/parity deciders + drop volatile pins; L1/L2 negative controls via server.js+save regions;
+   server-error L1 check; --repeat 2 nightly; doc coherence) -> green SCHEDULED fire -> delta re-audit.
 
 1. PARITY sweep: every Q-row -> `baseline-verified` citing the pinning checks (Verifier).
 2. Exit checklist plan §2: L1-L4 self-tests, gen-goldens --check (20), spec-reconcile unreconciled=0,
