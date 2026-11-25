@@ -22,6 +22,7 @@ const PATH_MAP_OUT = path.join(FIXTURES_DIR, 'PATH-MAP.json');
 const CONFIGS_OUT = path.join(CORPUS_OUT_DIR, 'configs.remapped.json');
 const SETTINGS_OUT = path.join(CORPUS_OUT_DIR, 'settings.remapped.json');
 const LOCAL_MAP_OUT = path.join(CORPUS_OUT_DIR, '.pathmap-local.json');
+const CORPUS_MANIFEST_OUT = path.join(CORPUS_OUT_DIR, 'MANIFEST.json');
 const INDEX_HTML = path.join(REPO_ROOT, 'public', 'index.html');
 
 const CONFIGS_FILE = 'llamaCppConfigs.txt';
@@ -541,6 +542,37 @@ function jsonText(value) {
   return JSON.stringify(value, null, 2) + '\n';
 }
 
+// F11 (AUDIT-2026-11-25): fixtures/corpus/*.remapped.json were in neither fixture manifest, so their
+// only provenance was PATH-MAP.json#generatedBy. This manifest names every committed corpus output
+// with the bytes the emit wrote and the command line that regenerates them. It carries no timestamps
+// on purpose — the file is hash-pinned, and a timestamp would move the pin on every legitimate emit
+// the way finding 6 says real tampering hides inside expected churn. The gitignored
+// .pathmap-local.json is deliberately not listed: it is machine-local and cannot be restored.
+const EMIT_COMMAND = 'node tools/parity/load-corpus.js --emit';
+
+function corpusManifestText(corpus, map) {
+  const files = [PATH_MAP_OUT, CONFIGS_OUT, SETTINGS_OUT].map((file) => ({
+    file: path.relative(REPO_ROOT, file).split('\\').join('/'),
+    producedBy: EMIT_COMMAND,
+    bytes: fs.statSync(file).size,
+    sha256: sha256(fs.readFileSync(file, 'utf8'))
+  }));
+  return jsonText({
+    generated_by: 'tools/parity/load-corpus.js',
+    producedBy: EMIT_COMMAND,
+    note: 'sha256 of every committed corpus artifact, with the command that regenerates it. The '
+      + 'inputs are the local corpus files hashed here by name (never by path: they carry personal '
+      + 'absolute paths, so the leak gate that covers the committed files also covers this one). '
+      + 'fixtures/corpus/.pathmap-local.json is gitignored and machine-local, so it is not listed.',
+    inputs: [
+      { file: CONFIGS_FILE, sha256: corpus.corpusSha256.configs },
+      { file: SETTINGS_FILE, sha256: corpus.corpusSha256.settings }
+    ],
+    pathmap_entries: map.entries.length,
+    files: files
+  });
+}
+
 function emit(corpus, map) {
   const remappedConfigs = Object.keys(corpus.configs).map((name) => ({
     name,
@@ -573,7 +605,10 @@ function emit(corpus, map) {
       fail(`${CONFIGS_OUT}: key order for "${sourceNames[i]}" is ${emittedKeys.join(',')} not ${sourceKeys.join(',')}`);
     }
   }
-  return { remappedConfigs, remappedSettings, files: files.map(([f]) => f).concat(LOCAL_MAP_OUT) };
+  // Last, so the hashes it records are the bytes that were actually written above.
+  writeFileChecked(CORPUS_MANIFEST_OUT, corpusManifestText(corpus, map), map.banned);
+  return { remappedConfigs, remappedSettings,
+    files: files.map(([f]) => f).concat([LOCAL_MAP_OUT, CORPUS_MANIFEST_OUT]) };
 }
 
 // --- CLI -------------------------------------------------------------------
@@ -621,6 +656,8 @@ module.exports = {
   CONFIGS_OUT,
   SETTINGS_OUT,
   LOCAL_MAP_OUT,
+  CORPUS_MANIFEST_OUT,
+  EMIT_COMMAND,
   loadCorpus,
   buildPathMap,
   remapString,

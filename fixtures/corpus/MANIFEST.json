@@ -1,0 +1,36 @@
+{
+  "generated_by": "tools/parity/load-corpus.js",
+  "producedBy": "node tools/parity/load-corpus.js --emit",
+  "note": "sha256 of every committed corpus artifact, with the command that regenerates it. The inputs are the local corpus files hashed here by name (never by path: they carry personal absolute paths, so the leak gate that covers the committed files also covers this one). fixtures/corpus/.pathmap-local.json is gitignored and machine-local, so it is not listed.",
+  "inputs": [
+    {
+      "file": "llamaCppConfigs.txt",
+      "sha256": "e33b3c41d2ce017c1964b4d2cab247a2acd3546bac22948e4401bf3479a76aff"
+    },
+    {
+      "file": "llamaCppSettings.txt",
+      "sha256": "60f64dc72222ead616252c752c5e93d2a56ccaf08c75e3f85e579caa3d40b9d6"
+    }
+  ],
+  "pathmap_entries": 22,
+  "files": [
+    {
+      "file": "fixtures/PATH-MAP.json",
+      "producedBy": "node tools/parity/load-corpus.js --emit",
+      "bytes": 4831,
+      "sha256": "451183bed9711f8a0d3a3d6cc4b18b608b80f9c6e3c0eaf7a056127376acd981"
+    },
+    {
+      "file": "fixtures/corpus/configs.remapped.json",
+      "producedBy": "node tools/parity/load-corpus.js --emit",
+      "bytes": 49378,
+      "sha256": "fafa46437241f826afa8c76ef363d4c0af9b11a7b3d2a201b0222d95a6338999"
+    },
+    {
+      "file": "fixtures/corpus/settings.remapped.json",
+      "producedBy": "node tools/parity/load-corpus.js --emit",
+      "bytes": 70,
+      "sha256": "62e4dabf387875fac23045ffdf1707bfff017a1e188a440bc3ce21d30949540e"
+    }
+  ]
+}
