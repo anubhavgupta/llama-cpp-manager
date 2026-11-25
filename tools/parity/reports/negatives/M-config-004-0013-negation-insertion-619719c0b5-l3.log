@@ -1,0 +1,22 @@
+$ node tests/L3-seam/run.js --app C:/parity-scratch/negatives/M-config-004-0013-negation-insertion-619719c0b5/checkout --only models,argv --keep-scratch
+
+== L3 sandbox C:\parity-scratch  ref=C:/parity-scratch/negatives/M-config-004-0013-negation-insertion-619719c0b5/checkout
+--> group seam: models, argv
+
+PASS  [Q11]  L3.SETTINGS-point-at-tree  — settings.json now { "modelsDirectory": "C:\\parity-scratch\\fixtures\\models", "serverPort": 7838 }
+PASS  [§9 seam: window.models]  L3.MODELS-fixture-bytes  — real /models equals the recorded J2 bytes (defaultMode:exact); 10 models
+PASS  [§9 seam: first-match mmproj association]  L3.MODELS-mmproj-field  — 4 of 10 models carry an mmprojFile, identical to the recorded J2 association
+FAIL  [§9 seam: client argv through the real spawn path]  L3.ARGV-recorded-bytes  — SEAM-ARGV-J5-UI-LAUNCH-LAUNCH-JSONL — expected 2574 bytes, got 2534
+                  fixture: fixtures/argv/J5-ui-launch/launch.jsonl
+                  first difference at byte 111
+                  expected: "xtures\\\\models\\\\models with spaces\\\\spaced model Q4.gguf\",\"-ngl\",\"99\",\"-t\",\"12\",\"--temp\",\"0.7\",\"--top-k\",\"20\",\"--top-p\","
+                  actual:   "xtures\\\\models\\\\models with spaces\\\\spaced model Q4.gguf\",\"-t\",\"12\",\"--temp\",\"0.7\",\"--top-k\",\"20\",\"--top-p\",\"0\",\"--min-p"
+                  shape rule: argv-jsonl
+PASS  [§9 seam: mmproj association]  L3.ARGV-mmproj-from-window-models  — --mmproj C:\parity-scratch\fixtures\models\models with spaces\mmproj-spaced model Q4.gguf came from the live /models entry, equal to the recorded one
+PASS  [Q20]  L3.ARGV-chat-template-file-separators  — derived C:\parity-scratch\fixtures\models\models with spaces\chat-template.jinja from a server-returned backslash path, equal to the recorded J5 value
+FAIL  [Q5 Q11]  L3.ARGV-port-from-localStorage-settings  — L3.ARGV-PORT-POSITION — --port sits at index 36 here and at 38 in the recorded J5 argv
+
+checks by quirk: Q11=1  §9 seam: window.models=1  §9 seam: first-match mmproj association=1  §9 seam: client argv through the real spawn path=0  §9 seam: mmproj association=1  Q20=1  Q5 Q11=0
+5 passed, 2 failed of 7 checks in 11.6 s
+
+L3 RED: 2 failing check(s), see the FAIL lines above

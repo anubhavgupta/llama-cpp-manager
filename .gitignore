@@ -55,6 +55,10 @@ fixtures/corpus/.pathmap-local.json
 # nightly/l1 cadence evidence (plan §7) is durable gate material, not a runtime log
 !tools/parity/reports/nightly/*.log
 
+# the negative controls' red-as-named traces: fixtures/NEGATIVES.md (pinned) cites each row's .log,
+# so the child output behind every row has to survive a clone (AUDIT-2026-11-25 finding 13 class)
+!tools/parity/reports/negatives/*.log
+
 # mutation worker private input snapshot (regenerable from git)
 tools/parity/reports/mutation/.snapshot/
 # nightly/l2 scratch output

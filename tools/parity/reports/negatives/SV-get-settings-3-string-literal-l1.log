@@ -1,0 +1,45 @@
+$ node tests/L1-backend/run.js --verify-against-selftest --ref e3ead344eb99df1baf4b20bb57def6530667cf93 --only contract --keep-scratch
+
+L1 backend conformance suite — self-test against e3ead344eb99df1baf4b20bb57def6530667cf93
+   fixtures: C:\projects\Cline-demo\fixtures  (193 recorded files, comparison policy 13 rules)
+   groups: contract, process, restart, presets, metrics-simulated, metrics-unparsable, metrics-stub, socket
+== sandbox C:\parity-scratch  ref e3ead344eb99df1baf4b20bb57def6530667cf93
+--> group contract (NVIDIA_SMI_STUB_MODE=ok)
+
+checks per endpoint
+  /metrics                         1 pass
+  /models                          4 pass
+  /settings (Q11 port)             1 pass
+  /settings                        4 pass    1 FAIL
+  /status                          1 pass
+  GET / (static)                   1 pass
+  GET /                            1 pass
+  GET /swagger(.json)              2 pass
+
+PASS  [contract]  L1.ROOT.BYTES  — 200, 24584 bytes == fixtures/http/J0-baseline/root.response
+PASS  [contract]  L1.SWAGGER.BYTES  — 200, 864 bytes == fixtures/http/J0-baseline/swagger.response
+PASS  [contract]  L1.SWAGGER-JSON.BYTES  — 200, 9516 bytes == fixtures/http/J0-baseline/swagger-json.response
+FAIL  [contract]  L1.SETTINGS.FIRST-RUN.BYTES
+      id: L1.SETTINGS.FIRST-RUN.BYTES
+      BYTES-HTTP-J0-BASELINE-SETTINGS-FIRST-RUN-RESPONSE — expected 103 bytes, got 103
+            fixture: fixtures/http/J0-baseline/settings-first-run.response
+            first difference at byte 73
+            expected: "ue,\"settings\":{\"modelsDirectory\":\"C:\\\\Users\\\\anubh\\\\.lmstudio\\\\models\",\"serverPort\":8080}}"
+            actual:   "ue,\"settings\":{\"modelsDirectory\":\"C:\\\\Users\\\\anubh\\\\.lmstudiX\\\\models\",\"serverPort\":8080}}"
+PASS  [contract]  L1.SETTINGS.POST-WITH-PORT.BYTES  — 200 bytes == golden AND settings.json bytes == fixtures/ini/J1-settings/settings.after-with-port.json
+PASS  [contract]  L1.SETTINGS.READ-BACK.BYTES  — 200 bytes == fixtures/http/J1-settings/settings-read.response, serverPort 7838
+PASS  [Q2]  L1.SETTINGS.TDZ-PORT-8080  — POST without serverPort rewrote 7838 -> 8080 (TDZ: existing settings never read); response and file bytes both == goldens
+PASS  [Q11]  L1.PORT.HARD-CODED-7837  — settings.json serverPort=8080 and the manager still answers on 7837
+PASS  [contract]  L1.STATUS.IDLE.BYTES  — {"running":false} == fixtures/http/J1-settings/status.response
+PASS  [contract]  L1.METRICS.STUB-SHAPE  — 3 samples: five-field key set, gpu/vram/vramUsage == the stub canned numbers, cpu/ram relaxed by rule metrics-body-stub
+PASS  [contract]  L1.MODELS.BYTES  — 10 models, bytes == fixtures/http/J2-models/models.response
+PASS  [contract]  L1.MODELS.MMPROJ-EXCLUDED  — 0 mmproj entries; 10 models, none mmproj*
+PASS  [contract]  L1.MODELS.MMPROJ-FIRST-MATCH  — 10 models carry the recorded mmprojFile association, incl. the case-sensitive probe and the multi-mmproj first match
+PASS  [contract]  L1.MODELS.UNREADABLE-ABSENT  — no entries under models/unreadable, matching the recorded ACL-denied subtree
+PASS  [contract]  L1.STATIC.INDEX-MATCHES-GOLDEN  — the served index.html is the recorded byte stream (24584 bytes)
+PASS  [contract]  L1.SETTINGS.REPLAY-MODELSDIR-REQUIRED  — 400 + {"success":false,"error":"Models directory path is required"}
+
+15 passed, 1 failed of 16 checks in 5.0 s
+run summary: tools\parity\reports\nightly\l1-2026-11-25T07-53-40Z-selftest.json
+
+L1 RED: see the FAIL lines above

@@ -1,0 +1,77 @@
+$ node tests/L3-seam/run.js --app C:/parity-scratch/negatives/M-args-004-0012-conditional-inversion-3d525bcf46/checkout --only corpus-seed,corpus-launch --keep-scratch
+
+== L3 sandbox C:\parity-scratch  ref=C:/parity-scratch/negatives/M-args-004-0012-conditional-inversion-3d525bcf46/checkout
+--> group corpus: corpus-seed, corpus-launch
+
+PASS  [§9A remapped mode]  L3.CORPUS-materialised  — 42 corpus model files created under C:\parity-scratch\fixtures\models; all 48 modelPaths are now /models options
+PASS  [§9 trap 6]  L3.CORPUS-list  — 48 rows in the recorded J6 order
+PASS  [Q18]  L3.CORPUS-launched-count  — 48/48 corpus configs launched through the real manager + stand-in
+FAIL  [§9A §8 argv-jsonl]  L3.CORPUS-argv-recorded-j6  — SEAM-ARGV-J6-CORPUS-SMOKE-LAUNCH-JSONL — expected 4292 bytes, got 3036
+                  fixture: fixtures/argv/J6-corpus-smoke/launch.jsonl
+                  first difference at byte 25
+                  expected: "{\"pid\":\"<PID>\",\"argv\":[\"-m\",\"C:\\\\parity-scratch\\\\fixtures\\\\models\\\\unsloth\\\\Qwen3-Cod"
+                  actual:   "{\"pid\":\"<PID>\",\"argv\":[\"-ngl\",\"99\",\"-t\",\"15\",\"--temp\",\"0.7\",\"--top-k\",\"20\",\"--top-p\","
+                  shape rule: argv-jsonl
+FAIL  [Q7 Q18 Q19 Q20 Q21 Q22]  L3.CORPUS-argv-goldens  — L3.CORPUS-ARGV — 48 of 48 argvs differ from the recorded legacy argv (fixtures/goldens/resave, PATH-MAP-resolved):
+                  [
+                    {
+                      "name": "Qwen 3 Q4 64K - 28TPS",
+                      "index": 0,
+                      "expected": "-m",
+                      "observed": "-ngl",
+                      "length": {
+                        "expected": 39,
+                        "observed": 37
+                      }
+                    },
+                    {
+                      "name": "GPT-OSS-20B 16K 125TPS",
+                      "index": 0,
+                      "expected": "-m",
+                      "observed": "-ngl",
+                      "length": {
+                        "expected": 27,
+                        "observed": 25
+                      }
+                    },
+                    {
+                      "name": "GPT-OSS-20B 100K 52TPS",
+                      "index": 0,
+                      "expected": "-m",
+                      "observed": "-ngl",
+                      "length": {
+                        "expected": 29,
+                        "observed": 27
+                      }
+                    },
+                    {
+                      "name": "GPT-20B 131K(full) - 50TPS",
+                      "index": 0,
+                      "expected": "-m",
+                      "observed": "-ngl",
+                      "length": {
+                        "expected": 29,
+                        "observed": 27
+                      }
+                    },
+                    {
+                      "name": "Qwen 3 0.6b",
+                      "index": 0,
+                      "expected": "-m",
+                      "observed": "-t",
+                      "length": {
+                        "expected": 35,
+                        "observed": 33
+                      }
+                    }
+                  ]
+PASS  [Q20 Q21]  L3.CORPUS-spawn-target  — 96 corpus argv lines, every spawn aimed at fake-llama-server.exe
+PASS  [Q10 Q17 §9 trap 6]  L3.CORPUS-INI-bytes  — sha d5fc433e359162b4 equals the recorded corpus ini composed in insertion order, 48 sections, trailing `port = 7838` (Q10)
+
+notes
+  corpus-seed: resolved seed: 48 configs, settings {"serverPort":7838,"modelsDirectory":"C:\\parity-scratch\\fixtures\\models\\"}
+
+checks by quirk: §9A remapped mode=1  §9 trap 6=1  Q18=1  §9A §8 argv-jsonl=0  Q7 Q18 Q19 Q20 Q21 Q22=0  Q20 Q21=1  Q10 Q17 §9 trap 6=1
+5 passed, 2 failed of 7 checks in 120.7 s
+
+L3 RED: 2 failing check(s), see the FAIL lines above

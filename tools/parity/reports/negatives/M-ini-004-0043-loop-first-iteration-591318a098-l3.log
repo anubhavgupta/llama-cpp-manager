@@ -1,0 +1,25 @@
+$ node tests/L3-seam/run.js --app C:/parity-scratch/negatives/M-ini-004-0043-loop-first-iteration-591318a098/checkout --only corpus-seed,corpus-launch --keep-scratch
+
+== L3 sandbox C:\parity-scratch  ref=C:/parity-scratch/negatives/M-ini-004-0043-loop-first-iteration-591318a098/checkout
+--> group corpus: corpus-seed, corpus-launch
+
+PASS  [§9A remapped mode]  L3.CORPUS-materialised  — 42 corpus model files created under C:\parity-scratch\fixtures\models; all 48 modelPaths are now /models options
+PASS  [§9 trap 6]  L3.CORPUS-list  — 48 rows in the recorded J6 order
+PASS  [Q18]  L3.CORPUS-launched-count  — 48/48 corpus configs launched through the real manager + stand-in
+PASS  [§9A §8 argv-jsonl]  L3.CORPUS-argv-recorded-j6  — the first three corpus launches (2 argv-jsonl lines each) are byte-identical to the recorded J6 corpus journey (argv-jsonl)
+PASS  [Q7 Q18 Q19 Q20 Q21 Q22]  L3.CORPUS-argv-goldens  — 48/48 argvs positionally equal to the recorded legacy argv
+PASS  [Q20 Q21]  L3.CORPUS-spawn-target  — 96 corpus argv lines, every spawn aimed at fake-llama-server.exe
+FAIL  [Q10 Q17 §9 trap 6]  L3.CORPUS-INI-bytes  — L3.CORPUS-INI-BYTES — the ini the browser built and the server wrote differs from the recorded corpus ini bytes:
+                  disk sha 61d7b627b37d88ca31cd8716f65fb1bea31feb3d6c24d22c9be91bbd5b6df624
+                  expect sha d5fc433e359162b426d19267a7f35c0efcefabb1449f8e0f2b217a02e47a2e67
+                  first difference at byte 348
+                  disk  : "ue\nfa = on\nspec-type = \nreasoning = on\n\nport = 7838\n"
+                  expect: "ue\nfa = on\nspec-type = \nreasoning = on\n\n[GPT-OSS-20B 16K 125TPS]\nmodel = C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf\ntemp"
+
+notes
+  corpus-seed: resolved seed: 48 configs, settings {"serverPort":7838,"modelsDirectory":"C:\\parity-scratch\\fixtures\\models\\"}
+
+checks by quirk: §9A remapped mode=1  §9 trap 6=1  Q18=1  §9A §8 argv-jsonl=1  Q7 Q18 Q19 Q20 Q21 Q22=1  Q20 Q21=1  Q10 Q17 §9 trap 6=0
+6 passed, 1 failed of 7 checks in 119.7 s
+
+L3 RED: 1 failing check(s), see the FAIL lines above
