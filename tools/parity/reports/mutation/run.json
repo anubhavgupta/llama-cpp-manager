@@ -15,16 +15,20 @@
     "rest": 2452,
     "promoted": 6
   },
+  "save_corpus": {
+    "recorded_resessions": 50,
+    "file": "fixtures/goldens/resave (inputs.jsonl + goldens.jsonl, sha-pinned pair)"
+  },
   "mutants": {
-    "enumerated": 706,
-    "run": 706,
-    "killed": 648,
-    "survived": 58,
-    "score": "91.78%",
+    "enumerated": 765,
+    "run": 765,
+    "killed": 705,
+    "survived": 60,
+    "score": "92.16%",
     "by_class": {
       "conditional-inversion": {
-        "mutants": 75,
-        "killed": 75,
+        "mutants": 76,
+        "killed": 76,
         "survived": 0
       },
       "statement-removal": {
@@ -33,9 +37,9 @@
         "survived": 0
       },
       "string-literal": {
-        "mutants": 221,
-        "killed": 216,
-        "survived": 5
+        "mutants": 224,
+        "killed": 218,
+        "survived": 6
       },
       "relational-boundary": {
         "mutants": 22,
@@ -48,23 +52,23 @@
         "survived": 0
       },
       "numeric-literal": {
-        "mutants": 35,
-        "killed": 35,
+        "mutants": 48,
+        "killed": 48,
         "survived": 0
       },
       "negation-insertion": {
-        "mutants": 41,
-        "killed": 35,
+        "mutants": 55,
+        "killed": 49,
         "survived": 6
       },
       "boolean-operator": {
-        "mutants": 56,
-        "killed": 55,
+        "mutants": 69,
+        "killed": 68,
         "survived": 1
       },
       "operand-removal": {
-        "mutants": 56,
-        "killed": 49,
+        "mutants": 69,
+        "killed": 62,
         "survived": 7
       },
       "equality-complement": {
@@ -88,15 +92,38 @@
         "survived": 0
       },
       "branch-swap": {
-        "mutants": 2,
-        "killed": 2,
-        "survived": 0
+        "mutants": 4,
+        "killed": 3,
+        "survived": 1
+      }
+    },
+    "by_region": {
+      "args": {
+        "mutants": 317,
+        "killed": 296,
+        "survived": 21
+      },
+      "config": {
+        "mutants": 54,
+        "killed": 49,
+        "survived": 5
+      },
+      "ini": {
+        "mutants": 335,
+        "killed": 303,
+        "survived": 32
+      },
+      "save": {
+        "mutants": 59,
+        "killed": 57,
+        "survived": 2
       }
     },
     "by_tier": {
       "tier1": 637,
       "tier2": 11,
-      "full": 58
+      "full": 58,
+      "save": 59
     }
   },
   "tier_control": {
@@ -108,10 +135,11 @@
   },
   "baseline_control": {
     "vectors": 2752,
-    "channels": 2,
+    "channels": 3,
+    "save_inputs": 50,
     "disagreements": 0
   },
-  "runtime_ms": 12005,
+  "runtime_ms": 9425,
   "workers": 8,
   "rows": {
     "BA-32": {
@@ -1427,6 +1455,177 @@
       "killed": 3,
       "survived": 0,
       "survivor_ids": []
+    },
+    "SCV-1": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-2": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-3": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-4": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-5": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-6": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-7": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-8": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-9": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-10": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-11": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-12": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-13": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-14": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-15": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-16": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-17": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-18": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-19": {
+      "mutants": 5,
+      "killed": 5,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-20": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-21": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-22": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-23": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-24": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-25": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-26": {
+      "mutants": 4,
+      "killed": 2,
+      "survived": 2,
+      "survivor_ids": [
+        "M-save-036-0092-branch-swap-418f9f7afd",
+        "M-save-036-0093-string-literal-2881fee7c3"
+      ]
+    },
+    "SCV-27": {
+      "mutants": 1,
+      "killed": 1,
+      "survived": 0,
+      "survivor_ids": []
+    },
+    "SCV-28": {
+      "mutants": 3,
+      "killed": 3,
+      "survived": 0,
+      "survivor_ids": []
     }
   },
   "survivor_ids": [
@@ -1487,7 +1686,9 @@
     "M-ini-140-0043-equality-strictness-2269a656a8",
     "M-ini-141-0037-relational-boundary-1f30eddadb",
     "M-ini-149-0071-equality-strictness-6073f375ae",
-    "M-ini-155-0067-equality-strictness-60cab77f69"
+    "M-ini-155-0067-equality-strictness-60cab77f69",
+    "M-save-036-0092-branch-swap-418f9f7afd",
+    "M-save-036-0093-string-literal-2881fee7c3"
   ],
   "mutant_results": [
     {
@@ -19037,6 +19238,1363 @@
       "first_killing_index": 0,
       "vectors_checked": 1,
       "first_problem": "ini bytes 217 -> 216, first difference at byte 216\n      baseline: \"-mode = none\\ncache-ram = 8192\\nfa = auto\\n\\n\"\n      candidate: \"-mode = none\\ncache-ram = 8192\\nfa = auto\\n\""
+    },
+    {
+      "id": "M-save-002-0008-conditional-inversion-3e77881381",
+      "class": "conditional-inversion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "before": "!configId",
+      "after": "!(!configId)",
+      "line": 2,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "saveConfigurations() was called 0 time(s), the recorded session wrote exactly 1"
+    },
+    {
+      "id": "M-save-007-0013-negation-insertion-1bbd8457b8",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-2"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "parseInt(nglInput.value)",
+      "after": "!(parseInt(nglInput.value))",
+      "line": 7,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-007-0038-boolean-operator-a5b9997006",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-3"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 7,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-007-0038-operand-removal-664fcc1859",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-3"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 0",
+      "after": "",
+      "line": 7,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-007-0041-numeric-literal-4112529273",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-3"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "0",
+      "after": "1",
+      "line": 7,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-008-0017-negation-insertion-e64461c730",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-4"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "parseInt(threadsInput.value)",
+      "after": "!(parseInt(threadsInput.value))",
+      "line": 8,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-008-0046-boolean-operator-b41acfe158",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-5"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 8,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-008-0046-operand-removal-ab8766d668",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-5"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 1",
+      "after": "",
+      "line": 8,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-008-0049-numeric-literal-abbf2497b3",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-5"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "1",
+      "after": "0",
+      "line": 8,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-009-0014-negation-insertion-06d2234947",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-6"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "parseFloat(tempInput.value)",
+      "after": "!(parseFloat(tempInput.value))",
+      "line": 9,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-009-0042-boolean-operator-97f232da46",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-7"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 9,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-009-0042-operand-removal-41e71b3fc1",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-7"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 0",
+      "after": "",
+      "line": 9,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-009-0045-numeric-literal-d36bd2d95e",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-7"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "0",
+      "after": "1",
+      "line": 9,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-010-0014-negation-insertion-e51f0a249b",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-8"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "parseInt(topKInput.value)",
+      "after": "!(parseInt(topKInput.value))",
+      "line": 10,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-010-0040-boolean-operator-2c92d9f048",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-9"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 10,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-010-0040-operand-removal-91adb5aefa",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-9"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 0",
+      "after": "",
+      "line": 10,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-010-0043-numeric-literal-a00d62fe9a",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-9"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "0",
+      "after": "1",
+      "line": 10,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-011-0014-negation-insertion-f0bc8761b1",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-10"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "parseFloat(topPInput.value)",
+      "after": "!(parseFloat(topPInput.value))",
+      "line": 11,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-011-0042-boolean-operator-02e03d545b",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-11"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 11,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-011-0042-operand-removal-2f56c7442b",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-11"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 0",
+      "after": "",
+      "line": 11,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-011-0045-numeric-literal-5b8786e1fa",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-11"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "0",
+      "after": "1",
+      "line": 11,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-012-0014-negation-insertion-e68b9ba52a",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-12"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "minPInput.value",
+      "after": "!(minPInput.value)",
+      "line": 12,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-012-0030-boolean-operator-d0c41de5a6",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-13"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 12,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-012-0030-operand-removal-d3fba26014",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-13"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 0",
+      "after": "",
+      "line": 12,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-012-0033-numeric-literal-653b7348cf",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-13"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "0",
+      "after": "1",
+      "line": 12,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-013-0023-negation-insertion-32e09a09c7",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-14"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "repeatPenaltyInput.value",
+      "after": "!(repeatPenaltyInput.value)",
+      "line": 13,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-013-0048-boolean-operator-eeea674427",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-15"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 13,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-013-0048-operand-removal-2b77d3da83",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-15"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 0",
+      "after": "",
+      "line": 13,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-013-0051-numeric-literal-e55a9d7d38",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-15"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "0",
+      "after": "1",
+      "line": 13,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-014-0025-negation-insertion-52e8630b02",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-16"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "presencePenaltyInput.value",
+      "after": "!(presencePenaltyInput.value)",
+      "line": 14,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-014-0052-boolean-operator-d10f3b5cb6",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-17"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 14,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-014-0052-operand-removal-ec02a7a563",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-17"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 0",
+      "after": "",
+      "line": 14,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-014-0055-numeric-literal-2be680ec3d",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-17"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "0",
+      "after": "1",
+      "line": 14,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-015-0018-negation-insertion-84c395b427",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-18"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "parseInt(document.getElementById('parallel').value)",
+      "after": "!(parseInt(document.getElementById('parallel').value))",
+      "line": 15,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-015-0051-string-literal-a490205af8",
+      "class": "string-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-18",
+        "SCV-19"
+      ],
+      "kinds": [
+        "logical-or",
+        "truthiness"
+      ],
+      "before": "'parallel'",
+      "after": "''",
+      "line": 15,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-015-0051-string-literal-e309661ccd",
+      "class": "string-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-18",
+        "SCV-19"
+      ],
+      "kinds": [
+        "logical-or",
+        "truthiness"
+      ],
+      "before": "'parallel'",
+      "after": "'parallelX'",
+      "line": 15,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-015-0070-boolean-operator-b5e947867c",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-19"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 15,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-015-0070-operand-removal-478877ece1",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-19"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 0",
+      "after": "",
+      "line": 15,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-015-0073-numeric-literal-38cdf5bd61",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-19"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "0",
+      "after": "1",
+      "line": 15,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-019-0021-negation-insertion-e617a75686",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-20"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "parseInt(contextSizeInput.value)",
+      "after": "!(parseInt(contextSizeInput.value))",
+      "line": 19,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-019-0054-boolean-operator-c46136f94b",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-21"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 19,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-019-0054-operand-removal-8dff2c5709",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-21"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 1",
+      "after": "",
+      "line": 19,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-019-0057-numeric-literal-f9e9a534f7",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-21"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "1",
+      "after": "0",
+      "line": 19,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-020-0017-negation-insertion-80f9ede95a",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-22"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "parseInt(nCpuMoeInput.value)",
+      "after": "!(parseInt(nCpuMoeInput.value))",
+      "line": 20,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-020-0046-boolean-operator-723696c38c",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-23"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 20,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-020-0046-operand-removal-b39f136e1f",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-23"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 0",
+      "after": "",
+      "line": 20,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-020-0049-numeric-literal-2688497a36",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-23"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "0",
+      "after": "1",
+      "line": 20,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-033-0023-negation-insertion-afa8191b6f",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-24"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "parseInt(specDraftNMaxInput.value)",
+      "after": "!(parseInt(specDraftNMaxInput.value))",
+      "line": 33,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-033-0058-boolean-operator-b0d1497f92",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-25"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 33,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-033-0058-operand-removal-7d40bae84e",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-25"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 0",
+      "after": "",
+      "line": 33,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-033-0061-numeric-literal-b5a8d2ecf8",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-25"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "0",
+      "after": "1",
+      "line": 33,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-036-0028-negation-insertion-af8ecb02cc",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-26"
+      ],
+      "kinds": [
+        "ternary"
+      ],
+      "before": "chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : ''",
+      "after": "!(chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : '')",
+      "line": 36,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-036-0053-branch-swap-8dd9dc7cc2",
+      "class": "branch-swap",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-26"
+      ],
+      "kinds": [
+        "ternary"
+      ],
+      "before": " chatTemplateKwargsInput.value.trim() ",
+      "after": " ''",
+      "line": 36,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-chat-template-kwargs"
+      ],
+      "first_killing_index": 50,
+      "vectors_checked": 50,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-036-0092-branch-swap-418f9f7afd",
+      "class": "branch-swap",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-26"
+      ],
+      "kinds": [
+        "ternary"
+      ],
+      "before": " ''",
+      "after": " chatTemplateKwargsInput.value.trim() ",
+      "line": 36,
+      "status": "survived",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [],
+      "first_killing_index": -1,
+      "vectors_checked": 50,
+      "first_problem": null
+    },
+    {
+      "id": "M-save-036-0093-string-literal-2881fee7c3",
+      "class": "string-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-26"
+      ],
+      "kinds": [
+        "ternary"
+      ],
+      "before": "''",
+      "after": "'X'",
+      "line": 36,
+      "status": "survived",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [],
+      "first_killing_index": -1,
+      "vectors_checked": 50,
+      "first_problem": null
+    },
+    {
+      "id": "M-save-038-0014-negation-insertion-b6fac433b1",
+      "class": "negation-insertion",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-27"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "before": "parseInt(ngldInput.value)",
+      "after": "!(parseInt(ngldInput.value))",
+      "line": 38,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-038-0040-boolean-operator-17c23b2de1",
+      "class": "boolean-operator",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-28"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "||",
+      "after": "&&",
+      "line": 38,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-038-0040-operand-removal-d43406d4a1",
+      "class": "operand-removal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-28"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "|| 0",
+      "after": "",
+      "line": 38,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:edge-empty-numeric"
+      ],
+      "first_killing_index": 49,
+      "vectors_checked": 49,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
+    },
+    {
+      "id": "M-save-038-0043-numeric-literal-b47d830aa1",
+      "class": "numeric-literal",
+      "region": "save",
+      "channel": "save",
+      "row_ids": [
+        "SCV-28"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "before": "0",
+      "after": "1",
+      "line": 38,
+      "status": "killed",
+      "killed_on_tier": "save",
+      "killing_vector_ids": [
+        "resave:Qwen 3 Q4 64K - 28TPS"
+      ],
+      "first_killing_index": 1,
+      "vectors_checked": 1,
+      "first_problem": "localStorage bytes differ from the bytes the legacy page wrote: first difference at normalised line 1"
     }
   ]
 }

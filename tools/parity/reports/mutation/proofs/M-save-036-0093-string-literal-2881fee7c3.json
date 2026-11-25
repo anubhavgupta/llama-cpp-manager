@@ -1,0 +1,95 @@
+{
+  "survivor_id": "M-save-036-0093-string-literal-2881fee7c3",
+  "generated_by": "tools/parity/equiv-prove.js",
+  "command": "node tools/parity/equiv-prove.js",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "goldens_impl": "parity-baseline@c57f4381425a97a0ef1b830a8314f126e5971c0f",
+  "mutated_sha256": "2f57da7ce6e1a941a37c3cac2f28796d5acc5e181be02e14f571ddb186a3305c",
+  "site": {
+    "region": "save",
+    "line": 36,
+    "start": 93,
+    "end": 95
+  },
+  "killed_in_run": {
+    "status": "survived",
+    "vectors_checked": 50
+  },
+  "status": "equivalent-proven",
+  "method": "static",
+  "row_ids": [
+    "SCV-26"
+  ],
+  "class": "string-literal",
+  "region": "save",
+  "before": "''",
+  "after": "'X'",
+  "static": {
+    "kind": "static",
+    "case": "unreachable-element-guard-fallback",
+    "argument": "The mutation is inside the `: `''` branch of `chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : ''`. That branch is evaluated only when `chatTemplateKwargsInput` is falsy, and `chatTemplateKwargsInput` is `document.getElementById('chatTemplateKwargs')` taken once at load: parity-baseline:public/index.html renders id=\"chatTemplateKwargs\" exactly once, inside html > body > div.container > div.main-layout > div.main-content > div.input-section > div.inline-checkboxes > div.form-group, and the only DOM-rewriting assignments in parity-baseline:public/script.js are on `configItem`, `configList`, `draftModelPathSelect`, `launchPresetsSelect`, `modelPathSelect`, `settingsDialog`, `warningEl`, none of which is that element or an ancestor of it. The guard is therefore truthy in every page state, the fallback is never evaluated, and no input can make the mutant differ from the baseline.",
+    "operands": {
+      "guard": "chatTemplateKwargsInput",
+      "element_id": "chatTemplateKwargs",
+      "fallback": "''",
+      "ancestors": [
+        {
+          "tag": "html",
+          "id": null,
+          "classes": []
+        },
+        {
+          "tag": "body",
+          "id": null,
+          "classes": []
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "container"
+          ]
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "main-layout"
+          ]
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "main-content"
+          ]
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "input-section"
+          ]
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "inline-checkboxes"
+          ]
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "form-group"
+          ]
+        }
+      ]
+    }
+  },
+  "probes": {
+    "run": 0,
+    "scope": null
+  }
+}

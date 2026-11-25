@@ -21,64 +21,67 @@ node tools/parity/equiv-prove.js
 
 | | count |
 |---|---|
-| mutants enumerated | 706 |
-| killed by a recorded vector | 648 |
-| survived | 58 |
-| survived, equivalent — static proof | 15 |
+| mutants enumerated | 765 |
+| killed by a recorded vector | 705 |
+| survived | 60 |
+| survived, equivalent — static proof | 17 |
 | survived, equivalent — exhaustive-probe proof | 43 |
 | survived, gap — killing vector synthesized | 0 |
 | unresolved gaps | 0 |
-| killed + explained | 706 of 706 |
-| **mutation score (killed / enumerated)** | **91.78%** |
+| killed + explained | 765 of 765 |
+| **mutation score (killed / enumerated)** | **92.16%** |
 | **ceiling score (killed + proven-equivalent + gap-killer) / enumerated** | **100.00%** |
 
-Runtime: kill check 12.0s on 8 worker process(es); tier 1 = first 300 vectors of 2752, 11 mutants needed the remaining 2452. Tier control: 64 seeded tier-1 kills re-run over the full set, 0 disagreement(s).
+Runtime: kill check 9.4s on 8 worker process(es); tier 1 = first 300 vectors of 2752, 11 mutants needed the remaining 2452. Tier control: 64 seeded tier-1 kills re-run over the full set, 0 disagreement(s).
 
 ## By class
 
 | class | mutants | killed | equiv-static | equiv-dynamic | gap (killer synthesized) | unresolved |
 |---|---|---|---|---|---|---|
-| string-literal | 221 | 216 | 0 | 5 | 0 | 0 |
+| string-literal | 224 | 218 | 1 | 5 | 0 | 0 |
 | statement-removal | 80 | 80 | 0 | 0 | 0 | 0 |
-| conditional-inversion | 75 | 75 | 0 | 0 | 0 | 0 |
-| boolean-operator | 56 | 55 | 0 | 1 | 0 | 0 |
-| operand-removal | 56 | 49 | 0 | 7 | 0 | 0 |
+| conditional-inversion | 76 | 76 | 0 | 0 | 0 | 0 |
+| boolean-operator | 69 | 68 | 0 | 1 | 0 | 0 |
+| operand-removal | 69 | 62 | 0 | 7 | 0 | 0 |
+| negation-insertion | 55 | 49 | 0 | 6 | 0 | 0 |
+| numeric-literal | 48 | 48 | 0 | 0 | 0 | 0 |
 | equality-complement | 47 | 47 | 0 | 0 | 0 | 0 |
 | equality-strictness | 47 | 12 | 15 | 20 | 0 | 0 |
-| negation-insertion | 41 | 35 | 0 | 6 | 0 | 0 |
-| numeric-literal | 35 | 35 | 0 | 0 | 0 | 0 |
 | relational-boundary | 22 | 18 | 0 | 4 | 0 | 0 |
 | relational-reverse | 22 | 22 | 0 | 0 | 0 | 0 |
-| branch-swap | 2 | 2 | 0 | 0 | 0 | 0 |
+| branch-swap | 4 | 3 | 1 | 0 | 0 | 0 |
 | loop-body-removal | 1 | 1 | 0 | 0 | 0 | 0 |
 | loop-first-iteration | 1 | 1 | 0 | 0 | 0 | 0 |
 
-## Regions the gate does not score: `save` and `server`
+## The two regions outside the generators: `save` and `server`
 
 `config` / `args` / `ini` are the regions this report scores. Two more have sites in
-`tools/parity/mutate.js` and no verdicts here — and the difference between `unscored`
-and `equivalent` is exactly what this table is for.
+`tools/parity/mutate.js`, and this table says how far each has actually got — produced
+by the enumerator, shipped in the inventory, scored with a verdict — because the
+difference between `unscored` and `equivalent` is exactly what this table is for.
 
 | region | site inventory | mutants the enumerator produces | in `mutants.json` | scored in `run.json` | killed | survived | proven in this report |
 |---|---|---|---|---|---|---|---|
-| `save` | `SCV-*` rows (28) over the `ANCHORS.SAVE_START` slice of `public/script.js` | 59 | 0 | 0 | 0 | 0 | 0 |
+| `save` | `SCV-*` rows (28) over the `ANCHORS.SAVE_START` slice of `public/script.js` | 59 | 59 | 59 | 57 | 2 | 2 |
 | `server` | `SV-*` rows (49) over the whole `parity-baseline:server.js` blob | 152 | 0 | 0 | 0 | 0 | 0 |
 
-The `save` figure is what `node tools/parity/mutate.js --dump` would ship today; the
+The `save` figure is what `node tools/parity/mutate.js --dump` ships today; the
 `server` figure is what `node tools/parity/mutate.js --dump-server` writes to its own
 unrun file — `--dump` produces 0 server mutants, and `--dump-server` asserts that it
 stays that way. That assertion is the ruling this table records.
 
-**`save` — the channel exists; the shipped run predates it.** `mutate.js` enumerates
-59 save mutants from the 28 `SCV-*` rows and scores them against the
-recorded re-save corpus (`fixtures/goldens/resave/`), and the
-`unreachable-element-guard-fallback` static strategy is asserted by name in
-`node tools/parity/equiv-prove.js --selftest`. The
-committed `mutants.json` was written before the region landed, so those mutants are
-not in it, carry no verdict in `run.json`, and own no file in `proofs/`. Regenerating
-`mutants.json` + `run.json` + this report moves a pinned artifact (C8): that is a ledger
-entry for the pin holder, not a step this tool takes on its own authority. Until then
-the save region is reported as unscored, never as clean.
+**`save` — enumerated, shipped, scored.** `mutate.js` enumerates 59 save
+mutants from the 28 `SCV-*` rows; all 59 are in `mutants.json` and all 59 carry a
+verdict in `run.json`. Their kill channel is the recorded re-save corpus
+(`fixtures/goldens/resave/`, 50 recorded sessions) because the localStorage bytes
+a re-save writes are the only output this region has — no argv or ini vector can see it.
+They kill 57; the 2 survivor(s) are proven by the
+`unreachable-element-guard-fallback` static strategy, which
+`node tools/parity/equiv-prove.js --selftest` asserts by name.
+
+The region landed after the `9d6a767` baseline its vectors come from, so shipping it
+moved pinned artifacts (`mutants.json`, `run.json`, `results/`, `proofs/`, this report)
+— a C8 ledger entry for the pin holder, which the tool does not write for itself.
 
 **`server` — enumerated, deliberately unrun** (`status: enumerated-unrun`, in
 `tools/parity/reports/mutation/SERVER-REGION-ENUMERATION.json`, written by `node tools/parity/mutate.js --dump-server`):
@@ -412,12 +415,12 @@ The `action` column is what feeds the promotion loop.
 
 ## Gates
 
-- [ ] mutant enumeration is deterministic — two enumerate() passes produce identical bytes (470680) and equal the committed mutants.json
+- [x] mutant enumeration is deterministic — two enumerate() passes produce identical bytes (470680) and equal the committed mutants.json
 - [x] every BA/INI row carries >=1 mutant or a note — 189 in-generator rows all carry mutants; 9 rows are outside both generators and carry the note `launch prelude`
-- [x] survivors == proofs/ 1:1 — 58 survivors, 58 proof files, 0 stale proof(s) pruned
+- [x] survivors == proofs/ 1:1 — 60 survivors, 60 proof files, 0 stale proof(s) pruned
 - [x] unresolved gaps are escalated, never called equivalent — 0 unresolved gap(s), 0 with an ESCALATION.md entry
-- [x] every survivor carries a machine-written proof object — 58 proof objects, each with a static argument or an explicit probe scope
-- [x] kill check reproduces the recording harness — 2752 vectors x 2 channels unmutated, 0 disagreement(s) (asserted inside every run, not only in --selftest)
+- [x] every survivor carries a machine-written proof object — 60 proof objects, each with a static argument or an explicit probe scope
+- [x] kill check reproduces the recording harness — 2752 vectors x 3 channels unmutated, 0 disagreement(s) (asserted inside every run, not only in --selftest)
 - [x] a promoted killer kills the mutant it was promoted for — 6 vector(s) in fixtures/vectors/boundary/shrunk-mutation.jsonl carrying 104 row claim(s); 6 formerly surviving mutant(s) are now killed by permanent boundary vectors; 0 gap(s) could not be promoted, 0 promoted file(s) gen-goldens.js manifest() does not list
 
 ## What feeds back
@@ -426,7 +429,7 @@ The `action` column is what feeds the promotion loop.
   hash-pinned and being re-recorded, so the parent appends them under
   `fixtures/vectors/boundary/promotion-mutation-*.jsonl`, adds them to `coverage-map.json`,
   and regenerates goldens. Until then the gap stays visible in this report, not hidden.
-- `proofs/<survivor-id>.json`: 58 file(s), one per survivor, each naming
+- `proofs/<survivor-id>.json`: 60 file(s), one per survivor, each naming
   the static argument or the exact probe domain, so the Auditor can re-prove without
   re-deriving anything (plan §5).
 

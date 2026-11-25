@@ -1372,8 +1372,9 @@ function regionSection(run, results) {
     const num = (value) => (value === undefined ? 0 : value);
 
     lines.push('`config` / `args` / `ini` are the regions this report scores. Two more have sites in');
-    lines.push('`tools/parity/mutate.js` and no verdicts here — and the difference between `unscored`');
-    lines.push('and `equivalent` is exactly what this table is for.');
+    lines.push('`tools/parity/mutate.js`, and this table says how far each has actually got — produced');
+    lines.push('by the enumerator, shipped in the inventory, scored with a verdict — because the');
+    lines.push('difference between `unscored` and `equivalent` is exactly what this table is for.');
     lines.push('');
     lines.push('| region | site inventory | mutants the enumerator produces | in `mutants.json` | scored in `run.json` | killed | survived | proven in this report |');
     lines.push('|---|---|---|---|---|---|---|---|');
@@ -1389,21 +1390,43 @@ function regionSection(run, results) {
             + ' | ' + num(survived[region]) + ' | ' + num(proven[region]) + ' |');
     }
     lines.push('');
-    lines.push('The `save` figure is what `node tools/parity/mutate.js --dump` would ship today; the');
+    const saveShipped = num(shippedRegions.save);
+    const saveScored = num(scored.save);
+    const saveWhole = saveShipped === num(live.save) && saveScored === num(live.save);
+    lines.push('The `save` figure is what `node tools/parity/mutate.js --dump` '
+        + (saveWhole ? 'ships today' : 'would ship today') + '; the');
     lines.push('`server` figure is what `node tools/parity/mutate.js --dump-server` writes to its own');
     lines.push('unrun file — `--dump` produces 0 server mutants, and `--dump-server` asserts that it');
     lines.push('stays that way. That assertion is the ruling this table records.');
     lines.push('');
-    lines.push('**`save` — the channel exists; the shipped run predates it.** `mutate.js` enumerates');
-    lines.push(num(live.save) + ' save mutants from the 28 `SCV-*` rows and scores them against the');
-    lines.push('recorded re-save corpus (`fixtures/goldens/resave/`), and the');
-    lines.push('`unreachable-element-guard-fallback` static strategy is asserted by name in');
-    lines.push('`node tools/parity/equiv-prove.js --selftest`. The');
-    lines.push('committed `mutants.json` was written before the region landed, so those mutants are');
-    lines.push('not in it, carry no verdict in `run.json`, and own no file in `proofs/`. Regenerating');
-    lines.push('`mutants.json` + `run.json` + this report moves a pinned artifact (C8): that is a ledger');
-    lines.push('entry for the pin holder, not a step this tool takes on its own authority. Until then');
-    lines.push('the save region is reported as unscored, never as clean.');
+    if (saveWhole) {
+        lines.push('**`save` — enumerated, shipped, scored.** `mutate.js` enumerates ' + num(live.save)
+            + ' save');
+        lines.push('mutants from the 28 `SCV-*` rows; all ' + saveShipped + ' are in `mutants.json` and all '
+            + saveScored + ' carry a');
+        lines.push('verdict in `run.json`. Their kill channel is the recorded re-save corpus');
+        lines.push('(`fixtures/goldens/resave/`, ' + ((run.save_corpus || {}).recorded_resessions)
+            + ' recorded sessions) because the localStorage bytes');
+        lines.push('a re-save writes are the only output this region has — no argv or ini vector can see it.');
+        lines.push('They kill ' + num(killed.save) + '; the ' + num(survived.save) + ' survivor(s) are proven by the');
+        lines.push('`unreachable-element-guard-fallback` static strategy, which');
+        lines.push('`node tools/parity/equiv-prove.js --selftest` asserts by name.');
+        lines.push('');
+        lines.push('The region landed after the `9d6a767` baseline its vectors come from, so shipping it');
+        lines.push('moved pinned artifacts (`mutants.json`, `run.json`, `results/`, `proofs/`, this report)');
+        lines.push('— a C8 ledger entry for the pin holder, which the tool does not write for itself.');
+    } else {
+        lines.push('**`save` — the channel exists; the shipped run predates it.** `mutate.js` enumerates');
+        lines.push(num(live.save) + ' save mutants from the 28 `SCV-*` rows and scores them against the');
+        lines.push('recorded re-save corpus (`fixtures/goldens/resave/`), and the');
+        lines.push('`unreachable-element-guard-fallback` static strategy is asserted by name in');
+        lines.push('`node tools/parity/equiv-prove.js --selftest`. The');
+        lines.push('committed `mutants.json` was written before the region landed, so those mutants are');
+        lines.push('not in it, carry no verdict in `run.json`, and own no file in `proofs/`. Regenerating');
+        lines.push('`mutants.json` + `run.json` + this report moves a pinned artifact (C8): that is a ledger');
+        lines.push('entry for the pin holder, not a step this tool takes on its own authority. Until then');
+        lines.push('the save region is reported as unscored, never as clean.');
+    }
     lines.push('');
     if (server) {
         const totals = server.totals || {};
@@ -1517,7 +1540,7 @@ function writeReport(run, results, options) {
             + row.dynamic + ' | ' + row.gap + ' | ' + row.unresolved + ' |');
     }
     out.push('');
-    out.push('## Regions the gate does not score: `save` and `server`');
+    out.push('## The two regions outside the generators: `save` and `server`');
     out.push('');
     out.push(...regionSection(run, results));
     out.push('');

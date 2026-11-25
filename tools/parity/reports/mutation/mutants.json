@@ -1,38 +1,40 @@
 {
   "generated_by": "tools/parity/mutate.js",
   "command": "node tools/parity/mutate.js --dump",
-  "mutated_source": "the parity-baseline inline blocks sliced by tools/parity/baseline-slices.js (config literal, argv block, ini block), mutated in memory; public/script.js, legacy/lib, fixtures/** and tests/** are never touched",
-  "site_inventory": "SPEC/SPEC-ROWS.csv BA-*/INI-* rows (line + kind per row)",
+  "mutated_source": "the parity-baseline inline blocks sliced by tools/parity/baseline-slices.js (config literal, argv block, ini block, saveCurrentValues), mutated in memory; public/script.js, legacy/lib, fixtures/** and tests/** are never touched",
+  "site_inventory": "SPEC/SPEC-ROWS.csv BA-*/INI-* rows (line + kind per row) for the two generators and SCV-* rows for the saveCurrentValues region",
   "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
   "regions": {
     "config": 40,
     "args": 175,
-    "ini": 165
+    "ini": 165,
+    "save": 48
   },
   "totals": {
-    "mutants": 706,
+    "mutants": 765,
     "classes": {
-      "conditional-inversion": 75,
+      "conditional-inversion": 76,
       "statement-removal": 80,
-      "string-literal": 221,
+      "string-literal": 224,
       "relational-boundary": 22,
       "relational-reverse": 22,
-      "numeric-literal": 35,
+      "numeric-literal": 48,
       "equality-complement": 47,
       "equality-strictness": 47,
-      "boolean-operator": 56,
-      "operand-removal": 56,
-      "negation-insertion": 41,
-      "branch-swap": 2,
+      "boolean-operator": 69,
+      "operand-removal": 69,
+      "negation-insertion": 55,
+      "branch-swap": 4,
       "loop-body-removal": 1,
       "loop-first-iteration": 1
     },
     "regions": {
       "args": 317,
       "config": 54,
-      "ini": 335
+      "ini": 335,
+      "save": 59
     },
-    "rows_with_a_mutant": 189,
+    "rows_with_a_mutant": 217,
     "rows_without_a_mutant": [],
     "rows_without_a_site": [
       {
@@ -1934,6 +1936,123 @@
       "M-ini-098-0000-statement-removal-994bf44fc3",
       "M-ini-098-0033-string-literal-fc234ed5bb",
       "M-ini-098-0033-string-literal-a581dfa40c"
+    ],
+    "SCV-10": [
+      "M-save-011-0014-negation-insertion-f0bc8761b1"
+    ],
+    "SCV-11": [
+      "M-save-011-0042-boolean-operator-02e03d545b",
+      "M-save-011-0042-operand-removal-2f56c7442b",
+      "M-save-011-0045-numeric-literal-5b8786e1fa"
+    ],
+    "SCV-12": [
+      "M-save-012-0014-negation-insertion-e68b9ba52a"
+    ],
+    "SCV-13": [
+      "M-save-012-0030-boolean-operator-d0c41de5a6",
+      "M-save-012-0030-operand-removal-d3fba26014",
+      "M-save-012-0033-numeric-literal-653b7348cf"
+    ],
+    "SCV-14": [
+      "M-save-013-0023-negation-insertion-32e09a09c7"
+    ],
+    "SCV-15": [
+      "M-save-013-0048-boolean-operator-eeea674427",
+      "M-save-013-0048-operand-removal-2b77d3da83",
+      "M-save-013-0051-numeric-literal-e55a9d7d38"
+    ],
+    "SCV-16": [
+      "M-save-014-0025-negation-insertion-52e8630b02"
+    ],
+    "SCV-17": [
+      "M-save-014-0052-boolean-operator-d10f3b5cb6",
+      "M-save-014-0052-operand-removal-ec02a7a563",
+      "M-save-014-0055-numeric-literal-2be680ec3d"
+    ],
+    "SCV-18": [
+      "M-save-015-0018-negation-insertion-84c395b427",
+      "M-save-015-0051-string-literal-a490205af8",
+      "M-save-015-0051-string-literal-e309661ccd"
+    ],
+    "SCV-19": [
+      "M-save-015-0051-string-literal-a490205af8",
+      "M-save-015-0051-string-literal-e309661ccd",
+      "M-save-015-0070-boolean-operator-b5e947867c",
+      "M-save-015-0070-operand-removal-478877ece1",
+      "M-save-015-0073-numeric-literal-38cdf5bd61"
+    ],
+    "SCV-20": [
+      "M-save-019-0021-negation-insertion-e617a75686"
+    ],
+    "SCV-21": [
+      "M-save-019-0054-boolean-operator-c46136f94b",
+      "M-save-019-0054-operand-removal-8dff2c5709",
+      "M-save-019-0057-numeric-literal-f9e9a534f7"
+    ],
+    "SCV-1": [
+      "M-save-002-0008-conditional-inversion-3e77881381"
+    ],
+    "SCV-22": [
+      "M-save-020-0017-negation-insertion-80f9ede95a"
+    ],
+    "SCV-23": [
+      "M-save-020-0046-boolean-operator-723696c38c",
+      "M-save-020-0046-operand-removal-b39f136e1f",
+      "M-save-020-0049-numeric-literal-2688497a36"
+    ],
+    "SCV-24": [
+      "M-save-033-0023-negation-insertion-afa8191b6f"
+    ],
+    "SCV-25": [
+      "M-save-033-0058-boolean-operator-b0d1497f92",
+      "M-save-033-0058-operand-removal-7d40bae84e",
+      "M-save-033-0061-numeric-literal-b5a8d2ecf8"
+    ],
+    "SCV-26": [
+      "M-save-036-0028-negation-insertion-af8ecb02cc",
+      "M-save-036-0053-branch-swap-8dd9dc7cc2",
+      "M-save-036-0092-branch-swap-418f9f7afd",
+      "M-save-036-0093-string-literal-2881fee7c3"
+    ],
+    "SCV-27": [
+      "M-save-038-0014-negation-insertion-b6fac433b1"
+    ],
+    "SCV-28": [
+      "M-save-038-0040-boolean-operator-17c23b2de1",
+      "M-save-038-0040-operand-removal-d43406d4a1",
+      "M-save-038-0043-numeric-literal-b47d830aa1"
+    ],
+    "SCV-2": [
+      "M-save-007-0013-negation-insertion-1bbd8457b8"
+    ],
+    "SCV-3": [
+      "M-save-007-0038-boolean-operator-a5b9997006",
+      "M-save-007-0038-operand-removal-664fcc1859",
+      "M-save-007-0041-numeric-literal-4112529273"
+    ],
+    "SCV-4": [
+      "M-save-008-0017-negation-insertion-e64461c730"
+    ],
+    "SCV-5": [
+      "M-save-008-0046-boolean-operator-b41acfe158",
+      "M-save-008-0046-operand-removal-ab8766d668",
+      "M-save-008-0049-numeric-literal-abbf2497b3"
+    ],
+    "SCV-6": [
+      "M-save-009-0014-negation-insertion-06d2234947"
+    ],
+    "SCV-7": [
+      "M-save-009-0042-boolean-operator-97f232da46",
+      "M-save-009-0042-operand-removal-41e71b3fc1",
+      "M-save-009-0045-numeric-literal-d36bd2d95e"
+    ],
+    "SCV-8": [
+      "M-save-010-0014-negation-insertion-e51f0a249b"
+    ],
+    "SCV-9": [
+      "M-save-010-0040-boolean-operator-2c92d9f048",
+      "M-save-010-0040-operand-removal-91adb5aefa",
+      "M-save-010-0043-numeric-literal-a00d62fe9a"
     ]
   },
   "mutants": [
@@ -16070,6 +16189,1072 @@
       ],
       "mutated_sha256": "133009c744192307cd495125ac6ec29bed5a05827472488dec1736b1e56d8a3e",
       "channel": "ini"
+    },
+    {
+      "id": "M-save-011-0014-negation-insertion-f0bc8761b1",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 10,
+      "start": 14,
+      "end": 41,
+      "before": "parseFloat(topPInput.value)",
+      "after": "!(parseFloat(topPInput.value))",
+      "row_ids": [
+        "SCV-10"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "a518a726f035bbe9994572c4bf40fb24fa10a60be30c31a1e9f9c4f7a88a086b",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-011-0042-boolean-operator-02e03d545b",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 10,
+      "start": 42,
+      "end": 44,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-11"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "a06aa210f92dab0078eeacb47933c8bfee2c85bda383016cac7fc0ed3dcc1e58",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-011-0042-operand-removal-2f56c7442b",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 10,
+      "start": 42,
+      "end": 46,
+      "before": "|| 0",
+      "after": "",
+      "row_ids": [
+        "SCV-11"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "271807a5021cac9218dc0758247a96f7fbc98f571a63712d18c2008f7e669dfb",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-011-0045-numeric-literal-5b8786e1fa",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 10,
+      "start": 45,
+      "end": 46,
+      "before": "0",
+      "after": "1",
+      "row_ids": [
+        "SCV-11"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "59418cc9ba089cb4173c15ef13735a3be89f7f49e12933b322e4aaf914187853",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-012-0014-negation-insertion-e68b9ba52a",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 11,
+      "start": 14,
+      "end": 29,
+      "before": "minPInput.value",
+      "after": "!(minPInput.value)",
+      "row_ids": [
+        "SCV-12"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "4451384787e5fe829bbeafc4a47fb608a94f4f0590eaeccb0e8d0aafe70c6122",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-012-0030-boolean-operator-d0c41de5a6",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 11,
+      "start": 30,
+      "end": 32,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-13"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "eb18507898b8c868eec212564db317cfc9fffd35774f5492f4d18eb81509bab6",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-012-0030-operand-removal-d3fba26014",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 11,
+      "start": 30,
+      "end": 34,
+      "before": "|| 0",
+      "after": "",
+      "row_ids": [
+        "SCV-13"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "bd1063e835ee611d8316827e8cc2448aa345615e553327d1771bbab35d6d9957",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-012-0033-numeric-literal-653b7348cf",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 11,
+      "start": 33,
+      "end": 34,
+      "before": "0",
+      "after": "1",
+      "row_ids": [
+        "SCV-13"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "1e42cb3f7d79a51ae6a4f9bfd1da79088cb133e2799655c90c6bd3f478429aef",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-013-0023-negation-insertion-32e09a09c7",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 12,
+      "start": 23,
+      "end": 47,
+      "before": "repeatPenaltyInput.value",
+      "after": "!(repeatPenaltyInput.value)",
+      "row_ids": [
+        "SCV-14"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "873bd1b9c6d71800f2ac4f406a8119aadc40e680f6b79ce8a4bbade61eaf6505",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-013-0048-boolean-operator-eeea674427",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 12,
+      "start": 48,
+      "end": 50,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-15"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "e33aaf7467c5650640166e7049623240e4c42eb15b0eb45144e64dd60b7920a1",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-013-0048-operand-removal-2b77d3da83",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 12,
+      "start": 48,
+      "end": 52,
+      "before": "|| 0",
+      "after": "",
+      "row_ids": [
+        "SCV-15"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "022db40b961f0ce6026ce3e9bc5b1d643429457b6deb839a32dbe0bc81451be3",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-013-0051-numeric-literal-e55a9d7d38",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 12,
+      "start": 51,
+      "end": 52,
+      "before": "0",
+      "after": "1",
+      "row_ids": [
+        "SCV-15"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "0af7671a304abd9583469d0094cae72ae9c90f80e3ed4898e81d57c4358f08de",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-014-0025-negation-insertion-52e8630b02",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 13,
+      "start": 25,
+      "end": 51,
+      "before": "presencePenaltyInput.value",
+      "after": "!(presencePenaltyInput.value)",
+      "row_ids": [
+        "SCV-16"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "0c8a0b5eb4576ea7087063cde01537d385bdca8ecb0627aea12206d4975210b1",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-014-0052-boolean-operator-d10f3b5cb6",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 13,
+      "start": 52,
+      "end": 54,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-17"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "337316f0051fd2ba8e67845f2907910124edd1c336d7865665f235135ca547f6",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-014-0052-operand-removal-ec02a7a563",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 13,
+      "start": 52,
+      "end": 56,
+      "before": "|| 0",
+      "after": "",
+      "row_ids": [
+        "SCV-17"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "2a64eb56dad941630f3ba3dbff98e9e4868d31ff68aed9a9e5068aa5bc30ff6c",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-014-0055-numeric-literal-2be680ec3d",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 13,
+      "start": 55,
+      "end": 56,
+      "before": "0",
+      "after": "1",
+      "row_ids": [
+        "SCV-17"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "cfc18ba913e754e8023b18fa108baceba206a2bd71d5d2b976894f108245f4a8",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-015-0018-negation-insertion-84c395b427",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 14,
+      "start": 18,
+      "end": 69,
+      "before": "parseInt(document.getElementById('parallel').value)",
+      "after": "!(parseInt(document.getElementById('parallel').value))",
+      "row_ids": [
+        "SCV-18"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "6e1cfd66660be7ac391627b5871160e95c9280ca75ec9f4746b44df2ffc2e880",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-015-0051-string-literal-a490205af8",
+      "class": "string-literal",
+      "region": "save",
+      "line": 14,
+      "start": 51,
+      "end": 61,
+      "before": "'parallel'",
+      "after": "''",
+      "row_ids": [
+        "SCV-18",
+        "SCV-19"
+      ],
+      "kinds": [
+        "logical-or",
+        "truthiness"
+      ],
+      "mutated_sha256": "1c030633a0ed6bf623e52b5505009f45af18b0a4df3be1211d9826333425c982",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-015-0051-string-literal-e309661ccd",
+      "class": "string-literal",
+      "region": "save",
+      "line": 14,
+      "start": 51,
+      "end": 61,
+      "before": "'parallel'",
+      "after": "'parallelX'",
+      "row_ids": [
+        "SCV-18",
+        "SCV-19"
+      ],
+      "kinds": [
+        "logical-or",
+        "truthiness"
+      ],
+      "mutated_sha256": "c29f8ae7a987fbc2e28a8707ecf7942fbaf391811bd957320484599c5bc167e8",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-015-0070-boolean-operator-b5e947867c",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 14,
+      "start": 70,
+      "end": 72,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-19"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "0e80fc8d65e52d8fbfbab7c23eca7f74124219f57e7b0e600fe41cf30182386f",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-015-0070-operand-removal-478877ece1",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 14,
+      "start": 70,
+      "end": 74,
+      "before": "|| 0",
+      "after": "",
+      "row_ids": [
+        "SCV-19"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "7bc39326c128109e1bb8750b3df125564fef2252c514025028f02764e993f7e2",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-015-0073-numeric-literal-38cdf5bd61",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 14,
+      "start": 73,
+      "end": 74,
+      "before": "0",
+      "after": "1",
+      "row_ids": [
+        "SCV-19"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "ca18ab825c796981ecbe52f16f7c95de82336c1aed03a31f7276e2b20b40f4ea",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-019-0021-negation-insertion-e617a75686",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 18,
+      "start": 21,
+      "end": 53,
+      "before": "parseInt(contextSizeInput.value)",
+      "after": "!(parseInt(contextSizeInput.value))",
+      "row_ids": [
+        "SCV-20"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "85131c32489f5ebec0efb58a33e8b2f3dda988b330e7ad046381e6c347312c99",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-019-0054-boolean-operator-c46136f94b",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 18,
+      "start": 54,
+      "end": 56,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-21"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "d38cb74339c1b38135e76936213ab8866b6fd60f193b5b76115bdeb8cbf419d2",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-019-0054-operand-removal-8dff2c5709",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 18,
+      "start": 54,
+      "end": 58,
+      "before": "|| 1",
+      "after": "",
+      "row_ids": [
+        "SCV-21"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "533fdf2ad624b80188af4f9d4bd72615ef2194989225007850a41b5251f63d32",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-019-0057-numeric-literal-f9e9a534f7",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 18,
+      "start": 57,
+      "end": 58,
+      "before": "1",
+      "after": "0",
+      "row_ids": [
+        "SCV-21"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "dd40c2ad5bb88942a8d4b7f1d70df68844d1c0e168bebb8a0ac296ac5f9b3bb6",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-002-0008-conditional-inversion-3e77881381",
+      "class": "conditional-inversion",
+      "region": "save",
+      "line": 1,
+      "start": 8,
+      "end": 17,
+      "before": "!configId",
+      "after": "!(!configId)",
+      "row_ids": [
+        "SCV-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "c7b2be39f491651a007eb5facd5092f226d74a6b94b515c0eef3c40b114683bc",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-020-0017-negation-insertion-80f9ede95a",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 19,
+      "start": 17,
+      "end": 45,
+      "before": "parseInt(nCpuMoeInput.value)",
+      "after": "!(parseInt(nCpuMoeInput.value))",
+      "row_ids": [
+        "SCV-22"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "c55f9efb157ddbe96a4156dfb504efc62c33f58bede9af153f0dcc386d85bcf7",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-020-0046-boolean-operator-723696c38c",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 19,
+      "start": 46,
+      "end": 48,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-23"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "65a669c912d08ed7f7f1ec8bab109ff5eb71be97873af212d0474ba20d6f4e64",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-020-0046-operand-removal-b39f136e1f",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 19,
+      "start": 46,
+      "end": 50,
+      "before": "|| 0",
+      "after": "",
+      "row_ids": [
+        "SCV-23"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "db3ccc7b3ea49c1e2d96bfe8144f765824c7743bb782925c3ddc0804ecffdd2e",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-020-0049-numeric-literal-2688497a36",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 19,
+      "start": 49,
+      "end": 50,
+      "before": "0",
+      "after": "1",
+      "row_ids": [
+        "SCV-23"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "ab51b8dbbe95775fa9bf849fcfd93bc62ae951905a6bc93656cfe401d317f38b",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-033-0023-negation-insertion-afa8191b6f",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 32,
+      "start": 23,
+      "end": 57,
+      "before": "parseInt(specDraftNMaxInput.value)",
+      "after": "!(parseInt(specDraftNMaxInput.value))",
+      "row_ids": [
+        "SCV-24"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "e0aeb3d67af0fa74aadf06f4e79866bcfa5e58c6b22624474d2a6a65ed958468",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-033-0058-boolean-operator-b0d1497f92",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 32,
+      "start": 58,
+      "end": 60,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-25"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "4619492005cd56c50a46fb7bdfa3240a058e7845ae565051c7a47575f2fe24de",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-033-0058-operand-removal-7d40bae84e",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 32,
+      "start": 58,
+      "end": 62,
+      "before": "|| 0",
+      "after": "",
+      "row_ids": [
+        "SCV-25"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "663ea4cdb25016aab7c1662e4e1d7938ce7cb1fce63921cb677fc68cc9e20b9e",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-033-0061-numeric-literal-b5a8d2ecf8",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 32,
+      "start": 61,
+      "end": 62,
+      "before": "0",
+      "after": "1",
+      "row_ids": [
+        "SCV-25"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "5d9aff7cf9ca43bad775b6ea3acd8fece36d4c9fc6b81d7bb88b1161cfd873a2",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-036-0028-negation-insertion-af8ecb02cc",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 35,
+      "start": 28,
+      "end": 95,
+      "before": "chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : ''",
+      "after": "!(chatTemplateKwargsInput ? chatTemplateKwargsInput.value.trim() : '')",
+      "row_ids": [
+        "SCV-26"
+      ],
+      "kinds": [
+        "ternary"
+      ],
+      "mutated_sha256": "57622e2c132b758fb27fe000717a843be29be5170f268b0218f0bb11008f0921",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-036-0053-branch-swap-8dd9dc7cc2",
+      "class": "branch-swap",
+      "region": "save",
+      "line": 35,
+      "start": 53,
+      "end": 91,
+      "before": " chatTemplateKwargsInput.value.trim() ",
+      "after": " ''",
+      "row_ids": [
+        "SCV-26"
+      ],
+      "kinds": [
+        "ternary"
+      ],
+      "mutated_sha256": "2d7fa4350989056fc9768b03589e6828550105573ae51d9f1009a4f73bbf4611",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-036-0092-branch-swap-418f9f7afd",
+      "class": "branch-swap",
+      "region": "save",
+      "line": 35,
+      "start": 92,
+      "end": 95,
+      "before": " ''",
+      "after": " chatTemplateKwargsInput.value.trim() ",
+      "row_ids": [
+        "SCV-26"
+      ],
+      "kinds": [
+        "ternary"
+      ],
+      "mutated_sha256": "33aaa26758f1f01233dd6357b33ecd8ebb21d8e5ef8747f69b6088003b9ebef5",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-036-0093-string-literal-2881fee7c3",
+      "class": "string-literal",
+      "region": "save",
+      "line": 35,
+      "start": 93,
+      "end": 95,
+      "before": "''",
+      "after": "'X'",
+      "row_ids": [
+        "SCV-26"
+      ],
+      "kinds": [
+        "ternary"
+      ],
+      "mutated_sha256": "2f57da7ce6e1a941a37c3cac2f28796d5acc5e181be02e14f571ddb186a3305c",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-038-0014-negation-insertion-b6fac433b1",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 37,
+      "start": 14,
+      "end": 39,
+      "before": "parseInt(ngldInput.value)",
+      "after": "!(parseInt(ngldInput.value))",
+      "row_ids": [
+        "SCV-27"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "a24f74f8f54d392b401477d71a680f6398519b69ee89a7d96f091e419c112962",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-038-0040-boolean-operator-17c23b2de1",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 37,
+      "start": 40,
+      "end": 42,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-28"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "da530c53b405352ba241dae28d3c376c44b6d36dc818a532730b13776c0f7426",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-038-0040-operand-removal-d43406d4a1",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 37,
+      "start": 40,
+      "end": 44,
+      "before": "|| 0",
+      "after": "",
+      "row_ids": [
+        "SCV-28"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "dab027cd2209e24a6d6f2a857e3105a451b8d91b48423a6d4e10e69e7f64a7bd",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-038-0043-numeric-literal-b47d830aa1",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 37,
+      "start": 43,
+      "end": 44,
+      "before": "0",
+      "after": "1",
+      "row_ids": [
+        "SCV-28"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "06a9b2a64ac93e328091dfe25d677aed9cc347277a8846386b19721621a12eda",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-007-0013-negation-insertion-1bbd8457b8",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 6,
+      "start": 13,
+      "end": 37,
+      "before": "parseInt(nglInput.value)",
+      "after": "!(parseInt(nglInput.value))",
+      "row_ids": [
+        "SCV-2"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "01722c0eff044f4cdb0328f1b3e0fa63605d7584c39c93d955f9fa6b6fac5ca3",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-007-0038-boolean-operator-a5b9997006",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 6,
+      "start": 38,
+      "end": 40,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-3"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "094d0eb9124726b1436916a72959603c34bb4c9b3ed7d3e70eeadce31772b8d6",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-007-0038-operand-removal-664fcc1859",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 6,
+      "start": 38,
+      "end": 42,
+      "before": "|| 0",
+      "after": "",
+      "row_ids": [
+        "SCV-3"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "9d844c6b673aaa69bf7bf5e7ef05cdbbbf498848acdd09efa0d30224ca0c1d28",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-007-0041-numeric-literal-4112529273",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 6,
+      "start": 41,
+      "end": 42,
+      "before": "0",
+      "after": "1",
+      "row_ids": [
+        "SCV-3"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "5bd0249e209ef332f929f2f7aa4fc92f77501c524fd6d28c8b60ec89abbb4f3e",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-008-0017-negation-insertion-e64461c730",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 7,
+      "start": 17,
+      "end": 45,
+      "before": "parseInt(threadsInput.value)",
+      "after": "!(parseInt(threadsInput.value))",
+      "row_ids": [
+        "SCV-4"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "a8163a4b59d6b4d1582955597286589cb78e49a351637120a8fbec993e1733f5",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-008-0046-boolean-operator-b41acfe158",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 7,
+      "start": 46,
+      "end": 48,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-5"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "91d8c3231c6246c13f11560899a38fd2b214e32a14ca4e879123e238b988839b",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-008-0046-operand-removal-ab8766d668",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 7,
+      "start": 46,
+      "end": 50,
+      "before": "|| 1",
+      "after": "",
+      "row_ids": [
+        "SCV-5"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "b3aa141f3beeb79fa5f5357874cebb64ac0ee8c295f90c225320309e32f0eddb",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-008-0049-numeric-literal-abbf2497b3",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 7,
+      "start": 49,
+      "end": 50,
+      "before": "1",
+      "after": "0",
+      "row_ids": [
+        "SCV-5"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "6fdeb9d4fb21b3449ffc4dd9640aea8e4a2efbaad45a5caf228b19407d9b267f",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-009-0014-negation-insertion-06d2234947",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 8,
+      "start": 14,
+      "end": 41,
+      "before": "parseFloat(tempInput.value)",
+      "after": "!(parseFloat(tempInput.value))",
+      "row_ids": [
+        "SCV-6"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "7abc0a3e76f4fea71e2845710ffa5651f6fce7e24ae5886c127632b2f6454676",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-009-0042-boolean-operator-97f232da46",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 8,
+      "start": 42,
+      "end": 44,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-7"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "e0941f17383eac4e9dadfc53aa23e4bb7d9d0313a7745037df09be6672134ebd",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-009-0042-operand-removal-41e71b3fc1",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 8,
+      "start": 42,
+      "end": 46,
+      "before": "|| 0",
+      "after": "",
+      "row_ids": [
+        "SCV-7"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "963ccd28584f406491f3894a15f8aa1b1479c5b8c587b214f79504f8ea5a44a2",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-009-0045-numeric-literal-d36bd2d95e",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 8,
+      "start": 45,
+      "end": 46,
+      "before": "0",
+      "after": "1",
+      "row_ids": [
+        "SCV-7"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "7c383f1d244e91dcd253c969e67bb9032e6e5bace9cb88559ba939ba762d1823",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-010-0014-negation-insertion-e51f0a249b",
+      "class": "negation-insertion",
+      "region": "save",
+      "line": 9,
+      "start": 14,
+      "end": 39,
+      "before": "parseInt(topKInput.value)",
+      "after": "!(parseInt(topKInput.value))",
+      "row_ids": [
+        "SCV-8"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "599bdb89fb072fba83531c138244ba0531ffcb048f0ad6d4d722727faa636173",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-010-0040-boolean-operator-2c92d9f048",
+      "class": "boolean-operator",
+      "region": "save",
+      "line": 9,
+      "start": 40,
+      "end": 42,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SCV-9"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "5aea752f53418d54e29757719f06233a3976c786ec683b927055991a904806d6",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-010-0040-operand-removal-91adb5aefa",
+      "class": "operand-removal",
+      "region": "save",
+      "line": 9,
+      "start": 40,
+      "end": 44,
+      "before": "|| 0",
+      "after": "",
+      "row_ids": [
+        "SCV-9"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "f35e42c2d7b0fbee29e0205bb26cdfc0af0da8f3e024f0f858f33e467f79576d",
+      "channel": "save"
+    },
+    {
+      "id": "M-save-010-0043-numeric-literal-a00d62fe9a",
+      "class": "numeric-literal",
+      "region": "save",
+      "line": 9,
+      "start": 43,
+      "end": 44,
+      "before": "0",
+      "after": "1",
+      "row_ids": [
+        "SCV-9"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "f9a49f28282be647c39cd0d63400534acf3476439b8d4d1b730c6e7d47db63eb",
+      "channel": "save"
     }
   ]
 }

@@ -6,6 +6,9 @@
 //   node tools/parity/mutation-run.js --selftest     control: baseline reproduces every golden, and
 //                                                    named mutants must die
 //   node tools/parity/mutation-run.js --tier1 300 --workers 8 --rerun
+//   node tools/parity/mutation-run.js --out <dir>     write run.json + results/ under <dir> instead
+//                                                    of under tools/parity/reports/mutation, so a
+//                                                    re-score can be diffed before it goes shipped
 //
 // Resumable by design. Every verdict is appended to tools/parity/reports/mutation/results/<class>.jsonl
 // the moment it is produced, one JSON object per line, before the next mutant starts; a restart re-reads
@@ -45,8 +48,22 @@ const equivalence = require('./equivalence.js');
 const REPO = mutate.REPO;
 const REPORTS = mutate.REPORTS;
 const SNAPSHOT = mutate.SNAPSHOT;
-const RESULTS = path.join(REPORTS, 'results');
-const RUN_FILE = 'tools/parity/reports/mutation/run.json';
+// The artifact locations. run.json and the results/ journal are pinned gate material (fixtures/
+// HASH-PIN.json), so a re-score has to be written somewhere else first and compared before it may
+// replace them — hence `--out <dir>`, which relocates every path this tool writes while the inputs
+// (snapshot, vectors, goldens, mutants) keep being read from the repo. Without it the tool could only
+// score by overwriting the score it is supposed to be checking itself.
+let ARTIFACT_ROOT = REPORTS;
+let RESULTS = path.join(ARTIFACT_ROOT, 'results');
+let RUN_FILE = path.join(ARTIFACT_ROOT, 'run.json');
+
+// Redirect the write side; returns the resolved root so the caller can print it.
+function setArtifactRoot(dir) {
+    ARTIFACT_ROOT = path.resolve(dir);
+    RESULTS = path.join(ARTIFACT_ROOT, 'results');
+    RUN_FILE = path.join(ARTIFACT_ROOT, 'run.json');
+    return ARTIFACT_ROOT;
+}
 const DEFAULT_TIER1 = 300;
 const SAMPLE_FRACTION = 0.1;
 const SAMPLE_SEED = 20261126;
@@ -427,12 +444,13 @@ function workerMain(job) {
 
 function options(argv) {
     const out = { tier1: DEFAULT_TIER1, workers: Math.max(1, Math.min(8, os.cpus().length - 2)),
-        sample: SAMPLE_FRACTION, limit: 0 };
+        sample: SAMPLE_FRACTION, limit: 0, out: null };
     for (let i = 0; i < argv.length; i += 1) {
         const token = argv[i];
         if (token === '--tier1') out.tier1 = Number(argv[i += 1]);
         else if (token === '--workers') out.workers = Number(argv[i += 1]);
         else if (token === '--sample') out.sample = Number(argv[i += 1]);
+        else if (token === '--out' || token === '--root') out.out = argv[i += 1];
     }
     return out;
 }
@@ -485,8 +503,10 @@ function runMain(options, rerun) {
         let open = shardCount;
         let stderr = '';
         for (let shard = 0; shard < shardCount; shard += 1) {
-            const child = fork(__filename, ['--shard', String(shard), '--of', String(shardCount),
-                '--tier1', String(options.tier1)], { stdio: ['ignore', 'ignore', 'pipe', 'ipc'] });
+            const shardArgv = ['--shard', String(shard), '--of', String(shardCount),
+                '--tier1', String(options.tier1)];
+            if (options.out) shardArgv.push('--out', options.out);
+            const child = fork(__filename, shardArgv, { stdio: ['ignore', 'ignore', 'pipe', 'ipc'] });
             child.stderr.on('data', (chunk) => { stderr += chunk.toString(); });
             child.on('message', (message) => {
                 const mutant = list.full.find((m) => m.id === message.id);
@@ -638,7 +658,7 @@ function finish(options, gen, bag, items, saveItems, list, all, verdicts, t0, ga
     const document = {
         generated_by: 'tools/parity/mutation-run.js',
         command: 'node tools/parity/mutation-run.js --tier1 ' + options.tier1 + ' --workers '
-            + options.workers,
+            + options.workers + (options.out ? ' --out ' + options.out : ''),
         base_commit: gate.base,
         goldens_impl: bag.impl,
         snapshot: { dir: 'tools/parity/reports/mutation/.snapshot',
@@ -671,9 +691,9 @@ function finish(options, gen, bag, items, saveItems, list, all, verdicts, t0, ga
         survivor_ids: survivors.map((m) => m.id),
         mutant_results: mutants
     };
-    fs.mkdirSync(REPORTS, { recursive: true });
+    fs.mkdirSync(ARTIFACT_ROOT, { recursive: true });
     compactJournal(all);
-    fs.writeFileSync(path.join(REPO, RUN_FILE), JSON.stringify(document, null, 2) + '\n', 'utf8');
+    fs.writeFileSync(RUN_FILE, JSON.stringify(document, null, 2) + '\n', 'utf8');
     if (stderr.trim()) process.stderr.write(stderr);
     console.log('mutants ' + mutants.length + '  killed ' + document.mutants.killed + '  survived '
         + survivors.length + '  score ' + document.mutants.score);
@@ -749,6 +769,9 @@ function main() {
     const argv = process.argv.slice(2);
     if (argv.indexOf('--shard') >= 0) {
         const parsed = options(argv);
+        // A shard writes its own verdict lines, so it has to inherit the parent's artifact root;
+        // without this a --out run would still land verdicts in the pinned journal.
+        if (parsed.out) setArtifactRoot(parsed.out);
         workerMain({ shard: Number(argv[argv.indexOf('--shard') + 1]),
             of: Number(argv[argv.indexOf('--of') + 1]), tier1: parsed.tier1 });
         return;
@@ -757,7 +780,12 @@ function main() {
         selftest(options(argv));
         return;
     }
-    runMain(options(argv), argv.indexOf('--rerun') >= 0).catch((error) => {
+    const runOptions = options(argv);
+    if (runOptions.out) {
+        console.log('artifacts -> ' + setArtifactRoot(runOptions.out)
+            + ' (inputs still read from ' + REPO + ')');
+    }
+    runMain(runOptions, argv.indexOf('--rerun') >= 0).catch((error) => {
         console.error(String((error && error.stack) || error));
         process.exitCode = 1;
     });
@@ -767,6 +795,6 @@ module.exports = { loadSnapshot, loadPromoted, prepare, prepareSave, loadResaveC
     observeSave, compareSave, checkSave, checkOne, checkMutant, baselineControl, runMain,
     selftest,
     options, readJournal, appendVerdict, compactJournal, verifyTierSample, NAMED_KILLS, SNAPSHOT,
-    RESULTS, RUN_FILE };
+    RESULTS, RUN_FILE, ARTIFACT_ROOT, setArtifactRoot };
 
 if (require.main === module) main();
