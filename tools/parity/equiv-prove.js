@@ -1348,6 +1348,87 @@ function pruneProofs(survivorIds) {
     return removed;
 }
 
+// The two regions that are known to the enumerator but not scored by this report, stated from the
+// artifacts rather than from memory: `save` (the localStorage writer) and `server` (enumerated only,
+// by the supervisor ruling of 2026-11-25). A mutation report that lists fewer regions than the
+// enumerator knows is how a coverage gap becomes invisible, so both appear with what a reader can
+// re-run.
+function regionSection(run, results) {
+    const lines = [];
+    const shipped = fs.existsSync(MUTANTS_FILE) ? JSON.parse(slices.readText(MUTANTS_FILE)) : null;
+    const tally = (list) => list.reduce((all, item) => {
+        all[item.region] = (all[item.region] || 0) + 1;
+        return all;
+    }, {});
+    const live = tally(mutate.enumerate().mutants);
+    const shippedRegions = tally((shipped && shipped.mutants) || []);
+    const scored = tally(run.mutant_results);
+    const killed = tally(run.mutant_results.filter((m) => m.status === 'killed'));
+    const survived = tally(run.mutant_results.filter((m) => m.status === 'survived'));
+    const proven = tally(results);
+    const serverPath = path.join(REPO, mutate.SERVER_ENUM_FILE);
+    const server = fs.existsSync(serverPath) ? JSON.parse(slices.readText(serverPath)) : null;
+    const serverShipped = shippedRegions.server || 0;
+    const num = (value) => (value === undefined ? 0 : value);
+
+    lines.push('`config` / `args` / `ini` are the regions this report scores. Two more have sites in');
+    lines.push('`tools/parity/mutate.js` and no verdicts here — and the difference between `unscored`');
+    lines.push('and `equivalent` is exactly what this table is for.');
+    lines.push('');
+    lines.push('| region | site inventory | mutants the enumerator produces | in `mutants.json` | scored in `run.json` | killed | survived | proven in this report |');
+    lines.push('|---|---|---|---|---|---|---|---|');
+    const known = [
+        ['save', '`SCV-*` rows (28) over the `ANCHORS.SAVE_START` slice of `public/script.js`',
+            num(live.save)],
+        ['server', '`SV-*` rows (49) over the whole `' + slices.BASELINE + ':server.js` blob',
+            server ? num(server.totals.mutants) : 0]
+    ];
+    for (const [region, inventory, count] of known) {
+        lines.push('| `' + region + '` | ' + inventory + ' | ' + count + ' | '
+            + num(shippedRegions[region]) + ' | ' + num(scored[region]) + ' | ' + num(killed[region])
+            + ' | ' + num(survived[region]) + ' | ' + num(proven[region]) + ' |');
+    }
+    lines.push('');
+    lines.push('The `save` figure is what `node tools/parity/mutate.js --dump` would ship today; the');
+    lines.push('`server` figure is what `node tools/parity/mutate.js --dump-server` writes to its own');
+    lines.push('unrun file — `--dump` produces 0 server mutants, and `--dump-server` asserts that it');
+    lines.push('stays that way. That assertion is the ruling this table records.');
+    lines.push('');
+    lines.push('**`save` — the channel exists; the shipped run predates it.** `mutate.js` enumerates');
+    lines.push(num(live.save) + ' save mutants from the 28 `SCV-*` rows and scores them against the');
+    lines.push('recorded re-save corpus (`fixtures/goldens/resave/`), and the');
+    lines.push('`unreachable-element-guard-fallback` static strategy is asserted by name in');
+    lines.push('`node tools/parity/equiv-prove.js --selftest`. The');
+    lines.push('committed `mutants.json` was written before the region landed, so those mutants are');
+    lines.push('not in it, carry no verdict in `run.json`, and own no file in `proofs/`. Regenerating');
+    lines.push('`mutants.json` + `run.json` + this report moves a pinned artifact (C8): that is a ledger');
+    lines.push('entry for the pin holder, not a step this tool takes on its own authority. Until then');
+    lines.push('the save region is reported as unscored, never as clean.');
+    lines.push('');
+    if (server) {
+        const totals = server.totals || {};
+        lines.push('**`server` — enumerated, deliberately unrun** (`status: ' + server.status + '`, in');
+        lines.push('`' + mutate.SERVER_ENUM_FILE + '`, written by `' + server.command + '`):');
+        lines.push(totals.mutants + ' mutants over ' + totals.rows_with_a_site + '/' + totals.sv_rows
+            + ' `SV-*` rows; classes ' + Object.keys(totals.classes || {}).sort().join(', ') + ';');
+        lines.push((totals.rejected_mutants || []).length
+            + ' rejected because the mutated file will not parse.');
+        lines.push('They are NOT in `mutants.json` (' + serverShipped + ' `server`-region ids there)');
+        lines.push('because `mutation-run.js` kills through the argv/ini/save channels and no channel');
+        lines.push('reaches a route: a scored run would print `survived` where the truth is `unmeasured`.');
+        lines.push('`tools/parity/tasks/task-server-mutation.md` is the work that makes them scoreable');
+        lines.push('(kill channel first, then `bodyStatements()` learn the `res.json` / `io.emit` emit');
+        lines.push('shapes, which is why the enumeration has no statement-removal mutants at all). The');
+        lines.push('one server-region claim the suites make today is a negative control, not inventory:');
+        lines.push('`SV-get-settings-3-string-literal` in `fixtures/NEGATIVES.md`, red as named on');
+        lines.push('`L1.SETTINGS.FIRST-RUN.BYTES`.');
+    } else {
+        lines.push('**`server` — not enumerated.** `' + mutate.SERVER_ENUM_FILE + '` is missing; run');
+        lines.push('`node tools/parity/mutate.js --dump-server`. The region is reported as unscored.');
+    }
+    return lines;
+}
+
 function writeReport(run, results, options) {
     const byId = new Map(results.map((r) => [r.survivor_id, r]));
     const groups = { 'equivalent-static': [], 'equivalent-dynamic': [], 'gap-killer-synthesized': [],
@@ -1435,6 +1516,10 @@ function writeReport(run, results, options) {
         out.push('| ' + cls + ' | ' + row.mutants + ' | ' + row.killed + ' | ' + row.static + ' | '
             + row.dynamic + ' | ' + row.gap + ' | ' + row.unresolved + ' |');
     }
+    out.push('');
+    out.push('## Regions the gate does not score: `save` and `server`');
+    out.push('');
+    out.push(...regionSection(run, results));
     out.push('');
     out.push('## Per-row map (every BA-*/INI-* row)');
     out.push('');

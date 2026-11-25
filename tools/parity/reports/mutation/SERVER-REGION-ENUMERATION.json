@@ -1,0 +1,2688 @@
+{
+  "generated_by": "tools/parity/mutate.js",
+  "command": "node tools/parity/mutate.js --dump-server",
+  "status": "enumerated-unrun",
+  "why": "server mutants are enumerated but not scored (supervisor ruling 2026-11-25): mutation-run.js kills mutants through the argv/ini/save channels and no channel reaches a server route, so a scored run would print `survived` where the truth is `unmeasured`. They are NOT in tools/parity/reports/mutation/mutants.json. tools/parity/tasks/task-server-mutation.md is the work that makes them scoreable.",
+  "mutated_source": "`parity-baseline:server.js` (whole file), mutated in memory; the working copy and every fixture are never touched",
+  "site_inventory": "SPEC/SPEC-ROWS.csv SV-* rows (line + kind per row)",
+  "base_commit": "9d6a767d43a4276f3af506d2ee7a75930580e796",
+  "server": {
+    "file": "server.js",
+    "ref": "parity-baseline",
+    "lines": 682
+  },
+  "totals": {
+    "sv_rows": 49,
+    "rows_with_a_site": 47,
+    "mutants": 152,
+    "classes": {
+      "conditional-inversion": 17,
+      "numeric-literal": 15,
+      "string-literal": 88,
+      "negation-insertion": 14,
+      "boolean-operator": 6,
+      "operand-removal": 6,
+      "relational-boundary": 1,
+      "relational-reverse": 1,
+      "equality-complement": 1,
+      "equality-strictness": 1,
+      "branch-swap": 2
+    },
+    "rows_with_a_mutant": 47,
+    "rows_without_a_mutant": [
+      "SV-get-settings-1",
+      "SV-post-settings-2"
+    ],
+    "rows_without_a_site": [
+      {
+        "row_id": "SV-get-settings-1",
+        "kind": "error-path",
+        "file": "server.js",
+        "lib_line": 547,
+        "reason": "snippet \".catch (err)\" is not the spelling on server.js:547 or within 2 lines of it (SPEC-ROWS normalises `.catch(err => {` to `.catch (err)` and `catch {}` to `catch ()`)",
+        "snippet": ".catch (err)"
+      },
+      {
+        "row_id": "SV-post-settings-2",
+        "kind": "error-path",
+        "file": "server.js",
+        "lib_line": 573,
+        "reason": "snippet \"catch ()\" is not the spelling on server.js:573 or within 2 lines of it (SPEC-ROWS normalises `.catch(err => {` to `.catch (err)` and `catch {}` to `catch ()`)",
+        "snippet": "catch ()"
+      }
+    ],
+    "rejected_mutants": []
+  },
+  "known_gaps": [
+    "removal classes are empty for this region: bodyStatements() recognises the argv/ini emit shapes (`args.push(`, `presetContent +=`, ...), and a server route emits through res.json/res.emit, so no statement is counted as removable.",
+    "the two error-path rows SPEC-ROWS spells `.catch (err)` / `catch ()` do not resolve by shape (see totals.rows_without_a_site)."
+  ],
+  "mutants": [
+    {
+      "id": "M-server-279-0008-conditional-inversion-0aacb35c74",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 278,
+      "start": 8,
+      "end": 19,
+      "before": "!serverPath",
+      "after": "!(!serverPath)",
+      "row_ids": [
+        "SV-post-start-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "0f7656c97fe120374644df3523573dc6dac02249aca74e4971f93b1acbbb1914"
+    },
+    {
+      "id": "M-server-280-0026-numeric-literal-d92c7dfdfa",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 279,
+      "start": 26,
+      "end": 29,
+      "before": "400",
+      "after": "401",
+      "row_ids": [
+        "SV-post-start-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "22b76a949a8dd6b4b3b5d430fbe919fce3ca8330230049fcbdc437ae3cf1cb88"
+    },
+    {
+      "id": "M-server-282-0019-string-literal-87098d0ad0",
+      "class": "string-literal",
+      "region": "server",
+      "line": 281,
+      "start": 19,
+      "end": 44,
+      "before": "'Server path is required'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-start-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "ab73761b311b4103f04a86cd013917f086b3d2dea6abea5825ca35cf3e4ea9f0"
+    },
+    {
+      "id": "M-server-282-0019-string-literal-c214c85185",
+      "class": "string-literal",
+      "region": "server",
+      "line": 281,
+      "start": 19,
+      "end": 44,
+      "before": "'Server path is required'",
+      "after": "'Server path is requiredX'",
+      "row_ids": [
+        "SV-post-start-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "335272039b2a4c46cc84ab8eb71519fdfda57ebe0292c93c0ffcda20083e5c81"
+    },
+    {
+      "id": "M-server-287-0008-conditional-inversion-c9e1b14d81",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 286,
+      "start": 8,
+      "end": 22,
+      "before": "runningProcess",
+      "after": "!(runningProcess)",
+      "row_ids": [
+        "SV-post-start-2"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "1b927671bed7c4495c664443fc601b8fc3029294c3c52d37706154ec53e0b650"
+    },
+    {
+      "id": "M-server-290-0019-string-literal-c4644271f1",
+      "class": "string-literal",
+      "region": "server",
+      "line": 289,
+      "start": 19,
+      "end": 46,
+      "before": "'Server is already running'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-start-2"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "d3c1316171501fa55bf63748a2afdb776d84d1f7a8db6da65e0d1d21ceaaeec8"
+    },
+    {
+      "id": "M-server-290-0019-string-literal-15d44322bf",
+      "class": "string-literal",
+      "region": "server",
+      "line": 289,
+      "start": 19,
+      "end": 46,
+      "before": "'Server is already running'",
+      "after": "'Server is already runningX'",
+      "row_ids": [
+        "SV-post-start-2"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "1b958875d4be19655bfb358e6ac5b0a8253aba1e5f806e6377f30329678a90bd"
+    },
+    {
+      "id": "M-server-322-0012-conditional-inversion-dfce59c1dd",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 321,
+      "start": 12,
+      "end": 33,
+      "before": "runningProcess.stdout",
+      "after": "!(runningProcess.stdout)",
+      "row_ids": [
+        "SV-post-start-3"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "20e71c5a4942f757a1e4286e3383e10e4757b8cfd321111ac8d25f4bdb068cb7"
+    },
+    {
+      "id": "M-server-323-0037-string-literal-d2dbe0bf9c",
+      "class": "string-literal",
+      "region": "server",
+      "line": 322,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-start-3"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "7a63e46bc2570ad6215bdcd42755344ac929097e3feeb83db6b6d24e67fafd2d"
+    },
+    {
+      "id": "M-server-323-0037-string-literal-393740a703",
+      "class": "string-literal",
+      "region": "server",
+      "line": 322,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "'dataX'",
+      "row_ids": [
+        "SV-post-start-3"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "332d580479366c4a5b908bbc514c32233a9310ac2fa0e6ec89ecd40051b94bf7"
+    },
+    {
+      "id": "M-server-325-0028-string-literal-bd0c57d307",
+      "class": "string-literal",
+      "region": "server",
+      "line": 324,
+      "start": 28,
+      "end": 37,
+      "before": "'STDOUT:'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-start-3"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "e8572af27e2a96653f42646330f9cc79088bd3cd371839b0e1007383ebee63e4"
+    },
+    {
+      "id": "M-server-325-0028-string-literal-687d484c4c",
+      "class": "string-literal",
+      "region": "server",
+      "line": 324,
+      "start": 28,
+      "end": 37,
+      "before": "'STDOUT:'",
+      "after": "'STDOUT:X'",
+      "row_ids": [
+        "SV-post-start-3"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "49a98bc4accffccb793589ec4c0708d12f9adce2ec44c13fc9b9b2abf040d791"
+    },
+    {
+      "id": "M-server-328-0032-string-literal-6f86c3d6db",
+      "class": "string-literal",
+      "region": "server",
+      "line": 327,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-start-3"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "93038686ef893eaaa7e4ac046084126642da2eb360e9135f961ed2478d5a6930"
+    },
+    {
+      "id": "M-server-328-0032-string-literal-250e9d1597",
+      "class": "string-literal",
+      "region": "server",
+      "line": 327,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "'log-streamX'",
+      "row_ids": [
+        "SV-post-start-3"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "7158ccfecaa772cd974b320e04f82f73d1a8d9235f8e1e51bb106d55e281a549"
+    },
+    {
+      "id": "M-server-328-0054-string-literal-44963bf761",
+      "class": "string-literal",
+      "region": "server",
+      "line": 327,
+      "start": 54,
+      "end": 62,
+      "before": "'stdout'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-start-3"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "da0bf6f6d6d9619797b0fcb1f66b523eb83bd6595a2df37e3a24acc8f98ce435"
+    },
+    {
+      "id": "M-server-328-0054-string-literal-92688c4d3e",
+      "class": "string-literal",
+      "region": "server",
+      "line": 327,
+      "start": 54,
+      "end": 62,
+      "before": "'stdout'",
+      "after": "'stdoutX'",
+      "row_ids": [
+        "SV-post-start-3"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "9ecbb13345a117aca4e8d8a3b506c5e8d9bbf8fd03575eede5d79ccc67dd2eef"
+    },
+    {
+      "id": "M-server-333-0012-conditional-inversion-2de68eb7e6",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 332,
+      "start": 12,
+      "end": 33,
+      "before": "runningProcess.stderr",
+      "after": "!(runningProcess.stderr)",
+      "row_ids": [
+        "SV-post-start-4"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "195c18750aaf4ca711929f4101a55b21e08327bde6af80c99e6f51298819b3f2"
+    },
+    {
+      "id": "M-server-334-0037-string-literal-e42c8b436f",
+      "class": "string-literal",
+      "region": "server",
+      "line": 333,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-start-4"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "82e94c96f84ebc596878e7081640e18a9df2f3b936e80a4af695d48f5401e2b8"
+    },
+    {
+      "id": "M-server-334-0037-string-literal-58d27d450f",
+      "class": "string-literal",
+      "region": "server",
+      "line": 333,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "'dataX'",
+      "row_ids": [
+        "SV-post-start-4"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "8d38b845555a8d49503481b8c24c8938947c03ac1f74624bed1605dbfc0bcdfd"
+    },
+    {
+      "id": "M-server-336-0028-string-literal-c1d7ab0880",
+      "class": "string-literal",
+      "region": "server",
+      "line": 335,
+      "start": 28,
+      "end": 37,
+      "before": "'STDERR:'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-start-4"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "0846581f8bc89b1cb6c5cd9ddceea7bb32e11a8e4051d6dbb65bb8ebf6e5b15c"
+    },
+    {
+      "id": "M-server-336-0028-string-literal-cd7afcf150",
+      "class": "string-literal",
+      "region": "server",
+      "line": 335,
+      "start": 28,
+      "end": 37,
+      "before": "'STDERR:'",
+      "after": "'STDERR:X'",
+      "row_ids": [
+        "SV-post-start-4"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "a5087b8bfc25cfdbb2a9b7b1eb905bfc37cf71055d8c18baa6996c590b120d2e"
+    },
+    {
+      "id": "M-server-339-0032-string-literal-02d518f569",
+      "class": "string-literal",
+      "region": "server",
+      "line": 338,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-start-4"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "2f1b70784eda6d0656c0c3ec36e3270ec95591e238c58037184d56e562ea54ad"
+    },
+    {
+      "id": "M-server-339-0032-string-literal-ef500fe641",
+      "class": "string-literal",
+      "region": "server",
+      "line": 338,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "'log-streamX'",
+      "row_ids": [
+        "SV-post-start-4"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "ff514badc0626f251b523266f04a67cfbec9ce9fc589381fdbf978e92eaea319"
+    },
+    {
+      "id": "M-server-339-0054-string-literal-97157eea00",
+      "class": "string-literal",
+      "region": "server",
+      "line": 338,
+      "start": 54,
+      "end": 62,
+      "before": "'stderr'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-start-4"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "fb6a1cefc0456049868edceaa86c5c7c919f410d3c57bd95d3e0bad2356ac0b1"
+    },
+    {
+      "id": "M-server-339-0054-string-literal-eec69beaec",
+      "class": "string-literal",
+      "region": "server",
+      "line": 338,
+      "start": 54,
+      "end": 62,
+      "before": "'stderr'",
+      "after": "'stderrX'",
+      "row_ids": [
+        "SV-post-start-4"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "8e80ce8a092f58a68b986983a5536878c61a8bb63fb055fc349b4916df5ba80e"
+    },
+    {
+      "id": "M-server-349-0019-numeric-literal-e662078f6e",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 348,
+      "start": 19,
+      "end": 22,
+      "before": "500",
+      "after": "501",
+      "row_ids": [
+        "SV-post-start-5"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "3adce6e344dcfb2ed2c984b23fe924666e1ef375583ffa14765c0786db8596e3"
+    },
+    {
+      "id": "M-server-351-0019-string-literal-ca221c3b0b",
+      "class": "string-literal",
+      "region": "server",
+      "line": 350,
+      "start": 19,
+      "end": 61,
+      "before": "`Failed to start server: ${error.message}`",
+      "after": "``",
+      "row_ids": [
+        "SV-post-start-5"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "5b9d45bf15f4ab69486d407d95332a42b0fabc5776d0a79ee92f6226a8099704"
+    },
+    {
+      "id": "M-server-351-0019-string-literal-78d1797029",
+      "class": "string-literal",
+      "region": "server",
+      "line": 350,
+      "start": 19,
+      "end": 61,
+      "before": "`Failed to start server: ${error.message}`",
+      "after": "`Failed to start server: ${error.message}X`",
+      "row_ids": [
+        "SV-post-start-5"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "61f4016bec09facd200ff7b1b80c501b92020519bdf9d335530be36b598922dc"
+    },
+    {
+      "id": "M-server-358-0008-conditional-inversion-386be1b339",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 357,
+      "start": 8,
+      "end": 23,
+      "before": "!runningProcess",
+      "after": "!(!runningProcess)",
+      "row_ids": [
+        "SV-post-stop-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "a0a5d3400c8994242d2d3126e2c1dbda0b34997d320ad1e73929fbd3f0dc718a"
+    },
+    {
+      "id": "M-server-361-0019-string-literal-a5a535974d",
+      "class": "string-literal",
+      "region": "server",
+      "line": 360,
+      "start": 19,
+      "end": 51,
+      "before": "'No server is currently running'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-stop-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "f6647e14d86e503c16a4b9a4226b66d9ab161e0be1c4c2aa0006ef68a27d82c1"
+    },
+    {
+      "id": "M-server-361-0019-string-literal-44ab5ac18f",
+      "class": "string-literal",
+      "region": "server",
+      "line": 360,
+      "start": 19,
+      "end": 51,
+      "before": "'No server is currently running'",
+      "after": "'No server is currently runningX'",
+      "row_ids": [
+        "SV-post-stop-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "dfced2fe5f60b4234b76fdac08631b0a2f27d2ddac461df2c945b2dd7abf3680"
+    },
+    {
+      "id": "M-server-369-0012-negation-insertion-ebd6c52cb7",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 368,
+      "start": 12,
+      "end": 26,
+      "before": "runningProcess",
+      "after": "!(runningProcess)",
+      "row_ids": [
+        "SV-post-stop-3"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "dd54cdd682d96d8926ebab4781ab8bec0c19d8db388e5a826d6fc140f831de96"
+    },
+    {
+      "id": "M-server-371-0020-conditional-inversion-93c8da340e",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 370,
+      "start": 20,
+      "end": 60,
+      "before": "runningProcess && !runningProcess.killed",
+      "after": "!(runningProcess && !runningProcess.killed)",
+      "row_ids": [
+        "SV-post-stop-2",
+        "SV-post-stop-5"
+      ],
+      "kinds": [
+        "logical-and"
+      ],
+      "mutated_sha256": "03f6d9e115c0b55eb16d433ba29c35790db30325a1c2680d6516162a57dddc0f"
+    },
+    {
+      "id": "M-server-371-0035-boolean-operator-66d4ecb051",
+      "class": "boolean-operator",
+      "region": "server",
+      "line": 370,
+      "start": 35,
+      "end": 37,
+      "before": "&&",
+      "after": "||",
+      "row_ids": [
+        "SV-post-stop-2",
+        "SV-post-stop-5"
+      ],
+      "kinds": [
+        "logical-and"
+      ],
+      "mutated_sha256": "3c0373e8d116a307690feb23c8646d0741169843ec6f9ff6c53c16fbf11c6202"
+    },
+    {
+      "id": "M-server-371-0035-operand-removal-edccf6a5f7",
+      "class": "operand-removal",
+      "region": "server",
+      "line": 370,
+      "start": 35,
+      "end": 60,
+      "before": "&& !runningProcess.killed",
+      "after": "",
+      "row_ids": [
+        "SV-post-stop-2",
+        "SV-post-stop-5"
+      ],
+      "kinds": [
+        "logical-and"
+      ],
+      "mutated_sha256": "84e62be28d30715577fd6da093a8a8d9aaa21e542e5c43b1a4d772326b33d31b"
+    },
+    {
+      "id": "M-server-371-0039-negation-insertion-516f6b7751",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 370,
+      "start": 39,
+      "end": 60,
+      "before": "runningProcess.killed",
+      "after": "!(runningProcess.killed)",
+      "row_ids": [
+        "SV-post-stop-4",
+        "SV-post-stop-7"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "f68d9312e2b5d28ace7a0d6f0c56a771edd0d1469a4cb09fca0aed04ddedb90d"
+    },
+    {
+      "id": "M-server-372-0020-negation-insertion-a22d64ab43",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 371,
+      "start": 20,
+      "end": 34,
+      "before": "runningProcess",
+      "after": "!(runningProcess)",
+      "row_ids": [
+        "SV-post-stop-6"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "43d693008adf48dc6a43b8db5744b07cf951be5683d916d5e78e63b4d37cccf4"
+    },
+    {
+      "id": "M-server-372-0040-string-literal-8ca8f4abb4",
+      "class": "string-literal",
+      "region": "server",
+      "line": 371,
+      "start": 40,
+      "end": 49,
+      "before": "'SIGKILL'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-stop-2",
+        "SV-post-stop-4",
+        "SV-post-stop-5",
+        "SV-post-stop-7"
+      ],
+      "kinds": [
+        "logical-and",
+        "truthiness"
+      ],
+      "mutated_sha256": "b4a587d0a2c7d6bc189f0d0d3df37400fa777808fcefa9fd05d5890c489dc6fc"
+    },
+    {
+      "id": "M-server-372-0040-string-literal-76a1b326e9",
+      "class": "string-literal",
+      "region": "server",
+      "line": 371,
+      "start": 40,
+      "end": 49,
+      "before": "'SIGKILL'",
+      "after": "'SIGKILLX'",
+      "row_ids": [
+        "SV-post-stop-2",
+        "SV-post-stop-4",
+        "SV-post-stop-5",
+        "SV-post-stop-7"
+      ],
+      "kinds": [
+        "logical-and",
+        "truthiness"
+      ],
+      "mutated_sha256": "470cb7ca9a0ef32f23e0c70deb93cf5ae103c48eaa59ff9ca00f4f5d08583756"
+    },
+    {
+      "id": "M-server-382-0019-numeric-literal-6b9fdd7037",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 381,
+      "start": 19,
+      "end": 22,
+      "before": "500",
+      "after": "501",
+      "row_ids": [
+        "SV-post-stop-8"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "a71ed32fb672b7e99b26823de68e1797dd58fdd6b9fea5d3f1777d88a567a7e0"
+    },
+    {
+      "id": "M-server-384-0019-string-literal-1c7fcefa23",
+      "class": "string-literal",
+      "region": "server",
+      "line": 383,
+      "start": 19,
+      "end": 60,
+      "before": "`Failed to stop server: ${error.message}`",
+      "after": "``",
+      "row_ids": [
+        "SV-post-stop-8"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "77b84ecbf5908d004514c149ddfa6d4313c062d112c050e28d1bbc2304c114c1"
+    },
+    {
+      "id": "M-server-384-0019-string-literal-62d91f286c",
+      "class": "string-literal",
+      "region": "server",
+      "line": 383,
+      "start": 19,
+      "end": 60,
+      "before": "`Failed to stop server: ${error.message}`",
+      "after": "`Failed to stop server: ${error.message}X`",
+      "row_ids": [
+        "SV-post-stop-8"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "f4360e1f8aeb62e42a2c37221a76ff1add5b4e1951477b8d662e5f92b8a21f21"
+    },
+    {
+      "id": "M-server-398-0019-numeric-literal-6e3af2e950",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 397,
+      "start": 19,
+      "end": 22,
+      "before": "500",
+      "after": "501",
+      "row_ids": [
+        "SV-get-models-1"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "b80dfafe6e5152e9c14b8a74145faf9191fde647638ce583a5f052c138b87e73"
+    },
+    {
+      "id": "M-server-400-0019-string-literal-2856e9b8bc",
+      "class": "string-literal",
+      "region": "server",
+      "line": 399,
+      "start": 19,
+      "end": 45,
+      "before": "'Failed to fetch models: '",
+      "after": "''",
+      "row_ids": [
+        "SV-get-models-1"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "1b69be6eb890d319818a76e1f30c0390bf022eead8ac8b2db7d91bbd0f4c0293"
+    },
+    {
+      "id": "M-server-400-0019-string-literal-0cf35e4262",
+      "class": "string-literal",
+      "region": "server",
+      "line": 399,
+      "start": 19,
+      "end": 45,
+      "before": "'Failed to fetch models: '",
+      "after": "'Failed to fetch models: X'",
+      "row_ids": [
+        "SV-get-models-1"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "842472a3bbc0ab6f8d5fd14a477934426cb6f07699fd371c8b8837924547f7e9"
+    },
+    {
+      "id": "M-server-420-0019-negation-insertion-bc922f302a",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 419,
+      "start": 19,
+      "end": 33,
+      "before": "runningProcess",
+      "after": "!(runningProcess)",
+      "row_ids": [
+        "SV-get-status-2"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "9363de582bb3215d6dac481d8d3d59cbeba881adc9b2eafc178fe4b322ef1e30"
+    },
+    {
+      "id": "M-server-420-0034-boolean-operator-a0bc9bfced",
+      "class": "boolean-operator",
+      "region": "server",
+      "line": 419,
+      "start": 34,
+      "end": 36,
+      "before": "&&",
+      "after": "||",
+      "row_ids": [
+        "SV-get-status-1"
+      ],
+      "kinds": [
+        "logical-and"
+      ],
+      "mutated_sha256": "414954ba145b12cd9de5f66b463de99755a4f9300e23ec7a5ea6396ce846ed31"
+    },
+    {
+      "id": "M-server-420-0034-operand-removal-2194f1bff4",
+      "class": "operand-removal",
+      "region": "server",
+      "line": 419,
+      "start": 34,
+      "end": 59,
+      "before": "&& !runningProcess.killed",
+      "after": "",
+      "row_ids": [
+        "SV-get-status-1"
+      ],
+      "kinds": [
+        "logical-and"
+      ],
+      "mutated_sha256": "f306219e95a4c26c792d1fbbfbbfca2747d2cea1a7bae0691a3e6c2fca21e5ae"
+    },
+    {
+      "id": "M-server-420-0038-negation-insertion-c8e1ea5394",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 419,
+      "start": 38,
+      "end": 59,
+      "before": "runningProcess.killed",
+      "after": "!(runningProcess.killed)",
+      "row_ids": [
+        "SV-get-status-3"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "07f8e7da7bf9762f60103ecdb5d22ba8e9abe7b4bb7cc8b2733e08a54a71414f"
+    },
+    {
+      "id": "M-server-427-0008-conditional-inversion-4c5038a9d4",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 426,
+      "start": 8,
+      "end": 25,
+      "before": "!lastLaunchConfig",
+      "after": "!(!lastLaunchConfig)",
+      "row_ids": [
+        "SV-post-restart-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "b7941da02d8849f165a1a490b5fac0522b02e4d1c34da4da48fa1a318bc4da86"
+    },
+    {
+      "id": "M-server-428-0026-numeric-literal-b469ccdd98",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 427,
+      "start": 26,
+      "end": 29,
+      "before": "400",
+      "after": "401",
+      "row_ids": [
+        "SV-post-restart-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "af7ec8bb0bb055dcc03597c901ace8f0341ee2c7ce13464f1f5f4582a5e15edb"
+    },
+    {
+      "id": "M-server-430-0019-string-literal-5a3a5b685c",
+      "class": "string-literal",
+      "region": "server",
+      "line": 429,
+      "start": 19,
+      "end": 68,
+      "before": "'No previous configuration found to restart from'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "f036f108d34e1eac511cd83771de4bd650fb49e4d609a7d65e65b4a5006a1ca4"
+    },
+    {
+      "id": "M-server-430-0019-string-literal-3ee3bd376b",
+      "class": "string-literal",
+      "region": "server",
+      "line": 429,
+      "start": 19,
+      "end": 68,
+      "before": "'No previous configuration found to restart from'",
+      "after": "'No previous configuration found to restart fromX'",
+      "row_ids": [
+        "SV-post-restart-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "7cc0c3eb056697fe2724e0460b16a348c588286ce3dbc8973109284346b07f21"
+    },
+    {
+      "id": "M-server-435-0008-conditional-inversion-2b87869d65",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 434,
+      "start": 8,
+      "end": 22,
+      "before": "runningProcess",
+      "after": "!(runningProcess)",
+      "row_ids": [
+        "SV-post-restart-2"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "af7f76ea496d4660a75fd5d3505e7c2c2f4061c62acc13c1704ff14c98d6097d"
+    },
+    {
+      "id": "M-server-439-0016-negation-insertion-970ab6d0f4",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 438,
+      "start": 16,
+      "end": 30,
+      "before": "runningProcess",
+      "after": "!(runningProcess)",
+      "row_ids": [
+        "SV-post-restart-4"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "f8ed81b7e367071b2667960e17dbc7d1b5bcc3a23adae85fe1fa49c3e11e1308"
+    },
+    {
+      "id": "M-server-439-0036-string-literal-8d19e253cb",
+      "class": "string-literal",
+      "region": "server",
+      "line": 438,
+      "start": 36,
+      "end": 45,
+      "before": "'SIGTERM'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-2"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "9ab34a10f4395ee271848c993102473e431e87b0c1790aca274b5cd9eecde87b"
+    },
+    {
+      "id": "M-server-439-0036-string-literal-d575ac3c24",
+      "class": "string-literal",
+      "region": "server",
+      "line": 438,
+      "start": 36,
+      "end": 45,
+      "before": "'SIGTERM'",
+      "after": "'SIGTERMX'",
+      "row_ids": [
+        "SV-post-restart-2"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "cd1162987e4cee0620316a3ac4a2abe414c24ac0f99a68c80c9dca8f5b767387"
+    },
+    {
+      "id": "M-server-441-0024-conditional-inversion-fcd7e22fbc",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 440,
+      "start": 24,
+      "end": 64,
+      "before": "runningProcess && !runningProcess.killed",
+      "after": "!(runningProcess && !runningProcess.killed)",
+      "row_ids": [
+        "SV-post-restart-3",
+        "SV-post-restart-6"
+      ],
+      "kinds": [
+        "logical-and"
+      ],
+      "mutated_sha256": "3d1b9c41b052a6c48c269cc04585d1056915ff777ff0d712881519beb7d1a7a3"
+    },
+    {
+      "id": "M-server-441-0039-boolean-operator-3459d4275e",
+      "class": "boolean-operator",
+      "region": "server",
+      "line": 440,
+      "start": 39,
+      "end": 41,
+      "before": "&&",
+      "after": "||",
+      "row_ids": [
+        "SV-post-restart-3",
+        "SV-post-restart-6"
+      ],
+      "kinds": [
+        "logical-and"
+      ],
+      "mutated_sha256": "c671e7941cf39d6863237e49add085c7772c60e43a0e3e2fd524dfa5afe5d72f"
+    },
+    {
+      "id": "M-server-441-0039-operand-removal-0e257c8824",
+      "class": "operand-removal",
+      "region": "server",
+      "line": 440,
+      "start": 39,
+      "end": 64,
+      "before": "&& !runningProcess.killed",
+      "after": "",
+      "row_ids": [
+        "SV-post-restart-3",
+        "SV-post-restart-6"
+      ],
+      "kinds": [
+        "logical-and"
+      ],
+      "mutated_sha256": "7ab7866c8611e7721c87cf8d2df53f4c882f27e8e771db3789aaf1b81d156b99"
+    },
+    {
+      "id": "M-server-441-0043-negation-insertion-8747b97f42",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 440,
+      "start": 43,
+      "end": 64,
+      "before": "runningProcess.killed",
+      "after": "!(runningProcess.killed)",
+      "row_ids": [
+        "SV-post-restart-5",
+        "SV-post-restart-8"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "936ee918d0dc5fb6bd54a2c725a01dcbd1eea6bf0c4f27f91f9ab09ee750fe81"
+    },
+    {
+      "id": "M-server-442-0024-negation-insertion-2c835576ae",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 441,
+      "start": 24,
+      "end": 38,
+      "before": "runningProcess",
+      "after": "!(runningProcess)",
+      "row_ids": [
+        "SV-post-restart-7"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "90d5239462ccedaaab50bceeb7566088549aeb1a62ce0c1be0a532959e331209"
+    },
+    {
+      "id": "M-server-442-0044-string-literal-61d6f25c85",
+      "class": "string-literal",
+      "region": "server",
+      "line": 441,
+      "start": 44,
+      "end": 53,
+      "before": "'SIGKILL'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-2",
+        "SV-post-restart-3",
+        "SV-post-restart-5",
+        "SV-post-restart-6",
+        "SV-post-restart-8"
+      ],
+      "kinds": [
+        "if",
+        "logical-and",
+        "truthiness"
+      ],
+      "mutated_sha256": "c94be97bbffc8d5a507be04e8bf9af4d92561fc8beaa66b40a9e68f7cc30e3e6"
+    },
+    {
+      "id": "M-server-442-0044-string-literal-13d3496052",
+      "class": "string-literal",
+      "region": "server",
+      "line": 441,
+      "start": 44,
+      "end": 53,
+      "before": "'SIGKILL'",
+      "after": "'SIGKILLX'",
+      "row_ids": [
+        "SV-post-restart-2",
+        "SV-post-restart-3",
+        "SV-post-restart-5",
+        "SV-post-restart-6",
+        "SV-post-restart-8"
+      ],
+      "kinds": [
+        "if",
+        "logical-and",
+        "truthiness"
+      ],
+      "mutated_sha256": "74cc00ad40afc757a56812fe0f06569778f5b31e98fcf4215f79024d40d28fb6"
+    },
+    {
+      "id": "M-server-444-0019-numeric-literal-a370a0aec2",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 443,
+      "start": 19,
+      "end": 23,
+      "before": "1000",
+      "after": "1001",
+      "row_ids": [
+        "SV-post-restart-2"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "8f38bef33e24ef79373ea415df3790b08e6b8fcb377469bbb4e0d7c727d7574c"
+    },
+    {
+      "id": "M-server-448-0026-string-literal-3c5776ccba",
+      "class": "string-literal",
+      "region": "server",
+      "line": 447,
+      "start": 26,
+      "end": 65,
+      "before": "'Error stopping server during restart:'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-2",
+        "SV-post-restart-9"
+      ],
+      "kinds": [
+        "error-path",
+        "if"
+      ],
+      "mutated_sha256": "3dbff00e9b58298b20387239cb956d399f87f06868e30de74d88b1b3de1b2da8"
+    },
+    {
+      "id": "M-server-448-0026-string-literal-c969fba844",
+      "class": "string-literal",
+      "region": "server",
+      "line": 447,
+      "start": 26,
+      "end": 65,
+      "before": "'Error stopping server during restart:'",
+      "after": "'Error stopping server during restart:X'",
+      "row_ids": [
+        "SV-post-restart-2",
+        "SV-post-restart-9"
+      ],
+      "kinds": [
+        "error-path",
+        "if"
+      ],
+      "mutated_sha256": "64ae79de4a7d13092e9eb1309d78067263dd1faafcc52e326bc9bc5db2882fcc"
+    },
+    {
+      "id": "M-server-449-0030-numeric-literal-76f7f88a0d",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 448,
+      "start": 30,
+      "end": 33,
+      "before": "500",
+      "after": "501",
+      "row_ids": [
+        "SV-post-restart-2",
+        "SV-post-restart-9"
+      ],
+      "kinds": [
+        "error-path",
+        "if"
+      ],
+      "mutated_sha256": "7d9fbdc9b6e43f7e18f116e57f13054fc7d453b08d1a845aea87420aaf5d1043"
+    },
+    {
+      "id": "M-server-451-0023-string-literal-1129eff2cc",
+      "class": "string-literal",
+      "region": "server",
+      "line": 450,
+      "start": 23,
+      "end": 64,
+      "before": "`Failed to stop server: ${error.message}`",
+      "after": "``",
+      "row_ids": [
+        "SV-post-restart-2",
+        "SV-post-restart-9"
+      ],
+      "kinds": [
+        "error-path",
+        "if"
+      ],
+      "mutated_sha256": "ce4193923a9142d5e2b666585b3cb6fe87b78881b1ee7f397f557315004f38b1"
+    },
+    {
+      "id": "M-server-451-0023-string-literal-6e78d6a250",
+      "class": "string-literal",
+      "region": "server",
+      "line": 450,
+      "start": 23,
+      "end": 64,
+      "before": "`Failed to stop server: ${error.message}`",
+      "after": "`Failed to stop server: ${error.message}X`",
+      "row_ids": [
+        "SV-post-restart-2",
+        "SV-post-restart-9"
+      ],
+      "kinds": [
+        "error-path",
+        "if"
+      ],
+      "mutated_sha256": "daed3601123ec5ef4c48347a6bb0f65106b85c653c4f00262f7e92ce7ec3216b"
+    },
+    {
+      "id": "M-server-482-0012-conditional-inversion-2f2db87dfe",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 481,
+      "start": 12,
+      "end": 33,
+      "before": "runningProcess.stdout",
+      "after": "!(runningProcess.stdout)",
+      "row_ids": [
+        "SV-post-restart-10"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "e1d6cfa24c8c33ba13019a1699c5ed1d9b7cd17e1b12dbcf0ae78393e694f789"
+    },
+    {
+      "id": "M-server-483-0037-string-literal-34a4f1b85f",
+      "class": "string-literal",
+      "region": "server",
+      "line": 482,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-10"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "af45c8f53e550f7a705d612dff5f8a99fa173664b4c1a874b2111fadc3f06c27"
+    },
+    {
+      "id": "M-server-483-0037-string-literal-865f73a731",
+      "class": "string-literal",
+      "region": "server",
+      "line": 482,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "'dataX'",
+      "row_ids": [
+        "SV-post-restart-10"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "6ac897429541ad2e93c70ceda0165ca5434024a2b0453df582c1647dc82f4901"
+    },
+    {
+      "id": "M-server-485-0028-string-literal-07baf6f968",
+      "class": "string-literal",
+      "region": "server",
+      "line": 484,
+      "start": 28,
+      "end": 37,
+      "before": "'STDOUT:'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-10"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "8fc89b803ca0a64b90f3f1bb795ab56c410b2223ce72bbcc8655b14b36ad0d3f"
+    },
+    {
+      "id": "M-server-485-0028-string-literal-4d7215fc96",
+      "class": "string-literal",
+      "region": "server",
+      "line": 484,
+      "start": 28,
+      "end": 37,
+      "before": "'STDOUT:'",
+      "after": "'STDOUT:X'",
+      "row_ids": [
+        "SV-post-restart-10"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "d286c514afd181fc212570f42d68eaab55ac96e991ceb8b5a3e5658677949479"
+    },
+    {
+      "id": "M-server-488-0032-string-literal-f50d3e2ec9",
+      "class": "string-literal",
+      "region": "server",
+      "line": 487,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-10"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "6ae6df908dcdad1ddc50447a048b7b61b58bbf90aba9dece36b200dd15a8bc12"
+    },
+    {
+      "id": "M-server-488-0032-string-literal-192b931fd4",
+      "class": "string-literal",
+      "region": "server",
+      "line": 487,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "'log-streamX'",
+      "row_ids": [
+        "SV-post-restart-10"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "1bdcf43886d528747183a9c13c06fcb19b122d679688ab8a301c8629049bd27f"
+    },
+    {
+      "id": "M-server-488-0054-string-literal-7ff0ab890c",
+      "class": "string-literal",
+      "region": "server",
+      "line": 487,
+      "start": 54,
+      "end": 62,
+      "before": "'stdout'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-10"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "9107cf27c8a799cdc11aef5fba29b4591865f31e09effe346383072750cac92e"
+    },
+    {
+      "id": "M-server-488-0054-string-literal-db46e11c6c",
+      "class": "string-literal",
+      "region": "server",
+      "line": 487,
+      "start": 54,
+      "end": 62,
+      "before": "'stdout'",
+      "after": "'stdoutX'",
+      "row_ids": [
+        "SV-post-restart-10"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "0e0d5571dbbbf113947c58f42f6a181e8db7088972b24c44c941d8f702c72f62"
+    },
+    {
+      "id": "M-server-493-0012-conditional-inversion-b6d09ab499",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 492,
+      "start": 12,
+      "end": 33,
+      "before": "runningProcess.stderr",
+      "after": "!(runningProcess.stderr)",
+      "row_ids": [
+        "SV-post-restart-11"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "51bbe3f8a0ff202d0c10ee40fce4246b2b25b88a95ad2de94f04668a408a82d4"
+    },
+    {
+      "id": "M-server-494-0037-string-literal-13bae13ca5",
+      "class": "string-literal",
+      "region": "server",
+      "line": 493,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-11"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "0567ce9bf983c27a7d94de226d2968000df7a1f127209347547dd2b9b4aff1d8"
+    },
+    {
+      "id": "M-server-494-0037-string-literal-44db4dc6db",
+      "class": "string-literal",
+      "region": "server",
+      "line": 493,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "'dataX'",
+      "row_ids": [
+        "SV-post-restart-11"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "6d719479e339baabae57066b25d9dc9c195c029262510312f3b6ff4c210897f6"
+    },
+    {
+      "id": "M-server-496-0028-string-literal-9e04419059",
+      "class": "string-literal",
+      "region": "server",
+      "line": 495,
+      "start": 28,
+      "end": 37,
+      "before": "'STDERR:'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-11"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "dcab336bc2c0e2c6dfb3e5004708fbc650cb065e551a66cd3b8f97a602909eff"
+    },
+    {
+      "id": "M-server-496-0028-string-literal-77e8f51190",
+      "class": "string-literal",
+      "region": "server",
+      "line": 495,
+      "start": 28,
+      "end": 37,
+      "before": "'STDERR:'",
+      "after": "'STDERR:X'",
+      "row_ids": [
+        "SV-post-restart-11"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "0033e8d94645d8bf95a016dda0c1eae6ad943c096e4de4b7e21081e4c1448d0a"
+    },
+    {
+      "id": "M-server-499-0032-string-literal-4fcdb532af",
+      "class": "string-literal",
+      "region": "server",
+      "line": 498,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-11"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "5d91d3de2dedbd003de0c9d305de9a16a2bbe9e3b3e5d4ac6a602659ee33efb1"
+    },
+    {
+      "id": "M-server-499-0032-string-literal-6b7d89912c",
+      "class": "string-literal",
+      "region": "server",
+      "line": 498,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "'log-streamX'",
+      "row_ids": [
+        "SV-post-restart-11"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "259556ce0532f4c1d7fd2e383f6a1bcb63bed9629c4e82444e97e17d92c061fb"
+    },
+    {
+      "id": "M-server-499-0054-string-literal-15cc080307",
+      "class": "string-literal",
+      "region": "server",
+      "line": 498,
+      "start": 54,
+      "end": 62,
+      "before": "'stderr'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-restart-11"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "b5fbcfe0b9d6ad5ee50fd19eaba85cf9f667a16249e293646ade869822a1e94f"
+    },
+    {
+      "id": "M-server-499-0054-string-literal-e662af3798",
+      "class": "string-literal",
+      "region": "server",
+      "line": 498,
+      "start": 54,
+      "end": 62,
+      "before": "'stderr'",
+      "after": "'stderrX'",
+      "row_ids": [
+        "SV-post-restart-11"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "ef45620f2a06a6e13054dd2719a9f873e397100146a0ec5fdb3a37b36f5456df"
+    },
+    {
+      "id": "M-server-509-0019-numeric-literal-3d89ff329d",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 508,
+      "start": 19,
+      "end": 22,
+      "before": "500",
+      "after": "501",
+      "row_ids": [
+        "SV-post-restart-12"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "388dc45fa4a80f2ec9dfcbab4fa60a3ca44f7d8b21d4325227258328abe0a0db"
+    },
+    {
+      "id": "M-server-511-0019-string-literal-be8c4b5249",
+      "class": "string-literal",
+      "region": "server",
+      "line": 510,
+      "start": 19,
+      "end": 63,
+      "before": "`Failed to restart server: ${error.message}`",
+      "after": "``",
+      "row_ids": [
+        "SV-post-restart-12"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "be5f158e6088d04ec409b9ab31f490e2489ac3fd420741f9ceffc3b241f76a76"
+    },
+    {
+      "id": "M-server-511-0019-string-literal-9b87a220ce",
+      "class": "string-literal",
+      "region": "server",
+      "line": 510,
+      "start": 19,
+      "end": 63,
+      "before": "`Failed to restart server: ${error.message}`",
+      "after": "`Failed to restart server: ${error.message}X`",
+      "row_ids": [
+        "SV-post-restart-12"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "c27157d48c96e091769c34608071f8b90aa543392d7a8aeadf9fb2332a6d8311"
+    },
+    {
+      "id": "M-server-525-0012-conditional-inversion-9a274293cd",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 524,
+      "start": 12,
+      "end": 22,
+      "before": "index > -1",
+      "after": "!(index > -1)",
+      "row_ids": [
+        "SV-ws-connection-1"
+      ],
+      "kinds": [
+        "range-comparison"
+      ],
+      "mutated_sha256": "b6c00e01f899b0a3e050e28263298d850adf8b56f11238b41c272eaae17eb307"
+    },
+    {
+      "id": "M-server-525-0018-relational-boundary-702be34d7f",
+      "class": "relational-boundary",
+      "region": "server",
+      "line": 524,
+      "start": 18,
+      "end": 19,
+      "before": ">",
+      "after": ">=",
+      "row_ids": [
+        "SV-ws-connection-1"
+      ],
+      "kinds": [
+        "range-comparison"
+      ],
+      "mutated_sha256": "9de8a1c69216e56ff597c508cb0766eee371ff7e35d63cbb1dbd4e9ef03b1999"
+    },
+    {
+      "id": "M-server-525-0018-relational-reverse-80a1f55055",
+      "class": "relational-reverse",
+      "region": "server",
+      "line": 524,
+      "start": 18,
+      "end": 19,
+      "before": ">",
+      "after": "<",
+      "row_ids": [
+        "SV-ws-connection-1"
+      ],
+      "kinds": [
+        "range-comparison"
+      ],
+      "mutated_sha256": "e8c1508a7de44bd9c40f851bc3df905ade0b11b7e7d3e2a9f01fa9d0d6695932"
+    },
+    {
+      "id": "M-server-525-0021-numeric-literal-f5378018b2",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 524,
+      "start": 21,
+      "end": 22,
+      "before": "1",
+      "after": "0",
+      "row_ids": [
+        "SV-ws-connection-1"
+      ],
+      "kinds": [
+        "range-comparison"
+      ],
+      "mutated_sha256": "783bf038b164a2592fb91c71631fa92a12706ea92adb555555aaaeed08f5de72"
+    },
+    {
+      "id": "M-server-526-0043-numeric-literal-d666346e99",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 525,
+      "start": 43,
+      "end": 44,
+      "before": "1",
+      "after": "0",
+      "row_ids": [
+        "SV-ws-connection-1"
+      ],
+      "kinds": [
+        "range-comparison"
+      ],
+      "mutated_sha256": "a3b7e00f281c3a3301857550d1b13e5a879af1caa177433d8229e7530be47265"
+    },
+    {
+      "id": "M-server-547-0067-negation-insertion-263edec9dd",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 546,
+      "start": 67,
+      "end": 89,
+      "before": "process.env.MODEL_PATH",
+      "after": "!(process.env.MODEL_PATH)",
+      "row_ids": [
+        "SV-get-settings-2"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "27253f9aeee02af376186fd72740121d4de943f143ec06879c335b6732b44c9c"
+    },
+    {
+      "id": "M-server-547-0090-boolean-operator-d6a3314e33",
+      "class": "boolean-operator",
+      "region": "server",
+      "line": 546,
+      "start": 90,
+      "end": 92,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SV-get-settings-3"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "a948506c885e361880c3dee075d0ad130ab504773a4d6cae67af5d1d6b57f948"
+    },
+    {
+      "id": "M-server-547-0090-operand-removal-c9d679aaa5",
+      "class": "operand-removal",
+      "region": "server",
+      "line": 546,
+      "start": 90,
+      "end": 130,
+      "before": "|| \"C:\\\\Users\\\\anubh\\\\.lmstudio\\\\models\"",
+      "after": "",
+      "row_ids": [
+        "SV-get-settings-3"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "f0d05d7a4bfc671198010cbb604bdf9c20f4667b1198b4726920c14cb25138d0"
+    },
+    {
+      "id": "M-server-547-0093-string-literal-095bf0ad5f",
+      "class": "string-literal",
+      "region": "server",
+      "line": 546,
+      "start": 93,
+      "end": 130,
+      "before": "\"C:\\\\Users\\\\anubh\\\\.lmstudio\\\\models\"",
+      "after": "\"\"",
+      "row_ids": [
+        "SV-get-settings-3"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "3c4ce8800f098d4d66387983f07bc7a73532e8a44dbc94b51f7474bc8c8cdfef"
+    },
+    {
+      "id": "M-server-547-0093-string-literal-0dbe9c76a2",
+      "class": "string-literal",
+      "region": "server",
+      "line": 546,
+      "start": 93,
+      "end": 130,
+      "before": "\"C:\\\\Users\\\\anubh\\\\.lmstudio\\\\models\"",
+      "after": "\"C:\\\\Users\\\\anubh\\\\.lmstudio\\\\modelsX\"",
+      "row_ids": [
+        "SV-get-settings-3"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "c4a32bfedf9af5b16ddffcc6c00d91425c46f85423e0b25eff6fb97efb2db91f"
+    },
+    {
+      "id": "M-server-555-0008-conditional-inversion-3885a67e2f",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 554,
+      "start": 8,
+      "end": 24,
+      "before": "!modelsDirectory",
+      "after": "!(!modelsDirectory)",
+      "row_ids": [
+        "SV-post-settings-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "174a6956b083df9a0af35387d36d17dbcffe6912d215b8d0831745b35a0cdc81"
+    },
+    {
+      "id": "M-server-556-0026-numeric-literal-2e42f3114b",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 555,
+      "start": 26,
+      "end": 29,
+      "before": "400",
+      "after": "401",
+      "row_ids": [
+        "SV-post-settings-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "2e3ac4f99a2d438b7262069b9a2a31d48720ea090779ebb1fd00118811c08650"
+    },
+    {
+      "id": "M-server-558-0019-string-literal-62bf08fd6e",
+      "class": "string-literal",
+      "region": "server",
+      "line": 557,
+      "start": 19,
+      "end": 54,
+      "before": "'Models directory path is required'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-settings-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "091366c0699963a6ebc8ea9338d8785a7da279348c7d5bde19f40d8dbf68180f"
+    },
+    {
+      "id": "M-server-558-0019-string-literal-00094efaf6",
+      "class": "string-literal",
+      "region": "server",
+      "line": 557,
+      "start": 19,
+      "end": 54,
+      "before": "'Models directory path is required'",
+      "after": "'Models directory path is requiredX'",
+      "row_ids": [
+        "SV-post-settings-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "96466870d744406cf34550fcd8964fc78feb078eabfd02952c139b26281a2dc0"
+    },
+    {
+      "id": "M-server-575-0125-boolean-operator-b5ee19956d",
+      "class": "boolean-operator",
+      "region": "server",
+      "line": 574,
+      "start": 125,
+      "end": 127,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SV-post-settings-6"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "1b152eb906d2b4f035ff8471d359d3459f7443189ca1a9ed50ffca4a42a59f16"
+    },
+    {
+      "id": "M-server-575-0125-operand-removal-152f6ea693",
+      "class": "operand-removal",
+      "region": "server",
+      "line": 574,
+      "start": 125,
+      "end": 140,
+      "before": "|| DEFAULT_PORT",
+      "after": "",
+      "row_ids": [
+        "SV-post-settings-6"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "8ee1214a8a79d0b7833acff2f4d8e892a8e0d3ca4103d4a9d63ba4eadbdcf3d6"
+    },
+    {
+      "id": "M-server-575-0128-negation-insertion-932a367d55",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 574,
+      "start": 128,
+      "end": 140,
+      "before": "DEFAULT_PORT",
+      "after": "!(DEFAULT_PORT)",
+      "row_ids": [
+        "SV-post-settings-7"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "68e0304f77b46e24be71d791d6f325d9b0752ae615ec9142efbf958ad5851102"
+    },
+    {
+      "id": "M-server-575-0056-negation-insertion-3e7cb2fab7",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 574,
+      "start": 56,
+      "end": 141,
+      "before": "serverPort !== undefined ? serverPort : (existingSettings.serverPort || DEFAULT_PORT)",
+      "after": "!(serverPort !== undefined ? serverPort : (existingSettings.serverPort || DEFAULT_PORT))",
+      "row_ids": [
+        "SV-post-settings-4"
+      ],
+      "kinds": [
+        "ternary"
+      ],
+      "mutated_sha256": "666f51b4c66c5714db778900ba64ad1a6e7e903547cbb3d94bb2e830d988e3b8"
+    },
+    {
+      "id": "M-server-575-0067-equality-complement-a88bcf1485",
+      "class": "equality-complement",
+      "region": "server",
+      "line": 574,
+      "start": 67,
+      "end": 70,
+      "before": "!==",
+      "after": "===",
+      "row_ids": [
+        "SV-post-settings-3",
+        "SV-post-settings-4"
+      ],
+      "kinds": [
+        "neq-comparison",
+        "ternary"
+      ],
+      "mutated_sha256": "ef22700197a76dfe42a317ae1bfc92f642b0cda2cf238054cd0a1013c9f6828c"
+    },
+    {
+      "id": "M-server-575-0067-equality-strictness-6c893729b2",
+      "class": "equality-strictness",
+      "region": "server",
+      "line": 574,
+      "start": 67,
+      "end": 70,
+      "before": "!==",
+      "after": "!=",
+      "row_ids": [
+        "SV-post-settings-3",
+        "SV-post-settings-4"
+      ],
+      "kinds": [
+        "neq-comparison",
+        "ternary"
+      ],
+      "mutated_sha256": "ef5321a6c1011469a17b9d589ae6353e82c9db0706321bb5bf3330a6707ff3b9"
+    },
+    {
+      "id": "M-server-575-0082-branch-swap-c9b558a17f",
+      "class": "branch-swap",
+      "region": "server",
+      "line": 574,
+      "start": 82,
+      "end": 94,
+      "before": " serverPort ",
+      "after": " (existingSettings.serverPort || DEFAULT_PORT)",
+      "row_ids": [
+        "SV-post-settings-4"
+      ],
+      "kinds": [
+        "ternary"
+      ],
+      "mutated_sha256": "df6727df9e1d853b69c06a0c1a2d79188a93513d6d8593b49f9200a6c97cdd28"
+    },
+    {
+      "id": "M-server-575-0095-branch-swap-c3bbd228c7",
+      "class": "branch-swap",
+      "region": "server",
+      "line": 574,
+      "start": 95,
+      "end": 141,
+      "before": " (existingSettings.serverPort || DEFAULT_PORT)",
+      "after": " serverPort ",
+      "row_ids": [
+        "SV-post-settings-4"
+      ],
+      "kinds": [
+        "ternary"
+      ],
+      "mutated_sha256": "e2e4090a8ef222dcf45027832b37ed274f837589815b7cae3496905e7e34ab68"
+    },
+    {
+      "id": "M-server-575-0097-negation-insertion-a938fb6754",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 574,
+      "start": 97,
+      "end": 124,
+      "before": "existingSettings.serverPort",
+      "after": "!(existingSettings.serverPort)",
+      "row_ids": [
+        "SV-post-settings-5"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "a017368e5c8ae1265c99f386de1b7b37cb5dd2a0b5592d8f5499711a7e92477d"
+    },
+    {
+      "id": "M-server-583-0019-numeric-literal-8a8c157de1",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 582,
+      "start": 19,
+      "end": 22,
+      "before": "500",
+      "after": "501",
+      "row_ids": [
+        "SV-post-settings-8"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "cce0dddb83b791ecf0f721afab0ecf2010c77c9f0d882380fb7b7dabadf06529"
+    },
+    {
+      "id": "M-server-585-0019-string-literal-cc564c0640",
+      "class": "string-literal",
+      "region": "server",
+      "line": 584,
+      "start": 19,
+      "end": 62,
+      "before": "`Failed to save settings: ${error.message}`",
+      "after": "``",
+      "row_ids": [
+        "SV-post-settings-8"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "01fc942bed7aaed4b1cc16baefe41db31058582cb0f23553a983783e854384ab"
+    },
+    {
+      "id": "M-server-585-0019-string-literal-978a17f045",
+      "class": "string-literal",
+      "region": "server",
+      "line": 584,
+      "start": 19,
+      "end": 62,
+      "before": "`Failed to save settings: ${error.message}`",
+      "after": "`Failed to save settings: ${error.message}X`",
+      "row_ids": [
+        "SV-post-settings-8"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "8ce17e62aeabc2914b8a93f2c5a1e1e49a4b65f9e6cfe84d40b627356e6ecf2f"
+    },
+    {
+      "id": "M-server-595-0012-conditional-inversion-6feec1a6b9",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 594,
+      "start": 12,
+      "end": 20,
+      "before": "!presets",
+      "after": "!(!presets)",
+      "row_ids": [
+        "SV-post-launch-presets-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "1232fcb3d48351d6e5c0b8dacc25d71f31d61953f2333a4c92973801bae44449"
+    },
+    {
+      "id": "M-server-596-0030-numeric-literal-126d03a113",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 595,
+      "start": 30,
+      "end": 33,
+      "before": "400",
+      "after": "401",
+      "row_ids": [
+        "SV-post-launch-presets-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "18b8e9b78038291bb39355e060e77d7817034f9a1dab1b9d7c1149b12fb4996f"
+    },
+    {
+      "id": "M-server-598-0023-string-literal-c8fa96a56b",
+      "class": "string-literal",
+      "region": "server",
+      "line": 597,
+      "start": 23,
+      "end": 52,
+      "before": "'Presets content is required'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-launch-presets-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "2bf8119df367fb2305fbcdd96c01172a65f19109f0e8a99b765d6e949fae355e"
+    },
+    {
+      "id": "M-server-598-0023-string-literal-ca5974319c",
+      "class": "string-literal",
+      "region": "server",
+      "line": 597,
+      "start": 23,
+      "end": 52,
+      "before": "'Presets content is required'",
+      "after": "'Presets content is requiredX'",
+      "row_ids": [
+        "SV-post-launch-presets-1"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "5c25bca73861f2833f562a086a6f72eafb5a71770823e4c321bfac40cb5d744e"
+    },
+    {
+      "id": "M-server-608-0012-conditional-inversion-3ea7d39118",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 607,
+      "start": 12,
+      "end": 23,
+      "before": "!serverPath",
+      "after": "!(!serverPath)",
+      "row_ids": [
+        "SV-post-launch-presets-2"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "c17082f617a4a9290443f5e5693c865d9167e5e0255e9cca10f9cbfcf2d5e292"
+    },
+    {
+      "id": "M-server-609-0030-numeric-literal-24d47b7732",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 608,
+      "start": 30,
+      "end": 33,
+      "before": "400",
+      "after": "401",
+      "row_ids": [
+        "SV-post-launch-presets-2"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "8b9b2712ba0eb6ba7f4b926b1110d539ae0ab7f8d094ef3b79376b018c4c1dc7"
+    },
+    {
+      "id": "M-server-611-0023-string-literal-8ee5422dad",
+      "class": "string-literal",
+      "region": "server",
+      "line": 610,
+      "start": 23,
+      "end": 46,
+      "before": "'Server path not found'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-launch-presets-2"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "f9e8db45bb0cdbfa60bbeca740f96f5e81f5bc750b432a8507c698fb1b9d9bba"
+    },
+    {
+      "id": "M-server-611-0023-string-literal-50f57ee536",
+      "class": "string-literal",
+      "region": "server",
+      "line": 610,
+      "start": 23,
+      "end": 46,
+      "before": "'Server path not found'",
+      "after": "'Server path not foundX'",
+      "row_ids": [
+        "SV-post-launch-presets-2"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "e68636b6d560e13f0b59f15cff2814500ceccaf2ef930cd24564a669e0a63857"
+    },
+    {
+      "id": "M-server-619-0029-negation-insertion-a9e4c68f3c",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 618,
+      "start": 29,
+      "end": 39,
+      "before": "serverPort",
+      "after": "!(serverPort)",
+      "row_ids": [
+        "SV-post-launch-presets-3"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "37122500b15d949ad04405caf4dd33633d3e74217a3edf0da3f829c0bb4bdd3a"
+    },
+    {
+      "id": "M-server-619-0040-boolean-operator-39c0222067",
+      "class": "boolean-operator",
+      "region": "server",
+      "line": 618,
+      "start": 40,
+      "end": 42,
+      "before": "||",
+      "after": "&&",
+      "row_ids": [
+        "SV-post-launch-presets-4"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "965fc37d004ba9b148222b1780efa95ac0c73685d829badf34942de19a1bbf20"
+    },
+    {
+      "id": "M-server-619-0040-operand-removal-32050f3c80",
+      "class": "operand-removal",
+      "region": "server",
+      "line": 618,
+      "start": 40,
+      "end": 55,
+      "before": "|| DEFAULT_PORT",
+      "after": "",
+      "row_ids": [
+        "SV-post-launch-presets-4"
+      ],
+      "kinds": [
+        "logical-or"
+      ],
+      "mutated_sha256": "1cda9b57865015351c392417ac04cb1d77ca3a51a653838254c3fe592634ede1"
+    },
+    {
+      "id": "M-server-619-0043-negation-insertion-c4b7233ad7",
+      "class": "negation-insertion",
+      "region": "server",
+      "line": 618,
+      "start": 43,
+      "end": 55,
+      "before": "DEFAULT_PORT",
+      "after": "!(DEFAULT_PORT)",
+      "row_ids": [
+        "SV-post-launch-presets-5"
+      ],
+      "kinds": [
+        "truthiness"
+      ],
+      "mutated_sha256": "c4307760b2b562b39401865a3afbef441c937e680eaaf180465df5de4f159cdb"
+    },
+    {
+      "id": "M-server-647-0012-conditional-inversion-3e4d4119ff",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 646,
+      "start": 12,
+      "end": 33,
+      "before": "runningProcess.stdout",
+      "after": "!(runningProcess.stdout)",
+      "row_ids": [
+        "SV-post-launch-presets-6"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "cc125e4c2fe9d245676c6cddb655a2fae2b5f228e986960bdaf32b71f9030b25"
+    },
+    {
+      "id": "M-server-648-0037-string-literal-ab5ce8786c",
+      "class": "string-literal",
+      "region": "server",
+      "line": 647,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-launch-presets-6"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "ef1f3a8b8574aaec67d58438d5867c8f8569c240486715c174d855a5ee663867"
+    },
+    {
+      "id": "M-server-648-0037-string-literal-f3ef37cf99",
+      "class": "string-literal",
+      "region": "server",
+      "line": 647,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "'dataX'",
+      "row_ids": [
+        "SV-post-launch-presets-6"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "008d8ece4f7bdfc202baa8b078c25d4bad94f9653ba7746c68cd128dfa133e21"
+    },
+    {
+      "id": "M-server-650-0028-string-literal-b08326a0a8",
+      "class": "string-literal",
+      "region": "server",
+      "line": 649,
+      "start": 28,
+      "end": 37,
+      "before": "'STDOUT:'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-launch-presets-6"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "ce7852f13ed93410180325c05a18348d5848a528d62e7424daca45f4674ec8d5"
+    },
+    {
+      "id": "M-server-650-0028-string-literal-d2eb77f7fc",
+      "class": "string-literal",
+      "region": "server",
+      "line": 649,
+      "start": 28,
+      "end": 37,
+      "before": "'STDOUT:'",
+      "after": "'STDOUT:X'",
+      "row_ids": [
+        "SV-post-launch-presets-6"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "152201ade58829fe4dbf829ac80471e79a08b7bfa58032c91cdf5ee7ab757dc4"
+    },
+    {
+      "id": "M-server-653-0032-string-literal-458756c4e1",
+      "class": "string-literal",
+      "region": "server",
+      "line": 652,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-launch-presets-6"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "ab0641725200ddad8444495d9f0507a532836e419e8c80213b3370e416c8628e"
+    },
+    {
+      "id": "M-server-653-0032-string-literal-a9e9fbba25",
+      "class": "string-literal",
+      "region": "server",
+      "line": 652,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "'log-streamX'",
+      "row_ids": [
+        "SV-post-launch-presets-6"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "d55886f155345c90e9314a6a5a3f265542f4050246ea271772fe1590d7699656"
+    },
+    {
+      "id": "M-server-653-0054-string-literal-3fd5e0c17f",
+      "class": "string-literal",
+      "region": "server",
+      "line": 652,
+      "start": 54,
+      "end": 62,
+      "before": "'stdout'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-launch-presets-6"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "d00f450798381c1c64332205d180228e8c9ea0b7559698f0df4f6dcc5026fdef"
+    },
+    {
+      "id": "M-server-653-0054-string-literal-207a5c1855",
+      "class": "string-literal",
+      "region": "server",
+      "line": 652,
+      "start": 54,
+      "end": 62,
+      "before": "'stdout'",
+      "after": "'stdoutX'",
+      "row_ids": [
+        "SV-post-launch-presets-6"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "2015f22b2f5a1ad1762a749fdaf25ab57a28a546412f166fa7ab60ffd6b96057"
+    },
+    {
+      "id": "M-server-658-0012-conditional-inversion-3cda03b381",
+      "class": "conditional-inversion",
+      "region": "server",
+      "line": 657,
+      "start": 12,
+      "end": 33,
+      "before": "runningProcess.stderr",
+      "after": "!(runningProcess.stderr)",
+      "row_ids": [
+        "SV-post-launch-presets-7"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "f42ad57265506025cddef09b7c55a284bc296787cabdf092e8848faaef9aa9a1"
+    },
+    {
+      "id": "M-server-659-0037-string-literal-164b4e69c3",
+      "class": "string-literal",
+      "region": "server",
+      "line": 658,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-launch-presets-7"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "2944bba507bb8558124a2743f73c95469a8621a5bfd24b536e9175661d5d7e6c"
+    },
+    {
+      "id": "M-server-659-0037-string-literal-fcc29d7734",
+      "class": "string-literal",
+      "region": "server",
+      "line": 658,
+      "start": 37,
+      "end": 43,
+      "before": "'data'",
+      "after": "'dataX'",
+      "row_ids": [
+        "SV-post-launch-presets-7"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "b80ac608397b8445196fb27dae6d635c0f432ea8670c84a752b15c41e64857cc"
+    },
+    {
+      "id": "M-server-661-0028-string-literal-44498b6124",
+      "class": "string-literal",
+      "region": "server",
+      "line": 660,
+      "start": 28,
+      "end": 37,
+      "before": "'STDERR:'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-launch-presets-7"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "cad5a4fa46efdf07a4be5e899a667cfd02c1b951a7f42db93d1263364053c13b"
+    },
+    {
+      "id": "M-server-661-0028-string-literal-f543332a68",
+      "class": "string-literal",
+      "region": "server",
+      "line": 660,
+      "start": 28,
+      "end": 37,
+      "before": "'STDERR:'",
+      "after": "'STDERR:X'",
+      "row_ids": [
+        "SV-post-launch-presets-7"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "87fb7f1574992a4194f87ad10ca434a05689106a98158ab665d0ecb1df32ba1e"
+    },
+    {
+      "id": "M-server-664-0032-string-literal-ebfda7ee03",
+      "class": "string-literal",
+      "region": "server",
+      "line": 663,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-launch-presets-7"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "48ae3064a0950fd6d6efa0794ac8a7745ebc6e49ca336cc758db6c43471b1285"
+    },
+    {
+      "id": "M-server-664-0032-string-literal-4b9ac3cbbd",
+      "class": "string-literal",
+      "region": "server",
+      "line": 663,
+      "start": 32,
+      "end": 44,
+      "before": "'log-stream'",
+      "after": "'log-streamX'",
+      "row_ids": [
+        "SV-post-launch-presets-7"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "c4f1e54360678fbe0ec2a6e39efab1201ccc5520c0e3eaa76cfcabd2b46fafdb"
+    },
+    {
+      "id": "M-server-664-0054-string-literal-3e95723069",
+      "class": "string-literal",
+      "region": "server",
+      "line": 663,
+      "start": 54,
+      "end": 62,
+      "before": "'stderr'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-launch-presets-7"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "0b9354730f2149f27ecc376e7bb3ca75a99b2b9e5abea9020b0b5f056f068248"
+    },
+    {
+      "id": "M-server-664-0054-string-literal-9d3827ff94",
+      "class": "string-literal",
+      "region": "server",
+      "line": 663,
+      "start": 54,
+      "end": 62,
+      "before": "'stderr'",
+      "after": "'stderrX'",
+      "row_ids": [
+        "SV-post-launch-presets-7"
+      ],
+      "kinds": [
+        "if"
+      ],
+      "mutated_sha256": "9e9a33d5147e87f7594908f0eff0aa51b9774394a64e17b64d39379ce01a6071"
+    },
+    {
+      "id": "M-server-675-0022-string-literal-77c3083333",
+      "class": "string-literal",
+      "region": "server",
+      "line": 674,
+      "start": 22,
+      "end": 60,
+      "before": "'Error launching server with presets:'",
+      "after": "''",
+      "row_ids": [
+        "SV-post-launch-presets-8"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "f0159fc8cd73ec1c018e096695da80a7e58e67a1430784a260fe151f634b3a6d"
+    },
+    {
+      "id": "M-server-675-0022-string-literal-752c469e9f",
+      "class": "string-literal",
+      "region": "server",
+      "line": 674,
+      "start": 22,
+      "end": 60,
+      "before": "'Error launching server with presets:'",
+      "after": "'Error launching server with presets:X'",
+      "row_ids": [
+        "SV-post-launch-presets-8"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "c97df0b5d415f12d8aef2eee428162ccdb3c4d225452958343abbd59ad19ee28"
+    },
+    {
+      "id": "M-server-676-0019-numeric-literal-7edf0272ae",
+      "class": "numeric-literal",
+      "region": "server",
+      "line": 675,
+      "start": 19,
+      "end": 22,
+      "before": "500",
+      "after": "501",
+      "row_ids": [
+        "SV-post-launch-presets-8"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "7058133b85d691136e6a855c99a9e4336623ced37f990eebeb76dd4fe831faa5"
+    },
+    {
+      "id": "M-server-678-0019-string-literal-ca4deaf465",
+      "class": "string-literal",
+      "region": "server",
+      "line": 677,
+      "start": 19,
+      "end": 74,
+      "before": "`Failed to start server with presets: ${error.message}`",
+      "after": "``",
+      "row_ids": [
+        "SV-post-launch-presets-8"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "86e1ee051e616cd89b35053876ba4279c28e151d5ecdcf3a0bb554bef47f4a0b"
+    },
+    {
+      "id": "M-server-678-0019-string-literal-27a25dd9a7",
+      "class": "string-literal",
+      "region": "server",
+      "line": 677,
+      "start": 19,
+      "end": 74,
+      "before": "`Failed to start server with presets: ${error.message}`",
+      "after": "`Failed to start server with presets: ${error.message}X`",
+      "row_ids": [
+        "SV-post-launch-presets-8"
+      ],
+      "kinds": [
+        "error-path"
+      ],
+      "mutated_sha256": "e8265e7c17b7a99905e49e7b8b51a1093f7206d077946ebfc2f0912a45986474"
+    }
+  ]
+}

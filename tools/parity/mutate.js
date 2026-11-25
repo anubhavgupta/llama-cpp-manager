@@ -3,6 +3,8 @@
 // Phase 2.6 (plan.md §2): mutant enumeration over the two pure generators.
 //
 //   node tools/parity/mutate.js --dump        write reports/mutation/mutants.json (no vector runs)
+//   node tools/parity/mutate.js --dump-server write the UNSCORED server-region enumeration to
+//                                             reports/mutation/SERVER-REGION-ENUMERATION.json
 //   node tools/parity/mutate.js --selftest    the enumeration gates (determinism + row coverage)
 //
 // What is mutated is the BASELINE text, never legacy/lib and never public/script.js: the slice texts
@@ -26,6 +28,7 @@ const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const vm = require('vm');
 
 const slices = require('./baseline-slices.js');
 const vectors = require('./gen-vectors.js');
@@ -843,6 +846,186 @@ function mutantRunner(gen, mutant, mutatedFull) {
     };
 }
 
+// --------------------------------------------------------------- server region ------------
+//
+// Supervisor ruling 2026-11-25: server-region mutants are NOT part of the shipped inventory.
+// `mutants.json` is scored against the argv/ini/save channels; the server routes have no kill
+// channel yet, so scoring them would print `survived` where the truth is `unmeasured`. What the
+// follow-up work needs (tools/parity/tasks/task-server-mutation.md) is a fixed site list to start
+// from, so the region is enumerated once and written to
+// reports/mutation/SERVER-REGION-ENUMERATION.json with status `enumerated-unrun`. It never enters
+// regionSources(), enumerate() or mutants.json.
+//
+// The region is the whole `parity-baseline:server.js` blob: a route body is not a sliceable pure
+// function the way the two generators and saveCurrentValues are, and the claim being tested lives
+// in the route, not in an extracted block.
+const SERVER_ENUM_FILE = 'tools/parity/reports/mutation/SERVER-REGION-ENUMERATION.json';
+
+function serverRegion() {
+    const bytes = execFileSync('git', ['show', slices.BASELINE + ':server.js'],
+        { cwd: REPO, maxBuffer: 64 * 1024 * 1024 });
+    const text = bytes.toString('utf8').replace(/\r\n/g, '\n');
+    return { text: text, lines: text.split('\n') };
+}
+
+// SV-* rows carry a server.js line plus the row's expression, and SPEC-ROWS writes that expression
+// in its own normalised shape (`.catch(err => {` is recorded as `.catch (err)`), so the span is
+// sought on the recorded line first, then on the two lines either side (the CSV's own line count is
+// a pass over the file and can sit a line off). A row that resolves nowhere is recorded as unmapped
+// with its snippet, never dropped.
+function serverRowSites(region, rows) {
+    const sites = [];
+    const unmapped = [];
+    for (const row of rows) {
+        if (row.row_id.indexOf('SV-') !== 0) continue;
+        const hint = Number(row.line) - 1;
+        let found = null;
+        for (const offset of [0, -1, 1, -2, 2]) {
+            const at = hint + offset;
+            if (at < 0 || at >= region.lines.length) continue;
+            const span = spanInLine(region.lines[at], row.code_snippet);
+            if (span) { found = { line: at, span: span, offset: offset }; break; }
+        }
+        if (!found) {
+            unmapped.push({ row_id: row.row_id, kind: row.kind, file: row.file, lib_line: Number(row.line),
+                reason: 'snippet ' + JSON.stringify(row.code_snippet) + ' is not the spelling on server.js:'
+                    + row.line + ' or within 2 lines of it (SPEC-ROWS normalises `.catch(err => {` to'
+                    + ' `.catch (err)` and `catch {}` to `catch ()`)',
+                snippet: row.code_snippet });
+            continue;
+        }
+        sites.push({ row_id: row.row_id, kind: row.kind, region: 'server', line: found.line,
+            start: found.span.start, end: found.span.end,
+            before: region.lines[found.line].slice(found.span.start, found.span.end),
+            file: row.file, lib_line: Number(row.line), line_offset_from_row: found.offset,
+            targets: row.targets });
+    }
+    return { sites: sites, unmapped: unmapped };
+}
+
+// The whole-file equivalent of `compiles()`: a mutated server.js that does not parse is an
+// enumerator bug, not a mutant, so it is counted and reported rather than silently kept.
+function parsesServer(text) {
+    try {
+        new vm.Script(text, { filename: 'server.js' });
+        return null;
+    } catch (error) {
+        return String(error && error.message).split('\n')[0];
+    }
+}
+
+function enumerateServer() {
+    const region = serverRegion();
+    const rows = vectors.specRows().filter((row) => row.row_id.indexOf('SV-') === 0);
+    const { sites, unmapped } = serverRowSites(region, rows);
+    const byMutation = new Map();
+    const rejected = [];
+    for (const site of sites) {
+        const edits = [];
+        for (const edit of operatorMutants(site, region.lines)) edits.push(edit);
+        for (const edit of literalMutants(region.lines, [{ line: site.line, start: site.start,
+            end: site.end }])) edits.push(edit);
+        for (const edit of removalMutants(site, region.lines)) edits.push(edit);
+        if (site.kind !== 'loop-gate') {
+            const body = bodyStatements(region.lines, site);
+            if (body.kind === 'block') {
+                for (const edit of literalMutants(region.lines, bodyRanges(body))) edits.push(edit);
+            }
+        }
+        for (const edit of edits) {
+            const before = edit.wholeLine ? region.lines[edit.line]
+                : region.lines[edit.line].slice(edit.start, edit.end);
+            if (edit.wholeLine && before.trim() === '') continue;
+            if (!edit.wholeLine && before === edit.after) continue;
+            if (edit.after === undefined) continue;
+            const mutated = applyEdit(region.text, edit);
+            if (mutated === region.text) continue;
+            const id = 'M-server-' + String(edit.line + 1).padStart(3, '0') + '-'
+                + String(edit.start).padStart(4, '0') + '-' + edit.class + '-'
+                + sha256(Buffer.from('server\n' + mutated)).slice(0, 10);
+            let entry = byMutation.get(id);
+            if (!entry) {
+                entry = { id: id, class: edit.class, region: 'server', line: edit.line,
+                    start: edit.start, end: edit.end, before: before, after: edit.after,
+                    row_ids: [], kinds: [], mutated_sha256: sha256(Buffer.from(mutated, 'utf8')) };
+                byMutation.set(id, entry);
+                const problem = parsesServer(mutated);
+                if (problem) rejected.push({ id: id, row_id: site.row_id, problem: problem });
+            }
+            if (entry.row_ids.indexOf(site.row_id) < 0) {
+                entry.row_ids.push(site.row_id);
+                entry.kinds.push(site.kind);
+            }
+        }
+    }
+    const kept = [...byMutation.values()]
+        .filter((entry) => !rejected.some((bad) => bad.id === entry.id))
+        .map((entry) => {
+            entry.row_ids.sort();
+            entry.kinds = [...new Set(entry.kinds)].sort();
+            return entry;
+        })
+        .sort((a, b) => (a.line + ':' + a.start + ':' + a.class + ':' + a.after)
+            .localeCompare(b.line + ':' + b.start + ':' + b.class + ':' + b.after));
+    const covered = new Set();
+    for (const mutant of kept) for (const row of mutant.row_ids) covered.add(row);
+    return {
+        status: 'enumerated-unrun',
+        file: 'server.js',
+        base: slices.BASELINE,
+        lines: region.lines.length,
+        rows: rows.length,
+        sites: sites.length,
+        mutants: kept,
+        classes: kept.reduce((all, m) => { all[m.class] = (all[m.class] || 0) + 1; return all; }, {}),
+        rows_with_a_mutant: covered.size,
+        rows_without_a_mutant: rows.map((row) => row.row_id)
+            .filter((id) => !covered.has(id)).sort(),
+        unmapped_rows: unmapped,
+        rejected_mutants: rejected
+    };
+}
+
+function serverDocument(list) {
+    return JSON.stringify({
+        generated_by: 'tools/parity/mutate.js',
+        command: 'node tools/parity/mutate.js --dump-server',
+        status: list.status,
+        why: 'server mutants are enumerated but not scored (supervisor ruling 2026-11-25): '
+            + 'mutation-run.js kills mutants through the argv/ini/save channels and no channel '
+            + 'reaches a server route, so a scored run would print `survived` where the truth is '
+            + '`unmeasured`. They are NOT in tools/parity/reports/mutation/mutants.json. '
+            + 'tools/parity/tasks/task-server-mutation.md is the work that makes them scoreable.',
+        mutated_source: '`' + list.base + ':server.js` (whole file), mutated in memory; the working '
+            + 'copy and every fixture are never touched',
+        site_inventory: 'SPEC/SPEC-ROWS.csv SV-* rows (line + kind per row)',
+        base_commit: BASE_COMMIT,
+        server: { file: list.file, ref: list.base, lines: list.lines },
+        totals: {
+            sv_rows: list.rows,
+            rows_with_a_site: list.sites,
+            mutants: list.mutants.length,
+            classes: list.classes,
+            rows_with_a_mutant: list.rows_with_a_mutant,
+            rows_without_a_mutant: list.rows_without_a_mutant,
+            rows_without_a_site: list.unmapped_rows,
+            rejected_mutants: list.rejected_mutants
+        },
+        known_gaps: [
+            'removal classes are empty for this region: bodyStatements() recognises the argv/ini '
+            + 'emit shapes (`args.push(`, `presetContent +=`, ...), and a server route emits '
+            + 'through res.json/res.emit, so no statement is counted as removable.',
+            'the two error-path rows SPEC-ROWS spells `.catch (err)` / `catch ()` do not resolve by '
+            + 'shape (see totals.rows_without_a_site).'
+        ],
+        mutants: list.mutants
+    }, null, 2) + '\n';
+}
+
+function serverDumpPath() {
+    return path.join(REPO, SERVER_ENUM_FILE);
+}
+
 // ---------------------------------------------------------------------- dump --------------
 
 function dumpPath() {
@@ -939,14 +1122,34 @@ function main() {
         console.log('wrote ' + MUTANT_FILE + ' (' + list.mutants.length + ' mutants)');
         return;
     }
-    console.log('usage: node tools/parity/mutate.js --dump | --selftest');
+    if (args.indexOf('--dump-server') >= 0) {
+        requireCommittedInputs();
+        const first = serverDocument(enumerateServer());
+        const second = serverDocument(enumerateServer());
+        assert(first === second, 'the server enumeration is not deterministic: two passes produced '
+            + 'different bytes');
+        const list = enumerateServer();
+        assert(!dumpDocument(enumerate()).includes('"M-server-'), 'server mutants leaked into the '
+            + 'shipped inventory: mutants.json must not contain M-server- ids');
+        fs.mkdirSync(path.dirname(serverDumpPath()), { recursive: true });
+        fs.writeFileSync(serverDumpPath(), first, 'utf8');
+        console.log('wrote ' + SERVER_ENUM_FILE + ' (' + list.mutants.length + ' mutants over ' + list.sites
+            + '/' + list.rows + ' SV-* sites, status ' + list.status + '; NOT scored, NOT in mutants.json)');
+        console.log('  classes: ' + JSON.stringify(list.classes));
+        console.log('  rows without a site: ' + list.unmapped_rows.length + ', rows with a site but no '
+            + 'mutant: ' + list.rows_without_a_mutant.length + ', rejected (would not parse): '
+            + list.rejected_mutants.length);
+        return;
+    }
+    console.log('usage: node tools/parity/mutate.js --dump | --dump-server | --selftest');
 }
 
 module.exports = {
-    REPO, REPORTS, SNAPSHOT, BASE_COMMIT, MUTANT_FILE, sha256, collapse, assert,
+    REPO, REPORTS, SNAPSHOT, BASE_COMMIT, MUTANT_FILE, SERVER_ENUM_FILE, sha256, collapse, assert,
     committedInputs, requireCommittedInputs, shapeOf, spanInLine, scanLine, topOperators,
     regionSources, saveRegionOffset, libRanges, alignments, rowSites, enumerate, applyEdit, compiles,
-    compileSource, runSaveSlice, mutantRunner, dumpDocument, dumpPath, selftest
+    compileSource, runSaveSlice, mutantRunner, dumpDocument, dumpPath, selftest,
+    serverRegion, serverRowSites, enumerateServer, serverDocument, serverDumpPath, parsesServer
 };
 
 if (require.main === module) main();

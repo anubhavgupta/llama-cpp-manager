@@ -53,6 +53,47 @@ Runtime: kill check 12.0s on 8 worker process(es); tier 1 = first 300 vectors of
 | loop-body-removal | 1 | 1 | 0 | 0 | 0 | 0 |
 | loop-first-iteration | 1 | 1 | 0 | 0 | 0 | 0 |
 
+## Regions the gate does not score: `save` and `server`
+
+`config` / `args` / `ini` are the regions this report scores. Two more have sites in
+`tools/parity/mutate.js` and no verdicts here — and the difference between `unscored`
+and `equivalent` is exactly what this table is for.
+
+| region | site inventory | mutants the enumerator produces | in `mutants.json` | scored in `run.json` | killed | survived | proven in this report |
+|---|---|---|---|---|---|---|---|
+| `save` | `SCV-*` rows (28) over the `ANCHORS.SAVE_START` slice of `public/script.js` | 59 | 0 | 0 | 0 | 0 | 0 |
+| `server` | `SV-*` rows (49) over the whole `parity-baseline:server.js` blob | 152 | 0 | 0 | 0 | 0 | 0 |
+
+The `save` figure is what `node tools/parity/mutate.js --dump` would ship today; the
+`server` figure is what `node tools/parity/mutate.js --dump-server` writes to its own
+unrun file — `--dump` produces 0 server mutants, and `--dump-server` asserts that it
+stays that way. That assertion is the ruling this table records.
+
+**`save` — the channel exists; the shipped run predates it.** `mutate.js` enumerates
+59 save mutants from the 28 `SCV-*` rows and scores them against the
+recorded re-save corpus (`fixtures/goldens/resave/`), and the
+`unreachable-element-guard-fallback` static strategy is asserted by name in
+`node tools/parity/equiv-prove.js --selftest`. The
+committed `mutants.json` was written before the region landed, so those mutants are
+not in it, carry no verdict in `run.json`, and own no file in `proofs/`. Regenerating
+`mutants.json` + `run.json` + this report moves a pinned artifact (C8): that is a ledger
+entry for the pin holder, not a step this tool takes on its own authority. Until then
+the save region is reported as unscored, never as clean.
+
+**`server` — enumerated, deliberately unrun** (`status: enumerated-unrun`, in
+`tools/parity/reports/mutation/SERVER-REGION-ENUMERATION.json`, written by `node tools/parity/mutate.js --dump-server`):
+152 mutants over 47/49 `SV-*` rows; classes boolean-operator, branch-swap, conditional-inversion, equality-complement, equality-strictness, negation-insertion, numeric-literal, operand-removal, relational-boundary, relational-reverse, string-literal;
+0 rejected because the mutated file will not parse.
+They are NOT in `mutants.json` (0 `server`-region ids there)
+because `mutation-run.js` kills through the argv/ini/save channels and no channel
+reaches a route: a scored run would print `survived` where the truth is `unmeasured`.
+`tools/parity/tasks/task-server-mutation.md` is the work that makes them scoreable
+(kill channel first, then `bodyStatements()` learn the `res.json` / `io.emit` emit
+shapes, which is why the enumeration has no statement-removal mutants at all). The
+one server-region claim the suites make today is a negative control, not inventory:
+`SV-get-settings-3-string-literal` in `fixtures/NEGATIVES.md`, red as named on
+`L1.SETTINGS.FIRST-RUN.BYTES`.
+
 ## Per-row map (every BA-*/INI-* row)
 
 `survivors` counts mutants that no recorded vector killed; each one is accounted for in
@@ -371,7 +412,7 @@ The `action` column is what feeds the promotion loop.
 
 ## Gates
 
-- [x] mutant enumeration is deterministic — two enumerate() passes produce identical bytes (440055) and equal the committed mutants.json
+- [ ] mutant enumeration is deterministic — two enumerate() passes produce identical bytes (470680) and equal the committed mutants.json
 - [x] every BA/INI row carries >=1 mutant or a note — 189 in-generator rows all carry mutants; 9 rows are outside both generators and carry the note `launch prelude`
 - [x] survivors == proofs/ 1:1 — 58 survivors, 58 proof files, 0 stale proof(s) pruned
 - [x] unresolved gaps are escalated, never called equivalent — 0 unresolved gap(s), 0 with an ESCALATION.md entry
