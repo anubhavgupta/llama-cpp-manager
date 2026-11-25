@@ -18,6 +18,11 @@
 // NUMBER OF RED GATES — that is what Task Scheduler records as LastTaskResult, so a 3-gate red
 // records 3, not 1 (AUDIT-2026-11-25 finding 7). --selftest checks that contract.
 //
+// A fire also takes the one-executor lock (tools/parity/parity-lock.js) before it touches the scratch
+// root, and hands its gates PARITY_LOCK_HELD so they do not fight it for it. A fire that finds the
+// lock held — the 03:00 auto-fire landing on an interactive run, say — refuses, writes the refusal to
+// its log, and exits 1; read the log before reading that number as one red gate.
+//
 //   node tools/parity/nightly/run-nightly.js [--only l1,l3] [--log <file>] [--no-l4] [--selftest]
 //
 // Registered as the Windows Task Scheduler job 'ParityNightly' by install-nightly.sh (03:00 daily).
@@ -25,6 +30,8 @@
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
+
+const parityLock = require('../parity-lock.js');
 
 const REPO = path.resolve(__dirname, '..', '..', '..');
 const REPORT_DIR = path.join(REPO, 'tools', 'parity', 'reports', 'nightly');
@@ -121,7 +128,7 @@ function runGate(gate) {
     return new Promise((resolve) => {
         const started = Date.now();
         const child = spawn(process.execPath, gate.argv, { cwd: REPO, windowsHide: true,
-            stdio: ['ignore', 'pipe', 'pipe'] });
+            stdio: ['ignore', 'pipe', 'pipe'], env: childEnv() });
         const tail = [];
         const capture = (chunk) => {
             for (const line of chunk.toString('utf8').split('\n')) {
@@ -145,15 +152,49 @@ function runGate(gate) {
     });
 }
 
+// The nightly holds the one-executor lock for the whole run and tells its gate processes they are
+// running inside a holder, so a gate neither collides with the nightly's own lock nor releases it.
+function childEnv() {
+    return { ...process.env, [parityLock.HELD_ENV]: '1' };
+}
+
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     if (options.selftest) return selftest();
+    let lock;
+    try {
+        lock = parityLock.acquire('nightly tools/parity/nightly/run-nightly.js '
+            + process.argv.slice(2).join(' '));
+    } catch (error) {
+        // A fire that could not start is not a fire with one red gate, but the exit code can only
+        // speak in red gates; the log line is what makes the number readable. This is what keeps the
+        // 03:00 auto-fire from running against a scratch root an interactive executor is using.
+        const message = String(error && error.message || error);
+        if (!message.startsWith('PARITY-LOCK-HELD')) throw error;
+        const log = options.log || defaultLog();
+        append(log, header(options) + message + '\n');
+        console.log(message);
+        return 1;
+    }
+    try {
+        return await runNightly(options);
+    } finally {
+        lock.release();
+    }
+}
+
+function header(options, gates) {
+    const list = gates ? gates.map((gate) => gate.id).join(',') : 'refused (executor lock held)';
+    return '\n===== ParityNightly ' + stamp() + '  node ' + process.version + '  repo ' + REPO
+        + '  gates ' + list + '\n';
+}
+
+async function runNightly(options) {
     const log = options.log || defaultLog();
     const gates = GATES.filter((gate) => !options.only || options.only.has(gate.id));
-    const header = '\n===== ParityNightly ' + stamp() + '  node ' + process.version
-        + '  repo ' + REPO + '  gates ' + gates.map((gate) => gate.id).join(',') + '\n';
-    append(log, header);
-    console.log(header.trim());
+    const head = header(options, gates);
+    append(log, head);
+    console.log(head.trim());
     console.log('    log ' + path.relative(REPO, log));
     const results = [];
     for (const gate of gates) {

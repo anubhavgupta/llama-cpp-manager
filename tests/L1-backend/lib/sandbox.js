@@ -19,6 +19,7 @@ const path = require('path');
 const { spawn, spawnSync } = require('child_process');
 
 const { runBash } = require('../../../tools/parity/bash-path');
+const { LOCK_NAME } = require('../../../tools/parity/parity-lock');
 
 const MANAGER_PORT_DEFAULT = 7837;
 const JOURNEY_PORTS = [7837, 7838, 8080, 17839, 17840, 17841, 17842, 17843, 17844, 17899];
@@ -390,7 +391,7 @@ class Sandbox {
         this.unlockTree();
         spawnSync('cmd.exe', ['/c', 'rmdir', winPath(path.join(this.app, 'node_modules'))], { stdio: 'ignore' });
         try {
-            fs.rmSync(this.scratch, { recursive: true, force: true });
+            this.removeRunTree();
         } catch (error) {
             // Measured failure, not a hypothesis: when the unlock does not run, fs.rmSync dies with
             // EPERM on models/unreadable and every later run inherits a poisoned scratch root. The
@@ -404,10 +405,28 @@ class Sandbox {
                     + '; fixture-tree.sh clean exited ' + cleaned.status + ': '
                     + String(cleaned.stderr || cleaned.stdout || '').trim());
             }
-            fs.rmSync(this.scratch, { recursive: true, force: true });
+            this.removeRunTree();
         }
-        assert(!fs.existsSync(this.scratch), 'the scratch root is still present after cleanTree: '
-            + this.scratch + (this.unlockFailure ? ' — ' + this.unlockFailure : ''));
+        const left = fs.existsSync(this.scratch)
+            ? fs.readdirSync(this.scratch).filter((name) => name !== LOCK_NAME) : [];
+        assert(left.length === 0, 'the scratch root still holds run material after cleanTree: '
+            + this.scratch + ' — ' + left.join(', ') + (this.unlockFailure
+                ? ' — ' + this.unlockFailure : ''));
+    }
+
+    // Everything under the scratch root was created by a run, so a run deletes it — except the
+    // one-executor lock (tools/parity/parity-lock.js), which may belong to an orchestrator that
+    // spawned this suite and whose job is still in progress. Deleting the root outright deleted that
+    // lock and let a second executor into the same scratch root mid-run (AUDIT-2026-11-25 finding 3).
+    removeRunTree() {
+        if (!fs.existsSync(path.join(this.scratch, LOCK_NAME))) {
+            fs.rmSync(this.scratch, { recursive: true, force: true });
+            return;
+        }
+        for (const name of fs.readdirSync(this.scratch)) {
+            if (name === LOCK_NAME) continue;
+            fs.rmSync(path.join(this.scratch, name), { recursive: true, force: true });
+        }
     }
 }
 

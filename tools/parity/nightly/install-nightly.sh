@@ -9,6 +9,9 @@
 #               legacy tag, writes a block per gate to tools/parity/reports/nightly/nightly-<utc>.log
 #               (a .gitignore exception keeps those logs in git), and exits with the NUMBER OF RED
 #               GATES (Task Scheduler shows that as LastTaskResult; 0 = all green, 3 = three red).
+#               Before any gate it takes the one-executor lock (C:/parity-scratch/.parity-lock, see
+#               tools/parity/parity-lock.js); a fire that finds the lock held refuses, logs the
+#               refusal, and exits 1 -- read the log before reading that 1 as one red gate.
 #
 # HOW TO READ IT LATER
 #   schtasks /query /tn ParityNightly /v /fo LIST      # next run time + LastTaskResult

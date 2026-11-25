@@ -19,6 +19,7 @@ const path = require('path');
 
 const { SeamSandbox } = require('./helpers/sandbox');
 const { Registry } = require('../L1-backend/lib/harness');
+const parityLock = require('../../tools/parity/parity-lock.js');
 
 const HERE = __dirname;
 const REPO = path.resolve(__dirname, '..', '..');
@@ -186,6 +187,9 @@ async function main() {
     const options = parseArgs(process.argv.slice(2));
     enforceNoAppImports();
     fs.mkdirSync(path.join(HERE, 'out'), { recursive: true });
+    // The seam suite builds its sandbox in the shared scratch root and owns manager port 7837
+    // (Q11), including in --app mode, where it still builds the fixture tree and the stand-in there.
+    const lock = parityLock.acquire('L3 tests/L3-seam/run.js ' + process.argv.slice(2).join(' '));
     const { chromium } = require('playwright');
     const browser = await chromium.launch();
     let green = true;
@@ -215,6 +219,7 @@ async function main() {
         // A leaked Chromium tree contends for profiles and ports with the next run; the manager and
         // any stand-in child it spawned are stopped by the sandbox's own finally.
         if (browser.isConnected()) await browser.close();
+        lock.release();
     }
     console.log(green
         ? '\nL3 SELF-TEST GREEN against ' + (options.app || options.ref) + ' (' + options.repeat + ' run(s))'

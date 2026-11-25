@@ -18,6 +18,7 @@ const path = require('path');
 
 const { Sandbox, delay, waitFor, winPath } = require('./lib/sandbox');
 const { COMPARISON, MANIFEST, Registry, WsRecorder, fixturePath } = require('./lib/harness');
+const parityLock = require('../../tools/parity/parity-lock.js');
 
 function fail(id, detail) {
     const error = new Error(id + ': ' + detail);
@@ -472,22 +473,30 @@ async function main() {
         ' comparison policy ' + COMPARISON.rules.length + ' rules)');
     console.log('   groups: ' + GROUPS.map((group) => group.name).join(', '));
 
+    // A sandbox run owns the scratch root and port 7837 (Q11), so it owns them alone; --attach mode
+    // touches neither and takes nothing.
+    const lock = options.attach ? null
+        : parityLock.acquire('L1 tests/L1-backend/run.js ' + process.argv.slice(2).join(' '));
     let green = true;
     const passes = [];
-    for (let index = 1; index <= options.repeat; index += 1) {
-        if (options.repeat > 1) console.log('\n===== pass ' + index + ' of ' + options.repeat + ' =====');
-        const pass = await runOnce(options, index);
-        passes.push(pass);
-        const ok = printResults(pass.registry, Date.now() - pass.seconds * 1000);
-        let indexed = true;
-        try {
-            enforceChecksIndex(pass.registry);
-        } catch (error) {
-            indexed = false;
-            console.log('FAIL  [harness]  L1.CHECKS-MD\n      ' + String(error.detail || error).split('\n').join('\n      '));
+    try {
+        for (let index = 1; index <= options.repeat; index += 1) {
+            if (options.repeat > 1) console.log('\n===== pass ' + index + ' of ' + options.repeat + ' =====');
+            const pass = await runOnce(options, index);
+            passes.push(pass);
+            const ok = printResults(pass.registry, Date.now() - pass.seconds * 1000);
+            let indexed = true;
+            try {
+                enforceChecksIndex(pass.registry);
+            } catch (error) {
+                indexed = false;
+                console.log('FAIL  [harness]  L1.CHECKS-MD\n      ' + String(error.detail || error).split('\n').join('\n      '));
+            }
+            green = green && ok && indexed;
+            if (!green && options.repeat > 1) break;
         }
-        green = green && ok && indexed;
-        if (!green && options.repeat > 1) break;
+    } finally {
+        if (lock) lock.release();
     }
     writeRunSummary(options, passes, green);
     console.log(green

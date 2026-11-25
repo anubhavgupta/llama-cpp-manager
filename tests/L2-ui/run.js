@@ -21,6 +21,7 @@ const browserHelpers = require('./helpers/browser');
 const fixtures = require('./helpers/fixtures');
 const mocks = require('./helpers/mocks');
 const app = require('./helpers/page');
+const parityLock = require('../../tools/parity/parity-lock.js');
 
 const HERE = __dirname;
 const CHECK_FILES = ['fields', 'conditional', 'storage', 'runtime', 'states', 'corpus', 'misc'];
@@ -303,13 +304,22 @@ function reportRun(attempt, options, run, sandbox, server) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
-    const checks = loadChecks();
     if (options.list) {
-        for (const check of checks) console.log(check.id + '  —  ' + check.title + '  [' + check.quirk + ']');
+        for (const check of loadChecks()) console.log(check.id + '  —  ' + check.title + '  [' + check.quirk + ']');
         return 0;
     }
     fs.mkdirSync(options.out, { recursive: true });
+    // The same one-executor rule the nightly runs under: L2 builds a sandbox copy of the ref and
+    // drives a browser against it while L1/L3/L4 want the scratch root and the manager ports.
+    const lock = parityLock.acquire('L2 tests/L2-ui/run.js ' + process.argv.slice(2).join(' '));
+    try {
+        return await runSuite(options);
+    } finally {
+        lock.release();
+    }
+}
 
+async function runSuite(options) {
     const sandbox = await app.prepareSandbox(options.ref, options);
     const server = await app.startStaticServer(sandbox.app, options.port);
     const { chromium } = require('playwright');

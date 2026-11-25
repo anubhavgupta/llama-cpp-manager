@@ -23,6 +23,7 @@ const { execFileSync, spawn } = require('child_process');
 
 const { ANCHORS, BASELINE, REPO } = require('./baseline-slices.js');
 const { runBash } = require('./bash-path.js');
+const parityLock = require('./parity-lock.js');
 
 const SCRATCH = process.env.PARITY_SCRATCH_ROOT || 'C:/parity-scratch';
 const NEG_ROOT = path.join(SCRATCH, 'negatives');
@@ -341,7 +342,7 @@ function runTarget(entry, dir) {
     return new Promise((resolve) => {
         const started = Date.now();
         const child = spawn(process.execPath, argv, { cwd: REPO, windowsHide: true,
-            stdio: ['ignore', 'pipe', 'pipe'] });
+            stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, [parityLock.HELD_ENV]: '1' } });
         const output = [];
         const grab = (chunk) => output.push(chunk.toString('utf8'));
         child.stdout.on('data', grab);
@@ -559,6 +560,18 @@ function writeNegativesMd(records) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    // A control patches a scratch worktree, rebuilds the fixture tree and runs a suite: it owns the
+    // scratch root and the manager ports for as long as any other gate would.
+    const lock = parityLock.acquire('negative-controls node tools/parity/negative-controls.js '
+        + process.argv.slice(2).join(' '));
+    try {
+        return await run(options);
+    } finally {
+        lock.release();
+    }
+}
+
+async function run(options) {
     const mutants = loadMutants();
     if (options.mode === 'probe') {
         const record = await runOne(probeEntry(options), mutants, options);
@@ -613,6 +626,9 @@ async function main() {
 }
 
 main().then((code) => process.exit(code), (error) => {
-    console.error('negative-controls.js: ' + (error && error.stack ? error.stack : error));
+    const message = String(error && error.message || error);
+    // A refused lock is a decision, not a crash: who holds it and until when is the whole report.
+    console.error('negative-controls.js: ' + (message.startsWith('PARITY-LOCK-HELD')
+        ? message : error && error.stack ? error.stack : error));
     process.exit(1);
 });
