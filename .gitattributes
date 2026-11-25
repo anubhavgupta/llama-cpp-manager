@@ -8,3 +8,11 @@ tools/parity/nvidia-smi-stub/nvidia-smi.cmd -text
 *.png binary
 *.ico binary
 *.gguf binary
+
+# The four pinned artifacts that drifted to a CRLF working copy while their blobs stayed LF
+# (AUDIT-2026-11-25 finding N2). `* text=auto eol=lf` already normalises the blob; naming them keeps
+# the checkout-stability requirement of a pinned hash visible where the pin list is read.
+AGENTS.md text eol=lf
+PARITY.md text eol=lf
+plan.md text eol=lf
+tools/parity/spec-static.js text eol=lf
