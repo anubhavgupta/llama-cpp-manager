@@ -1,5 +1,11 @@
 {
-  "tracked": [],
+  "tracked": [
+    {
+      "id": "e8a8c382-f796-45c2-943b-ad7822448c78",
+      "layer": "Remediation batch",
+      "stallAfterMin": 20
+    }
+  ],
   "ignoreIds": [
     "12e18884-960c-4426-9a33-a41fc73987bc",
     "7964b51e-a7dd-4d37-aca2-30076a2819ea"
