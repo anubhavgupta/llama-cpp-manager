@@ -1,0 +1,13 @@
+diff --git a/server.js b/server.js
+index d10e8e1..356b7a1 100644
+--- a/server.js
++++ b/server.js
+@@ -544,7 +544,7 @@ app.get('/settings', (req, res) => {
+         })
+         .catch(err => {
+             // If settings file doesn't exist, return default settings
+-            res.json({ success: true, settings: { modelsDirectory: process.env.MODEL_PATH || "C:\\Users\\anubh\\.lmstudio\\models", serverPort: DEFAULT_PORT } });
++            res.json({ success: true, settings: { modelsDirectory: process.env.MODEL_PATH || "C:\\Users\\anubh\\.lmstudiX\\models", serverPort: DEFAULT_PORT } });
+         });
+ });
+ 

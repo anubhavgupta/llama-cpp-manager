@@ -1,0 +1,54 @@
+{
+  "producedBy": "node tests/L1-backend/run.js --verify-against-selftest --only socket",
+  "at": "2026-11-25T05:54:50Z",
+  "mode": "verify-against-selftest",
+  "ref": "parity-baseline",
+  "repeat": 1,
+  "green": false,
+  "exitCode": 1,
+  "passes": [
+    {
+      "index": 1,
+      "seconds": 60.3,
+      "groups": [
+        "socket"
+      ],
+      "checks": 6,
+      "passed": 5,
+      "failed": 1,
+      "result": [
+        {
+          "id": "L1.SOCKET.EVENT-FAMILIES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.RELAY-BYTES-IDENTICAL",
+          "quirk": "contract",
+          "status": "fail",
+          "detail": "L1.SOCKET.RELAY-STREAM — the relay never delivered the probe line three times: \"mber of logical cores: 16\\nload_backend: loaded CPU backend\\nload_model: expecting a GGUF file in version 3\\nload_model: model = C:\\\\parity-scratch\\\\fixtures\\\\models\\\\\""
+        },
+        {
+          "id": "L1.SOCKET.SERVER-ENDED-ON-EVERY-CLIENT",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.CONNECTED-CLIENTS-CLEANUP",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.DISCONNECT-REMOVES-CLIENT",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.SERVER-ERROR-UNSPAWNABLE-PATH",
+          "quirk": "contract",
+          "status": "pass"
+        }
+      ]
+    }
+  ]
+}

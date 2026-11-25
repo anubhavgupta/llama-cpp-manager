@@ -43,3 +43,33 @@ scheduled fire `schtasks /run /tn ParityNightly` ending Last Result 0 with log i
 location + negative-controls --all all rows red-as-named + gen-goldens/spec-reconcile/verify-manifest
 --check green + hash-pin regeneration diff-stable (only pinnedAt/self). Kill spawned procs; report
 per-finding status table + pin delta + new mutant/kill stats.
+
+## REMAINING (worker-1 context exhausted at HEAD 1e7d43f; everything above = fce8339..1e7d43f)
+
+Done: F1+F2 (fce8339), F7+F9+F13 (eb5d27e), F4-save channel 59 mutants 57 killed + 2 machine-proven
+(new strategy unreachable-element-guard-fallback, 05c815a), F10 server-error probed-then-asserted
+(d133974), F4 L1+L2 controls + false-comment fix (93ceb1e), F5+F6 pin rewrite +78/-28 UNPINNED-
+pending-regen (1e7d43f). Ledger rows worker-1 needs from supervisor: see list in
+C:\Users/anubh\.pi\agent\sessions\--C--projects-Cline-demo--\subagent-artifacts\e8a8c382-f796-45c2-943b-ad7822448c78_worker_output.md.
+
+Remaining (this spec still governs; same ownership/exclusivity rules):
+R1. SERVER-REGION-ENUMERATION.json + tools/parity/tasks/task-server-mutation.md stub + server/save
+    section into REPORT.md GENERATOR (equiv-prove writeReport), status enumerated-unrun; server
+    mutants NOT in shipped inventory (supervisor ruling 2026-11-25).
+R2. F3 concurrency lock: C:/parity-scratch/.parity-lock (O_EXCL + pid + stale>45min takeover w/ log);
+    every suite/nightly/negative-controls entrypoint acquires/releases; refuse-and-report when held.
+R3. F11 fixtures/corpus/MANIFEST.json via load-corpus.js --emit (producedBy command line inside).
+R4. F12 wording: L2 run.js partial-run guard prints explicit "SELF-TEST GUARD: only N assertions
+    (<200)" instead of bare SELF-TEST RED.
+R5. F13 tail: .gitignore exception + confirm nightly durable logs land (verify, don't re-do if
+    already present from eb5d27e).
+R6. Final sequence IN ORDER, single-threaded: negative-controls --all (now 8 rows incl L1/L2;
+    NEGATIVES.md regenerates) -> restricted-PATH proof -> interactive nightly GREEN -> gen-goldens
+    --check -> gen-vectors --check -> spec-reconcile -> verify-manifest -> bash tools/parity
+    hash-pin.sh LAST (captures all new artifacts incl NEGATIVES regen + corpus MANIFEST) -> report
+    exact pin added/dropped vs 1e7d43f.
+R7. schtasks /run /tn ParityNightly -> wait for Last Result 0 + durable log. NOTE: run this FIRST in
+    the morning? No: run after everything lands; if 03:00 auto-fire happens mid-work it is expected
+    RED/garbage — trust only your manual /run AFTER your commits, and record Last Run/Result.
+Known flake watch: L1.SOCKET.RELAY-BYTES-IDENTICAL flaked ONCE under concurrency (worker-1); under
+strict lock re-run should be stable; if it flakes again: quarantine protocol.
