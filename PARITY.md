@@ -124,5 +124,10 @@ Non-determinism addenda discovered during capture (beyond §8): dotenv v17 print
   check (goldens baseline-recorded, `gen-goldens --check` 20 entries, mutation-proven rows in
   `tools/parity/reports/mutation/`). No row flipped without at least one named machine artifact.
 
+- 2026-11-24 C8 PIN REFRESH (Verifier): re-ran `tools/parity/hash-pin.sh` after the PARITY sweep
+  commit (32eead9 changed this file post-pin); only `PARITY.md` + self-hash entries moved. No suite,
+  golden, fixture or SPEC file changed since ff4eff0 (verified in the same run: MANIFEST 193/193,
+  gen-goldens --check GREEN, spec-reconcile 0, nightly GREEN 403 s).
+
 Out of scope (C2 dead code, recorded not ported): `createDefaultConfigName` (script.js:205),
 client `restartServer` (script.js:968). `/restart` HTTP endpoint IS live and must be ported.
