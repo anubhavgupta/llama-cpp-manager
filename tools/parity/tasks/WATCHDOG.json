@@ -1,9 +1,9 @@
 {
   "tracked": [
     {
-      "id": "a94cba27-575f-44e1-9b59-e63921f1a0be",
-      "layer": "Delta re-auditor",
-      "stallAfterMin": 25
+      "id": "b4bf778b-269e-4c38-9446-4302daaced3d",
+      "layer": "Remediate-2 (N1-N5)",
+      "stallAfterMin": 30
     }
   ],
   "ignoreIds": [
@@ -11,7 +11,8 @@
     "7964b51e-a7dd-4d37-aca2-30076a2819ea",
     "e8a8c382-f796-45c2-943b-ad7822448c78",
     "8b1bde62-0fb0-4718-aae4-28460cfd53b1",
-    "5e486df8-c6fa-4edc-84b4-2de729d6a20b"
+    "5e486df8-c6fa-4edc-84b4-2de729d6a20b",
+    "a94cba27-575f-44e1-9b59-e63921f1a0be"
   ],
   "notes": "Supervisor updates this file when workers launch/pause/land. stallAfterMin = no growth in output-0.log AND no matching local compute process before intervening."
 }
