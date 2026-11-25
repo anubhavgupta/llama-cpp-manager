@@ -1,11 +1,5 @@
 {
-  "tracked": [
-    {
-      "id": "e98b8fe9-cff0-4bb7-bedf-f81eec45d644",
-      "layer": "Cold-start Auditor",
-      "stallAfterMin": 30
-    }
-  ],
+  "tracked": [],
   "ignoreIds": [
     "12e18884-960c-4426-9a33-a41fc73987bc",
     "7964b51e-a7dd-4d37-aca2-30076a2819ea",
@@ -16,7 +10,8 @@
     "6a76df11-6e62-4ec4-ace5-11c5dd85e655",
     "23e57f10-826e-406a-aade-5d24ecc93371",
     "00cb5245-9a89-4055-8911-acc970bcf49e",
-    "a902f91c-a219-4216-a73e-6255480a9ce7"
+    "a902f91c-a219-4216-a73e-6255480a9ce7",
+    "e98b8fe9-cff0-4bb7-bedf-f81eec45d644"
   ],
   "notes": "Supervisor updates this file when workers launch/pause/land. stallAfterMin = no growth in output-0.log AND no matching local compute process before intervening."
 }
