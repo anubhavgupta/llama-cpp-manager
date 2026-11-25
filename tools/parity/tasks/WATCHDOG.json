@@ -1,5 +1,11 @@
 {
-  "tracked": [],
+  "tracked": [
+    {
+      "id": "12e18884-960c-4426-9a33-a41fc73987bc",
+      "layer": "Part-1 Auditor",
+      "stallAfterMin": 20
+    }
+  ],
   "ignoreIds": [],
   "notes": "Supervisor updates this file when workers launch/pause/land. stallAfterMin = no growth in output-0.log AND no matching local compute process before intervening."
 }

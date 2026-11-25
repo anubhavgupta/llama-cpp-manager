@@ -20,7 +20,7 @@ Task specs in this directory are the exact prompts each worker phase ran on.
 
 ## IN FLIGHT
 
-(none)
+(none) — Auditor 12e18884 running the cold-start go/no-go battery (exit steps 1-2 complete: sweep 32eead9, pins cd3f2b1)
 
 ## Landed since launch
 
