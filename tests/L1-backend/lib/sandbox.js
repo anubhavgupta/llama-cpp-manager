@@ -18,6 +18,8 @@ const os = require('os');
 const path = require('path');
 const { spawn, spawnSync } = require('child_process');
 
+const { runBash } = require('../../../tools/parity/bash-path');
+
 const MANAGER_PORT_DEFAULT = 7837;
 const JOURNEY_PORTS = [7837, 7838, 8080, 17839, 17840, 17841, 17842, 17843, 17844, 17899];
 
@@ -166,7 +168,7 @@ class Sandbox {
     buildFixtureTree() {
         const script = path.join(this.repo, 'tools', 'parity', 'fixture-tree.sh');
         assert(fs.existsSync(script), 'fixture-tree.sh is missing at ' + script);
-        const built = this.run('bash', [winPath(script), winPath(this.treeRoot), 'build']);
+        const built = runBash(script, [this.treeRoot, 'build']);
         assert(built.status === 0, 'fixture-tree.sh build failed: ' + (built.stderr || built.stdout));
         assert(fs.existsSync(this.modelsDir), 'the fixture tree has no models/ directory');
     }
@@ -209,7 +211,11 @@ class Sandbox {
         }
         const env = { ...process.env };
         delete env.MODEL_PATH;
-        env.PATH = winPath(this.stubDir) + ';' + (env.PATH || '');
+        // The nvidia-smi stub entry point is a .cmd that runs `node`, and node is not on the Task
+        // Scheduler PATH; without it the manager falls into the simulated-metrics branch (Q6) and
+        // every stub-mode metrics check reads the wrong corpus. The recording shell had node on PATH,
+        // so passing its own directory is what keeps this the recorded environment.
+        env.PATH = winPath(this.stubDir) + ';' + winPath(path.dirname(process.execPath)) + ';' + (env.PATH || '');
         env.NVIDIA_SMI_STUB_MODE = options.stubMode || 'ok';
         env.PARITY_ARGV_LOG = winPath(argvLog);
         env.PARITY_CHUNK_LOG = winPath(chunkLog);
@@ -368,15 +374,40 @@ class Sandbox {
 
     unlockTree() {
         const script = path.join(this.repo, 'tools', 'parity', 'fixture-tree.sh');
-        if (fs.existsSync(script) && fs.existsSync(this.treeRoot)) {
-            spawnSync('bash', [winPath(script), winPath(this.treeRoot), 'unlock'], { stdio: 'ignore' });
+        if (!fs.existsSync(script) || !fs.existsSync(this.treeRoot)) return;
+        const unlocked = runBash(script, [this.treeRoot, 'unlock']);
+        // The deliberate ACL deny on models/unreadable is what makes a recursive delete fail, so an
+        // unlock that no-ops has to be visible: cleanTree reports it when the delete then fails.
+        if (unlocked.status !== 0) {
+            this.unlockFailure = 'fixture-tree.sh unlock exited ' + unlocked.status + ': '
+                + String(unlocked.stderr || unlocked.stdout || '').trim();
+        } else {
+            this.unlockFailure = null;
         }
     }
 
     cleanTree() {
         this.unlockTree();
         spawnSync('cmd.exe', ['/c', 'rmdir', winPath(path.join(this.app, 'node_modules'))], { stdio: 'ignore' });
-        fs.rmSync(this.scratch, { recursive: true, force: true });
+        try {
+            fs.rmSync(this.scratch, { recursive: true, force: true });
+        } catch (error) {
+            // Measured failure, not a hypothesis: when the unlock does not run, fs.rmSync dies with
+            // EPERM on models/unreadable and every later run inherits a poisoned scratch root. The
+            // tree tool's own clean mode lifts the read-deny before it deletes, so go through it and
+            // retry once before declaring the scratch root unremovable.
+            const cleaned = runBash(path.join(this.repo, 'tools', 'parity', 'fixture-tree.sh'),
+                [this.treeRoot, 'clean']);
+            if (cleaned.status !== 0) {
+                fail('could not remove the scratch root ' + this.scratch + ': ' + error.message
+                    + (this.unlockFailure ? '; ' + this.unlockFailure : '')
+                    + '; fixture-tree.sh clean exited ' + cleaned.status + ': '
+                    + String(cleaned.stderr || cleaned.stdout || '').trim());
+            }
+            fs.rmSync(this.scratch, { recursive: true, force: true });
+        }
+        assert(!fs.existsSync(this.scratch), 'the scratch root is still present after cleanTree: '
+            + this.scratch + (this.unlockFailure ? ' — ' + this.unlockFailure : ''));
     }
 }
 

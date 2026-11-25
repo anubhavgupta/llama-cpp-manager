@@ -22,6 +22,7 @@ const path = require('path');
 const { execFileSync, spawn } = require('child_process');
 
 const { ANCHORS, BASELINE, REPO } = require('./baseline-slices.js');
+const { runBash } = require('./bash-path.js');
 
 const SCRATCH = process.env.PARITY_SCRATCH_ROOT || 'C:/parity-scratch';
 const NEG_ROOT = path.join(SCRATCH, 'negatives');
@@ -323,8 +324,9 @@ function removeWorktree(dir) {
 // recursive delete cannot do.
 function resetFixtureTree() {
     const tree = path.join(SCRATCH, 'fixtures');
-    execFileSync('bash', [win(path.join(REPO, 'tools', 'parity', 'fixture-tree.sh')), win(tree),
-        'clean'], { stdio: 'ignore' });
+    const cleaned = runBash(path.join(REPO, 'tools', 'parity', 'fixture-tree.sh'), [tree, 'clean']);
+    assert(cleaned.status === 0, 'NEG-TREE: fixture-tree.sh clean exited ' + cleaned.status + ': '
+        + String(cleaned.stderr || cleaned.stdout || '').trim());
 }
 
 async function runOne(entry, mutants, options) {
