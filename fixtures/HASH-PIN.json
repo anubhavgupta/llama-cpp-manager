@@ -1,13 +1,13 @@
 {
-  "pinnedAt": "2026-11-25T09:03:05Z",
+  "pinnedAt": "2026-11-25T09:09:32Z",
   "files": {
     "AGENTS.md": "f437d2fe3fd70915c9085ec81507f811f2659c0d952900146f4006aa8c22bcda",
-    "PARITY.md": "3bbd8cb6a5a9f2f33b7ceff57db707f93a6884d47718aeec08ae1c932a18c262",
+    "PARITY.md": "51d5ebc04470026140a0c0957b6876ff50b1491d2c2cbbc47c90d3aaa51fdd23",
     "plan.md": "d2b1e49169f4a798ca396d95d76d3a104f2f490358cac59422f00b1f6d028053",
     "fixtures/BASELINE.json": "1cbaff26a50dc3ecf1e82bfc1087a354a252937539c55ad5d9a32e49625bd991",
     "fixtures/COMPARISON.json": "49d894777f5216a7f6e0e19b057c986ea866a2b88397b4ef20c19559401d9f16",
     "fixtures/EXTRACT-PROOF.json": "187af83fb45a0a6b5e05badedeff0885403b50183d39ed254b7083dfda3312b7",
-    "fixtures/HASH-PIN.json": "e4ad86bdc1472a49c6b2df3542686d851e77580738c76600b4408c89111f51b4",
+    "fixtures/HASH-PIN.json": "3439e15b4aac1563294467f68b8f174801b4ab760309dd44c4ebd00b922e5867",
     "fixtures/MANIFEST.json": "2055489ccae0b2fd5457eff741be59198106ede357d2faeacc0678e02af3e1c2",
     "fixtures/PATH-MAP.json": "451183bed9711f8a0d3a3d6cc4b18b608b80f9c6e3c0eaf7a056127376acd981",
     "tests/L1-backend/CHECKS.md": "c6776e17670a8f9e70c151b644bec70b5cc347eba60cfec9750cdcd09be90a53",

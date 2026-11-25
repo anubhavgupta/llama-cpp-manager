@@ -149,5 +149,13 @@ Non-determinism addenda discovered during capture (beyond §8): dotenv v17 print
   L1.SOCKET.RELAY-BYTES-IDENTICAL: no re-flake under strict lock (3 full L1 + 3 nightlies); no
   quarantine.
 
+- 2026-11-25 CLOSURE (Verifier): mutation ceiling closed at 765/765 killed-or-proven (705 killed,
+  60 proven: 17 static + 43 exhaustive-dynamic, 0 gaps) with the save channel shipped and the
+  inherited 706 verdicts provably unchanged (37c90a6); L4 runner now takes the executor lock,
+  proven under live contention (d56825a); negative-control logs durable + stale residue pruned
+  with the deletion list in-message (9725a7d, supervisor ruling B); C8 pin event 460f01b (9 hashes
+  moved, set stable at 143 entries) re-closed by this row's pin refresh. Remaining recorded gaps
+  unchanged: L4 negative control, server-region scoring (task-server-mutation.md).
+
 Out of scope (C2 dead code, recorded not ported): `createDefaultConfigName` (script.js:205),
 client `restartServer` (script.js:968). `/restart` HTTP endpoint IS live and must be ported.
