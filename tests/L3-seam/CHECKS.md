@@ -7,8 +7,9 @@ corpus round-trip against a real backend. Every expectation is a recorded legacy
 legacy run produces itself. Gate: `node tests/L3-seam/run.js --verify-against-selftest` ×2.
 
 Harness guards: `L3.NO-APP-IMPORTS` (§6.1, no `public/`, `legacy/` or `server.js` require anywhere in
-the suite), `L3.CHECKS-MD` (this index), and the sandbox's port check (it refuses to kill a process
-it did not start).
+the suite), `L3.DIFF-EXCERPT` (the byte-diff excerpt prints real bytes for a difference at byte 0, so
+a red is readable — AUDIT-2026-11-25 N5), `L3.CHECKS-MD` (this index), and the sandbox's port check
+(it refuses to kill a process it did not start).
 
 ## checks/seam.js
 

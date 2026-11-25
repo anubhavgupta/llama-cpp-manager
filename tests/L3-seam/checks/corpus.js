@@ -24,7 +24,7 @@ const { corpusSeeds } = require('../helpers/seeds');
 const harness = require('../../L1-backend/lib/harness');
 const l2fixtures = require('../../L2-ui/helpers/fixtures');
 
-const { assert, sha256 } = harness;
+const { assert, diffText, sha256 } = harness;
 
 const ORPHAN_KEYS = ['mlock', 'noMmap', 'ndio', 'dio', 'draftMin', 'draftMax', 'draftPMin',
     'disableReasoning'];
@@ -210,9 +210,8 @@ async function launchAll(ctx) {
             assert(sha256(onDisk) === sha256(expectedBytes), 'L3.CORPUS-INI-BYTES',
                 'the ini the browser built and the server wrote differs from the recorded corpus ini'
                 + ' bytes:\n      disk sha ' + sha256(onDisk) + '\n      expect sha '
-                + sha256(expectedBytes) + '\n      first difference at byte ' + firstDifference(onDisk, expectedBytes)
-                + '\n      disk  : ' + JSON.stringify(onDisk.slice(Math.max(0, firstDifference(onDisk, expectedBytes) - 40), firstDifference(onDisk, expectedBytes) + 120))
-                + '\n      expect: ' + JSON.stringify(expectedBytes.slice(Math.max(0, firstDifference(onDisk, expectedBytes) - 40), firstDifference(onDisk, expectedBytes) + 120)));
+                + sha256(expectedBytes) + '\n      ' + diffText(expectedBytes, onDisk,
+                    'the corpus ini composed from fixtures/goldens/resave in localStorage order'));
             const sections = onDisk.slice(INI_HEADER.length).split(/(?=^\[)/m)
                 .filter((block) => block !== '')
                 .map((block) => block.replace(/port = [^\n]*\n$/, ''));
@@ -329,11 +328,9 @@ async function tokenFormIni(ctx) {
                     .slice(INI_HEADER.length)).join('')
                 + 'port = ' + settingsPort + '\n';
             assert(onDisk === expected, 'L3.CORPUS-INI-TOKEN-BYTES',
-                'the ini bytes are not the recorded corpus ini in token form; first difference at byte '
-                + firstDifference(onDisk, expected) + '\n      disk  : '
-                + JSON.stringify(onDisk.slice(firstDifference(onDisk, expected) - 40, firstDifference(onDisk, expected) + 160))
-                + '\n      expect: '
-                + JSON.stringify(expected.slice(firstDifference(onDisk, expected) - 40, firstDifference(onDisk, expected) + 160)));
+                'the ini bytes are not the recorded corpus ini in token form; '
+                + diffText(expected, onDisk,
+                    'the corpus ini composed from fixtures/goldens/resave in token form'));
             const mixed = expected.split('\n').filter((line) => /^chat-template-file = /.test(line)
                 && line.includes('\\') && line.includes('/'));
             assert(mixed.length > 0, 'L3.CORPUS-INI-Q20-VACUOUS',

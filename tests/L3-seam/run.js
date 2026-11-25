@@ -18,7 +18,7 @@ const fs = require('fs');
 const path = require('path');
 
 const { SeamSandbox } = require('./helpers/sandbox');
-const { Registry } = require('../L1-backend/lib/harness');
+const { Registry, diffText } = require('../L1-backend/lib/harness');
 const parityLock = require('../../tools/parity/parity-lock.js');
 
 const HERE = __dirname;
@@ -89,6 +89,28 @@ function enforceNoAppImports() {
     walk(HERE);
     assert(offenders.length === 0, 'L3.NO-APP-IMPORTS',
         'the L3 suite imports app code, which §6.1 forbids: ' + offenders.join(', '));
+}
+
+// Every byte diff this suite reports goes through the L1 harness's diffText. A red at byte 0 used to
+// print "" for both sides because the excerpt sliced 40 bytes to the LEFT of byte 0, i.e. off the end
+// of the string (AUDIT-2026-11-25 finding N5) — so the guard proves on every run that a difference at
+// byte 0 prints the leading bytes of both sides, and that the size line distinguishes a short file
+// from a differing one.
+function enforceDiffExcerpt() {
+    const expected = 'version = 1\n'
+        + '[Config 0]\nmodel = C:/parity-scratch/fixtures/models/m0.gguf\n'.repeat(6);
+    const actual = 'x' + expected.slice(1);
+    const diff = diffText(expected, actual, 'unit:byte-zero-diff');
+    const excerpt = (tag) => {
+        const match = new RegExp(tag + ':\\s+"([^"]*)').exec(diff);
+        return match ? match[1] : null;
+    };
+    assert(excerpt('expected') !== null && excerpt('expected').startsWith('version = 1')
+        && excerpt('actual') !== null && excerpt('actual').startsWith('xersion = 1')
+        && diff.includes('first difference at byte 0')
+        && diff.includes('expected ' + expected.length + ' bytes, got ' + actual.length),
+        'L3.DIFF-EXCERPT', 'a difference at byte 0 must print the leading bytes of both sides and'
+            + ' both sizes, got ' + JSON.stringify(diff));
 }
 
 // Every executed check id has to be listed in CHECKS.md with the quirk it pins, so a new check
@@ -186,6 +208,7 @@ function report(registry, notes, seconds) {
 async function main() {
     const options = parseArgs(process.argv.slice(2));
     enforceNoAppImports();
+    enforceDiffExcerpt();
     fs.mkdirSync(path.join(HERE, 'out'), { recursive: true });
     // The seam suite builds its sandbox in the shared scratch root and owns manager port 7837
     // (Q11), including in --app mode, where it still builds the fixture tree and the stand-in there.
