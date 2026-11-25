@@ -5,13 +5,15 @@
 #   task name : ParityNightly
 #   schedule  : daily at 03:00 local time  (/sc DAILY /st 03:00)
 #   action    : "<this node.exe>" "<repo>/tools/parity/nightly/run-nightly.js"
-#               which runs L1 -> L2 -> L3 -> L4 self-mode against the legacy tag, appends a
-#               timestamped block per gate to tools/parity/reports/nightly.log, and exits with the
-#               number of red gates (Task Scheduler shows that as LastTaskResult; 0 = all green).
+#               which runs L1 -> L2 (--repeat 2) -> L3 (--repeat 2) -> L4 self-mode against the
+#               legacy tag, writes a block per gate to tools/parity/reports/nightly/nightly-<utc>.log
+#               (a .gitignore exception keeps those logs in git), and exits with the NUMBER OF RED
+#               GATES (Task Scheduler shows that as LastTaskResult; 0 = all green, 3 = three red).
 #
 # HOW TO READ IT LATER
 #   schtasks /query /tn ParityNightly /v /fo LIST      # next run time + LastTaskResult
-#   Get-Content tools/parity/reports/nightly.log -Tail 60
+#   ls -t tools/parity/reports/nightly/                # one durable log per fire
+#   Get-Content (Get-ChildItem tools/parity/reports/nightly/*.log | Sort-Object LastWriteTime -Descending | Select-Object -First 1) -Tail 60
 #   bash tools/parity/nightly/install-nightly.sh --status
 #
 # IDEMPOTENT
@@ -90,7 +92,8 @@ schtasks /create /tn "$TASK" /sc DAILY /st "$AT" \
 
 echo "registered $TASK: daily at $AT"
 echo "  action: \"$NODE_WIN\" \"$RUNNER_WIN\""
-echo "  log   : tools/parity/reports/nightly.log"
+echo "  log   : tools/parity/reports/nightly/nightly-<utc>.log (one per fire, git-visible)"
+echo "  exit  : number of red gates, recorded as LastTaskResult (0 = all green)"
 echo
 if registered; then
     show

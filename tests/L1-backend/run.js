@@ -366,6 +366,47 @@ function printResults(registry, startedAt) {
 
 // ------------------------------------------------------------------------------ main --------
 
+// The scratch root is deleted on success, so a green nightly L1 run used to leave no artifact
+// behind at all. One JSON per run, next to the nightly logs (tools/parity/reports/nightly/ is
+// git-visible), so the cadence trail exists independently of the suite's own stdout.
+const SUMMARY_DIR = path.join(REPO, 'tools', 'parity', 'reports', 'nightly');
+
+function summaryFile(options) {
+    const mode = options.attach ? 'attach' : (options.verify ? 'selftest' : 'run');
+    const utc = new Date().toISOString().replace(/[:]/g, '-').replace(/\.\d{3}Z$/, 'Z');
+    return path.join(SUMMARY_DIR, 'l1-' + utc + '-' + mode + '.json');
+}
+
+function writeRunSummary(options, passes, green) {
+    const file = summaryFile(options);
+    fs.mkdirSync(SUMMARY_DIR, { recursive: true });
+    fs.writeFileSync(file, JSON.stringify({
+        producedBy: 'node tests/L1-backend/run.js ' + process.argv.slice(2).join(' '),
+        at: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'),
+        mode: options.attach ? 'attach' : (options.verify ? 'verify-against-selftest' : 'run'),
+        ref: options.attach ? null : options.ref,
+        repeat: options.repeat,
+        green: green,
+        exitCode: green ? 0 : 1,
+        passes: passes.map((pass) => ({
+            index: pass.index,
+            seconds: Number(pass.seconds.toFixed(1)),
+            groups: pass.groups,
+            checks: pass.registry.results.length,
+            passed: pass.registry.results.length - pass.registry.failures.length,
+            failed: pass.registry.failures.length,
+            result: pass.registry.results.map((entry) => ({
+                id: entry.id, quirk: entry.quirk, status: entry.status,
+                ...(entry.status === 'fail'
+                    ? { detail: String(entry.detail).split('\n').slice(0, 6).join('\n') }
+                    : {})
+            }))
+        }))
+    }, null, 2) + '\n');
+    console.log('run summary: ' + path.relative(REPO, file));
+    return file;
+}
+
 // The spec pins CHECKS.md as part of the gate: every executed check id has to be listed there with
 // the §9 quirk it pins, so a new check cannot pass unnoticed.
 function enforceChecksIndex(registry) {
@@ -390,6 +431,7 @@ async function runOnce(options, index) {
         await sandbox.checkPorts();
     }
     const groups = GROUPS.filter((group) => !options.only || options.only.has(group.name));
+    let pass = null;
     try {
         for (const group of groups) {
             console.log('--> group ' + group.name + ' (NVIDIA_SMI_STUB_MODE=' + group.stubMode + ')');
@@ -409,9 +451,11 @@ async function runOnce(options, index) {
         }
     } finally {
         try { await sandbox.stopSession(); } catch (error) { /* already down */ }
+        pass = { index, registry, groups: groups.map((group) => group.name),
+            seconds: (Date.now() - startedAt) / 1000 };
         if (!options.attach && !options.keepScratch) sandbox.cleanTree();
     }
-    return { registry, seconds: (Date.now() - startedAt) / 1000 };
+    return pass;
 }
 
 function urlPort() {
@@ -429,13 +473,15 @@ async function main() {
     console.log('   groups: ' + GROUPS.map((group) => group.name).join(', '));
 
     let green = true;
+    const passes = [];
     for (let index = 1; index <= options.repeat; index += 1) {
         if (options.repeat > 1) console.log('\n===== pass ' + index + ' of ' + options.repeat + ' =====');
-        const { registry, seconds } = await runOnce(options, index);
-        const ok = printResults(registry, Date.now() - seconds * 1000);
+        const pass = await runOnce(options, index);
+        passes.push(pass);
+        const ok = printResults(pass.registry, Date.now() - pass.seconds * 1000);
         let indexed = true;
         try {
-            enforceChecksIndex(registry);
+            enforceChecksIndex(pass.registry);
         } catch (error) {
             indexed = false;
             console.log('FAIL  [harness]  L1.CHECKS-MD\n      ' + String(error.detail || error).split('\n').join('\n      '));
@@ -443,6 +489,7 @@ async function main() {
         green = green && ok && indexed;
         if (!green && options.repeat > 1) break;
     }
+    writeRunSummary(options, passes, green);
     console.log(green
         ? '\nL1 ' + (options.verify ? 'SELF-TEST GREEN' : 'GREEN') + ' against ' +
             (options.attach ? (process.env.PARITY_BASE_URL || 'the attached manager') : options.ref)

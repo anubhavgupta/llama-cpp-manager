@@ -52,6 +52,9 @@ fixtures/corpus/.pathmap-local.json
 # fixture logs are recorded gate material, not runtime logs
 !fixtures/**/*.log
 
+# nightly/l1 cadence evidence (plan §7) is durable gate material, not a runtime log
+!tools/parity/reports/nightly/*.log
+
 # mutation worker private input snapshot (regenerable from git)
 tools/parity/reports/mutation/.snapshot/
 # nightly/l2 scratch output

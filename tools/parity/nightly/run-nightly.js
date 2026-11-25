@@ -4,16 +4,21 @@
 // itself to manager port 7837 (Q11):
 //
 //   L1  node tests/L1-backend/run.js --verify-against-selftest
-//   L2  node tests/L2-ui/run.js --verify-selftest
-//   L3  node tests/L3-seam/run.js --verify-against-selftest
+//   L2  node tests/L2-ui/run.js --verify-selftest --repeat 2
+//   L3  node tests/L3-seam/run.js --verify-against-selftest --repeat 2
 //   L4  node tests/L4-dual/run.js --self-mode
 //
-// Every gate runs against the legacy tag, so a red is either the harness or the recorded corpus
-// moving underneath a green suite — never a candidate (there is no candidate yet). Results are
-// appended to tools/parity/reports/nightly.log with a timestamp per gate, and the process exits
-// non-zero if any gate is red (that exit code is what Task Scheduler records as LastTaskResult).
+// The --repeat 2 on L2 and L3 is the flake protocol those suites' own CHECKS.md declare as the
+// gate ('--verify-selftest --repeat 2', '×2'); a nightly that runs each once does not run the gate.
 //
-//   node tools/parity/nightly/run-nightly.js [--only l1,l3] [--log <file>] [--no-l4]
+// Every gate runs against the legacy tag, so a red is either the harness or the recorded corpus
+// moving underneath a green suite — never a candidate (there is no candidate yet). Each fire writes
+// its own durable block to tools/parity/reports/nightly/nightly-<utc>.log (a .gitignore exception
+// keeps that directory's logs in git) with a timestamp per gate, and the process exits with the
+// NUMBER OF RED GATES — that is what Task Scheduler records as LastTaskResult, so a 3-gate red
+// records 3, not 1 (AUDIT-2026-11-25 finding 7). --selftest checks that contract.
+//
+//   node tools/parity/nightly/run-nightly.js [--only l1,l3] [--log <file>] [--no-l4] [--selftest]
 //
 // Registered as the Windows Task Scheduler job 'ParityNightly' by install-nightly.sh (03:00 daily).
 
@@ -22,20 +27,21 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 const REPO = path.resolve(__dirname, '..', '..', '..');
-const LOG = path.join(REPO, 'tools', 'parity', 'reports', 'nightly.log');
+const REPORT_DIR = path.join(REPO, 'tools', 'parity', 'reports', 'nightly');
 const GATES = [
     { id: 'L1', title: 'backend conformance vs legacy', argv: ['tests/L1-backend/run.js',
         '--verify-against-selftest'], timeoutMs: 40 * 60000 },
     { id: 'L2', title: 'UI conformance vs legacy assets', argv: ['tests/L2-ui/run.js',
-        '--verify-selftest'], timeoutMs: 40 * 60000 },
+        '--verify-selftest', '--repeat', '2'], timeoutMs: 40 * 60000 },
     { id: 'L3', title: 'seam conformance: browser + legacy server + fake binary',
-        argv: ['tests/L3-seam/run.js', '--verify-against-selftest'], timeoutMs: 45 * 60000 },
+        argv: ['tests/L3-seam/run.js', '--verify-against-selftest', '--repeat', '2'],
+        timeoutMs: 45 * 60000 },
     { id: 'L4', title: 'dual-run self-mode (A = B = parity-baseline ⇒ zero field diffs)',
         argv: ['tests/L4-dual/run.js', '--self-mode'], timeoutMs: 45 * 60000 }
 ];
 
 function parseArgs(argv) {
-    const options = { log: LOG, only: null };
+    const options = { log: null, only: null, selftest: false };
     for (let index = 0; index < argv.length; index += 1) {
         const token = argv[index];
         const next = () => {
@@ -45,6 +51,7 @@ function parseArgs(argv) {
         };
         if (token === '--log') options.log = path.resolve(next());
         else if (token === '--only') options.only = new Set(next().split(',').map((id) => id.trim().toUpperCase()));
+        else if (token === '--selftest') options.selftest = true;
         else throw new Error('unknown argument: ' + token);
     }
     return options;
@@ -52,6 +59,54 @@ function parseArgs(argv) {
 
 function stamp() {
     return new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
+}
+
+// One file per fire, named by its UTC start time. ':' is not legal in a Windows filename.
+function defaultLog() {
+    return path.join(REPORT_DIR, 'nightly-' + stamp().replace(/:/g, '-') + '.log');
+}
+
+// The exit code IS the count of red gates (Task Scheduler's LastTaskResult), capped at 255 because
+// that is the widest value an exit code can carry — with four gates the cap is unreachable.
+function verdictExitCode(results) {
+    const red = results.filter((result) => result.verdict === 'FAIL').length;
+    return Math.min(red, 255);
+}
+
+// The contract finding 7 recorded as broken, checked without running a gate: the exit code counts
+// red gates instead of collapsing to 1.
+function selftest() {
+    const cases = [[[], 0], [['PASS', 'PASS'], 0], [['FAIL'], 1], [['PASS', 'FAIL', 'FAIL'], 2],
+        [['FAIL', 'FAIL', 'FAIL', 'FAIL'], 4]];
+    for (const [verdicts, expected] of cases) {
+        const results = verdicts.map((verdict) => ({ verdict }));
+        const code = verdictExitCode(results);
+        if (code !== expected) {
+            throw new Error('exit-code contract broken: ' + (verdicts.join(',') || 'no gates')
+                + ' exited ' + code + ', expected ' + expected);
+        }
+    }
+    // The recorded breakage, asserted by name: the 2026-11-25 03:00 fire had L1+L3+L4 red and
+    // Task Scheduler recorded LastTaskResult 1.
+    if (verdictExitCode([{ verdict: 'FAIL' }, { verdict: 'FAIL' }, { verdict: 'FAIL' }]) !== 3) {
+        throw new Error('exit-code contract broken: three red gates must record 3, the value the '
+            + '2026-11-25 fire recorded as 1');
+    }
+    const repeats = GATES.filter((entry) => entry.id === 'L2' || entry.id === 'L3')
+        .map((entry) => entry.id + ' ' + entry.argv.slice(-2).join(' '));
+    for (const entry of GATES) {
+        if (entry.id !== 'L2' && entry.id !== 'L3') continue;
+        const at = entry.argv.indexOf('--repeat');
+        if (at < 0 || entry.argv[at + 1] !== '2') {
+            throw new Error('the ' + entry.id + ' gate must run --repeat 2, the flake protocol its '
+                + 'CHECKS.md declares as the gate');
+        }
+    }
+    console.log('RUN-NIGHTLY SELFTEST GREEN');
+    console.log('  exit code = red gate count: ' + cases.map(([, expected]) => '→' + expected)
+        .join(' ') + ' (3 red gates → 3, the value the 2026-11-25 fire lost)');
+    console.log('  flake protocol on the gates that declare one: ' + repeats.join(', '));
+    return 0;
 }
 
 function append(file, text) {
@@ -92,11 +147,14 @@ function runGate(gate) {
 
 async function main() {
     const options = parseArgs(process.argv.slice(2));
+    if (options.selftest) return selftest();
+    const log = options.log || defaultLog();
     const gates = GATES.filter((gate) => !options.only || options.only.has(gate.id));
     const header = '\n===== ParityNightly ' + stamp() + '  node ' + process.version
         + '  repo ' + REPO + '  gates ' + gates.map((gate) => gate.id).join(',') + '\n';
-    append(options.log, header);
+    append(log, header);
     console.log(header.trim());
+    console.log('    log ' + path.relative(REPO, log));
     const results = [];
     for (const gate of gates) {
         const command = 'node ' + gate.argv.join(' ');
@@ -108,19 +166,25 @@ async function main() {
             + result.code + (result.signal ? ' signal=' + result.signal : '') + '  ' + command;
         console.log('    ' + line);
         const block = [line, ...result.tail.map((entry) => '    | ' + entry)].join('\n') + '\n';
-        append(options.log, block);
+        append(log, block);
     }
     const failing = results.filter((result) => result.verdict === 'FAIL');
+    const exitCode = verdictExitCode(results);
     const verdictLine = 'verdict ' + (failing.length ? 'RED' : 'GREEN') + ' — '
         + (failing.length ? failing.map((result) => result.gate.id).join(',') + ' red' : 'all gates green')
-        + '  (' + results.reduce((sum, result) => sum + result.seconds, 0).toFixed(0) + ' s)\n';
-    append(options.log, verdictLine);
+        + '  (' + results.reduce((sum, result) => sum + result.seconds, 0).toFixed(0) + ' s)'
+        + '  exit=' + exitCode + ' (red gate count)\n';
+    append(log, verdictLine);
     console.log(verdictLine.trim());
-    append(options.log, '----- end ' + stamp() + '\n');
-    return failing.length ? 1 : 0;
+    append(log, '----- end ' + stamp() + '\n');
+    return exitCode;
 }
 
-main().then((code) => process.exit(code), (error) => {
-    console.error('run-nightly.js: ' + (error && error.stack ? error.stack : error));
-    process.exit(1);
-});
+if (require.main === module) {
+    main().then((code) => process.exit(code), (error) => {
+        console.error('run-nightly.js: ' + (error && error.stack ? error.stack : error));
+        process.exit(1);
+    });
+}
+
+module.exports = { GATES, verdictExitCode, defaultLog, REPORT_DIR };
