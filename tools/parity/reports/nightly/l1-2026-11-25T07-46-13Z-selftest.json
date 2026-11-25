@@ -1,0 +1,103 @@
+{
+  "producedBy": "node tests/L1-backend/run.js --verify-against-selftest --only contract",
+  "at": "2026-11-25T07:46:13Z",
+  "mode": "verify-against-selftest",
+  "ref": "parity-baseline",
+  "repeat": 1,
+  "green": true,
+  "exitCode": 0,
+  "passes": [
+    {
+      "index": 1,
+      "seconds": 5,
+      "groups": [
+        "contract"
+      ],
+      "checks": 16,
+      "passed": 16,
+      "failed": 0,
+      "result": [
+        {
+          "id": "L1.ROOT.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SWAGGER.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SWAGGER-JSON.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.FIRST-RUN.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.POST-WITH-PORT.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.READ-BACK.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.TDZ-PORT-8080",
+          "quirk": "Q2",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PORT.HARD-CODED-7837",
+          "quirk": "Q11",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STATUS.IDLE.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.METRICS.STUB-SHAPE",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.MMPROJ-EXCLUDED",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.MMPROJ-FIRST-MATCH",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.UNREADABLE-ABSENT",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STATIC.INDEX-MATCHES-GOLDEN",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.REPLAY-MODELSDIR-REQUIRED",
+          "quirk": "contract",
+          "status": "pass"
+        }
+      ]
+    }
+  ]
+}

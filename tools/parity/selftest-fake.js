@@ -56,6 +56,18 @@ function expectedLog(options = {}) {
     return lines.join('\n') + '\n';
 }
 
+// The Task Scheduler PATH shape: System32 and the Windows dir, plus git's mingw64 bin, and
+// deliberately no WindowsPowerShell and no Git\usr\bin — the environment that made F1 and the
+// J6 argv regression invisible from an interactive shell.
+function schedulerPath() {
+    const root = process.env.SystemRoot || 'C:\\Windows';
+    const list = [path.join(root, 'System32'), root];
+    if (fs.existsSync('C:\\Program Files\\Git\\mingw64\\bin')) {
+        list.push('C:\\Program Files\\Git\\mingw64\\bin');
+    }
+    return list.join(';');
+}
+
 function spawnFake(args, env, exe) {
     const childEnv = { ...process.env };
     delete childEnv.PARITY_ARGV_LOG;
@@ -231,6 +243,48 @@ async function check(name, fn) {
 }
 
 async function main() {
+    await check('argv-log: raw command line captured on the scheduler PATH', async () => {
+        // The regression this exists for: the Task Scheduler PATH has no WindowsPowerShell directory,
+        // so bare `powershell` cannot resolve. The nightly L3 gate died on it in the 2026-11-25 fire
+        // (raw:null against a fixture that carries the command line), while every interactive run was
+        // green. The restricted PATH is asserted first, so the check cannot go vacuous.
+        const restricted = schedulerPath();
+        const probe = spawnSync('cmd.exe', ['/c', 'where', 'powershell'],
+            { encoding: 'utf8', env: { PATH: restricted } });
+        assert(probe.status !== 0, 'the restricted PATH still resolves powershell ('
+            + String(probe.stdout).trim() + ') — this check would be vacuous');
+        const argvLog = path.join(tmpDir, 'argv-scheduler-path.jsonl');
+        fs.rmSync(argvLog, { force: true });
+        const run = spawnFake(['--parity-chunks', '0'], { PARITY_ARGV_LOG: argvLog, PATH: restricted });
+        try {
+            const record = JSON.parse(await waitForJsonLine(argvLog, 30000));
+            assert(typeof record.raw === 'string' && record.raw.length > 0,
+                'raw command line is ' + show(record.raw) + ' under PATH=' + restricted
+                + ' — the absolute PowerShell lookup regressed');
+            assert(record.raw.includes(path.basename(FAKE)),
+                'raw does not name this script: ' + record.raw);
+            return 'captured with bare powershell unavailable';
+        } finally {
+            await killRun(run);
+        }
+    });
+
+    await check('argv-log: a failed capture records null, never a reconstruction', async () => {
+        const argvLog = path.join(tmpDir, 'argv-capture-fails.jsonl');
+        fs.rmSync(argvLog, { force: true });
+        const run = spawnFake(['--parity-chunks', '0'], { PARITY_ARGV_LOG: argvLog,
+            PARITY_POWERSHELL: path.join(tmpDir, 'definitely-not-powershell.exe') });
+        try {
+            const record = JSON.parse(await waitForJsonLine(argvLog, 30000));
+            assert(record.raw === null, 'a failing capture must record null so the byte compare '
+                + 'reddens; it recorded ' + show(record.raw));
+            assert(show(record.argv).includes('--parity-chunks'), 'argv itself must still be recorded');
+            return 'raw = null, argv still recorded';
+        } finally {
+            await killRun(run);
+        }
+    });
+
     await check('argv-log: argv array, pid and raw command line recorded', async () => {
         const argvLog = path.join(tmpDir, 'argv.jsonl');
         const spaced = 'C:\\models\\dir with space\\model name.gguf';

@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const http = require('http');
+const path = require('path');
 const { execSync } = require('child_process');
 
 const CHUNK_DELAY_MS = 10;
@@ -95,10 +96,27 @@ function baseName(filePath) {
     return parts[parts.length - 1] || '';
 }
 
+// The nightly fire runs with the Task Scheduler PATH (System32 + mingw64, no WindowsPowerShell
+// directory), where bare `powershell` does not resolve; a failed query used to record raw:null and
+// break the byte-exact J6 argv rows in every scheduled run while staying green in an interactive
+// shell. Resolve the absolute executable first, the same rule tools/parity/bash-path.js applies to
+// bash. PARITY_POWERSHELL overrides the whole lookup so selftest-fake.js can point it at a
+// nonexistent path and prove the failure path still records null instead of a reconstruction.
+function powershellExe() {
+    if (process.env.PARITY_POWERSHELL) return process.env.PARITY_POWERSHELL;
+    const root = process.env.SystemRoot || 'C:\\Windows';
+    const candidates = [path.join(root, 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe'),
+        'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe', 'powershell'];
+    for (const candidate of candidates) {
+        if (candidate === 'powershell' || fs.existsSync(candidate)) return candidate;
+    }
+    return 'powershell';
+}
+
 function rawCommandLine() {
     if (process.platform === 'win32') {
-        const command = 'powershell -NoProfile -Command "(Get-CimInstance Win32_Process -Filter ' +
-            "'ProcessId=" + process.pid + "').CommandLine\"";
+        const command = '"' + powershellExe() + '" -NoProfile -Command "(Get-CimInstance '
+            + 'Win32_Process -Filter \'ProcessId=' + process.pid + '\').CommandLine"';
         try {
             return execSync(command, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
         } catch (error) {
