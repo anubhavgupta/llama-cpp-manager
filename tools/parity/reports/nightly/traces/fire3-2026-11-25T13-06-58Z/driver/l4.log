@@ -1,0 +1,18 @@
+
+== side a  ref=parity-baseline  url=http://localhost:7841  scratch=C:\parity-scratch\L4-a
+  --> probe backend
+  --> probe ui
+  --> probe seam
+  side a: 62 fields, 0 problem(s)
+
+== side b  ref=parity-baseline  url=http://localhost:7842  scratch=C:\parity-scratch\L4-b
+  --> probe backend
+  --> probe ui
+  --> probe seam
+  side b: 62 fields, 0 problem(s)
+
+fields A=62 B=62  diffs=0  policy violations=0  problems=0  (64.7 s)
+report: C:\projects\Cline-demo\tests\L4-dual\out\report.md
+        C:\projects\Cline-demo\tests\L4-dual\out\report.json
+
+L4 SELF-MODE GREEN: A = B = parity-baseline produced zero field diffs.

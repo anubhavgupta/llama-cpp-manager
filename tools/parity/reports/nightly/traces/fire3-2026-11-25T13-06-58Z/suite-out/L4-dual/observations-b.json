@@ -1,0 +1,1190 @@
+{
+  "side": "b",
+  "target": {
+    "ref": "parity-baseline",
+    "url": "http://localhost:7842",
+    "publicPort": 7842,
+    "scratch": "C:\\parity-scratch\\L4-b",
+    "app": "C:\\parity-scratch\\L4-b\\app",
+    "nodeExe": "C:\\nvm4w\\nodejs\\node.exe"
+  },
+  "problems": [],
+  "fields": [
+    {
+      "key": "backend.home.status",
+      "family": null,
+      "value": 200
+    },
+    {
+      "key": "backend.home.bytes",
+      "family": null,
+      "value": "79ebec8dc79da50ea35e69ea927961d137c17f6b16eed7e7406ec18674dd0356"
+    },
+    {
+      "key": "backend.swagger.status",
+      "family": null,
+      "value": 200
+    },
+    {
+      "key": "backend.unknown-route",
+      "family": null,
+      "value": "404 <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /no-such-route</pre>\n</body>\n</html>\n"
+    },
+    {
+      "key": "backend.status.idle",
+      "family": null,
+      "value": "{\"running\":false}"
+    },
+    {
+      "key": "backend.metrics",
+      "family": "http/J1-settings/metrics-1.response",
+      "value": "{\"cpu\":0.931892848117255,\"ram\":33.912522337827134,\"gpu\":42,\"vram\":50.23193359375,\"vramUsage\":\"12345/24576\"}"
+    },
+    {
+      "key": "backend.settings.first-run",
+      "family": "http/J0-baseline/settings-first-run.response",
+      "value": "{\"success\":true,\"settings\":{\"modelsDirectory\":\"C:\\\\Users\\\\anubh\\\\.lmstudio\\\\models\",\"serverPort\":8080}}"
+    },
+    {
+      "key": "backend.settings.file.after-with-port",
+      "family": "ini/J1-settings/settings.after-with-port.json",
+      "value": "{\n  \"modelsDirectory\": \"FIXTURE_ROOT\\\\models\",\n  \"serverPort\": 7838\n}"
+    },
+    {
+      "key": "backend.settings.file.Q2",
+      "family": "ini/J1-settings/settings.after-without-port.json",
+      "value": "{\n  \"modelsDirectory\": \"FIXTURE_ROOT\\\\models\",\n  \"serverPort\": 8080\n}"
+    },
+    {
+      "key": "backend.settings.read",
+      "family": "http/J1-settings/settings-read.response",
+      "value": "{\"success\":true,\"settings\":{\"modelsDirectory\":\"FIXTURE_ROOT\\\\models\",\"serverPort\":8080}}"
+    },
+    {
+      "key": "backend.models",
+      "family": "http/J2-models/models.response",
+      "value": "{\"success\":true,\"models\":[{\"name\":\"deep-b-model.gguf\",\"path\":\"FIXTURE_ROOT\\\\models\\\\a\\\\b\\\\deep-b-model.gguf\",\"relativePath\":\"a\\\\b\\\\deep-b-model.gguf\",\"mmprojFile\":null},{\"name\":\"model-a.gguf\",\"path\":\"FIXTURE_ROOT\\\\models\\\\a\\\\model-a.gguf\",\"relativePath\":\"a\\\\model-a.gguf\",\"mmprojFile\":\"FIXTURE_ROOT\\\\models\\\\a\\\\mmproj-model-a-F16.gguf\"},{\"name\":\"llama-bench-benchmarks.gguf\",\"path\":\"FIXTURE_ROOT\\\\models\\\\Bench\\\\llama-bench-benchmarks.gguf\",\"relativePath\":\"Bench\\\\llama-bench-benchmarks.gguf\",\"mmprojFile\":null},{\"name\":\"long-path-model.gguf\",\"path\":\"FIXTURE_ROOT\\\\models\\\\longdir-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\\long-path-model.gguf\",\"relativePath\":\"longdir-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\\\long-path-model.gguf\",\"mmprojFile\":null},{\"name\":\"case-probe-model.gguf\",\"path\":\"FIXTURE_ROOT\\\\models\\\\MMProj-case-only\\\\case-probe-model.gguf\",\"relativePath\":\"MMProj-case-only\\\\case-probe-model.gguf\",\"mmprojFile\":null},{\"name\":\"model-root.gguf\",\"path\":\"FIXTURE_ROOT\\\\models\\\\model-root.gguf\",\"relativePath\":\"model-root.gguf\",\"mmprojFile\":\"FIXTURE_ROOT\\\\models\\\\mmproj-root.gguf\"},{\"name\":\"spaced model Q4.gguf\",\"path\":\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\spaced model Q4.gguf\",\"relativePath\":\"models with spaces\\\\spaced model Q4.gguf\",\"mmprojFile\":\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\mmproj-spaced model Q4.gguf\"},{\"name\":\"multi-model.gguf\",\"path\":\"FIXTURE_ROOT\\\\models\\\\multi-mmproj\\\\multi-model.gguf\",\"relativePath\":\"multi-mmproj\\\\multi-model.gguf\",\"mmprojFile\":\"FIXTURE_ROOT\\\\models\\\\multi-mmproj\\\\mmproj-a.gguf\"},{\"name\":\"UPPERCASE-EXT.GGUF\",\"path\":\"FIXTURE_ROOT\\\\models\\\\uppercase-ext\\\\UPPERCASE-EXT.GGUF\",\"relativePath\":\"uppercase-ext\\\\UPPERCASE-EXT.GGUF\",\"mmprojFile\":null},{\"name\":\"ünïcødé-model.gguf\",\"path\":\"FIXTURE_ROOT\\\\models\\\\ünïcødé-тест\\\\ünïcødé-model.gguf\",\"relativePath\":\"ünïcødé-тест\\\\ünïcødé-model.gguf\",\"mmprojFile\":null}]}"
+    },
+    {
+      "key": "backend.models.mmproj-association",
+      "family": null,
+      "value": [
+        "a\\model-a.gguf -> FIXTURE_ROOT\\models\\a\\mmproj-model-a-F16.gguf",
+        "model-root.gguf -> FIXTURE_ROOT\\models\\mmproj-root.gguf",
+        "models with spaces\\spaced model Q4.gguf -> FIXTURE_ROOT\\models\\models with spaces\\mmproj-spaced model Q4.gguf",
+        "multi-mmproj\\multi-model.gguf -> FIXTURE_ROOT\\models\\multi-mmproj\\mmproj-a.gguf"
+      ]
+    },
+    {
+      "key": "backend.start.missing-serverPath",
+      "family": "http/J3c-start-missing-path/start.response",
+      "value": "400 {\"success\":false,\"error\":\"Server path is required\"}"
+    },
+    {
+      "key": "backend.stop.idle",
+      "family": null,
+      "value": "200 {\"success\":false,\"error\":\"No server is currently running\"}"
+    },
+    {
+      "key": "backend.restart.no-config",
+      "family": "http/J3d-restart/restart-after-manager-restart.response",
+      "value": "400 {\"success\":false,\"error\":\"No previous configuration found to restart from\"}"
+    },
+    {
+      "key": "backend.presets.no-presets",
+      "family": null,
+      "value": "400 {\"success\":false,\"error\":\"Presets content is required\"}"
+    },
+    {
+      "key": "backend.presets.no-serverPath",
+      "family": null,
+      "value": "400 {\"success\":false,\"error\":\"Server path not found\"}"
+    },
+    {
+      "key": "backend.start.body",
+      "family": "http/J3-start-stop/start.response",
+      "value": "200 {\"success\":true,\"message\":\"Server started successfully\"}"
+    },
+    {
+      "key": "backend.start.spawned",
+      "family": null,
+      "value": true
+    },
+    {
+      "key": "backend.start.argv",
+      "family": "argv/J3-start-stop/launch.jsonl",
+      "value": "{\"pid\":38984,\"argv\":[\"-m\",\"FIXTURE_ROOT\\\\models\\\\model-a.gguf\",\"--port\",\"7838\"],\"raw\":\"FIXTURE_ROOT\\\\bin\\\\fake-llama-server.cmd -m FIXTURE_ROOT\\\\models\\\\model-a.gguf --port 7838\"}\n{\"pid\":38832,\"argv\":[\"-m\",\"FIXTURE_ROOT\\\\models\\\\model-a.gguf\",\"--port\",\"7838\"],\"raw\":\"\\\"C:\\\\nvm4w\\\\nodejs\\\\node.exe\\\" SCRATCH_ROOT\\\\bin\\\\fake-llama-server.js -m FIXTURE_ROOT\\\\models\\\\model-a.gguf --port 7838\"}"
+    },
+    {
+      "key": "backend.start.while-running",
+      "family": "http/J3-start-stop/start-while-running.request.json",
+      "value": "200 {\"success\":false,\"error\":\"Server is already running\"}"
+    },
+    {
+      "key": "backend.status.after-stop",
+      "family": null,
+      "value": "{\"running\":false}"
+    },
+    {
+      "key": "backend.presets.default-port.spawned",
+      "family": null,
+      "value": true
+    },
+    {
+      "key": "backend.presets.default-port.argv",
+      "family": "argv/J4-launch-presets/launch.jsonl",
+      "value": "{\"pid\":37836,\"argv\":[\"--models-preset\",\"APP_ROOT\\\\models-preset.ini\",\"--host\",\"0.0.0.0\",\"--port\",\"8080\"],\"raw\":\"FIXTURE_ROOT\\\\bin\\\\fake-llama-server.cmd --models-preset APP_ROOT\\\\models-preset.ini --host 0.0.0.0 --port 8080\"}\n{\"pid\":39608,\"argv\":[\"--models-preset\",\"APP_ROOT\\\\models-preset.ini\",\"--host\",\"0.0.0.0\",\"--port\",\"8080\"],\"raw\":\"\\\"C:\\\\nvm4w\\\\nodejs\\\\node.exe\\\" SCRATCH_ROOT\\\\bin\\\\fake-llama-server.js --models-preset APP_ROOT\\\\models-preset.ini --host 0.0.0.0 --port 8080\"}"
+    },
+    {
+      "key": "backend.presets.explicit-port.argv",
+      "family": "argv/J4-launch-presets/launch.jsonl",
+      "value": "{\"pid\":6984,\"argv\":[\"--models-preset\",\"APP_ROOT\\\\models-preset.ini\",\"--host\",\"0.0.0.0\",\"--port\",\"7838\"],\"raw\":\"FIXTURE_ROOT\\\\bin\\\\fake-llama-server.cmd --models-preset APP_ROOT\\\\models-preset.ini --host 0.0.0.0 --port 7838\"}\n{\"pid\":24044,\"argv\":[\"--models-preset\",\"APP_ROOT\\\\models-preset.ini\",\"--host\",\"0.0.0.0\",\"--port\",\"7838\"],\"raw\":\"\\\"C:\\\\nvm4w\\\\nodejs\\\\node.exe\\\" SCRATCH_ROOT\\\\bin\\\\fake-llama-server.js --models-preset APP_ROOT\\\\models-preset.ini --host 0.0.0.0 --port 7838\"}"
+    },
+    {
+      "key": "backend.presets.ini.bytes",
+      "family": "ini/J4-launch-presets/presets-direct.ini",
+      "value": "version = 1\n\n[dual-alpha]\nmodel = x.gguf\ntemp = 0.7\n\n"
+    },
+    {
+      "key": "backend.presets.ini.after",
+      "family": null,
+      "value": "version = 1\n\n[dual-alpha]\nmodel = x.gguf\ntemp = 0.7\n\n"
+    },
+    {
+      "key": "ui.config-list.names",
+      "family": null,
+      "value": [
+        "capture-alpha",
+        "capture-beta"
+      ]
+    },
+    {
+      "key": "ui.config-list.active",
+      "family": null,
+      "value": [
+        "",
+        ""
+      ]
+    },
+    {
+      "key": "ui.restart-btn.disabled",
+      "family": null,
+      "value": true
+    },
+    {
+      "key": "ui.stop-btn.disabled.idle",
+      "family": null,
+      "value": true
+    },
+    {
+      "key": "ui.control-facts",
+      "family": "screenshots/J5-ui-states/state-notes.json",
+      "value": [
+        {
+          "id": "configName",
+          "tag": "input",
+          "type": "text",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "",
+          "defaultValue": "",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "serverPath",
+          "tag": "input",
+          "type": "text",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "",
+          "defaultValue": "",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "modelPath",
+          "tag": "select",
+          "type": "select",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "",
+          "checked": null,
+          "disabled": false,
+          "options": [
+            "",
+            "FIXTURE_ROOT\\models\\a\\b\\deep-b-model.gguf",
+            "FIXTURE_ROOT\\models\\a\\model-a.gguf",
+            "FIXTURE_ROOT\\models\\Bench\\llama-bench-benchmarks.gguf",
+            "FIXTURE_ROOT\\models\\longdir-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\long-path-model.gguf",
+            "FIXTURE_ROOT\\models\\MMProj-case-only\\case-probe-model.gguf",
+            "FIXTURE_ROOT\\models\\model-root.gguf",
+            "FIXTURE_ROOT\\models\\models with spaces\\spaced model Q4.gguf",
+            "FIXTURE_ROOT\\models\\multi-mmproj\\multi-model.gguf",
+            "FIXTURE_ROOT\\models\\uppercase-ext\\UPPERCASE-EXT.GGUF",
+            "FIXTURE_ROOT\\models\\ünïcødé-тест\\ünïcødé-model.gguf"
+          ]
+        },
+        {
+          "id": "ngl",
+          "tag": "input",
+          "type": "number",
+          "min": "0",
+          "max": null,
+          "step": null,
+          "value": "99",
+          "defaultValue": "99",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "threads",
+          "tag": "input",
+          "type": "number",
+          "min": "1",
+          "max": null,
+          "step": null,
+          "value": "12",
+          "defaultValue": "12",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "temp",
+          "tag": "input",
+          "type": "number",
+          "min": "0",
+          "max": null,
+          "step": "0.01",
+          "value": "0.7",
+          "defaultValue": "0.7",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "topK",
+          "tag": "input",
+          "type": "number",
+          "min": "0",
+          "max": null,
+          "step": null,
+          "value": "20",
+          "defaultValue": "20",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "topP",
+          "tag": "input",
+          "type": "number",
+          "min": "0",
+          "max": "1",
+          "step": "0.01",
+          "value": "0.00",
+          "defaultValue": "0.00",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "minP",
+          "tag": "input",
+          "type": "number",
+          "min": "0",
+          "max": "1",
+          "step": "0.01",
+          "value": "0",
+          "defaultValue": "0",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "repeatPenalty",
+          "tag": "input",
+          "type": "number",
+          "min": "0",
+          "max": null,
+          "step": "0.01",
+          "value": "1.05",
+          "defaultValue": "1.05",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "presencePenalty",
+          "tag": "input",
+          "type": "number",
+          "min": "0",
+          "max": null,
+          "step": "0.01",
+          "value": "0.00",
+          "defaultValue": "0.00",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "backendSampling",
+          "tag": "input",
+          "type": "checkbox",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": null,
+          "defaultValue": null,
+          "checked": false,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "loadMode",
+          "tag": "select",
+          "type": "select",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "none",
+          "checked": null,
+          "disabled": false,
+          "options": [
+            "none",
+            "mmap",
+            "mlock",
+            "mmap+mlock",
+            "dio"
+          ]
+        },
+        {
+          "id": "swaFull",
+          "tag": "input",
+          "type": "checkbox",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": null,
+          "defaultValue": null,
+          "checked": false,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "noKvOffload",
+          "tag": "input",
+          "type": "checkbox",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": null,
+          "defaultValue": null,
+          "checked": false,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "noMmprojOffload",
+          "tag": "input",
+          "type": "checkbox",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": null,
+          "defaultValue": null,
+          "checked": false,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "cacheRam",
+          "tag": "input",
+          "type": "number",
+          "min": "-1",
+          "max": null,
+          "step": null,
+          "value": "8192",
+          "defaultValue": "8192",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "contextSize",
+          "tag": "input",
+          "type": "number",
+          "min": "1",
+          "max": null,
+          "step": null,
+          "value": "16384",
+          "defaultValue": "16384",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "nCpuMoe",
+          "tag": "input",
+          "type": "number",
+          "min": "0",
+          "max": null,
+          "step": null,
+          "value": "8",
+          "defaultValue": "8",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "cpuMoe",
+          "tag": "input",
+          "type": "checkbox",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": null,
+          "defaultValue": null,
+          "checked": false,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "ctkEnable",
+          "tag": "input",
+          "type": "checkbox",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": null,
+          "defaultValue": null,
+          "checked": false,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "reasoning",
+          "tag": "select",
+          "type": "select",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "auto",
+          "checked": null,
+          "disabled": false,
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ]
+        },
+        {
+          "id": "contextTokenKey",
+          "tag": "select",
+          "type": "select",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "f16",
+          "checked": null,
+          "disabled": true,
+          "options": [
+            "f32",
+            "f16",
+            "bf16",
+            "q8_0",
+            "q4_0",
+            "q4_1",
+            "iq4_nl",
+            "q5_0",
+            "q5_1",
+            "kvarn2",
+            "kvarn3",
+            "kvarn4",
+            "kvarn5",
+            "kvarn6",
+            "kvarn8"
+          ]
+        },
+        {
+          "id": "contextTokenValue",
+          "tag": "select",
+          "type": "select",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "f16",
+          "checked": null,
+          "disabled": true,
+          "options": [
+            "f32",
+            "f16",
+            "bf16",
+            "q8_0",
+            "q4_0",
+            "q4_1",
+            "iq4_nl",
+            "q5_0",
+            "q5_1",
+            "kvarn2",
+            "kvarn3",
+            "kvarn4",
+            "kvarn5",
+            "kvarn6",
+            "kvarn8"
+          ]
+        },
+        {
+          "id": "parallel",
+          "tag": "input",
+          "type": "number",
+          "min": "0",
+          "max": null,
+          "step": null,
+          "value": "1",
+          "defaultValue": "1",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "fastAttention",
+          "tag": "select",
+          "type": "select",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "auto",
+          "checked": null,
+          "disabled": false,
+          "options": [
+            "auto",
+            "on",
+            "off"
+          ]
+        },
+        {
+          "id": "jinja",
+          "tag": "input",
+          "type": "checkbox",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": null,
+          "defaultValue": null,
+          "checked": false,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "loadCustomChatTemplate",
+          "tag": "input",
+          "type": "checkbox",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": null,
+          "defaultValue": null,
+          "checked": false,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "chatTemplateKwargs",
+          "tag": "input",
+          "type": "text",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "",
+          "defaultValue": "",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "ngramMod",
+          "tag": "input",
+          "type": "checkbox",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": null,
+          "defaultValue": null,
+          "checked": false,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "speculationType",
+          "tag": "select",
+          "type": "select",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "none",
+          "checked": null,
+          "disabled": false,
+          "options": [
+            "none",
+            "draft-mtp",
+            "draft-dflash",
+            "draft-dspark"
+          ]
+        },
+        {
+          "id": "specDraftNMax",
+          "tag": "input",
+          "type": "number",
+          "min": "0",
+          "max": null,
+          "step": null,
+          "value": "0",
+          "defaultValue": "0",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "draftModelPath",
+          "tag": "select",
+          "type": "select",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "",
+          "checked": null,
+          "disabled": false,
+          "options": [
+            "",
+            "FIXTURE_ROOT\\models\\a\\b\\deep-b-model.gguf",
+            "FIXTURE_ROOT\\models\\a\\model-a.gguf",
+            "FIXTURE_ROOT\\models\\Bench\\llama-bench-benchmarks.gguf",
+            "FIXTURE_ROOT\\models\\longdir-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\long-path-model.gguf",
+            "FIXTURE_ROOT\\models\\MMProj-case-only\\case-probe-model.gguf",
+            "FIXTURE_ROOT\\models\\model-root.gguf",
+            "FIXTURE_ROOT\\models\\models with spaces\\spaced model Q4.gguf",
+            "FIXTURE_ROOT\\models\\multi-mmproj\\multi-model.gguf",
+            "FIXTURE_ROOT\\models\\uppercase-ext\\UPPERCASE-EXT.GGUF",
+            "FIXTURE_ROOT\\models\\ünïcødé-тест\\ünïcødé-model.gguf"
+          ]
+        },
+        {
+          "id": "ngld",
+          "tag": "input",
+          "type": "number",
+          "min": "0",
+          "max": null,
+          "step": null,
+          "value": "0",
+          "defaultValue": "0",
+          "checked": null,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "ctkd",
+          "tag": "select",
+          "type": "select",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "f16",
+          "checked": null,
+          "disabled": false,
+          "options": [
+            "f32",
+            "f16",
+            "bf16",
+            "q8_0",
+            "q4_0",
+            "q4_1",
+            "iq4_nl",
+            "q5_0",
+            "q5_1",
+            "kvarn2",
+            "kvarn3",
+            "kvarn4",
+            "kvarn5",
+            "kvarn6",
+            "kvarn8"
+          ]
+        },
+        {
+          "id": "ctvd",
+          "tag": "select",
+          "type": "select",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "f16",
+          "checked": null,
+          "disabled": false,
+          "options": [
+            "f32",
+            "f16",
+            "bf16",
+            "q8_0",
+            "q4_0",
+            "q4_1",
+            "iq4_nl",
+            "q5_0",
+            "q5_1",
+            "kvarn2",
+            "kvarn3",
+            "kvarn4",
+            "kvarn5",
+            "kvarn6",
+            "kvarn8"
+          ]
+        },
+        {
+          "id": "verbose",
+          "tag": "input",
+          "type": "checkbox",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": null,
+          "defaultValue": null,
+          "checked": false,
+          "disabled": false,
+          "options": null
+        },
+        {
+          "id": "launchPresetsSelect",
+          "tag": "select",
+          "type": "select",
+          "min": null,
+          "max": null,
+          "step": null,
+          "value": "",
+          "checked": null,
+          "disabled": false,
+          "options": [
+            "",
+            "FIXTURE_ROOT\\bin\\fake-llama-server.cmd"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "ui.options.modelPath",
+      "family": null,
+      "value": [
+        "",
+        "FIXTURE_ROOT\\models\\a\\b\\deep-b-model.gguf",
+        "FIXTURE_ROOT\\models\\a\\model-a.gguf",
+        "FIXTURE_ROOT\\models\\Bench\\llama-bench-benchmarks.gguf",
+        "FIXTURE_ROOT\\models\\longdir-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\\long-path-model.gguf",
+        "FIXTURE_ROOT\\models\\MMProj-case-only\\case-probe-model.gguf",
+        "FIXTURE_ROOT\\models\\model-root.gguf",
+        "FIXTURE_ROOT\\models\\models with spaces\\spaced model Q4.gguf",
+        "FIXTURE_ROOT\\models\\multi-mmproj\\multi-model.gguf",
+        "FIXTURE_ROOT\\models\\uppercase-ext\\UPPERCASE-EXT.GGUF",
+        "FIXTURE_ROOT\\models\\ünïcødé-тест\\ünïcødé-model.gguf"
+      ]
+    },
+    {
+      "key": "ui.options.launchPresets",
+      "family": null,
+      "value": [
+        "",
+        "FIXTURE_ROOT\\bin\\fake-llama-server.cmd"
+      ]
+    },
+    {
+      "key": "ui.resave.bytes",
+      "family": "goldens/resave/goldens.jsonl",
+      "value": "{\"capture-alpha\":{\"serverPath\":\"\",\"modelPath\":\"\",\"ngl\":99,\"threads\":12,\"temp\":0.7,\"topK\":20,\"topP\":0,\"minP\":\"0\",\"repeatPenalty\":\"1.05\",\"presencePenalty\":\"0.00\",\"parallel\":1,\"loadMode\":\"none\",\"swaFull\":false,\"backendSampling\":false,\"contextSize\":16384,\"nCpuMoe\":8,\"cpuMoe\":false,\"ctkEnable\":false,\"contextTokenKey\":\"f16\",\"contextTokenValue\":\"f16\",\"fastAttention\":\"auto\",\"jinja\":false,\"verbose\":false,\"noKvOffload\":false,\"noMmprojOffload\":false,\"cacheRam\":8192,\"speculationType\":\"none\",\"ngramMod\":false,\"specDraftNMax\":0,\"reasoning\":\"auto\",\"loadCustomChatTemplate\":false,\"chatTemplateKwargs\":\"\",\"draftModelPath\":\"\",\"ngld\":0,\"ctkd\":\"f16\",\"ctvd\":\"f16\"},\"capture-beta\":{\"serverPath\":\"\",\"modelPath\":\"\",\"ngl\":99,\"threads\":12,\"temp\":0.7,\"topK\":20,\"topP\":0,\"minP\":\"0\",\"repeatPenalty\":\"1.05\",\"presencePenalty\":\"0.00\",\"parallel\":1,\"loadMode\":\"none\",\"swaFull\":false,\"backendSampling\":false,\"contextSize\":16384,\"nCpuMoe\":8,\"cpuMoe\":false,\"ctkEnable\":false,\"contextTokenKey\":\"f16\",\"contextTokenValue\":\"f16\",\"fastAttention\":\"auto\",\"jinja\":false,\"verbose\":false,\"noKvOffload\":false,\"noMmprojOffload\":false,\"cacheRam\":8192,\"speculationType\":\"none\",\"ngramMod\":false,\"specDraftNMax\":0,\"reasoning\":\"auto\",\"loadCustomChatTemplate\":false,\"chatTemplateKwargs\":\"\",\"draftModelPath\":\"\",\"ngld\":0,\"ctkd\":\"f16\",\"ctvd\":\"f16\"}}"
+    },
+    {
+      "key": "ui.resave.changed",
+      "family": null,
+      "value": true
+    },
+    {
+      "key": "ui.resave.entry-keys",
+      "family": null,
+      "value": [
+        "serverPath",
+        "modelPath",
+        "ngl",
+        "threads",
+        "temp",
+        "topK",
+        "topP",
+        "minP",
+        "repeatPenalty",
+        "presencePenalty",
+        "parallel",
+        "loadMode",
+        "swaFull",
+        "backendSampling",
+        "contextSize",
+        "nCpuMoe",
+        "cpuMoe",
+        "ctkEnable",
+        "contextTokenKey",
+        "contextTokenValue",
+        "fastAttention",
+        "jinja",
+        "verbose",
+        "noKvOffload",
+        "noMmprojOffload",
+        "cacheRam",
+        "speculationType",
+        "ngramMod",
+        "specDraftNMax",
+        "reasoning",
+        "loadCustomChatTemplate",
+        "chatTemplateKwargs",
+        "draftModelPath",
+        "ngld",
+        "ctkd",
+        "ctvd"
+      ]
+    },
+    {
+      "key": "ui.delete-reset.values",
+      "family": "localstorage/J5-ui-states/q8-delete-reset.json",
+      "value": {
+        "configName": [
+          "",
+          null,
+          false
+        ],
+        "serverPath": [
+          "",
+          null,
+          false
+        ],
+        "modelPath": [
+          "",
+          null,
+          false
+        ],
+        "ngl": [
+          "99",
+          null,
+          false
+        ],
+        "threads": [
+          "12",
+          null,
+          false
+        ],
+        "temp": [
+          "0.7",
+          null,
+          false
+        ],
+        "topK": [
+          "20",
+          null,
+          false
+        ],
+        "topP": [
+          "0.00",
+          null,
+          false
+        ],
+        "minP": [
+          "0",
+          null,
+          false
+        ],
+        "repeatPenalty": [
+          "1.05",
+          null,
+          false
+        ],
+        "presencePenalty": [
+          "0.00",
+          null,
+          false
+        ],
+        "backendSampling": [
+          null,
+          false,
+          false
+        ],
+        "loadMode": [
+          "mmap",
+          null,
+          false
+        ],
+        "swaFull": [
+          null,
+          false,
+          false
+        ],
+        "noKvOffload": [
+          null,
+          false,
+          false
+        ],
+        "noMmprojOffload": [
+          null,
+          false,
+          false
+        ],
+        "cacheRam": [
+          "8192",
+          null,
+          false
+        ],
+        "contextSize": [
+          "16384",
+          null,
+          false
+        ],
+        "nCpuMoe": [
+          "8",
+          null,
+          false
+        ],
+        "cpuMoe": [
+          null,
+          false,
+          false
+        ],
+        "ctkEnable": [
+          null,
+          false,
+          false
+        ],
+        "reasoning": [
+          "auto",
+          null,
+          false
+        ],
+        "contextTokenKey": [
+          "f16",
+          null,
+          true
+        ],
+        "contextTokenValue": [
+          "f16",
+          null,
+          true
+        ],
+        "parallel": [
+          "1",
+          null,
+          false
+        ],
+        "fastAttention": [
+          "auto",
+          null,
+          false
+        ],
+        "jinja": [
+          null,
+          false,
+          false
+        ],
+        "loadCustomChatTemplate": [
+          null,
+          false,
+          false
+        ],
+        "chatTemplateKwargs": [
+          "",
+          null,
+          false
+        ],
+        "ngramMod": [
+          null,
+          false,
+          false
+        ],
+        "speculationType": [
+          "none",
+          null,
+          false
+        ],
+        "specDraftNMax": [
+          "0",
+          null,
+          false
+        ],
+        "draftModelPath": [
+          "",
+          null,
+          false
+        ],
+        "ngld": [
+          "0",
+          null,
+          false
+        ],
+        "ctkd": [
+          "f16",
+          null,
+          false
+        ],
+        "ctvd": [
+          "f16",
+          null,
+          false
+        ],
+        "verbose": [
+          null,
+          false,
+          false
+        ],
+        "launchPresetsSelect": [
+          "",
+          null,
+          false
+        ]
+      }
+    },
+    {
+      "key": "ui.config-list.after-delete",
+      "family": null,
+      "value": [
+        "capture-alpha"
+      ]
+    },
+    {
+      "key": "ui.q18.selected-index",
+      "family": null,
+      "value": -1
+    },
+    {
+      "key": "ui.q18.dialogs",
+      "family": "goldens/resave/goldens.jsonl",
+      "value": [
+        "alert: Please select a model from the dropdown"
+      ]
+    },
+    {
+      "key": "ui.q18.no-post",
+      "family": null,
+      "value": 0
+    },
+    {
+      "key": "seam.launch.spawned",
+      "family": null,
+      "value": true
+    },
+    {
+      "key": "seam.launch.argv",
+      "family": "argv/J5-ui-launch/launch.jsonl",
+      "value": "{\"pid\":19672,\"argv\":[\"-m\",\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\spaced model Q4.gguf\",\"-ngl\",\"99\",\"-t\",\"12\",\"--temp\",\"0.7\",\"--top-k\",\"20\",\"--top-p\",\"0\",\"--min-p\",\"0.05\",\"--repeat-penalty\",\"1.05\",\"--parallel\",\"1\",\"--load-mode\",\"mmap\",\"-c\",\"16384\",\"--n-cpu-moe\",\"8\",\"-fa\",\"--jinja\",\"--chat-template-kwargs\",\"{\\\"preserve_thinking\\\": true}\",\"--chat-template-file\",\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\chat-template.jinja\",\"--cache-ram\",\"8192\",\"--reasoning\",\"off\",\"--host\",\"0.0.0.0\",\"-fit\",\"off\",\"--port\",\"7838\",\"--mmproj\",\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\mmproj-spaced model Q4.gguf\"],\"raw\":\"FIXTURE_ROOT\\\\bin\\\\fake-llama-server.cmd -m \\\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\spaced model Q4.gguf\\\" -ngl 99 -t 12 --temp 0.7 --top-k 20 --top-p 0 --min-p 0.05 --repeat-penalty 1.05 --parallel 1 --load-mode mmap -c 16384 --n-cpu-moe 8 -fa --jinja --chat-template-kwargs \\\"{\\\\\\\"preserve_thinking\\\\\\\": true}\\\" --chat-template-file \\\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\chat-template.jinja\\\" --cache-ram 8192 --reasoning off --host 0.0.0.0 -fit off --port 7838 --mmproj \\\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\mmproj-spaced model Q4.gguf\\\"\"}\n{\"pid\":33836,\"argv\":[\"-m\",\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\spaced model Q4.gguf\",\"-ngl\",\"99\",\"-t\",\"12\",\"--temp\",\"0.7\",\"--top-k\",\"20\",\"--top-p\",\"0\",\"--min-p\",\"0.05\",\"--repeat-penalty\",\"1.05\",\"--parallel\",\"1\",\"--load-mode\",\"mmap\",\"-c\",\"16384\",\"--n-cpu-moe\",\"8\",\"-fa\",\"--jinja\",\"--chat-template-kwargs\",\"{\\\"preserve_thinking\\\": true}\",\"--chat-template-file\",\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\chat-template.jinja\",\"--cache-ram\",\"8192\",\"--reasoning\",\"off\",\"--host\",\"0.0.0.0\",\"-fit\",\"off\",\"--port\",\"7838\",\"--mmproj\",\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\mmproj-spaced model Q4.gguf\"],\"raw\":\"\\\"C:\\\\nvm4w\\\\nodejs\\\\node.exe\\\" SCRATCH_ROOT\\\\bin\\\\fake-llama-server.js -m \\\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\spaced model Q4.gguf\\\" -ngl 99 -t 12 --temp 0.7 --top-k 20 --top-p 0 --min-p 0.05 --repeat-penalty 1.05 --parallel 1 --load-mode mmap -c 16384 --n-cpu-moe 8 -fa --jinja --chat-template-kwargs \\\"{\\\\\\\"preserve_thinking\\\\\\\": true}\\\" --chat-template-file \\\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\chat-template.jinja\\\" --cache-ram 8192 --reasoning off --host 0.0.0.0 -fit off --port 7838 --mmproj \\\"FIXTURE_ROOT\\\\models\\\\models with spaces\\\\mmproj-spaced model Q4.gguf\\\"\"}"
+    },
+    {
+      "key": "seam.mmproj",
+      "family": null,
+      "value": "FIXTURE_ROOT\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+    },
+    {
+      "key": "seam.chat-template-file",
+      "family": null,
+      "value": "FIXTURE_ROOT\\models\\models with spaces\\chat-template.jinja"
+    },
+    {
+      "key": "seam.port.start",
+      "family": null,
+      "value": "7838"
+    },
+    {
+      "key": "seam.argv.tail",
+      "family": null,
+      "value": [
+        "-fit",
+        "off",
+        "--port",
+        "7838",
+        "--mmproj",
+        "FIXTURE_ROOT\\models\\models with spaces\\mmproj-spaced model Q4.gguf"
+      ]
+    },
+    {
+      "key": "seam.socket.banner",
+      "family": null,
+      "value": true
+    },
+    {
+      "key": "seam.pane.has-entries",
+      "family": null,
+      "value": true
+    },
+    {
+      "key": "seam.ini.posted",
+      "family": "ini/J4b-ui-presets-launch/presets-from-ui.ini",
+      "value": "version = 1\n\n[capture-alpha]\nmodel = FIXTURE_ROOT\\models\\models with spaces\\spaced model Q4.gguf\nmmproj = FIXTURE_ROOT\\models\\models with spaces\\mmproj-spaced model Q4.gguf\ntemp = 0.7\nc = 16384\ntop-k = 20\ntop-p = 0\nmin-p = 0.05\nrepeat-penalty = 1.05\nngl = 99\nthreads = 12\nn-cpu-moe = 8\nparallel = 1\nload-mode = mmap\ncache-ram = 8192\njinja = true\nchat-template-kwargs = {\"preserve_thinking\": true}\nchat-template-file = FIXTURE_ROOT\\models\\models with spaces\\chat-template.jinja\nfa = auto\nreasoning = off\n\n[capture-beta]\ntemp = 0.7\nc = 16384\ntop-k = 20\ntop-p = 0\nrepeat-penalty = 1.05\npresence-penalty = 0.00\nngl = 99\nthreads = 12\nn-cpu-moe = 8\nparallel = 1\nload-mode = none\ncache-ram = 8192\nfa = auto\n\nport = 7838\n"
+    },
+    {
+      "key": "seam.ini.disk",
+      "family": "ini/J4b-ui-presets-launch/presets-from-ui.ini",
+      "value": "version = 1\n\n[capture-alpha]\nmodel = FIXTURE_ROOT\\models\\models with spaces\\spaced model Q4.gguf\nmmproj = FIXTURE_ROOT\\models\\models with spaces\\mmproj-spaced model Q4.gguf\ntemp = 0.7\nc = 16384\ntop-k = 20\ntop-p = 0\nmin-p = 0.05\nrepeat-penalty = 1.05\nngl = 99\nthreads = 12\nn-cpu-moe = 8\nparallel = 1\nload-mode = mmap\ncache-ram = 8192\njinja = true\nchat-template-kwargs = {\"preserve_thinking\": true}\nchat-template-file = FIXTURE_ROOT\\models\\models with spaces\\chat-template.jinja\nfa = auto\nreasoning = off\n\n[capture-beta]\ntemp = 0.7\nc = 16384\ntop-k = 20\ntop-p = 0\nrepeat-penalty = 1.05\npresence-penalty = 0.00\nngl = 99\nthreads = 12\nn-cpu-moe = 8\nparallel = 1\nload-mode = none\ncache-ram = 8192\nfa = auto\n\nport = 7838\n"
+    },
+    {
+      "key": "seam.ini.verbatim",
+      "family": null,
+      "value": true
+    },
+    {
+      "key": "seam.presets.argv",
+      "family": "argv/J4-launch-presets/launch.jsonl",
+      "value": "{\"pid\":29808,\"argv\":[\"--models-preset\",\"APP_ROOT\\\\models-preset.ini\",\"--host\",\"0.0.0.0\",\"--port\",\"7838\"],\"raw\":\"FIXTURE_ROOT\\\\bin\\\\fake-llama-server.cmd --models-preset APP_ROOT\\\\models-preset.ini --host 0.0.0.0 --port 7838\"}\n{\"pid\":40920,\"argv\":[\"--models-preset\",\"APP_ROOT\\\\models-preset.ini\",\"--host\",\"0.0.0.0\",\"--port\",\"7838\"],\"raw\":\"\\\"C:\\\\nvm4w\\\\nodejs\\\\node.exe\\\" SCRATCH_ROOT\\\\bin\\\\fake-llama-server.js --models-preset APP_ROOT\\\\models-preset.ini --host 0.0.0.0 --port 7838\"}"
+    },
+    {
+      "key": "seam.presets.port",
+      "family": null,
+      "value": "7838"
+    },
+    {
+      "key": "seam.split.settings-file",
+      "family": "ini/J1-settings/settings.after-without-port.json",
+      "value": "{\n  \"modelsDirectory\": \"FIXTURE_ROOT\\\\models\",\n  \"serverPort\": 8080\n}"
+    },
+    {
+      "key": "seam.split.dialog-port",
+      "family": null,
+      "value": "8080"
+    },
+    {
+      "key": "seam.split.storage-port",
+      "family": null,
+      "value": 7838
+    },
+    {
+      "key": "seam.split.launch-port",
+      "family": null,
+      "value": "8080"
+    },
+    {
+      "key": "seam.corpus.subset",
+      "family": null,
+      "value": [
+        "qwen3.6-35b-mtp",
+        "ornith-9b",
+        "ornith-35b",
+        "qwen3.8-27b"
+      ]
+    },
+    {
+      "key": "seam.corpus.ini",
+      "family": "goldens/corpus/goldens.jsonl",
+      "value": "version = 1\n\n[qwen3.6-35b-mtp]\nmodel = FIXTURE_ROOT/models/qwen3.6-35b/Qwen3.6-35B-A3B-UD-Q4_K_M-MTP-unsloth.gguf\ntemp = 0.6\nc = 200000\ntop-k = 20\ntop-p = 0.95\nmin-p = 0.00\npresence-penalty = 0.00\nngl = 99\nthreads = 15\nn-cpu-moe = 29\nparallel = 1\nload-mode = mlock\nno-mmproj-offload = true\ncache-ram = 8192\njinja = true\nchat-template-kwargs = {\"preserve_thinking\": true}\nchat-template-file = FIXTURE_ROOT/models/qwen3.6-35b\\chat-template.jinja\nbackend-sampling = true\nfa = on\nspec-type = ngram-mod,draft-mtp\nspec-ngram-size-n = 24\ndraft-min = 48\ndraft-max = 64\nspec-draft-n-max = 2\nreasoning = on\n\n[ornith-9b]\nmodel = FIXTURE_ROOT/models/ornith-9b/Ornith-1.5-9B-Q4_K_M.gguf\ntemp = 0.6\nc = 200000\ntop-k = 20\ntop-p = 0.95\nmin-p = 0.00\nngl = 99\nthreads = 15\nparallel = 1\nload-mode = dio\ncache-ram = 8192\njinja = true\nchat-template-kwargs = {\"preserve_thinking\": true, \"reasoning_effort\": \"xhigh\"}\nchat-template-file = FIXTURE_ROOT/models/ornith-9b\\chat-template.jinja\nbackend-sampling = true\nfa = on\nspec-type = ngram-mod\nspec-ngram-size-n = 24\ndraft-min = 48\ndraft-max = 64\nreasoning = on\n\n[ornith-35b]\nmodel = FIXTURE_ROOT/models/ornith-35b/ornith-1.0-35b-Q4_K_M.gguf\ntemp = 0.6\nc = 200000\ntop-k = 20\ntop-p = 0.95\nmin-p = 0.00\npresence-penalty = 0.00\nngl = 99\nthreads = 15\nn-cpu-moe = 25\nparallel = 1\nno-mmproj-offload = true\njinja = true\nchat-template-kwargs = {\"preserve_thinking\": true}\nchat-template-file = FIXTURE_ROOT/models/ornith-35b\\chat-template.jinja\nfa = on\nspec-type = ngram-mod,\nspec-ngram-size-n = 24\ndraft-min = 48\ndraft-max = 64\nreasoning = off\n\n[qwen3.8-27b]\nmodel = FIXTURE_ROOT/models/Qwen3.8-27B-UD-IQ2_XXS/Qwen3.8-27B-GSQ-RCO-IQ2_XS.gguf\ntemp = 1\nc = 100000\ntop-k = 20\ntop-p = 0.95\nmin-p = 0.00\nrepeat-penalty = 1.0\npresence-penalty = 0.00\nngl = 99\nthreads = 15\nparallel = 1\nload-mode = dio\nno-mmproj-offload = true\ncache-ram = 8192\nchat-template-kwargs = {\"preserve_thinking\": true, \"reasoning_effort\": \"xhigh\"}\nchat-template-file = FIXTURE_ROOT/models/Qwen3.8-27B-UD-IQ2_XXS\\chat-template.jinja\nbackend-sampling = true\nfa = on\nspec-type = ngram-mod\nspec-ngram-size-n = 24\ndraft-min = 48\ndraft-max = 64\nreasoning = on\n\nport = 7838\n"
+    },
+    {
+      "key": "seam.corpus.port-line",
+      "family": null,
+      "value": [
+        "port = 7838"
+      ]
+    }
+  ]
+}

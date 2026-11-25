@@ -1,0 +1,4 @@
+driver start  cpus=32 totalmem=50.7GB freemem=32.9GB  keepScratch=true
+--> L3  node tests/L3-seam/run.js --verify-against-selftest --repeat 2 --keep-scratch   (full output -> C:\Users\anubh\AppData\Local\Temp\pi-scratchpad\n1\fire8\l3.log)
+  FAIL L3  170.2 s  exit=1  cpu-busy-samples=100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,25,8,9,9
+driver done  red=1

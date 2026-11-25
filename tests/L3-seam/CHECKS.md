@@ -8,8 +8,18 @@ legacy run produces itself. Gate: `node tests/L3-seam/run.js --verify-against-se
 
 Harness guards: `L3.NO-APP-IMPORTS` (§6.1, no `public/`, `legacy/` or `server.js` require anywhere in
 the suite), `L3.DIFF-EXCERPT` (the byte-diff excerpt prints real bytes for a difference at byte 0, so
-a red is readable — AUDIT-2026-11-25 N5), `L3.CHECKS-MD` (this index), and the sandbox's port check
-(it refuses to kill a process it did not start).
+a red is readable — AUDIT-2026-11-25 N5), `L3.CHECKS-MD` (this index), `L3.STOP-PORT-RELEASED` (the
+launch port is free before the next launch, so a launch never dies of EADDRINUSE instead of starting),
+`L3.SPAWN-EINVAL-CAP` (more than 2 re-posts of a launch Windows refused is a red fire, not a tolerated
+one), and the sandbox's port check (it refuses to kill a process it did not start).
+
+Stop → relaunch waits on conditions, not on a sleep (AUDIT-2026-11-25 N1): the Q24 floor is kept, the
+manager must answer `/status` fast for a span that proves its loop turned over after the armed
+SIGTERM→SIGKILL deadline, and the last launch's recorded pids and `--port` must be gone. Windows
+refuses the manager's own spawn of the stand-in about once per 55 attempts, including in green fires;
+a launch the manager logged as `spawn EINVAL` is re-posted unchanged exactly once, the check's detail
+line names it, and the fire prints the tally. Both are harness mechanics — no expectation in this
+index changed because of them.
 
 ## checks/seam.js
 

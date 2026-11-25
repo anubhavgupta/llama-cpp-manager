@@ -131,8 +131,31 @@ function rawCommandLine() {
     }
 }
 
+// A sleep that works inside a synchronous path.
+function sleepSync(ms) {
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+}
+
+// The argv and chunk logs are shared with the stand-in, whose File.AppendAllText opens them with
+// FileShare.Read, and with the harness readers. On Windows that combination can make an append fail
+// with EBUSY while the other side holds the file, and this runs on the chunk-emit timer: an uncaught
+// throw here kills the server child the manager just started, which the harness then reads as
+// '/status never reported running=true'. The records are required evidence, so retry the append
+// (the 100% CPU fire8 trace shows EBUSY at appendFileSync and the child exiting 1) and give up only
+// once the sharing conflict outlives the retry window.
 function appendJsonLine(file, value) {
-    fs.appendFileSync(file, JSON.stringify(value) + '\n');
+    const line = JSON.stringify(value) + '\n';
+    const deadline = Date.now() + 5000;
+    for (;;) {
+        try {
+            fs.appendFileSync(file, line);
+            return;
+        } catch (error) {
+            const held = error.code === 'EBUSY' || error.code === 'EPERM' || error.code === 'EAGAIN';
+            if (!held || Date.now() >= deadline) throw error;
+            sleepSync(10);
+        }
+    }
 }
 
 // PARITY_CHUNK_LOG: one JSON line per stdout/stderr write this process performs, carrying the raw

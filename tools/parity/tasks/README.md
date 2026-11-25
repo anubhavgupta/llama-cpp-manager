@@ -4,6 +4,11 @@ If the supervising session restarts, resume from here. Durable state = git commi
 `PARITY.md` (ledger) + `fixtures/HASH-PIN.json` + `fixtures/MANIFEST.json` + `tools/parity/reports/`.
 Task specs in this directory are the exact prompts each worker phase ran on.
 
+Harness affordance, not recorded behavior: L3 re-posts a launch request once when the manager logged
+Windows' `spawn EINVAL` for that exact spawn (measured ~1 per 55 attempts here, capped per fire) — the
+Part-2 candidate gets no exemption from re-deriving anything because of it, and a spawn failure under a
+candidate run is the candidate's own red.
+
 ## Done (verify by re-running the gate commands, not by trusting this file)
 
 | Phase | Commit | Gate command(s) |

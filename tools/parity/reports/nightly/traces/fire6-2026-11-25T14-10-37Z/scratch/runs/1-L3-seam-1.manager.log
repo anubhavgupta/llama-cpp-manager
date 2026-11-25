@@ -1,0 +1,465 @@
+[dotenv@17.2.2] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+Server running at http://localhost:7837
+Error reading directory C:\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\parity-scratch\fixtures\models\unreadable'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async searchDirectory (C:\parity-scratch\app\server.js:218:31)
+    at async searchDirectory (C:\parity-scratch\app\server.js:225:25)
+    at async findGGUFFiles (C:\parity-scratch\app\server.js:257:9)
+    at async C:\parity-scratch\app\server.js:392:24 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'scandir',
+  path: 'C:\\parity-scratch\\fixtures\\models\\unreadable'
+}
+Error reading directory C:\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\parity-scratch\fixtures\models\unreadable'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async searchDirectory (C:\parity-scratch\app\server.js:218:31)
+    at async searchDirectory (C:\parity-scratch\app\server.js:225:25)
+    at async findGGUFFiles (C:\parity-scratch\app\server.js:257:9)
+    at async C:\parity-scratch\app\server.js:392:24 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'scandir',
+  path: 'C:\\parity-scratch\\fixtures\\models\\unreadable'
+}
+Error reading directory C:\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\parity-scratch\fixtures\models\unreadable'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async searchDirectory (C:\parity-scratch\app\server.js:218:31)
+    at async searchDirectory (C:\parity-scratch\app\server.js:225:25)
+    at async findGGUFFiles (C:\parity-scratch\app\server.js:257:9)
+    at async C:\parity-scratch\app\server.js:392:24 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'scandir',
+  path: 'C:\\parity-scratch\\fixtures\\models\\unreadable'
+}
+Starting server with args: [
+  '-m',
+  'C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf',
+  '-ngl',
+  '99',
+  '-t',
+  '12',
+  '--temp',
+  '0.7',
+  '--top-k',
+  '20',
+  '--top-p',
+  '0',
+  '--min-p',
+  '0.05',
+  '--repeat-penalty',
+  '1.05',
+  '--parallel',
+  '1',
+  '--load-mode',
+  'mmap',
+  '-c',
+  '16384',
+  '--n-cpu-moe',
+  '8',
+  '-fa',
+  '--jinja',
+  '--chat-template-kwargs',
+  '{"preserve_thinking": true}',
+  '--chat-template-file',
+  'C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja',
+  '--cache-ram',
+  '8192',
+  '--reasoning',
+  'off',
+  '--host',
+  '0.0.0.0',
+  '-fit',
+  'off',
+  '--port',
+  '7838',
+  '--mmproj',
+  'C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf'
+]
+Client connected for log streaming
+STDOUT: ggml_ba
+STDERR: node:fs:2415
+    return binding.writeFileUtf8(
+                   ^
+
+Error: EBUSY: resource busy or locked, open 'C:\parity-scratch\chunks-L3-seam-1.jsonl'
+    at Object.writeFileSync (node:fs:2415:20)
+    at Object.appendFileSync (node:fs:2497:6)
+    at appendJsonLine (C:\parity-scratch\bin\fake-llama-server.js:135:8)
+    at recordChunk (C:\parity-scratch\bin\fake-llama-server.js:148:5)
+    at Timeout.next [as _onTimeout] (C:\parity-scratch\bin\fake-llama-server.js:205:13)
+    at listOnTimeout (node:internal/timers:608:17)
+    at process.processTimers (node:internal/timers:543:7) {
+  errno: -4082,
+  code: 'EBUSY',
+  syscall: 'open',
+  path: 'C:\\parity-scratch\\chunks-L3-seam-1.jsonl'
+}
+
+Node.js v24.6.0
+
+Server process exited with code 1
+Client disconnected from log streaming
+Error reading directory C:\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\parity-scratch\fixtures\models\unreadable'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async searchDirectory (C:\parity-scratch\app\server.js:218:31)
+    at async searchDirectory (C:\parity-scratch\app\server.js:225:25)
+    at async findGGUFFiles (C:\parity-scratch\app\server.js:257:9)
+    at async C:\parity-scratch\app\server.js:392:24 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'scandir',
+  path: 'C:\\parity-scratch\\fixtures\\models\\unreadable'
+}
+Starting server with args: [
+  '-m',
+  'C:\\parity-scratch\\fixtures\\models\\models with spaces\\spaced model Q4.gguf',
+  '-ngl',
+  '99',
+  '-t',
+  '12',
+  '--temp',
+  '0.7',
+  '--top-k',
+  '20',
+  '--top-p',
+  '0',
+  '--min-p',
+  '0.05',
+  '--repeat-penalty',
+  '1.05',
+  '--parallel',
+  '1',
+  '--load-mode',
+  'mmap',
+  '-c',
+  '16384',
+  '--n-cpu-moe',
+  '8',
+  '-fa',
+  '--jinja',
+  '--chat-template-kwargs',
+  '{"preserve_thinking": true}',
+  '--chat-template-file',
+  'C:\\parity-scratch\\fixtures\\models\\models with spaces\\chat-template.jinja',
+  '--cache-ram',
+  '8192',
+  '--reasoning',
+  'off',
+  '--host',
+  '0.0.0.0',
+  '-fit',
+  'off',
+  '--port',
+  '8080',
+  '--mmproj',
+  'C:\\parity-scratch\\fixtures\\models\\models with spaces\\mmproj-spaced model Q4.gguf'
+]
+Client connected for log streaming
+STDOUT: ggml_ba
+STDERR: node:fs:2415
+    return binding.writeFileUtf8(
+                   ^
+
+Error: EBUSY: resource busy or locked, open 'C:\parity-scratch\chunks-L3-seam-1.jsonl'
+    at Object.writeFileSync (node:fs:2415:20)
+    at Object.appendFileSync (node:fs:2497:6)
+    at appendJsonLine (C:\parity-scratch\bin\fake-llama-server.js:135:8)
+    at recordChunk (C:\parity-scratch\bin\fake-llama-server.js:148:5)
+    at Timeout.next [as _onTimeout] (C:\parity-scratch\bin\fake-llama-server.js:205:13)
+    at listOnTimeout (node:internal/timers:608:17)
+    at process.processTimers (node:internal/timers:543:7) {
+  errno: -4082,
+  code: 'EBUSY',
+  syscall: 'open',
+  path: 'C:\\parity-scratch\\chunks-L3-seam-1.jsonl'
+}
+
+Node.js v24.6.0
+
+Server process exited with code 1
+Client disconnected from log streaming
+Error reading directory C:\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\parity-scratch\fixtures\models\unreadable'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async searchDirectory (C:\parity-scratch\app\server.js:218:31)
+    at async searchDirectory (C:\parity-scratch\app\server.js:225:25)
+    at async findGGUFFiles (C:\parity-scratch\app\server.js:257:9)
+    at async C:\parity-scratch\app\server.js:392:24 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'scandir',
+  path: 'C:\\parity-scratch\\fixtures\\models\\unreadable'
+}
+Generated models-preset.ini file: C:\parity-scratch\app\models-preset.ini
+Starting server with presets: [
+  '--models-preset',
+  'C:\\parity-scratch\\app\\models-preset.ini',
+  '--host',
+  '0.0.0.0',
+  '--port',
+  '7838'
+]
+Client connected for log streaming
+Server process exited with code null
+Generated models-preset.ini file: C:\parity-scratch\app\models-preset.ini
+Starting server with presets: [
+  '--models-preset',
+  'C:\\parity-scratch\\app\\models-preset.ini',
+  '--host',
+  '0.0.0.0',
+  '--port',
+  '8080'
+]
+Server process exited with code null
+Generated models-preset.ini file: C:\parity-scratch\app\models-preset.ini
+Starting server with presets: [
+  '--models-preset',
+  'C:\\parity-scratch\\app\\models-preset.ini',
+  '--host',
+  '0.0.0.0',
+  '--port',
+  '7838'
+]
+Server process exited with code null
+Client disconnected from log streaming
+Error reading directory C:\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\parity-scratch\fixtures\models\unreadable'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async searchDirectory (C:\parity-scratch\app\server.js:218:31)
+    at async searchDirectory (C:\parity-scratch\app\server.js:225:25)
+    at async findGGUFFiles (C:\parity-scratch\app\server.js:257:9)
+    at async C:\parity-scratch\app\server.js:392:24 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'scandir',
+  path: 'C:\\parity-scratch\\fixtures\\models\\unreadable'
+}
+Error reading directory C:\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\parity-scratch\fixtures\models\unreadable'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async searchDirectory (C:\parity-scratch\app\server.js:218:31)
+    at async searchDirectory (C:\parity-scratch\app\server.js:225:25)
+    at async findGGUFFiles (C:\parity-scratch\app\server.js:257:9)
+    at async C:\parity-scratch\app\server.js:392:24 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'scandir',
+  path: 'C:\\parity-scratch\\fixtures\\models\\unreadable'
+}
+Error reading directory C:\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\parity-scratch\fixtures\models\unreadable'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async searchDirectory (C:\parity-scratch\app\server.js:218:31)
+    at async searchDirectory (C:\parity-scratch\app\server.js:225:25)
+    at async findGGUFFiles (C:\parity-scratch\app\server.js:257:9)
+    at async C:\parity-scratch\app\server.js:392:24 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'scandir',
+  path: 'C:\\parity-scratch\\fixtures\\models\\unreadable'
+}
+Starting server with args: [
+  '-m',
+  'C:\\parity-scratch\\fixtures\\models\\unsloth\\Qwen3-Coder-30B-A3B-Instruct-GGUF\\Qwen3-Coder-30B-A3B-Instruct-Q4_0.gguf',
+  '-ngl',
+  '99',
+  '-t',
+  '15',
+  '--temp',
+  '0.7',
+  '--top-k',
+  '20',
+  '--top-p',
+  '0.01',
+  '--repeat-penalty',
+  '1.05',
+  '--parallel',
+  '1',
+  '--load-mode',
+  'mlock',
+  '-c',
+  '64000',
+  '--n-cpu-moe',
+  '26',
+  '-ctk',
+  'q8_0',
+  '-ctv',
+  'q8_0',
+  '-fa',
+  'on',
+  '--jinja',
+  '--cache-ram',
+  '8192',
+  '--reasoning',
+  'on',
+  '--host',
+  '0.0.0.0',
+  '-fit',
+  'off',
+  '--port',
+  '7838'
+]
+Client connected for log streaming
+STDOUT: ggml_ba
+Client disconnected from log streaming
+Server process exited with code null
+Starting server with args: [
+  '-m',
+  'C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf',
+  '-ngl',
+  '99',
+  '-t',
+  '15',
+  '--temp',
+  '1',
+  '--top-p',
+  '1',
+  '--parallel',
+  '1',
+  '--load-mode',
+  'mlock',
+  '-c',
+  '16384',
+  '-fa',
+  'off',
+  '--jinja',
+  '--cache-ram',
+  '8192',
+  '--host',
+  '0.0.0.0',
+  '-fit',
+  'off',
+  '--port',
+  '7838'
+]
+Client connected for log streaming
+STDOUT: ggml_ba
+Client disconnected from log streaming
+Server process exited with code null
+Starting server with args: [
+  '-m',
+  'C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf',
+  '-ngl',
+  '99',
+  '-t',
+  '15',
+  '--temp',
+  '1',
+  '--top-p',
+  '1',
+  '--parallel',
+  '1',
+  '--load-mode',
+  'mlock',
+  '-c',
+  '100000',
+  '--n-cpu-moe',
+  '5',
+  '-fa',
+  'on',
+  '--jinja',
+  '--cache-ram',
+  '8192',
+  '--host',
+  '0.0.0.0',
+  '-fit',
+  'off',
+  '--port',
+  '7838'
+]
+Client connected for log streaming
+Client disconnected from log streaming
+Server process exited with code null
+Starting server with args: [
+  '-m',
+  'C:\\parity-scratch\\fixtures\\models\\unsloth\\gpt-oss-20b-GGUF\\gpt-oss-20b-Q4_K_M.gguf',
+  '-ngl',
+  '99',
+  '-t',
+  '15',
+  '--temp',
+  '1',
+  '--top-p',
+  '1',
+  '--parallel',
+  '1',
+  '--load-mode',
+  'mlock',
+  '-c',
+  '131072',
+  '--n-cpu-moe',
+  '7',
+  '-fa',
+  'on',
+  '--jinja',
+  '--cache-ram',
+  '8192',
+  '--host',
+  '0.0.0.0',
+  '-fit',
+  'off',
+  '--port',
+  '7838'
+]
+Client connected for log streaming
+STDOUT: ggml_backend_cpu_init: number of physical cores: 8
+ggml_backend_cpu_init
+STDERR: node:fs:2415
+    return binding.writeFileUtf8(
+                   ^
+
+Error: EBUSY: resource busy or locked, open 'C:\parity-scratch\chunks-L3-seam-1.jsonl'
+    at Object.writeFileSync (node:fs:2415:20)
+    at Object.appendFileSync (node:fs:2497:6)
+    at appendJsonLine (C:\parity-scratch\bin\fake-llama-server.js:135:8)
+    at recordChunk (C:\parity-scratch\bin\fake-llama-server.js:148:5)
+    at Timeout.next [as _onTimeout] (C:\parity-scratch\bin\fake-llama-server.js:205:13)
+    at listOnTimeout (node:internal/timers:608:17)
+    at process.processTimers (node:internal/timers:543:7) {
+  errno: -4082,
+  code: 'EBUSY',
+  syscall: 'open',
+  path: 'C:\\parity-scratch\\chunks-L3-seam-1.jsonl'
+}
+
+Node.js v24.6.0
+
+Server process exited with code 1
+Client disconnected from log streaming
+Error reading directory C:\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\parity-scratch\fixtures\models\unreadable'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async searchDirectory (C:\parity-scratch\app\server.js:218:31)
+    at async searchDirectory (C:\parity-scratch\app\server.js:225:25)
+    at async findGGUFFiles (C:\parity-scratch\app\server.js:257:9)
+    at async C:\parity-scratch\app\server.js:392:24 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'scandir',
+  path: 'C:\\parity-scratch\\fixtures\\models\\unreadable'
+}
+Error reading directory C:\parity-scratch\fixtures\models\unreadable: Error: EPERM: operation not permitted, scandir 'C:\parity-scratch\fixtures\models\unreadable'
+    at async Object.readdir (node:internal/fs/promises:958:18)
+    at async searchDirectory (C:\parity-scratch\app\server.js:218:31)
+    at async searchDirectory (C:\parity-scratch\app\server.js:225:25)
+    at async findGGUFFiles (C:\parity-scratch\app\server.js:257:9)
+    at async C:\parity-scratch\app\server.js:392:24 {
+  errno: -4048,
+  code: 'EPERM',
+  syscall: 'scandir',
+  path: 'C:\\parity-scratch\\fixtures\\models\\unreadable'
+}
+Generated models-preset.ini file: C:\parity-scratch\app\models-preset.ini
+Starting server with presets: [
+  '--models-preset',
+  'C:\\parity-scratch\\app\\models-preset.ini',
+  '--host',
+  '0.0.0.0',
+  '--port',
+  '7838'
+]
+Error launching server with presets: Error: spawn EINVAL
+    at ChildProcess.spawn (node:internal/child_process:421:11)
+    at spawn (node:child_process:795:9)
+    at C:\parity-scratch\app\server.js:625:26 {
+  errno: -4071,
+  code: 'EINVAL',
+  syscall: 'spawn'
+}

@@ -16,6 +16,7 @@ const page = require('../helpers/page');
 const compare = require('../helpers/compare');
 const { uiSeed } = require('../helpers/seeds');
 const { winPath } = require('../helpers/pathmap');
+const { spawnEinval } = require('../helpers/sandbox');
 
 const harness = require('../../L1-backend/lib/harness');
 
@@ -297,6 +298,7 @@ async function presetsPort(ctx) {
             await session.page.selectOption('#launchPresetsSelect', options[1]);
             const postsBefore = session.postsTo('/launch-presets');
             const launchesBefore = manager.argvRecords().length;
+            const spawnFailuresBefore = manager.spawnEinvalLogged();
             await session.click('launchPresetsBtn');
             const posted = await waitForPost(session, '/launch-presets', postsBefore);
             assert(posted, 'L3.INI-POSTED', 'the page posted no /launch-presets body');
@@ -322,11 +324,23 @@ async function presetsPort(ctx) {
             assert(posted.serverPath === options[1] && posted.serverPort === 7838, 'L3.INI-POST-BODY',
                 'the /launch-presets body carries serverPath ' + JSON.stringify(posted.serverPath)
                 + ' and serverPort ' + JSON.stringify(posted.serverPort));
-            const spawned = await manager.waitForLaunch(launchesBefore, 20000);
-            assert(spawned, 'L3.INI-SPAWNED', 'the presets launch spawned nothing');
+            let spawned = await manager.waitForLaunch(launchesBefore, 20000);
+            let spawnRetryNote = '';
+            if (!spawned && manager.spawnEinvalLogged() > spawnFailuresBefore) {
+                // The page's own request arrived and the manager logged Windows refusing the spawn, so
+                // the identical body the page posted is re-posted once. The argv compared below is the
+                // argv that same body produced, and the detail line says the retry happened.
+                spawnEinval.retries += 1;
+                spawnRetryNote = spawnEinval.note + '; ';
+                await manager.request('POST', '/launch-presets', posted);
+                spawned = await manager.waitForLaunch(launchesBefore, 20000);
+            }
+            assert(spawned, 'L3.INI-SPAWNED', 'the presets launch spawned nothing'
+                + (manager.spawnEinvalLogged() > spawnFailuresBefore
+                    ? ' and the manager logged a second spawn EINVAL' : ''));
             presetsArgv = spawned.argv;
             await manager.stopAndWait();
-            return 'browser sha ' + sha256(posted.presets).slice(0, 16) + ' === disk sha; the pane'
+            return spawnRetryNote + 'browser sha ' + sha256(posted.presets).slice(0, 16) + ' === disk sha; the pane'
                 + ' printed the sections without the trailing port line; ini existed before: '
                 + (before !== null);
         });
@@ -363,11 +377,12 @@ async function presetsPort(ctx) {
                     serverPath: winPath(manager.standin), serverPort: 7838 }]
         ]) {
             await ctx.check(id, 'Q5', async () => {
-                const before = manager.argvRecords().length;
-                const res = await manager.request('POST', '/launch-presets', body);
-                assert(res.status === 200, id + '-STATUS', 'POST /launch-presets: ' + res.status + ' '
-                    + res.raw.toString('utf8'));
-                const spawned = await manager.waitForLaunch(before, 30000);
+                const launched = await manager.launchRequest('/launch-presets', body, {
+                    timeoutMs: 30000,
+                    onResponse: (res) => assert(res.status === 200, id + '-STATUS',
+                        'POST /launch-presets: ' + res.status + ' ' + res.raw.toString('utf8'))
+                });
+                const spawned = launched.spawned;
                 assert(spawned, id + '-SPAWN', 'the presets launch spawned nothing');
                 const observed = compare.portableArgv(manager, spawned.argv);
                 const recorded = compare.recordedPresetsArgv(key);
@@ -377,7 +392,8 @@ async function presetsPort(ctx) {
                     + ' says ' + JSON.stringify(recorded) + ' (settings.json says 8080 after Q2 and the'
                     + ' route ignores it either way)');
                 await manager.stopAndWait();
-                return JSON.stringify(observed);
+                return (launched.retryNote ? launched.retryNote + '; ' : '')
+                    + JSON.stringify(observed);
             });
         }
     } finally {

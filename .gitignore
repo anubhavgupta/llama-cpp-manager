@@ -67,3 +67,7 @@ tools/parity/reports/watchdog-alert.json
 tests/L2-ui/out/run-*.json
 tests/L2-ui/out/screenshots/
 .pi/subagents/schedules/
+
+# N1 flake traces (AUDIT-2026-11-25 N1): the full per-gate logs, scratch logs and manager logs behind
+# the sequence-only L3 red are the evidence for the fix, so they survive the global *.log rule.
+!tools/parity/reports/nightly/traces/**

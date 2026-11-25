@@ -1,0 +1,2704 @@
+{
+  "target": {
+    "base": "http://localhost:7847",
+    "ref": "parity-baseline",
+    "sha": "c57f4381425a97a0ef1b830a8314f126e5971c0f",
+    "app": "C:\\parity-l2\\app"
+  },
+  "summary": {
+    "total": 433,
+    "failed": 0,
+    "passed": 433,
+    "groups": [
+      {
+        "group": "fields",
+        "total": 56,
+        "failed": 0
+      },
+      {
+        "group": "conditional-ui",
+        "total": 96,
+        "failed": 0
+      },
+      {
+        "group": "log-pane",
+        "total": 18,
+        "failed": 0
+      },
+      {
+        "group": "socket-events",
+        "total": 11,
+        "failed": 0
+      },
+      {
+        "group": "http-mock",
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "group": "cadence",
+        "total": 5,
+        "failed": 0
+      },
+      {
+        "group": "charts",
+        "total": 4,
+        "failed": 0
+      },
+      {
+        "group": "dialogs",
+        "total": 7,
+        "failed": 0
+      },
+      {
+        "group": "state-snapshots",
+        "total": 30,
+        "failed": 0
+      },
+      {
+        "group": "corpus",
+        "total": 181,
+        "failed": 0
+      },
+      {
+        "group": "misc",
+        "total": 21,
+        "failed": 0
+      }
+    ]
+  },
+  "failures": [],
+  "notes": {
+    "corpus-launch": "48 of 48 launched; 0 alert-blocked",
+    "corpus-alert-blocked": "all 48 configs alert-blocked with: Please select a model from the dropdown"
+  },
+  "checks": [
+    "fields",
+    "conditional-ui",
+    "crud-empty",
+    "crud-create",
+    "crud-list",
+    "crud-edit-delete",
+    "crud-orphans",
+    "q7-launch",
+    "log-pane",
+    "socket-events",
+    "start-error",
+    "cadence",
+    "charts",
+    "dialogs",
+    "state-snapshots",
+    "heading-order",
+    "corpus-list",
+    "corpus-launch",
+    "corpus-alerts",
+    "corpus-resave",
+    "corpus-resave-whole",
+    "corpus-ini",
+    "corpus-ini-subset",
+    "default-port",
+    "model-dropdowns",
+    "presets-dropdown",
+    "q1-states"
+  ],
+  "assertions": [
+    {
+      "id": "L2-FIELDS-count",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest states 41 fields"
+    },
+    {
+      "id": "L2-FIELDS-rendered-ids",
+      "group": "fields",
+      "pass": true,
+      "note": "the controls rendered outside the settings dialog are exactly the SPEC fields that own a control"
+    },
+    {
+      "id": "L2-FIELDS-control-count",
+      "group": "fields",
+      "pass": true,
+      "note": "the recorded fresh page has 38 controls (fixtures/screenshots/J5-ui-states/state-notes.json)"
+    },
+    {
+      "id": "L2-FIELD-backendSampling",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (backendSampling) — agrees"
+    },
+    {
+      "id": "L2-FIELD-cacheRam",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (cacheRam) — agrees"
+    },
+    {
+      "id": "L2-FIELD-chatTemplateKwargs",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (chatTemplateKwargs) — agrees"
+    },
+    {
+      "id": "L2-FIELD-configName",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (configName) — agrees"
+    },
+    {
+      "id": "L2-FIELD-contextSize",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (contextSize) — agrees"
+    },
+    {
+      "id": "L2-FIELD-contextTokenKey",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (contextTokenKey) — agrees"
+    },
+    {
+      "id": "L2-FIELD-contextTokenValue",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (contextTokenValue) — agrees"
+    },
+    {
+      "id": "L2-FIELD-cpuMoe",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (cpuMoe) — agrees"
+    },
+    {
+      "id": "L2-FIELD-ctkEnable",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (ctkEnable) — agrees"
+    },
+    {
+      "id": "L2-FIELD-ctkd",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (ctkd) — agrees"
+    },
+    {
+      "id": "L2-FIELD-ctvd",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (ctvd) — agrees"
+    },
+    {
+      "id": "L2-FIELD-draftModelPath",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (draftModelPath) — agrees"
+    },
+    {
+      "id": "L2-FIELD-fastAttention",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (fastAttention) — agrees"
+    },
+    {
+      "id": "L2-FIELD-jinja",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (jinja) — agrees"
+    },
+    {
+      "id": "L2-FIELD-launchPresetsSelect",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (launchPresetsSelect) — agrees"
+    },
+    {
+      "id": "L2-FIELD-loadCustomChatTemplate",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (loadCustomChatTemplate) — agrees"
+    },
+    {
+      "id": "L2-FIELD-loadMode",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (loadMode) — agrees"
+    },
+    {
+      "id": "L2-FIELD-minP",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (minP) — agrees"
+    },
+    {
+      "id": "L2-FIELD-modelPath",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (modelPath) — agrees"
+    },
+    {
+      "id": "L2-FIELD-nCpuMoe",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (nCpuMoe) — agrees"
+    },
+    {
+      "id": "L2-FIELD-ngl",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (ngl) — agrees"
+    },
+    {
+      "id": "L2-FIELD-ngld",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (ngld) — agrees"
+    },
+    {
+      "id": "L2-FIELD-ngramMod",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (ngramMod) — agrees"
+    },
+    {
+      "id": "L2-FIELD-noKvOffload",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (noKvOffload) — agrees"
+    },
+    {
+      "id": "L2-FIELD-noMmprojOffload",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (noMmprojOffload) — agrees"
+    },
+    {
+      "id": "L2-FIELD-parallel",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (parallel) — agrees"
+    },
+    {
+      "id": "L2-FIELD-presencePenalty",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (presencePenalty) — agrees"
+    },
+    {
+      "id": "L2-FIELD-reasoning",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (reasoning) — agrees"
+    },
+    {
+      "id": "L2-FIELD-repeatPenalty",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (repeatPenalty) — agrees"
+    },
+    {
+      "id": "L2-FIELD-serverPath",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (serverPath) — agrees"
+    },
+    {
+      "id": "L2-FIELD-specDraftNMax",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (specDraftNMax) — agrees"
+    },
+    {
+      "id": "L2-FIELD-speculationType",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (speculationType) — agrees"
+    },
+    {
+      "id": "L2-FIELD-swaFull",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (swaFull) — agrees"
+    },
+    {
+      "id": "L2-FIELD-temp",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (temp) — agrees"
+    },
+    {
+      "id": "L2-FIELD-threads",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (threads) — agrees"
+    },
+    {
+      "id": "L2-FIELD-topK",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (topK) — agrees"
+    },
+    {
+      "id": "L2-FIELD-topP",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (topP) — agrees"
+    },
+    {
+      "id": "L2-FIELD-verbose",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered control (verbose) — agrees"
+    },
+    {
+      "id": "L2-FIELD-disableReasoning",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC states no control for disableReasoning (legacy key only) and none is rendered — agrees"
+    },
+    {
+      "id": "L2-FIELDS-section-order",
+      "group": "fields",
+      "pass": true,
+      "note": "sorting the SPEC fields by `order` reproduces document order"
+    },
+    {
+      "id": "L2-FIELDS-recorded-order",
+      "group": "fields",
+      "pass": true,
+      "note": "document order equals the recorded fresh-page control order"
+    },
+    {
+      "id": "L2-FIELDS-defaults",
+      "group": "fields",
+      "pass": true,
+      "note": "every control holds the value the recorded fresh page held (HTML defaults)"
+    },
+    {
+      "id": "L2-FIELD-modelsDirectory-not-in-main-form",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC puts modelsDirectory in the settings dialog, so it is not a control of the main form until openSettingsDialog runs"
+    },
+    {
+      "id": "L2-FIELD-serverPort-not-in-main-form",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC puts serverPort in the settings dialog, so it is not a control of the main form until openSettingsDialog runs"
+    },
+    {
+      "id": "L2-FIELD-modelsDirectory",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered dialog control (modelsDirectory) — agrees"
+    },
+    {
+      "id": "L2-FIELD-serverPort",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC/field-manifest vs the rendered dialog control (serverPort) — agrees"
+    },
+    {
+      "id": "L2-FIELDS-dialog-heading",
+      "group": "fields",
+      "pass": true,
+      "note": "the settings dialog heading is \"Settings\"; SPEC files its two fields under the group name \"Settings dialog (built by openSettingsDialog)\""
+    },
+    {
+      "id": "L2-FIELD-dialog-prefill",
+      "group": "fields",
+      "pass": true,
+      "note": "openSettingsDialog prefills both controls from the recorded GET /settings body"
+    },
+    {
+      "id": "L2-FIELD-modelsDirectory-prefill-documented",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC states no fixed markup default for modelsDirectory (the value attribute is a template literal of the loaded settings); rendered \"C:\\\\parity-scratch\\\\fixtures\\\\models\" from the fixture"
+    },
+    {
+      "id": "L2-FIELD-serverPort-prefill-documented",
+      "group": "fields",
+      "pass": true,
+      "note": "SPEC states no fixed markup default for serverPort (the value attribute is a template literal of the loaded settings); rendered \"7838\" from the fixture"
+    },
+    {
+      "id": "L2-Q1-restartBtn",
+      "group": "fields",
+      "pass": true,
+      "note": "Q1: restartBtn is rendered and disabled, and stays disabled with the settings dialog open (the enabling line in updateButtonStates is commented out)"
+    },
+    {
+      "id": "L2-Q12-font-links",
+      "group": "fields",
+      "pass": true,
+      "note": "the stylesheets the recorded page loaded (external Google Fonts link kept, same-origin path)"
+    },
+    {
+      "id": "L2-Q12-no-service-worker",
+      "group": "fields",
+      "pass": true,
+      "note": "Q12: no service worker is registered (do not add offline support)"
+    },
+    {
+      "id": "L2-CTK-contextTokenKey-disabled-fresh",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "contextToken dropdown disabled follows ctkEnable (state fresh)"
+    },
+    {
+      "id": "L2-CTK-contextTokenKey-attr-fresh",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the disabled ATTRIBUTE tracks it too (setAttribute/removeAttribute, not .disabled)"
+    },
+    {
+      "id": "L2-CTK-contextTokenValue-disabled-fresh",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "contextToken dropdown disabled follows ctkEnable (state fresh)"
+    },
+    {
+      "id": "L2-CTK-contextTokenValue-attr-fresh",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the disabled ATTRIBUTE tracks it too (setAttribute/removeAttribute, not .disabled)"
+    },
+    {
+      "id": "L2-CTK-contextTokenKey-disabled-checked",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "contextToken dropdown disabled follows ctkEnable (state checked)"
+    },
+    {
+      "id": "L2-CTK-contextTokenKey-attr-checked",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the disabled ATTRIBUTE tracks it too (setAttribute/removeAttribute, not .disabled)"
+    },
+    {
+      "id": "L2-CTK-contextTokenValue-disabled-checked",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "contextToken dropdown disabled follows ctkEnable (state checked)"
+    },
+    {
+      "id": "L2-CTK-contextTokenValue-attr-checked",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the disabled ATTRIBUTE tracks it too (setAttribute/removeAttribute, not .disabled)"
+    },
+    {
+      "id": "L2-CTK-contextTokenKey-disabled-unchecked",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "contextToken dropdown disabled follows ctkEnable (state unchecked)"
+    },
+    {
+      "id": "L2-CTK-contextTokenKey-attr-unchecked",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the disabled ATTRIBUTE tracks it too (setAttribute/removeAttribute, not .disabled)"
+    },
+    {
+      "id": "L2-CTK-contextTokenValue-disabled-unchecked",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "contextToken dropdown disabled follows ctkEnable (state unchecked)"
+    },
+    {
+      "id": "L2-CTK-contextTokenValue-attr-unchecked",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the disabled ATTRIBUTE tracks it too (setAttribute/removeAttribute, not .disabled)"
+    },
+    {
+      "id": "L2-CTK-load-enabled",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "loading a config with ctkEnable:true enables both cache-type dropdowns"
+    },
+    {
+      "id": "L2-SPEC-none-draftModelSection",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "draftModelSection inline display for speculationType=none"
+    },
+    {
+      "id": "L2-SPEC-none-specDraftNMaxGroup",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "specDraftNMaxGroup inline display for speculationType=none"
+    },
+    {
+      "id": "L2-SPEC-none-draft-visible",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "draftModelSection is actually shown only for draft-dflash/draft-dspark"
+    },
+    {
+      "id": "L2-SPEC-draft-mtp-draftModelSection",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "draftModelSection inline display for speculationType=draft-mtp"
+    },
+    {
+      "id": "L2-SPEC-draft-mtp-specDraftNMaxGroup",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "specDraftNMaxGroup inline display for speculationType=draft-mtp"
+    },
+    {
+      "id": "L2-SPEC-draft-mtp-draft-visible",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "draftModelSection is actually shown only for draft-dflash/draft-dspark"
+    },
+    {
+      "id": "L2-SPEC-draft-dflash-draftModelSection",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "draftModelSection inline display for speculationType=draft-dflash"
+    },
+    {
+      "id": "L2-SPEC-draft-dflash-specDraftNMaxGroup",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "specDraftNMaxGroup inline display for speculationType=draft-dflash"
+    },
+    {
+      "id": "L2-SPEC-draft-dflash-draft-visible",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "draftModelSection is actually shown only for draft-dflash/draft-dspark"
+    },
+    {
+      "id": "L2-SPEC-draft-dspark-draftModelSection",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "draftModelSection inline display for speculationType=draft-dspark"
+    },
+    {
+      "id": "L2-SPEC-draft-dspark-specDraftNMaxGroup",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "specDraftNMaxGroup inline display for speculationType=draft-dspark"
+    },
+    {
+      "id": "L2-SPEC-draft-dspark-draft-visible",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "draftModelSection is actually shown only for draft-dflash/draft-dspark"
+    },
+    {
+      "id": "L2-SPEC-ngramMod-does-not-show-draft",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "ngramMod alone does not reveal the draft section"
+    },
+    {
+      "id": "L2-SPEC-ngramMod-does-not-show-nmax",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "ngramMod alone does not reveal specDraftNMaxGroup"
+    },
+    {
+      "id": "L2-KVARN-initial-hidden",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "no cache-type dropdown starts on a kvarn value, so every warning is display:none"
+    },
+    {
+      "id": "L2-KVARN-all-present",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "each of the four dropdowns has its own .kvarn-warning element"
+    },
+    {
+      "id": "L2-KVARN-contextTokenKey-shown",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "selecting a kvarn value reveals the warning under contextTokenKey"
+    },
+    {
+      "id": "L2-KVARN-contextTokenKey-text",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "warning text is the beellama.cpp notice, unchanged (parity-baseline script.js)"
+    },
+    {
+      "id": "L2-KVARN-contextTokenKey-hidden-again",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "leaving the kvarn value hides the warning again"
+    },
+    {
+      "id": "L2-KVARN-contextTokenValue-shown",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "selecting a kvarn value reveals the warning under contextTokenValue"
+    },
+    {
+      "id": "L2-KVARN-contextTokenValue-text",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "warning text is the beellama.cpp notice, unchanged (parity-baseline script.js)"
+    },
+    {
+      "id": "L2-KVARN-contextTokenValue-hidden-again",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "leaving the kvarn value hides the warning again"
+    },
+    {
+      "id": "L2-KVARN-ctkd-shown",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "selecting a kvarn value reveals the warning under ctkd"
+    },
+    {
+      "id": "L2-KVARN-ctkd-text",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "warning text is the beellama.cpp notice, unchanged (parity-baseline script.js)"
+    },
+    {
+      "id": "L2-KVARN-ctkd-hidden-again",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "leaving the kvarn value hides the warning again"
+    },
+    {
+      "id": "L2-KVARN-ctvd-shown",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "selecting a kvarn value reveals the warning under ctvd"
+    },
+    {
+      "id": "L2-KVARN-ctvd-text",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "warning text is the beellama.cpp notice, unchanged (parity-baseline script.js)"
+    },
+    {
+      "id": "L2-KVARN-ctvd-hidden-again",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "leaving the kvarn value hides the warning again"
+    },
+    {
+      "id": "L2-KVARN-resync-all",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "switching a dropdown back clears every warning"
+    },
+    {
+      "id": "L2-KVARN-on-load",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "loadConfiguration re-syncs the KVarN warnings to the loaded values"
+    },
+    {
+      "id": "L2-CRUD-empty-empty-object",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "empty state renders the recorded empty-configs element (seed empty-object)"
+    },
+    {
+      "id": "L2-CRUD-empty-empty-object-rows",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "no config rows in the empty state"
+    },
+    {
+      "id": "L2-CRUD-empty-key-absent",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "empty state renders the recorded empty-configs element (seed key-absent)"
+    },
+    {
+      "id": "L2-CRUD-empty-key-absent-rows",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "no config rows in the empty state"
+    },
+    {
+      "id": "L2-CRUD-create-title",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "addConfigBtn opens the create form"
+    },
+    {
+      "id": "L2-CRUD-create-name-empty",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the create form starts with an empty name"
+    },
+    {
+      "id": "L2-CRUD-create-empty-name-alert",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "saving with no name alerts with the recorded text and keeps the dialog open (Q13)"
+    },
+    {
+      "id": "L2-CRUD-create-empty-name-dialog-open",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the form stays open after the alert, so it covers the page (recorded Q13 evidence)"
+    },
+    {
+      "id": "L2-CRUD-create-empty-name-no-write",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the rejected save wrote nothing to localStorage"
+    },
+    {
+      "id": "L2-CRUD-create-listed",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the created config is rendered, and not marked active"
+    },
+    {
+      "id": "L2-CRUD-create-storage-bytes",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the exact localStorage entry the baseline writes for a fresh form save (fixtures/goldens/resave, op=create)"
+    },
+    {
+      "id": "L2-CRUD-create-field-order",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the saved object carries the 36-field set in the order saveCurrentValues writes it (Q7: not the launch set)"
+    },
+    {
+      "id": "L2-CRUD-create-no-orphans",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "a fresh save writes no orphan keys (Q16: saveCurrentValues builds a fresh object)"
+    },
+    {
+      "id": "L2-CRUD-create-form-cleared",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "saveConfiguration clears the name input and the title"
+    },
+    {
+      "id": "L2-CRUD-create-dialog-closed",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the form closes after a successful save"
+    },
+    {
+      "id": "L2-CRUD-create-no-launch-post",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "saving a config does not launch anything"
+    },
+    {
+      "id": "L2-CRUD-alphabetical",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the rendered list equals the order the legacy page rendered (recorded), which is .sort() order"
+    },
+    {
+      "id": "L2-CRUD-sort-vs-insertion",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "and that is the legacy .sort() of the storage keys, not the insertion order (plan §9 trap 6)"
+    },
+    {
+      "id": "L2-CRUD-insertion-order-differs",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the render order really is a sort: it differs from the localStorage insertion order"
+    },
+    {
+      "id": "L2-CRUD-active-single",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "selecting a config marks exactly that row active"
+    },
+    {
+      "id": "L2-CRUD-active-moves",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the active class moves to the newly selected row"
+    },
+    {
+      "id": "L2-CRUD-select-fills-form",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "selecting a config fills the form from the stored values"
+    },
+    {
+      "id": "L2-CRUD-edit-title",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the edit button opens the form titled Edit Configuration"
+    },
+    {
+      "id": "L2-CRUD-edit-name",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the edit form is prefilled with the config name"
+    },
+    {
+      "id": "L2-CRUD-edit-opens-without-writing",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "opening the editor writes nothing (editConfiguration only fills the name input)"
+    },
+    {
+      "id": "L2-CRUD-edit-save-storage-bytes",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the exact localStorage bytes the recorded edit-save journey wrote (recorded: form values of a page that never loaded the config, so they are the HTML defaults re-read from the DOM)"
+    },
+    {
+      "id": "L2-CRUD-edit-save-fields",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "every control still holds the recorded value after the save"
+    },
+    {
+      "id": "L2-CRUD-delete-loaded-before-reset",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the loaded capture-beta values are in the form before the delete resets some of them"
+    },
+    {
+      "id": "L2-CRUD-delete-confirm-text",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the delete confirm text is legacy wording with the config name interpolated (Q13)"
+    },
+    {
+      "id": "L2-CRUD-delete-removes-one",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "accepting the confirm removes exactly that config"
+    },
+    {
+      "id": "L2-CRUD-delete-storage",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the remaining stored bytes are the other config, exactly as the recorded edit-save wrote it"
+    },
+    {
+      "id": "L2-CRUD-delete-only-that-key",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "and only the deleted key left the store"
+    },
+    {
+      "id": "L2-Q8-every-control",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "Q8: after deleting the active config EVERY control reads the value the recording has, including the controls deleteConfiguration does NOT reset"
+    },
+    {
+      "id": "L2-Q8-reset-only-list",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "every control the delete changed is one of the 24 controls deleteConfiguration resets (parity-baseline script.js, hard-coded list)"
+    },
+    {
+      "id": "L2-Q8-reset-values",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "and each of them holds exactly the value the list assigns"
+    },
+    {
+      "id": "L2-Q8-reset-misses",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "no reset-list control was left off its reset value (a control can be unchanged because it already held the reset value, which is why \"changed\" is not the claim)"
+    },
+    {
+      "id": "L2-Q8-loadMode-recorded-row",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the recorded q8-delete-reset row for loadMode is reproduced: reset to \"mmap\", and that is not the HTML default option (Q8: the reset list diverges from the markup defaults)"
+    },
+    {
+      "id": "L2-Q8-loadMode-divergence",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "Q8: loadMode is reset to mmap while the HTML default option is none (the divergence this row is about)"
+    },
+    {
+      "id": "L2-Q8-control-count",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the comparison covers the same number of controls as the recording"
+    },
+    {
+      "id": "L2-Q16-corpus-has-orphans",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the corpus carries orphan keys in 28/48 configs (Q16 evidence: 28)"
+    },
+    {
+      "id": "L2-Q16-before-seed",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the orphan keys are present in the seeded storage exactly as the corpus stores them (mlock, noMmap, ndio, disableReasoning, draftPMin, draftMin, draftMax)"
+    },
+    {
+      "id": "L2-Q16-load-does-not-clean",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "loading a config does NOT migrate or clean the orphan keys (Q16: candidate must not clean on load)"
+    },
+    {
+      "id": "L2-Q16-load-keeps-keys",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the stored entry still holds the same orphan keys, in the same order, after the load"
+    },
+    {
+      "id": "L2-Q16-resave-drops-orphans",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "re-saving writes a fresh object without the orphan keys (Q16)"
+    },
+    {
+      "id": "L2-Q16-resave-field-count",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "and the re-saved entry has exactly the 36 persisted fields"
+    },
+    {
+      "id": "L2-Q7-launch-posts",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the Launch click posted /start"
+    },
+    {
+      "id": "L2-Q7-argv-reads-dom",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "Q7: the argv carries the DOM value 5, not the stored 99 (launchServer re-reads the form)"
+    },
+    {
+      "id": "L2-Q7-argv-serverPath-not-a-flag",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "serverPath is the /start body field, never an argv entry"
+    },
+    {
+      "id": "L2-Q7-body-keys",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the /start body is {serverPath, args} (the launch field set, not the 36 saved fields)"
+    },
+    {
+      "id": "L2-Q7-resave-on-launch",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "launching re-saves the config from the DOM (Q7: launchServer calls saveCurrentValues)"
+    },
+    {
+      "id": "L2-Q7-saved-field-set",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the saved set is the 36-field saveCurrentValues set, not the 35-entry launch literal"
+    },
+    {
+      "id": "L2-Q7-saved-has-serverPath-and-kwargs",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "the saved set includes fields the launch literal does not read"
+    },
+    {
+      "id": "L2-Q7-launch-port-from-settings",
+      "group": "conditional-ui",
+      "pass": true,
+      "note": "Q5/Q7: --port comes from localStorage settings at launch time"
+    },
+    {
+      "id": "L2-LOG-initial",
+      "group": "log-pane",
+      "pass": true,
+      "note": "a fresh page has an empty pane (one empty split element)"
+    },
+    {
+      "id": "L2-LOG-payload-count",
+      "group": "log-pane",
+      "pass": true,
+      "note": "the recorded J5-ui-log-cap trace carries 61 log-stream payloads"
+    },
+    {
+      "id": "L2-LOG-launch-entries",
+      "group": "log-pane",
+      "pass": true,
+      "note": "the launch itself wrote 5 entries before the replay"
+    },
+    {
+      "id": "L2-LOG-replay-anchor-found",
+      "group": "log-pane",
+      "pass": true,
+      "note": "the first recorded payload appears in the pane at entry 5, after the launch entries"
+    },
+    {
+      "id": "L2-LOG-source-lines",
+      "group": "log-pane",
+      "pass": true,
+      "note": "the replayed payload bytes are the 9 source lines the recording states"
+    },
+    {
+      "id": "L2-LOG-more-entries-than-source-lines",
+      "group": "log-pane",
+      "pass": true,
+      "note": "chunk boundaries turn 9 source lines into many entries (plan §9 trap 2, §8 chunk boundaries)"
+    },
+    {
+      "id": "L2-LOG-blank-payloads",
+      "group": "log-pane",
+      "pass": true,
+      "note": "the trace really does carry a whitespace-only payload"
+    },
+    {
+      "id": "L2-LOG-some-payloads-whitespace-only",
+      "group": "log-pane",
+      "pass": true,
+      "note": "and the recorded byte-exact claim holds for the replayed bytes"
+    },
+    {
+      "id": "L2-LOG-per-chunk-trim",
+      "group": "log-pane",
+      "pass": true,
+      "note": "every payload becomes exactly its own trimmed lines: the first entry carries the ISO prefix, its remaining lines are bare continuations, and nothing is re-split or re-assembled"
+    },
+    {
+      "id": "L2-LOG-iso-shape",
+      "group": "log-pane",
+      "pass": true,
+      "note": "every payload opens its entry with [ISO-8601 UTC] (plan §8: the regex shape is the claim, not the timestamp bytes)"
+    },
+    {
+      "id": "L2-LOG-iso-shape",
+      "group": "log-pane",
+      "pass": true,
+      "note": "every entry starts with [ISO-8601 UTC] (plan §8: regex shape, not bytes)"
+    },
+    {
+      "id": "L2-LOG-normalized-stream",
+      "group": "log-pane",
+      "pass": true,
+      "note": "the concatenated character stream of the walked entries equals the stream of the recorded payload bytes (whitespace-normalised per fixtures/COMPARISON.json)"
+    },
+    {
+      "id": "L2-LOG-entry-count",
+      "group": "log-pane",
+      "pass": true,
+      "note": "the walk consumed exactly one pane entry per line of each TRIMMED payload (61 lines over 61 payloads)"
+    },
+    {
+      "id": "L2-LOG-pane-has-app-lines-too",
+      "group": "log-pane",
+      "pass": true,
+      "note": "the pane still holds 3 further entries written by the app itself after the replay window"
+    },
+    {
+      "id": "L2-LOG-timestamps-real",
+      "group": "log-pane",
+      "pass": true,
+      "note": "below the cap the entry prefix is a real timestamp (the masked §8 field only applies at the cap)"
+    },
+    {
+      "id": "L2-LOG-auto-scroll",
+      "group": "log-pane",
+      "pass": true,
+      "note": "showOutput pins scrollTop to scrollHeight :: {\"scrollTop\":1078,\"scrollHeight\":1196,\"clientHeight\":118}"
+    },
+    {
+      "id": "L2-LOG-cap",
+      "group": "log-pane",
+      "pass": true,
+      "note": "the 1000-entry cap behaves exactly as the recording states (all four claims)"
+    },
+    {
+      "id": "L2-LOG-cap-lineCount",
+      "group": "log-pane",
+      "pass": true,
+      "note": "the pane holds exactly 1000 entries after 1203 events"
+    },
+    {
+      "id": "L2-SOCKET-no-early-io",
+      "group": "socket-events",
+      "pass": true,
+      "note": "io() is only called after a launch succeeds, not on page load"
+    },
+    {
+      "id": "L2-SOCKET-io-called",
+      "group": "socket-events",
+      "pass": true,
+      "note": "launch success calls io()"
+    },
+    {
+      "id": "L2-SOCKET-handlers",
+      "group": "socket-events",
+      "pass": true,
+      "note": "the app registers the five socket.io handlers it records (one set per socket)"
+    },
+    {
+      "id": "L2-SOCKET-connect-banner",
+      "group": "socket-events",
+      "pass": true,
+      "note": "the connect handler prints the recorded banner line (C6: user-visible reconnect choreography)"
+    },
+    {
+      "id": "L2-SOCKET-launch-lines",
+      "group": "socket-events",
+      "pass": true,
+      "note": "launch writes its own pane entries before the socket"
+    },
+    {
+      "id": "L2-SOCKET-server-error-line",
+      "group": "socket-events",
+      "pass": true,
+      "note": "the server-error handler prints its payload message"
+    },
+    {
+      "id": "L2-SOCKET-server-ended-line",
+      "group": "socket-events",
+      "pass": true,
+      "note": "the recorded server-ended payload produces the recorded line"
+    },
+    {
+      "id": "L2-SOCKET-server-ended-status",
+      "group": "socket-events",
+      "pass": true,
+      "note": "server-ended drives the status readout"
+    },
+    {
+      "id": "L2-SOCKET-server-ended-buttons",
+      "group": "socket-events",
+      "pass": true,
+      "note": "Q1 plus button state after the child ended (updateButtonStates(false))"
+    },
+    {
+      "id": "L2-STOP-disconnects",
+      "group": "socket-events",
+      "pass": true,
+      "note": "stopServer disconnects the log socket on success (script.js stopServer)"
+    },
+    {
+      "id": "L2-STOP-pane-line",
+      "group": "socket-events",
+      "pass": true,
+      "note": "the stop success path prints its line"
+    },
+    {
+      "id": "L2-START-error-line",
+      "group": "http-mock",
+      "pass": true,
+      "note": "a 200 body with success:false prints the error instead of updating status (Q3 shape)"
+    },
+    {
+      "id": "L2-START-error-status",
+      "group": "http-mock",
+      "pass": true,
+      "note": "the failed launch leaves the status readout alone"
+    },
+    {
+      "id": "L2-START-error-no-socket",
+      "group": "http-mock",
+      "pass": true,
+      "note": "the failed launch does not open a log socket"
+    },
+    {
+      "id": "L2-MOCK-unmatched",
+      "group": "http-mock",
+      "pass": true,
+      "note": "every fetch the page issued had recorded bytes to replay"
+    },
+    {
+      "id": "L2-CADENCE-initial",
+      "group": "cadence",
+      "pass": true,
+      "note": "the page fetches /metrics once at startup (startMetricUpdates)"
+    },
+    {
+      "id": "L2-CADENCE-metrics-1s",
+      "group": "cadence",
+      "pass": true,
+      "note": "/metrics polled about every 1000 ms: 12 polls in a 12 s fake clock window"
+    },
+    {
+      "id": "L2-CADENCE-status-5s",
+      "group": "cadence",
+      "pass": true,
+      "note": "/status polled about every 5000 ms: 2 polls in the same window"
+    },
+    {
+      "id": "L2-CADENCE-independent",
+      "group": "cadence",
+      "pass": true,
+      "note": "the two cadences are independent intervals, not one timer (5 s vs 1 s)"
+    },
+    {
+      "id": "L2-CADENCE-metrics-gaps",
+      "group": "cadence",
+      "pass": true,
+      "note": "the mock observed 12/metrics gaps under the fake clock"
+    },
+    {
+      "id": "L2-CHART-50-point-history",
+      "group": "charts",
+      "pass": true,
+      "note": "the canvas after 51 points equals the canvas of the last 50 points (chartData shift(), plan §9 trap 7)"
+    },
+    {
+      "id": "L2-CHART-readout-rounds",
+      "group": "charts",
+      "pass": true,
+      "note": "the readout is Math.round(last cpu) + \"%\""
+    },
+    {
+      "id": "L2-CHART-canvas-sized",
+      "group": "charts",
+      "pass": true,
+      "note": "initCharts sizes the canvas backing store to its CSS box: 111x40"
+    },
+    {
+      "id": "L2-CHART-resize",
+      "group": "charts",
+      "pass": true,
+      "note": "resizing the window resizes the chart canvases (handleResize → initCharts): 111x40 → 91x40"
+    },
+    {
+      "id": "L2-DIALOG-serverpath-alert",
+      "group": "dialogs",
+      "pass": true,
+      "note": "Q13: launching without a serverPath alerts with the recorded text"
+    },
+    {
+      "id": "L2-DIALOG-serverpath-no-request",
+      "group": "dialogs",
+      "pass": true,
+      "note": "the alert path returns before fetch, so nothing is posted"
+    },
+    {
+      "id": "L2-DIALOG-settings-fetched",
+      "group": "dialogs",
+      "pass": true,
+      "note": "the settings dialog opens from GET /settings"
+    },
+    {
+      "id": "L2-DIALOG-modelsdir-alert",
+      "group": "dialogs",
+      "pass": true,
+      "note": "Q13: saving an empty models directory alerts with the recorded text"
+    },
+    {
+      "id": "L2-Q13-reload-after-settings-save",
+      "group": "dialogs",
+      "pass": true,
+      "note": "Q13: location.reload() after a successful settings save (main-frame navigations 1 → 2)"
+    },
+    {
+      "id": "L2-DIALOG-settings-post",
+      "group": "dialogs",
+      "pass": true,
+      "note": "the settings POST body is the two dialog fields"
+    },
+    {
+      "id": "L2-DIALOG-settings-local-first",
+      "group": "dialogs",
+      "pass": true,
+      "note": "settings.serverPort is written to localStorage before the server round-trip"
+    },
+    {
+      "id": "L2-STATE-default-1280x800",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "rendered fingerprint equals fixtures/screenshots/J5-ui-states/default-1280x800.render.json (element geometry, visibility, control state, shown text with digits masked, log pane reduced to its entry claims)"
+    },
+    {
+      "id": "L2-A11Y-default-1280x800-duplicate-ids",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "no duplicate element ids in this state"
+    },
+    {
+      "id": "L2-A11Y-default-1280x800-unlabeled",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "every rendered control/label/button has an accessible name (label[for] or aria-label)"
+    },
+    {
+      "id": "L2-STATE-default-1920x1080",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "rendered fingerprint equals fixtures/screenshots/J5-ui-states/default-1920x1080.render.json (element geometry, visibility, control state, shown text with digits masked, log pane reduced to its entry claims)"
+    },
+    {
+      "id": "L2-A11Y-default-1920x1080-duplicate-ids",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "no duplicate element ids in this state"
+    },
+    {
+      "id": "L2-A11Y-default-1920x1080-unlabeled",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "every rendered control/label/button has an accessible name (label[for] or aria-label)"
+    },
+    {
+      "id": "L2-STATE-config-selected-1280x800",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "rendered fingerprint equals fixtures/screenshots/J5-ui-states/config-selected-1280x800.render.json (element geometry, visibility, control state, shown text with digits masked, log pane reduced to its entry claims)"
+    },
+    {
+      "id": "L2-A11Y-config-selected-1280x800-duplicate-ids",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "no duplicate element ids in this state"
+    },
+    {
+      "id": "L2-A11Y-config-selected-1280x800-unlabeled",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "every rendered control/label/button has an accessible name (label[for] or aria-label)"
+    },
+    {
+      "id": "L2-STATE-config-selected-1920x1080",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "rendered fingerprint equals fixtures/screenshots/J5-ui-states/config-selected-1920x1080.render.json (element geometry, visibility, control state, shown text with digits masked, log pane reduced to its entry claims)"
+    },
+    {
+      "id": "L2-A11Y-config-selected-1920x1080-duplicate-ids",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "no duplicate element ids in this state"
+    },
+    {
+      "id": "L2-A11Y-config-selected-1920x1080-unlabeled",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "every rendered control/label/button has an accessible name (label[for] or aria-label)"
+    },
+    {
+      "id": "L2-STATE-settings-dialog-1280x800",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "rendered fingerprint equals fixtures/screenshots/J5-ui-states/settings-dialog-1280x800.render.json (element geometry, visibility, control state, shown text with digits masked, log pane reduced to its entry claims)"
+    },
+    {
+      "id": "L2-A11Y-settings-dialog-1280x800-duplicate-ids",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "no duplicate element ids in this state"
+    },
+    {
+      "id": "L2-A11Y-settings-dialog-1280x800-unlabeled",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "every rendered control/label/button has an accessible name (label[for] or aria-label)"
+    },
+    {
+      "id": "L2-STATE-settings-dialog-1920x1080",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "rendered fingerprint equals fixtures/screenshots/J5-ui-states/settings-dialog-1920x1080.render.json (element geometry, visibility, control state, shown text with digits masked, log pane reduced to its entry claims)"
+    },
+    {
+      "id": "L2-A11Y-settings-dialog-1920x1080-duplicate-ids",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "no duplicate element ids in this state"
+    },
+    {
+      "id": "L2-A11Y-settings-dialog-1920x1080-unlabeled",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "every rendered control/label/button has an accessible name (label[for] or aria-label)"
+    },
+    {
+      "id": "L2-STATE-delete-confirm-1280x800",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "rendered fingerprint equals fixtures/screenshots/J5-ui-states/delete-confirm-1280x800.render.json (element geometry, visibility, control state, shown text with digits masked, log pane reduced to its entry claims)"
+    },
+    {
+      "id": "L2-A11Y-delete-confirm-1280x800-duplicate-ids",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "no duplicate element ids in this state"
+    },
+    {
+      "id": "L2-A11Y-delete-confirm-1280x800-unlabeled",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "every rendered control/label/button has an accessible name (label[for] or aria-label)"
+    },
+    {
+      "id": "L2-STATE-delete-confirm-1920x1080",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "rendered fingerprint equals fixtures/screenshots/J5-ui-states/delete-confirm-1920x1080.render.json (element geometry, visibility, control state, shown text with digits masked, log pane reduced to its entry claims)"
+    },
+    {
+      "id": "L2-A11Y-delete-confirm-1920x1080-duplicate-ids",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "no duplicate element ids in this state"
+    },
+    {
+      "id": "L2-A11Y-delete-confirm-1920x1080-unlabeled",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "every rendered control/label/button has an accessible name (label[for] or aria-label)"
+    },
+    {
+      "id": "L2-STATE-log-pane-1280x800",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "rendered fingerprint equals fixtures/screenshots/J5-ui-log-cap/log-pane-1280x800.render.json (element geometry, visibility, control state, shown text with digits masked, log pane reduced to its entry claims)"
+    },
+    {
+      "id": "L2-A11Y-log-pane-1280x800-duplicate-ids",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "no duplicate element ids in this state"
+    },
+    {
+      "id": "L2-A11Y-log-pane-1280x800-unlabeled",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "every rendered control/label/button has an accessible name (label[for] or aria-label)"
+    },
+    {
+      "id": "L2-STATE-compared-count",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "9 recorded fingerprints compared (J4b presets-selected is not rebuildable from fixtures)"
+    },
+    {
+      "id": "L2-HEADINGS-spec-sections-rendered",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "every SPEC section that owns a rendered field appears as a heading in the document"
+    },
+    {
+      "id": "L2-HEADINGS-order",
+      "group": "state-snapshots",
+      "pass": true,
+      "note": "the sections appear in the order SPEC orders their first field, including the create-config dialog section, whose dialog is open in this state"
+    },
+    {
+      "id": "L2-CORPUS-list-count",
+      "group": "corpus",
+      "pass": true,
+      "note": "all 48 corpus configs render"
+    },
+    {
+      "id": "L2-CORPUS-list-order",
+      "group": "corpus",
+      "pass": true,
+      "note": "the rendered order equals the order the legacy page rendered (recorded J6 bytes)"
+    },
+    {
+      "id": "L2-CORPUS-seed-map-order",
+      "group": "corpus",
+      "pass": true,
+      "note": "the seeded storage map keeps the corpus file order (ini section order follows it, §9 trap 6)"
+    },
+    {
+      "id": "L2-CORPUS-model-options",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded J6 run matched all 48 corpus modelPaths against /models options, which is the option set this suite mocks for corpus mode"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen 3 Q4 64K - 28TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen 3 Q4 64K - 28TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen 3 Q4 64K - 28TPS\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen 3 Q4 64K - 28TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-GPT-OSS-20B 16K 125TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-GPT-OSS-20B 16K 125TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"GPT-OSS-20B 16K 125TPS\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-GPT-OSS-20B 16K 125TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-GPT-OSS-20B 100K 52TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-GPT-OSS-20B 100K 52TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"GPT-OSS-20B 100K 52TPS\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-GPT-OSS-20B 100K 52TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-GPT-20B 131K(full) - 50TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-GPT-20B 131K(full) - 50TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"GPT-20B 131K(full) - 50TPS\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-GPT-20B 131K(full) - 50TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen 3 0.6b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen 3 0.6b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen 3 0.6b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen 3 0.6b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen 3 Q4 10K - 38TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen 3 Q4 10K - 38TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen 3 Q4 10K - 38TPS\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen 3 Q4 10K - 38TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen3VL - 30B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen3VL - 30B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen3VL - 30B\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen3VL - 30B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen3VL-30B-Thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen3VL-30B-Thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen3VL-30B-Thinking\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen3VL-30B-Thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen3VL-2B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen3VL-2B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen3VL-2B\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen3VL-2B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen3VL-4B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen3VL-4B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen3VL-4B\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen3VL-4B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen3VL-8B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen3VL-8B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen3VL-8B\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen3VL-8B",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen 3 - 4b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen 3 - 4b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen 3 - 4b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen 3 - 4b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Mistral -14B Thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Mistral -14B Thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Mistral -14B Thinking\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Mistral -14B Thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Nvidia-orchestrator-8b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Nvidia-orchestrator-8b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Nvidia-orchestrator-8b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Nvidia-orchestrator-8b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen3VL-2B-thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen3VL-2B-thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen3VL-2B-thinking\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen3VL-2B-thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen 3 Q4 64K - Draft",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen 3 Q4 64K - Draft",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen 3 Q4 64K - Draft\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen 3 Q4 64K - Draft",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen3-coder-480b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen3-coder-480b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen3-coder-480b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen3-coder-480b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Nemotron-3-nano",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Nemotron-3-nano",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Nemotron-3-nano\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Nemotron-3-nano",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen3 - 4b Thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen3 - 4b Thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen3 - 4b Thinking\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen3 - 4b Thinking",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen3-coder-480b-draft",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen3-coder-480b-draft",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen3-coder-480b-draft\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen3-coder-480b-draft",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-nemotron-cascade-14b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-nemotron-cascade-14b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"nemotron-cascade-14b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-nemotron-cascade-14b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-GLM-4.7-flash",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-GLM-4.7-flash",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"GLM-4.7-flash\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-GLM-4.7-flash",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen3-coder-80b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen3-coder-80b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen3-coder-80b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen3-coder-80b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-Qwen3-coder-80b-full",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-Qwen3-coder-80b-full",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"Qwen3-coder-80b-full\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-Qwen3-coder-80b-full",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.5-0.8b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.5-0.8b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.5-0.8b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.5-0.8b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.5-9b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.5-9b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.5-9b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.5-9b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.6-35b-mtp",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.6-35b-mtp",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.6-35b-mtp\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.6-35b-mtp",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.6-35b-mtp-n",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.6-35b-mtp-n",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.6-35b-mtp-n\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.6-35b-mtp-n",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.6-35b-n",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.6-35b-n",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.6-35b-n\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.6-35b-n",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.6-35b-q2",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.6-35b-q2",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.6-35b-q2\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.6-35b-q2",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-ornith-9b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-ornith-9b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"ornith-9b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-ornith-9b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-ornith-35b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-ornith-35b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"ornith-35b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-ornith-35b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.8-27b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.8-27b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.8-27b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.8-27b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.8-27b-mtp",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.8-27b-mtp",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.8-27b-mtp\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.8-27b-mtp",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.8-27b-beellama",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.8-27b-beellama",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.8-27b-beellama\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.8-27b-beellama",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.6-35b-beellama",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.6-35b-beellama",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.6-35b-beellama\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.6-35b-beellama",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.6-35b-q2-beellama",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.6-35b-q2-beellama",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.6-35b-q2-beellama\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.6-35b-q2-beellama",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-LFM-2.5",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-LFM-2.5",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"LFM-2.5\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-LFM-2.5",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-ornith-1.5-35b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-ornith-1.5-35b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"ornith-1.5-35b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-ornith-1.5-35b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.8-27b-beellama-fast",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.8-27b-beellama-fast",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.8-27b-beellama-fast\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.8-27b-beellama-fast",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-spark-v2.5-4b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-spark-v2.5-4b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"spark-v2.5-4b\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-spark-v2.5-4b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.6-35b-uncensored",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.6-35b-uncensored",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.6-35b-uncensored\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.6-35b-uncensored",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.8-27b-bonsai",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.8-27b-bonsai",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.8-27b-bonsai\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.8-27b-bonsai",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.8-27b-bonsai-q1",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.8-27b-bonsai-q1",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.8-27b-bonsai-q1\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.8-27b-bonsai-q1",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.5-9b-mimo",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.5-9b-mimo",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.5-9b-mimo\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.5-9b-mimo",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-spark.X2.5-single",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-spark.X2.5-single",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"spark.X2.5-single\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-spark.X2.5-single",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-qwen3.8-flash-next",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-qwen3.8-flash-next",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"qwen3.8-flash-next\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-qwen3.8-flash-next",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-form-sha-inkling-2-mini",
+      "group": "corpus",
+      "pass": true,
+      "note": "the recorded form state that this launch expectation was composed from is the state the page is in now (golden launch_form_sha256)"
+    },
+    {
+      "id": "L2-CORPUS-argv-inkling-2-mini",
+      "group": "corpus",
+      "pass": true,
+      "note": "the mock-captured POST /start argv equals the recorded legacy argv for \"inkling-2-mini\""
+    },
+    {
+      "id": "L2-CORPUS-serverPath-inkling-2-mini",
+      "group": "corpus",
+      "pass": true,
+      "note": "the POST body serverPath is the stored serverPath, verbatim (Q20 separators kept)"
+    },
+    {
+      "id": "L2-CORPUS-launched-count",
+      "group": "corpus",
+      "pass": true,
+      "note": "every corpus config issued a POST /start (the corpus-mode /models mock offers every corpus path)"
+    },
+    {
+      "id": "L2-CORPUS-alert-blocked",
+      "group": "corpus",
+      "pass": true,
+      "note": "in corpus mode nothing is alert-blocked; the recorded-J2-payload mode below asserts the blocking"
+    },
+    {
+      "id": "L2-CORPUS-form-states",
+      "group": "corpus",
+      "pass": true,
+      "note": "loading each config produces the recorded form state (values, checked, disabled)"
+    },
+    {
+      "id": "L2-CORPUS-Q18-options",
+      "group": "corpus",
+      "pass": true,
+      "note": "the /models mock replayed the recorded J2 payload (placeholder option aside)"
+    },
+    {
+      "id": "L2-CORPUS-Q18-blanked",
+      "group": "corpus",
+      "pass": true,
+      "note": "Q18: with the recorded J2 option set every corpus modelPath is missing from the <option> list, so it blanks on load (value \"\", selectedIndex -1) exactly as the recording shows"
+    },
+    {
+      "id": "L2-CORPUS-Q18-alert-count",
+      "group": "corpus",
+      "pass": true,
+      "note": "and every Launch click alerts instead of posting /start"
+    },
+    {
+      "id": "L2-CORPUS-Q18-alert-text",
+      "group": "corpus",
+      "pass": true,
+      "note": "the alert text matches what the legacy page alerted with (fixtures/goldens/resave, op=alert-blocked)"
+    },
+    {
+      "id": "L2-CORPUS-Q18-no-posts",
+      "group": "corpus",
+      "pass": true,
+      "note": "nothing was posted in this mode (launchServer returns before fetch)"
+    },
+    {
+      "id": "L2-CORPUS-resave-bytes",
+      "group": "corpus",
+      "pass": true,
+      "note": "every re-saved entry is byte-identical to the baseline saveCurrentValues output for that config (fixtures/goldens/resave, recorded from parity-baseline)"
+    },
+    {
+      "id": "L2-CORPUS-resave-orphans",
+      "group": "corpus",
+      "pass": true,
+      "note": "Q16: the orphan keys are dropped for exactly the configs that carried them"
+    },
+    {
+      "id": "L2-CORPUS-resave-key-order",
+      "group": "corpus",
+      "pass": true,
+      "note": "re-saving does not reorder the storage keys: the order is still the seeded insertion order (that order is what drives ini sections, §9 trap 6)"
+    },
+    {
+      "id": "L2-CORPUS-resave-changed-something",
+      "group": "corpus",
+      "pass": true,
+      "note": "the re-saves really rewrote storage"
+    },
+    {
+      "id": "L2-CORPUS-resave-whole-bytes-Qwen 3 Q4 64K - 28TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the exact localStorage bytes written for \"Qwen 3 Q4 64K - 28TPS\", other config untouched and in place"
+    },
+    {
+      "id": "L2-CORPUS-resave-sha-Qwen 3 Q4 64K - 28TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "full-storage digest for \"Qwen 3 Q4 64K - 28TPS\""
+    },
+    {
+      "id": "L2-CORPUS-resave-whole-bytes-Qwen 3 Q4 64K - 28TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "the exact localStorage bytes written for \"Qwen 3 Q4 64K - 28TPS\", other config untouched and in place"
+    },
+    {
+      "id": "L2-CORPUS-resave-sha-Qwen 3 Q4 64K - 28TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "full-storage digest for \"Qwen 3 Q4 64K - 28TPS\""
+    },
+    {
+      "id": "L2-CORPUS-resave-whole-bytes-ornith-35b",
+      "group": "corpus",
+      "pass": true,
+      "note": "the exact localStorage bytes written for \"ornith-35b\", other config untouched and in place"
+    },
+    {
+      "id": "L2-CORPUS-resave-sha-ornith-35b",
+      "group": "corpus",
+      "pass": true,
+      "note": "full-storage digest for \"ornith-35b\""
+    },
+    {
+      "id": "L2-INI-presets-dropdown",
+      "group": "corpus",
+      "pass": true,
+      "note": "the presets dropdown is populated from the stored serverPaths"
+    },
+    {
+      "id": "L2-INI-all48-bytes",
+      "group": "corpus",
+      "pass": true,
+      "note": "the models-preset.ini bytes generated from ALL 48 configs equal the gen-goldens corpus ini output composed in storage insertion order, with the trailing port line (Q10)"
+    },
+    {
+      "id": "L2-INI-all48-section-order",
+      "group": "corpus",
+      "pass": true,
+      "note": "§9 trap 6: ini section order is Object.entries(localStorage) order, not the alphabetical render order"
+    },
+    {
+      "id": "L2-INI-all48-per-section",
+      "group": "corpus",
+      "pass": true,
+      "note": "each of the 48 ini sections equals its own corpus golden (the composition is per-config)"
+    },
+    {
+      "id": "L2-INI-trailing-port",
+      "group": "corpus",
+      "pass": true,
+      "note": "Q10: the ini ends with the trailing `port = ` line"
+    },
+    {
+      "id": "L2-INI-body-keys",
+      "group": "corpus",
+      "pass": true,
+      "note": "the /launch-presets body is {presets, serverPath, serverPort}"
+    },
+    {
+      "id": "L2-INI-pane-before-port-line",
+      "group": "corpus",
+      "pass": true,
+      "note": "the pane prints the sections before the port line is appended (recorded J4b claim)"
+    },
+    {
+      "id": "L2-INI-2config-GPT-20B 131K(full) - 50TPS-Qwen3VL-4B",
+      "group": "corpus",
+      "pass": true,
+      "note": "ini bytes from a deterministic 2-config subset (GPT-20B 131K(full) - 50TPS, Qwen3VL-4B)"
+    },
+    {
+      "id": "L2-INI-2config-order-GPT-20B 131K(full) - 50TPS-Qwen3VL-4B",
+      "group": "corpus",
+      "pass": true,
+      "note": "section order follows the storage insertion order for this seed"
+    },
+    {
+      "id": "L2-INI-2config-render-always-sorted-GPT-20B 131K(full) - 50TPS-Qwen3VL-4B",
+      "group": "corpus",
+      "pass": true,
+      "note": "while the rendered list stays alphabetical, whatever the insertion order"
+    },
+    {
+      "id": "L2-INI-2config-Qwen3VL-4B-GPT-20B 131K(full) - 50TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "ini bytes from a deterministic 2-config subset (Qwen3VL-4B, GPT-20B 131K(full) - 50TPS)"
+    },
+    {
+      "id": "L2-INI-2config-order-Qwen3VL-4B-GPT-20B 131K(full) - 50TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "section order follows the storage insertion order for this seed"
+    },
+    {
+      "id": "L2-INI-2config-render-always-sorted-Qwen3VL-4B-GPT-20B 131K(full) - 50TPS",
+      "group": "corpus",
+      "pass": true,
+      "note": "while the rendered list stays alphabetical, whatever the insertion order"
+    },
+    {
+      "id": "L2-INI-2config-order-matters",
+      "group": "corpus",
+      "pass": true,
+      "note": "the two seeds produce different bytes: the order claim is real, not vacuous"
+    },
+    {
+      "id": "L2-INI-2config-only-order-differs",
+      "group": "corpus",
+      "pass": true,
+      "note": "sanity: both section names appear in the forward seed (GPT-20B 131K(full) - 50TPS, Qwen3VL-4B)"
+    },
+    {
+      "id": "L2-PORT-default-posted",
+      "group": "misc",
+      "pass": true,
+      "note": "launch posted /start with no stored settings"
+    },
+    {
+      "id": "L2-PORT-default-8080",
+      "group": "misc",
+      "pass": true,
+      "note": "Q5: with no llamaCppSettings the client uses DEFAULT_PORT 8080"
+    },
+    {
+      "id": "L2-PORT-argv-tail",
+      "group": "misc",
+      "pass": true,
+      "note": "Q14/Q5/Q21: --host 0.0.0.0, then -fit off, then --port, then the selected model mmproj — the order the recorded goldens end with (cover2-006)"
+    },
+    {
+      "id": "L2-MODELS-options",
+      "group": "misc",
+      "pass": true,
+      "note": "the model dropdown holds the placeholder plus every recorded /models path"
+    },
+    {
+      "id": "L2-MODELS-draft-options",
+      "group": "misc",
+      "pass": true,
+      "note": "the draft dropdown gets the same options (fetchModels clones them)"
+    },
+    {
+      "id": "L2-MODELS-labels",
+      "group": "misc",
+      "pass": true,
+      "note": "option text is relativePath || name, as the recorded payload provides"
+    },
+    {
+      "id": "L2-MODELS-failure-line",
+      "group": "misc",
+      "pass": true,
+      "note": "a successful /models fetch leaves no error line in the pane"
+    },
+    {
+      "id": "L2-MODELS-error-line",
+      "group": "misc",
+      "pass": true,
+      "note": "a success:false /models body prints the recorded error path"
+    },
+    {
+      "id": "L2-MODELS-error-keeps-placeholder",
+      "group": "misc",
+      "pass": true,
+      "note": "the failed fetch leaves the markup placeholder in place (the select is only rebuilt on success)"
+    },
+    {
+      "id": "L2-PRESETS-distinct-count",
+      "group": "misc",
+      "pass": true,
+      "note": "the presets dropdown holds one option per distinct TRIMMED stored serverPath (1 of 48 configs)"
+    },
+    {
+      "id": "L2-PRESETS-values",
+      "group": "misc",
+      "pass": true,
+      "note": "the option values are the trimmed stored paths, in Set (insertion) order"
+    },
+    {
+      "id": "L2-PRESETS-placeholder-first",
+      "group": "misc",
+      "pass": true,
+      "note": "the dropdown keeps its placeholder option"
+    },
+    {
+      "id": "L2-Q1-fresh",
+      "group": "misc",
+      "pass": true,
+      "note": "Q1: disabled in the markup, and the line in updateButtonStates that would enable it is commented out, so the attribute never leaves"
+    },
+    {
+      "id": "L2-Q1-config-selected",
+      "group": "misc",
+      "pass": true,
+      "note": "Q1 holds after selecting a config"
+    },
+    {
+      "id": "L2-Q1-running",
+      "group": "misc",
+      "pass": true,
+      "note": "Q1 holds while the page believes a server is running (updateButtonStates(true) skips restartBtn)"
+    },
+    {
+      "id": "L2-Q1-settings-dialog",
+      "group": "misc",
+      "pass": true,
+      "note": "Q1 holds with a modal dialog open"
+    },
+    {
+      "id": "L2-Q1-stopped",
+      "group": "misc",
+      "pass": true,
+      "note": "Q1 holds after stopping"
+    },
+    {
+      "id": "L2-Q1-after-delete-prompt",
+      "group": "misc",
+      "pass": true,
+      "note": "Q1 holds while the delete confirm is up (dismissed by the harness)"
+    },
+    {
+      "id": "L2-SOCKET-module-requested",
+      "group": "misc",
+      "pass": true,
+      "note": "C6: the page really imports ./socket.io.esm.min.js (45 request(s) stubbed)"
+    },
+    {
+      "id": "L2-NO-APP-IMPORTS",
+      "group": "misc",
+      "pass": true,
+      "note": "no L2 file requires public/script.js, legacy/lib or server.js (plan §6 rule 1)"
+    },
+    {
+      "id": "L2-STATIC-404",
+      "group": "misc",
+      "pass": true,
+      "note": "the page requested no asset the sandbox failed to serve"
+    }
+  ]
+}

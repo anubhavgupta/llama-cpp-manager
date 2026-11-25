@@ -1,0 +1,99 @@
+L1 backend conformance suite — self-test against parity-baseline
+   fixtures: C:\projects\Cline-demo\fixtures  (193 recorded files, comparison policy 13 rules)
+   groups: contract, process, restart, presets, metrics-simulated, metrics-unparsable, metrics-stub, socket
+== sandbox C:\parity-scratch  ref parity-baseline
+--> group contract (NVIDIA_SMI_STUB_MODE=ok)
+--> group process (NVIDIA_SMI_STUB_MODE=ok)
+--> group restart (NVIDIA_SMI_STUB_MODE=ok)
+--> group presets (NVIDIA_SMI_STUB_MODE=ok)
+--> group metrics-simulated (NVIDIA_SMI_STUB_MODE=fail)
+--> group metrics-unparsable (NVIDIA_SMI_STUB_MODE=garbage)
+--> group metrics-stub (NVIDIA_SMI_STUB_MODE=ok)
+--> group socket (NVIDIA_SMI_STUB_MODE=ok)
+
+checks per endpoint
+  /launch-presets                  9 pass
+  /metrics                         7 pass
+  /models                          4 pass
+  /restart                        10 pass
+  /settings (Q11 port)             1 pass
+  /settings                        5 pass
+  /start -> socket log stream      2 pass
+  /start                           6 pass
+  /status                          4 pass
+  /stop                            4 pass
+  GET / (static)                   1 pass
+  GET /                            1 pass
+  GET /swagger(.json)              2 pass
+  harness guard (no child left registered)   1 pass
+  socket.io                        7 pass
+
+PASS  [contract]  L1.ROOT.BYTES  — 200, 24584 bytes == fixtures/http/J0-baseline/root.response
+PASS  [contract]  L1.SWAGGER.BYTES  — 200, 864 bytes == fixtures/http/J0-baseline/swagger.response
+PASS  [contract]  L1.SWAGGER-JSON.BYTES  — 200, 9516 bytes == fixtures/http/J0-baseline/swagger-json.response
+PASS  [contract]  L1.SETTINGS.FIRST-RUN.BYTES  — first-run default branch byte-identical, serverPort 8080, modelsDirectory C:\Users\anubh\.lmstudio\models
+PASS  [contract]  L1.SETTINGS.POST-WITH-PORT.BYTES  — 200 bytes == golden AND settings.json bytes == fixtures/ini/J1-settings/settings.after-with-port.json
+PASS  [contract]  L1.SETTINGS.READ-BACK.BYTES  — 200 bytes == fixtures/http/J1-settings/settings-read.response, serverPort 7838
+PASS  [Q2]  L1.SETTINGS.TDZ-PORT-8080  — POST without serverPort rewrote 7838 -> 8080 (TDZ: existing settings never read); response and file bytes both == goldens
+PASS  [Q11]  L1.PORT.HARD-CODED-7837  — settings.json serverPort=8080 and the manager still answers on 7837
+PASS  [contract]  L1.STATUS.IDLE.BYTES  — {"running":false} == fixtures/http/J1-settings/status.response
+PASS  [contract]  L1.METRICS.STUB-SHAPE  — 3 samples: five-field key set, gpu/vram/vramUsage == the stub canned numbers, cpu/ram relaxed by rule metrics-body-stub
+PASS  [contract]  L1.MODELS.BYTES  — 10 models, bytes == fixtures/http/J2-models/models.response
+PASS  [contract]  L1.MODELS.MMPROJ-EXCLUDED  — 0 mmproj entries; 10 models, none mmproj*
+PASS  [contract]  L1.MODELS.MMPROJ-FIRST-MATCH  — 10 models carry the recorded mmprojFile association, incl. the case-sensitive probe and the multi-mmproj first match
+PASS  [contract]  L1.MODELS.UNREADABLE-ABSENT  — no entries under models/unreadable, matching the recorded ACL-denied subtree
+PASS  [contract]  L1.STATIC.INDEX-MATCHES-GOLDEN  — the served index.html is the recorded byte stream (24584 bytes)
+PASS  [contract]  L1.SETTINGS.REPLAY-MODELSDIR-REQUIRED  — 400 + {"success":false,"error":"Models directory path is required"}
+PASS  [contract]  L1.STATUS.BEFORE-START.BYTES  — {"running":false} == fixtures/http/J3-start-stop/status-before.response
+PASS  [Q3]  L1.START.MISSING-PATH-400  — 400 + {"success":false,"error":"Server path is required"}, nothing spawned
+PASS  [Q3]  L1.STOP.WHILE-IDLE-200  — 200 + success:false == fixtures/http/J3c-start-missing-path/stop-while-idle.response
+PASS  [contract]  L1.START.OK-BYTES  — 200 + {"success":true,"message":"Server started successfully"}
+PASS  [contract]  L1.START.ARGV-MATCHES-GOLDEN  — 56 args positionally identical to the golden, --port 7838
+PASS  [contract]  L1.LOG.STREAM-MATCHES-RECORDED-BYTES  — 419 bytes == the recorded stream; 51 partial-line payloads prove raw chunk forwarding
+PASS  [contract]  L1.STATUS.RUNNING-BYTES  — {"running":true} == fixtures/http/J3-start-stop/status-running.response
+PASS  [contract]  L1.STATUS.CADENCE-FREE-POLLING  — 10 back-to-back polls, all {"running":true}
+PASS  [Q3]  L1.START.ALREADY-RUNNING-200  — 200 + success:false + "Server is already running", still 1 spawn line(s)
+PASS  [contract]  L1.STOP.OK-BYTES  — {"success":true,"message":"Server stopped successfully"} + server-ended
+PASS  [contract]  L1.SOCKET.SERVER-ENDED-ORDER  — control events in recorded order: ["connect","server-ended"]
+PASS  [contract]  L1.LOG.RAW-CHUNK-BYTES-FORWARDED  — 176 payloads vs 184 recorded writes; 543 bytes byte-identical
+PASS  [contract]  L1.STOP.SIGTERM-THEN-SIGKILL  — child 38448 terminated inside the stop window; manager logged code null (win32)
+PASS  [Q24]  L1.STOP.STALE-TIMER-WINDOW  — relaunch 32152 1 ms into the window: /status settled false, /stop 200 success:false, child survived with its handle lost — recorded on win32
+PASS  [contract]  L1.START.EXIT-CODE-PATH  — child 29736 exited 3, server-ended delivered, exit code logged
+PASS  [contract]  L1.START.EXIT-CODE-ARGV-GOLDEN  — 8 args identical to fixtures/argv/J3b-exit-code/launch.jsonl
+PASS  [contract]  L1.GROUP.SETTLED  — no child registered at the end of the group
+PASS  [Q4]  L1.RESTART.NO-CONFIG-400  — 400 + {"success":false,"error":"No previous configuration found to restart from"}
+PASS  [contract]  L1.RESTART.START-FIRST  — spawned with the recorded argv (4 args)
+PASS  [Q23]  L1.RESTART.GET-IS-EXPRESS-404  — 404 + the Express "Cannot GET /restart" page, byte-identical to the golden
+PASS  [Q3]  L1.RESTART.OK-200-TRUE  — 200 + {"success":true,"message":"Server restarted successfully"}
+PASS  [Q23]  L1.RESTART.STATUS-SETTLES-FALSE  — immediately {"running":false}, after 2 s {"running":false}
+PASS  [Q23]  L1.RESTART.STOP-AFTER-RESTART-200-FALSE  — 200 + success:false — the replacement child is unreachable to /stop
+PASS  [Q23]  L1.RESTART.ARGV-GAINED-ONE-SPAWN  — 2 argv lines, inside the restart-settle rule bounds [2, 2]
+PASS  [Q23]  L1.RESTART.EVENT-IDENTITY  — event identity ["connect","log-stream","server-ended"] covers the recorded set ["connect","disconnect","log-stream","server-ended"]
+PASS  [Q23]  L1.RESTART.SETTLE-RULE-BOUNDS  — restartBody byte-identical and the recorded platform matches this run (win32)
+PASS  [Q4]  L1.RESTART.AFTER-MANAGER-RESTART-400  — 400 + {"success":false,"error":"No previous configuration found to restart from"}, argv log gained nothing
+PASS  [Q5]  L1.PRESETS.SEED-PORT-7838  — settings.json serverPort 7838 (so a DEFAULT_PORT fallback is unambiguous)
+PASS  [Q5]  L1.PRESETS.DEFAULT-PORT-BYTES  — 200 bytes == golden, incl. presetsFile C:\parity-scratch\app\models-preset.ini
+PASS  [Q10]  L1.PRESETS.INI-BYTES  — 410 bytes == fixtures/ini/J4-launch-presets/presets-direct.ini
+PASS  [Q5]  L1.PRESETS.ARGV-PORT-8080  — --port 8080 with settings.json at 7838, argv == the recorded dual-path evidence
+PASS  [Q24]  L1.PRESETS.STOP-AFTER-DEFAULT-PORT  — 200 success:true, then the recorded 1.5 s quiescence before relaunching (Q24)
+PASS  [Q5]  L1.PRESETS.EXPLICIT-PORT-7838  — same ini bytes, --port 7838 taken from the request body
+PASS  [Q4]  L1.PRESETS.RESTART-STILL-400  — 400 + "No previous configuration found to restart from"
+PASS  [contract]  L1.PRESETS.STOP-AFTER-EXPLICIT-PORT  — 200 success:true
+PASS  [contract]  L1.PRESETS.STANDIN-RELAY-ARGV-IDENTICAL  — 2 relay pairs, argv identical across the relay
+PASS  [Q6]  L1.METRICS.SIMULATED-SHAPE  — 220 samples (200 + 20 after 2500 ms), 2 distinct, rule metrics-body-simulated, fixture family fixtures/http/J2c-metrics-fail/
+PASS  [Q6]  L1.METRICS.SIMULATED-NOT-REAL  — vramUsage 2831.1143563534297/8192 — simulated total 8192, values not the recorded sample
+PASS  [Q6]  L1.METRICS.GARBAGE-ZEROS  — 220 samples (200 + 20 after 2500 ms), 2 distinct, rule metrics-body-unparsable, fixture family fixtures/http/J2b-metrics-garbage/
+PASS  [Q6]  L1.METRICS.GARBAGE-RECORDED-NOTE  — zeros + "0/0" confirmed against fixtures/http/J2b-metrics-garbage/shape-note.json
+PASS  [Q6]  L1.METRICS.STUB-CANNED  — 220 samples (200 + 20 after 2500 ms), 2 distinct, rule metrics-body-stub, fixture family fixtures/http/J1-settings/
+PASS  [contract]  L1.METRICS.STUB-FORMAT  — ${total-free}/${total} == 12345/24576 (24576 total, 12345 used)
+PASS  [contract]  L1.SOCKET.EVENT-FAMILIES  — events ["connect","log-stream"], every payload key set == SPEC/socket-contract.json
+PASS  [contract]  L1.SOCKET.RELAY-BYTES-IDENTICAL  — 157 payloads vs 162 relayed blocks; 481 bytes byte-identical
+PASS  [contract]  L1.SOCKET.SERVER-ENDED-ON-EVERY-CLIENT  — both clients got server-ended {"message":"Server process has ended"}
+PASS  [contract]  L1.SOCKET.CONNECTED-CLIENTS-CLEANUP  — fan-out reached the survivor only (0 payloads), the disconnected client received 0
+PASS  [contract]  L1.SOCKET.DISCONNECT-REMOVES-CLIENT  — a client connected after the cleanup is served and gets {"message":"Server process has ended"}
+PASS  [contract]  L1.SOCKET.SERVER-ERROR-UNSPAWNABLE-PATH  — unspawnable serverPath: 200 success:true on HTTP, socket got {"message":"Failed to start server: spawn C:\\parity-scratch\\app\\no-such-llama-server.exe ENOENT"}, /status back to running:false
+
+64 passed, 0 failed of 64 checks in 96.8 s
+run summary: tools\parity\reports\nightly\l1-2026-11-25T12-57-39Z-selftest.json
+
+L1 SELF-TEST GREEN against parity-baseline

@@ -11,6 +11,7 @@
 // the stand-in records for it.
 
 const browser = require('../../L2-ui/helpers/browser');
+const { spawnEinval } = require('./sandbox');
 
 const DEFAULT_TIMEOUT = 15000;
 
@@ -114,13 +115,28 @@ async function launch(session) {
     const manager = session.manager;
     const dialogsBefore = session.dialogs.length;
     const before = manager.argvRecords().length;
+    const spawnFailuresBefore = manager.spawnEinvalLogged();
     await session.click('launchBtn');
-    const record = await manager.waitForLaunch(before, 30000);
+    let record = await manager.waitForLaunch(before, 30000);
+    let retryNote = '';
+    if (!record && manager.spawnEinvalLogged() > spawnFailuresBefore) {
+        // Windows refused the manager's spawn of this very request. The body the page posted is
+        // re-posted unchanged, once, so the config's argv is still compared; helpers/sandbox.js
+        // launchRequest carries the explanation and the per-fire tally.
+        const posted = await session.lastPost('/start');
+        if (posted) {
+            spawnEinval.retries += 1;
+            retryNote = spawnEinval.note;
+            await manager.request('POST', '/start', posted);
+            record = await manager.waitForLaunch(before, 30000);
+        }
+    }
     if (!record) {
-        return { spawned: false, dialogs: session.dialogs.slice(dialogsBefore), argv: null };
+        return { spawned: false, dialogs: session.dialogs.slice(dialogsBefore), argv: null,
+            spawnEinval: manager.spawnEinvalLogged() > spawnFailuresBefore };
     }
     await session.waitStatus(true);
-    return { spawned: true, dialogs: [], argv: record, linesBefore: before };
+    return { spawned: true, dialogs: [], argv: record, linesBefore: before, retryNote };
 }
 
 async function stop(session) {

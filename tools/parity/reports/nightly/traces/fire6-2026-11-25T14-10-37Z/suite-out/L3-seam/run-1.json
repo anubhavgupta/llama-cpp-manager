@@ -1,0 +1,142 @@
+{
+  "at": "2026-11-25T14:14:41.885Z",
+  "ref": "parity-baseline",
+  "seconds": 212.486,
+  "checks": [
+    {
+      "id": "L3.SETTINGS-point-at-tree",
+      "quirk": "Q11",
+      "status": "pass",
+      "detail": "settings.json now { \"modelsDirectory\": \"C:\\\\parity-scratch\\\\fixtures\\\\models\", \"serverPort\": 7838 }"
+    },
+    {
+      "id": "L3.MODELS-fixture-bytes",
+      "quirk": "§9 seam: window.models",
+      "status": "pass",
+      "detail": "real /models equals the recorded J2 bytes (defaultMode:exact); 10 models"
+    },
+    {
+      "id": "L3.MODELS-mmproj-field",
+      "quirk": "§9 seam: first-match mmproj association",
+      "status": "pass",
+      "detail": "4 of 10 models carry an mmprojFile, identical to the recorded J2 association"
+    },
+    {
+      "id": "L3-CHECK-THREW-argv",
+      "quirk": "harness",
+      "status": "fail",
+      "detail": "Error: /status never reported running=true\n    at Object.waitStatus (C:\\projects\\Cline-demo\\tests\\L3-seam\\helpers\\page.js:84:19)\n    at async Object.argvSeam [as run] (C:\\projects\\Cline-demo\\tests\\L3-seam\\checks\\seam.js:110:9)\n    at async runOnce (C:\\projects\\Cline-demo\\tests\\L3-seam\\run.js:159:21)\n    at async main (C:\\projects\\Cline-demo\\tests\\L3-seam\\run.js:224:41)"
+    },
+    {
+      "id": "L3.PORT-q2-resets-file-to-8080",
+      "quirk": "Q2",
+      "status": "pass",
+      "detail": "settings.json = { \"modelsDirectory\": \"C:\\\\parity-scratch\\\\fixtures\\\\models\", \"serverPort\": 8080 }"
+    },
+    {
+      "id": "L3.PORT-Q11-manager-still-7837",
+      "quirk": "Q11",
+      "status": "pass",
+      "detail": "the file says 8080, localStorage will say 7838, the manager listens on 7837"
+    },
+    {
+      "id": "L3.PORT-dialog-prefill-from-file",
+      "quirk": "§9 seam: settings split-brain",
+      "status": "pass",
+      "detail": "dialog fields prefilled from settings.json (8080 + the fixture tree), localStorage still 7838"
+    },
+    {
+      "id": "L3.PORT-cancel-keeps-localStorage",
+      "quirk": "Q13",
+      "status": "pass",
+      "detail": "localStorage llamaCppSettings.serverPort still 7838"
+    },
+    {
+      "id": "L3.PORT-launch-takes-merged-port",
+      "quirk": "§9 seam: settings split-brain",
+      "status": "fail",
+      "detail": "Error: /status never reported running=true\n    at Object.waitStatus (C:\\projects\\Cline-demo\\tests\\L3-seam\\helpers\\page.js:84:19)\n    at async C:\\projects\\Cline-demo\\tests\\L3-seam\\checks\\seam.js:263:13\n    at async Registry.check (C:\\projects\\Cline-demo\\tests\\L1-backend\\lib\\harness.js:328:28)\n    at async Object.portSplitBrain [as run] (C:\\projects\\Cline-demo\\tests\\L3-seam\\checks\\seam.js:257:9)\n    at async runOnce (C:\\projects\\Cline-demo\\tests\\L3-seam\\run.js:159:21)\n    at async main (C:\\projects\\Cline-demo\\tests\\L3-seam\\run.js:224:41)"
+    },
+    {
+      "id": "L3.INI-presets-from-ui-bytes",
+      "quirk": "Q10 §9 seam: ini written verbatim",
+      "status": "pass",
+      "detail": "browser sha 799d3cf8929aedda === disk sha; the pane printed the sections without the trailing port line; ini existed before: false"
+    },
+    {
+      "id": "L3.PORT-presets-ui-argv",
+      "quirk": "Q5",
+      "status": "pass",
+      "detail": "[\"--models-preset\",\"C:\\\\parity-scratch\\\\app\\\\models-preset.ini\",\"--host\",\"0.0.0.0\",\"--port\",\"7838\"]"
+    },
+    {
+      "id": "L3.PORT-start-vs-presets",
+      "quirk": "Q5",
+      "status": "pass",
+      "detail": "both paths carry --port 7838 with the client-supplied value; the 8080 fallback is the next check"
+    },
+    {
+      "id": "L3.PORT-presets-default-8080",
+      "quirk": "Q5",
+      "status": "pass",
+      "detail": "[\"--models-preset\",\"C:\\\\parity-scratch\\\\app\\\\models-preset.ini\",\"--host\",\"0.0.0.0\",\"--port\",\"8080\"]"
+    },
+    {
+      "id": "L3.PORT-presets-explicit-port",
+      "quirk": "Q5",
+      "status": "pass",
+      "detail": "[\"--models-preset\",\"C:\\\\parity-scratch\\\\app\\\\models-preset.ini\",\"--host\",\"0.0.0.0\",\"--port\",\"7838\"]"
+    },
+    {
+      "id": "L3.CORPUS-materialised",
+      "quirk": "§9A remapped mode",
+      "status": "pass",
+      "detail": "42 corpus model files created under C:\\parity-scratch\\fixtures\\models; all 48 modelPaths are now /models options"
+    },
+    {
+      "id": "L3.CORPUS-list",
+      "quirk": "§9 trap 6",
+      "status": "pass",
+      "detail": "48 rows in the recorded J6 order"
+    },
+    {
+      "id": "L3-CHECK-THREW-corpus-launch",
+      "quirk": "harness",
+      "status": "fail",
+      "detail": "Error: /status never reported running=true\n    at Object.waitStatus (C:\\projects\\Cline-demo\\tests\\L3-seam\\helpers\\page.js:84:19)\n    at async Object.launch (C:\\projects\\Cline-demo\\tests\\L3-seam\\helpers\\page.js:122:5)\n    at async Object.launchAll [as run] (C:\\projects\\Cline-demo\\tests\\L3-seam\\checks\\corpus.js:111:30)\n    at async runOnce (C:\\projects\\Cline-demo\\tests\\L3-seam\\run.js:159:21)\n    at async main (C:\\projects\\Cline-demo\\tests\\L3-seam\\run.js:224:41)"
+    },
+    {
+      "id": "L3.CORPUS-resave-bytes",
+      "quirk": "Q16",
+      "status": "pass",
+      "detail": "48/48 re-saved entries byte-identical to the recorded goldens"
+    },
+    {
+      "id": "L3.CORPUS-resave-orphans",
+      "quirk": "Q16",
+      "status": "pass",
+      "detail": "Q16: the orphan keys are dropped for exactly the configs that carried them"
+    },
+    {
+      "id": "L3.CORPUS-resave-key-order",
+      "quirk": "§9 trap 6",
+      "status": "pass",
+      "detail": "storage key order survives all 48 re-saves"
+    },
+    {
+      "id": "L3.CORPUS-INI-token-bytes",
+      "quirk": "Q10 Q20",
+      "status": "pass",
+      "detail": "sha e103b55360e90aff equals the recorded token-form corpus ini exactly, 11 mixed-separator chat-template-file lines included"
+    },
+    {
+      "id": "L3.CORPUS-Q18-alert",
+      "quirk": "Q18 Q13",
+      "status": "pass",
+      "detail": "Q18: \"Qwen 3 Q4 64K - 28TPS\" blanks against the real option set and alerts with the recorded text"
+    }
+  ],
+  "notes": {
+    "corpus-seed": "resolved seed: 48 configs, settings {\"serverPort\":7838,\"modelsDirectory\":\"C:\\\\parity-scratch\\\\fixtures\\\\models\\\\\"}"
+  }
+}

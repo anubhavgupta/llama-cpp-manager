@@ -1,0 +1,9 @@
+
+===== pass 1 of 2 =====
+== L3 sandbox C:\parity-scratch  ref=parity-baseline
+--> group seam: models, argv, split-brain, presets-port
+L3 run.js: ReferenceError: port is not defined
+    at SeamSandbox.stopAndWait (C:\projects\Cline-demo\tests\L3-seam\helpers\sandbox.js:237:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async runOnce (C:\projects\Cline-demo\tests\L3-seam\run.js:167:17)
+    at async main (C:\projects\Cline-demo\tests\L3-seam\run.js:224:41)

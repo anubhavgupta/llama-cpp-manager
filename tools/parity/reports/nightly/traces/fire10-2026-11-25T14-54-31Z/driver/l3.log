@@ -1,0 +1,51 @@
+
+===== pass 1 of 2 =====
+== L3 sandbox C:\parity-scratch  ref=parity-baseline
+--> group seam: models, argv, split-brain, presets-port
+    [q24] stop quiescence 3465 ms (floor 1500, proof 500), launch port none recorded
+    [q24] stop quiescence 2345 ms (floor 1500, proof 500), launch port 7838 released
+    [q24] stop quiescence 1776 ms (floor 1500, proof 500), launch port 7838 released
+    [q24] stop quiescence 2052 ms (floor 1500, proof 500), launch port 7838 released
+    [q24] stop quiescence 2110 ms (floor 1500, proof 500), launch port 8080 released
+    [q24] stop quiescence 1832 ms (floor 1500, proof 500), launch port 8080 released
+    [q24] stop quiescence 2620 ms (floor 1500, proof 500), launch port 8080 released
+    [q24] stop quiescence 1830 ms (floor 1500, proof 500), launch port 7838 released
+--> group corpus: corpus-seed, corpus-launch, corpus-resave, corpus-tokens
+
+PASS  [Q11]  L3.SETTINGS-point-at-tree  — settings.json now { "modelsDirectory": "C:\\parity-scratch\\fixtures\\models", "serverPort": 7838 }
+PASS  [§9 seam: window.models]  L3.MODELS-fixture-bytes  — real /models equals the recorded J2 bytes (defaultMode:exact); 10 models
+PASS  [§9 seam: first-match mmproj association]  L3.MODELS-mmproj-field  — 4 of 10 models carry an mmprojFile, identical to the recorded J2 association
+PASS  [§9 seam: client argv through the real spawn path]  L3.ARGV-recorded-bytes  — relay + relayed argv lines byte-identical to the recorded J5 UI launch (argv-jsonl)
+PASS  [§9 seam: mmproj association]  L3.ARGV-mmproj-from-window-models  — --mmproj C:\parity-scratch\fixtures\models\models with spaces\mmproj-spaced model Q4.gguf came from the live /models entry, equal to the recorded one
+PASS  [Q20]  L3.ARGV-chat-template-file-separators  — derived C:\parity-scratch\fixtures\models\models with spaces\chat-template.jinja from a server-returned backslash path, equal to the recorded J5 value
+PASS  [Q5 Q11]  L3.ARGV-port-from-localStorage-settings  — --port 7838 at index 38, same --host/-fit/--port tail as recorded (--host 0.0.0.0 -fit off)
+PASS  [Q2]  L3.PORT-q2-resets-file-to-8080  — settings.json = { "modelsDirectory": "C:\\parity-scratch\\fixtures\\models", "serverPort": 8080 }
+PASS  [Q11]  L3.PORT-Q11-manager-still-7837  — the file says 8080, localStorage will say 7838, the manager listens on 7837
+PASS  [§9 seam: settings split-brain]  L3.PORT-dialog-prefill-from-file  — dialog fields prefilled from settings.json (8080 + the fixture tree), localStorage still 7838
+PASS  [Q13]  L3.PORT-cancel-keeps-localStorage  — localStorage llamaCppSettings.serverPort still 7838
+PASS  [§9 seam: settings split-brain]  L3.PORT-launch-takes-merged-port  — --port 8080 (the settings.json value) while localStorage holds 7838
+PASS  [Q10 §9 seam: ini written verbatim]  L3.INI-presets-from-ui-bytes  — browser sha 799d3cf8929aedda === disk sha; the pane printed the sections without the trailing port line; ini existed before: false
+PASS  [Q5]  L3.PORT-presets-ui-argv  — ["--models-preset","C:\\parity-scratch\\app\\models-preset.ini","--host","0.0.0.0","--port","7838"]
+PASS  [Q5]  L3.PORT-start-vs-presets  — both paths carry --port 7838 with the client-supplied value; the 8080 fallback is the next check
+FAIL  [Q5]  L3.PORT-presets-default-8080  — L3.PORT-presets-default-8080-SPAWN — the presets launch spawned nothing
+PASS  [Q5]  L3.PORT-presets-explicit-port  — ["--models-preset","C:\\parity-scratch\\app\\models-preset.ini","--host","0.0.0.0","--port","7838"]
+PASS  [§9A remapped mode]  L3.CORPUS-materialised  — 42 corpus model files created under C:\parity-scratch\fixtures\models; all 48 modelPaths are now /models options
+PASS  [§9 trap 6]  L3.CORPUS-list  — 48 rows in the recorded J6 order
+PASS  [Q18]  L3.CORPUS-launched-count  — 48/48 corpus configs launched through the real manager + stand-in
+PASS  [§9A §8 argv-jsonl]  L3.CORPUS-argv-recorded-j6  — the first three corpus launches (2 argv-jsonl lines each) are byte-identical to the recorded J6 corpus journey (argv-jsonl)
+PASS  [Q7 Q18 Q19 Q20 Q21 Q22]  L3.CORPUS-argv-goldens  — 48/48 argvs positionally equal to the recorded legacy argv
+PASS  [Q20 Q21]  L3.CORPUS-spawn-target  — 96 corpus argv lines, every spawn aimed at fake-llama-server.exe
+PASS  [Q10 Q17 §9 trap 6]  L3.CORPUS-INI-bytes  — sha d5fc433e359162b4 equals the recorded corpus ini composed in insertion order, 48 sections, trailing `port = 7838` (Q10)
+PASS  [Q16]  L3.CORPUS-resave-bytes  — 48/48 re-saved entries byte-identical to the recorded goldens
+PASS  [Q16]  L3.CORPUS-resave-orphans  — Q16: the orphan keys are dropped for exactly the configs that carried them
+PASS  [§9 trap 6]  L3.CORPUS-resave-key-order  — storage key order survives all 48 re-saves
+PASS  [Q10 Q20]  L3.CORPUS-INI-token-bytes  — sha e103b55360e90aff equals the recorded token-form corpus ini exactly, 11 mixed-separator chat-template-file lines included
+PASS  [Q18 Q13]  L3.CORPUS-Q18-alert  — Q18: "Qwen 3 Q4 64K - 28TPS" blanks against the real option set and alerts with the recorded text
+
+notes
+  corpus-seed: resolved seed: 48 configs, settings {"serverPort":7838,"modelsDirectory":"C:\\parity-scratch\\fixtures\\models\\"}
+
+checks by quirk: Q11=2  §9 seam: window.models=1  §9 seam: first-match mmproj association=1  §9 seam: client argv through the real spawn path=1  §9 seam: mmproj association=1  Q20=1  Q5 Q11=1  Q2=1  §9 seam: settings split-brain=2  Q13=1  Q10 §9 seam: ini written verbatim=1  Q5=3  §9A remapped mode=1  §9 trap 6=2  Q18=1  §9A §8 argv-jsonl=1  Q7 Q18 Q19 Q20 Q21 Q22=1  Q20 Q21=1  Q10 Q17 §9 trap 6=1  Q16=2  Q10 Q20=1  Q18 Q13=1
+28 passed, 1 failed of 29 checks in 253.1 s
+
+L3 RED: 1 failing check(s), see the FAIL lines above

@@ -1,0 +1,6 @@
+      [probe] waitForIniChange settled in 53 ms, 3 polls: gone@0 gone@27 776@53
+      [probe] waitForIniChange settled in 7 ms, 1 polls: 20268@6
+      [probe] waitForIniChange settled in 5 ms, 1 polls: 19386@5
+      [probe] waitForIniChange settled in 10 ms, 1 polls: 776@10
+      [probe] waitForIniChange settled in 4 ms, 1 polls: 20268@4
+      [probe] waitForIniChange settled in 5 ms, 1 polls: 19386@5

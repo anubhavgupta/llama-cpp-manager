@@ -1,0 +1,52 @@
+
+===== pass 1 of 2 =====
+== L3 sandbox C:\parity-scratch  ref=parity-baseline
+--> group seam: models, argv, split-brain, presets-port
+--> group corpus: corpus-seed, corpus-launch, corpus-resave, corpus-tokens
+
+PASS  [Q11]  L3.SETTINGS-point-at-tree  — settings.json now { "modelsDirectory": "C:\\parity-scratch\\fixtures\\models", "serverPort": 7838 }
+PASS  [§9 seam: window.models]  L3.MODELS-fixture-bytes  — real /models equals the recorded J2 bytes (defaultMode:exact); 10 models
+PASS  [§9 seam: first-match mmproj association]  L3.MODELS-mmproj-field  — 4 of 10 models carry an mmprojFile, identical to the recorded J2 association
+PASS  [§9 seam: client argv through the real spawn path]  L3.ARGV-recorded-bytes  — relay + relayed argv lines byte-identical to the recorded J5 UI launch (argv-jsonl)
+PASS  [§9 seam: mmproj association]  L3.ARGV-mmproj-from-window-models  — --mmproj C:\parity-scratch\fixtures\models\models with spaces\mmproj-spaced model Q4.gguf came from the live /models entry, equal to the recorded one
+PASS  [Q20]  L3.ARGV-chat-template-file-separators  — derived C:\parity-scratch\fixtures\models\models with spaces\chat-template.jinja from a server-returned backslash path, equal to the recorded J5 value
+PASS  [Q5 Q11]  L3.ARGV-port-from-localStorage-settings  — --port 7838 at index 38, same --host/-fit/--port tail as recorded (--host 0.0.0.0 -fit off)
+PASS  [Q2]  L3.PORT-q2-resets-file-to-8080  — settings.json = { "modelsDirectory": "C:\\parity-scratch\\fixtures\\models", "serverPort": 8080 }
+PASS  [Q11]  L3.PORT-Q11-manager-still-7837  — the file says 8080, localStorage will say 7838, the manager listens on 7837
+PASS  [§9 seam: settings split-brain]  L3.PORT-dialog-prefill-from-file  — dialog fields prefilled from settings.json (8080 + the fixture tree), localStorage still 7838
+PASS  [Q13]  L3.PORT-cancel-keeps-localStorage  — localStorage llamaCppSettings.serverPort still 7838
+FAIL  [§9 seam: settings split-brain]  L3.PORT-launch-takes-merged-port  — Error: /status never reported running=true
+                at Object.waitStatus (C:\projects\Cline-demo\tests\L3-seam\helpers\page.js:84:19)
+                at async C:\projects\Cline-demo\tests\L3-seam\checks\seam.js:263:13
+                at async Registry.check (C:\projects\Cline-demo\tests\L1-backend\lib\harness.js:328:28)
+                at async Object.portSplitBrain [as run] (C:\projects\Cline-demo\tests\L3-seam\checks\seam.js:257:9)
+                at async runOnce (C:\projects\Cline-demo\tests\L3-seam\run.js:159:21)
+                at async main (C:\projects\Cline-demo\tests\L3-seam\run.js:224:41)
+PASS  [Q10 §9 seam: ini written verbatim]  L3.INI-presets-from-ui-bytes  — browser sha 799d3cf8929aedda === disk sha; the pane printed the sections without the trailing port line; ini existed before: false
+PASS  [Q5]  L3.PORT-presets-ui-argv  — ["--models-preset","C:\\parity-scratch\\app\\models-preset.ini","--host","0.0.0.0","--port","7838"]
+PASS  [Q5]  L3.PORT-start-vs-presets  — both paths carry --port 7838 with the client-supplied value; the 8080 fallback is the next check
+PASS  [Q5]  L3.PORT-presets-default-8080  — ["--models-preset","C:\\parity-scratch\\app\\models-preset.ini","--host","0.0.0.0","--port","8080"]
+PASS  [Q5]  L3.PORT-presets-explicit-port  — ["--models-preset","C:\\parity-scratch\\app\\models-preset.ini","--host","0.0.0.0","--port","7838"]
+PASS  [§9A remapped mode]  L3.CORPUS-materialised  — 42 corpus model files created under C:\parity-scratch\fixtures\models; all 48 modelPaths are now /models options
+PASS  [§9 trap 6]  L3.CORPUS-list  — 48 rows in the recorded J6 order
+FAIL  [harness]  L3-CHECK-THREW-corpus-launch  — Error: /status never reported running=true
+                at Object.waitStatus (C:\projects\Cline-demo\tests\L3-seam\helpers\page.js:84:19)
+                at async Object.launch (C:\projects\Cline-demo\tests\L3-seam\helpers\page.js:122:5)
+                at async Object.launchAll [as run] (C:\projects\Cline-demo\tests\L3-seam\checks\corpus.js:111:30)
+                at async runOnce (C:\projects\Cline-demo\tests\L3-seam\run.js:159:21)
+                at async main (C:\projects\Cline-demo\tests\L3-seam\run.js:224:41)
+PASS  [Q16]  L3.CORPUS-resave-bytes  — 48/48 re-saved entries byte-identical to the recorded goldens
+PASS  [Q16]  L3.CORPUS-resave-orphans  — Q16: the orphan keys are dropped for exactly the configs that carried them
+PASS  [§9 trap 6]  L3.CORPUS-resave-key-order  — storage key order survives all 48 re-saves
+PASS  [Q10 Q20]  L3.CORPUS-INI-token-bytes  — sha e103b55360e90aff equals the recorded token-form corpus ini exactly, 11 mixed-separator chat-template-file lines included
+PASS  [Q18 Q13]  L3.CORPUS-Q18-alert  — Q18: "Qwen 3 Q4 64K - 28TPS" blanks against the real option set and alerts with the recorded text
+
+notes
+  corpus-seed: resolved seed: 48 configs, settings {"serverPort":7838,"modelsDirectory":"C:\\parity-scratch\\fixtures\\models\\"}
+
+checks by quirk: Q11=2  §9 seam: window.models=1  §9 seam: first-match mmproj association=1  §9 seam: client argv through the real spawn path=1  §9 seam: mmproj association=1  Q20=1  Q5 Q11=1  Q2=1  §9 seam: settings split-brain=1  Q13=1  Q10 §9 seam: ini written verbatim=1  Q5=4  §9A remapped mode=1  §9 trap 6=2  harness=0  Q16=2  Q10 Q20=1  Q18 Q13=1
+23 passed, 2 failed of 25 checks in 290.3 s
+FAIL  [harness]  L3.CHECKS-MD
+      Error: L3.CHECKS-MD: CHECKS.md does not list 1 check id(s): L3-CHECK-THREW-corpus-launch
+
+L3 RED: 2 failing check(s), see the FAIL lines above

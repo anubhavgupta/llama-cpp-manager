@@ -20,6 +20,7 @@ const readers = require('../helpers/browser-readers');
 const page = require('../helpers/page');
 const compare = require('../helpers/compare');
 const { corpusSeeds } = require('../helpers/seeds');
+const { spawnEinval } = require('../helpers/sandbox');
 
 const harness = require('../../L1-backend/lib/harness');
 const l2fixtures = require('../../L2-ui/helpers/fixtures');
@@ -105,14 +106,16 @@ async function launchAll(ctx) {
         session = await page.open(manager, { seed: resolved, browser: ctx.browser, settleMs: 900 });
         await session.page.waitForSelector('#configList .config-item');
         const beforeAll = manager.argvRecords().length;
+        const spawnRetried = [];
 
         for (const name of corpus.names) {
             await session.selectConfig(name);
             const launched = await page.launch(session);
             if (!launched.spawned) {
-                blocked.push({ name, dialogs: launched.dialogs });
+                blocked.push({ name, dialogs: launched.dialogs, spawnEinval: launched.spawnEinval });
                 continue;
             }
+            if (launched.retryNote) spawnRetried.push(name);
             argvByConfig.set(name, launched.argv.argv);
             await page.stop(session);
         }
@@ -123,7 +126,10 @@ async function launchAll(ctx) {
                 + JSON.stringify(blocked.slice(0, 3)));
             assert(argvByConfig.size === 48, 'L3.CORPUS-LAUNCH-COUNT',
                 argvByConfig.size + ' of 48 configs produced a recorded argv');
-            return '48/48 corpus configs launched through the real manager + stand-in';
+            return '48/48 corpus configs launched through the real manager + stand-in'
+                + (spawnRetried.length ? '; ' + spawnRetried.length + ' of them after the '
+                    + spawnEinval.note + ' (' + spawnRetried.join(', ') + ')'
+                    : ', no spawn-EINVAL re-post needed');
         });
 
         await ctx.check('L3.CORPUS-argv-recorded-j6', '§9A §8 argv-jsonl', async () => {

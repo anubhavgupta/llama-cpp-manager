@@ -13,11 +13,17 @@
 // §6.1: base URL, ref, scratch root and binary are env/flag driven and no suite file imports app
 // code — the gate below greps for it. The manager port is not configurable because server.js
 // hardcodes 7837 (Q11); L4 sequences its two refs for that reason.
+//
+// Windows refuses the manager's own spawn of the stand-in about once per 55 attempts, even in green
+// fires; a launch that the manager itself logged as 'spawn EINVAL' is re-posted unchanged once
+// (helpers/sandbox.js launchRequest, capped per fire by L3.SPAWN-EINVAL-CAP). That tolerance is a
+// harness affordance for this machine, not a recorded behavior: the Part-2 candidate gets no exemption
+// from it, and a spawn EINVAL under a candidate run is the candidate's own red to explain.
 
 const fs = require('fs');
 const path = require('path');
 
-const { SeamSandbox } = require('./helpers/sandbox');
+const { SeamSandbox, spawnEinval, SPAWN_EINVAL_CAP } = require('./helpers/sandbox');
 const { Registry, diffText } = require('../L1-backend/lib/harness');
 const parityLock = require('../../tools/parity/parity-lock.js');
 
@@ -199,6 +205,8 @@ function report(registry, notes, seconds) {
         for (const [area, text] of Object.entries(notes)) console.log('  ' + area + ': ' + text);
     }
     console.log('\nchecks by quirk: ' + [...byQuirk.entries()].map(([quirk, count]) => quirk + '=' + count).join('  '));
+    console.log('manager spawn-EINVAL re-posts this fire: ' + spawnEinval.retries
+        + ' (cap ' + SPAWN_EINVAL_CAP + ')');
     console.log((registry.results.length - registry.failures.length) + ' passed, '
         + registry.failures.length + ' failed of ' + registry.results.length + ' checks in '
         + seconds.toFixed(1) + ' s');
@@ -236,6 +244,15 @@ async function main() {
                     seconds, checks: registry.results, notes }, null, 2));
             worst = Math.max(worst, registry.failures.length);
             green = green && ok && indexed;
+            if (spawnEinval.retries > SPAWN_EINVAL_CAP) {
+                // The tolerance exists for a machine that occasionally refuses to create a process, not
+                // for a machine doing it repeatedly: past the cap the fire is red and says why.
+                console.log('FAIL  [harness]  L3.SPAWN-EINVAL-CAP\n      environmental spawn failure '
+                    + 'rate exceeded: ' + spawnEinval.retries + ' manager spawn EINVAL re-posts in this '
+                    + 'fire (cap ' + SPAWN_EINVAL_CAP + '), so a green here would not mean much');
+                worst = Math.max(worst, 1);
+                green = false;
+            }
             if (!green && options.repeat > 1) break;
         }
     } finally {

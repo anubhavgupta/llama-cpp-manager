@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-25T12:51:16.094Z",
+  "targetA": {
+    "ref": "parity-baseline",
+    "url": "http://localhost:7841",
+    "publicPort": 7841,
+    "scratch": "C:\\parity-scratch\\L4-a",
+    "app": "C:\\parity-scratch\\L4-a\\app",
+    "nodeExe": "C:\\nvm4w\\nodejs\\node.exe"
+  },
+  "targetB": {
+    "ref": "parity-baseline",
+    "url": "http://localhost:7842",
+    "publicPort": 7842,
+    "scratch": "C:\\parity-scratch\\L4-b",
+    "app": "C:\\parity-scratch\\L4-b\\app",
+    "nodeExe": "C:\\nvm4w\\nodejs\\node.exe"
+  },
+  "fieldCount": {
+    "A": 62,
+    "B": 62
+  },
+  "diffs": [],
+  "violations": [],
+  "problems": {
+    "A": [],
+    "B": []
+  },
+  "selfMode": true
+}

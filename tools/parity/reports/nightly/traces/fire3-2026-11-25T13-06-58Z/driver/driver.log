@@ -1,0 +1,9 @@
+2026-11-25T13:06:58.196Z  driver start  cpus=32 totalmem=50.7GB freemem=33.9GB  keepScratch=false
+2026-11-25T13:06:58.197Z  --> L1  node tests/L1-backend/run.js --verify-against-selftest   (full output -> C:\Users\anubh\AppData\Local\Temp\pi-scratchpad\n1\fire3\l1.log)
+2026-11-25T13:08:35.139Z    PASS L1  96.9 s  exit=0  cpu-busy-samples=4,2,2,2,2,3,2,2,5,6,2,3,2,2,4,1,4,2,3,2,3,4,2,3,2,2,3,2,2,1,4,4,2,3,2,2,2,2,3,3,2,4,2,2,2,2,2,3
+2026-11-25T13:08:35.142Z  --> L2  node tests/L2-ui/run.js --verify-selftest --repeat 2   (full output -> C:\Users\anubh\AppData\Local\Temp\pi-scratchpad\n1\fire3\l2.log)
+2026-11-25T13:11:20.510Z    PASS L2  165.4 s  exit=0  cpu-busy-samples=5,3,3,3,3,4,2,2,2,4,3,2,4,3,3,3,4,4,3,3,3,3,4,3,4,4,3,2,2,3,2,3,2,2,3,4,4,4,4,4,3,3,2,3,2,10,10,2,4,3,2,3,2,3,4,2,3,4,5,4,3,4,4,3,4,3,4,2,1,2,2,2,2,2,2,3,4,3,4,3,4,4
+2026-11-25T13:11:20.512Z  --> L3  node tests/L3-seam/run.js --verify-against-selftest --repeat 2   (full output -> C:\Users\anubh\AppData\Local\Temp\pi-scratchpad\n1\fire3\l3.log)
+2026-11-25T13:16:43.641Z    PASS L3  323.1 s  exit=0  cpu-busy-samples=6,2,3,4,2,2,3,1,2,4,3,3,1,2,1,3,3,3,4,4,3,3,3,4,5,6,3,2,4,3,3,3,3,3,3,2,3,3,4,4,4,3,4,3,3,3,4,3,4,4,4,3,3,4,3,3,3,3,4,3,5,3,3,4,4,3,4,3,3,4,3,2,4,5,5,5,2,2,2,3,5,2,2,4,3,2,5,2,1,4,3,3,2,1,4,2,3,4,3,4,4,2,2,3,4,3,3,4,3,4,3,2,2,3,4,3,2,2,2,3,3,3,4,4,4,3,3,4,4,3,4,2,3,4,3,4,4,5,4,4,4,4,3,4,4,5,4,2,2,5,4,1,2,5,3,4,3,2,3,1
+2026-11-25T13:16:43.646Z  --> L4  node tests/L4-dual/run.js --self-mode   (full output -> C:\Users\anubh\AppData\Local\Temp\pi-scratchpad\n1\fire3\l4.log)
+2026-11-25T13:17:48.672Z    PASS L4  65.0 s  exit=0  cpu-busy-samples=6,2,2,3,3,3,6,6,3,4,3,5,2,3,2,2,4,1,5,4,3,6,3,2,3,3,1,3,3,2,2,3
