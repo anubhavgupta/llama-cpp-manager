@@ -1,0 +1,7 @@
+
+===== ParityNightly 2026-11-25T17:46:38Z  node v24.6.0  repo C:\projects\Cline-demo  gates L1,L2,L3,L4
+HASH-PIN PRE-GATE REFUSED this fire (not a red gate): HASH-PIN CHECK RED — 143 paths recomputed from the git INDEX against 143 pinned entries, pinnedAt 2026-11-25T17:36:49Z
+      MISMATCH  PARITY.md
+      WORKING-COPY-DRIFT  PARITY.md
+      NOTE  fixtures/HASH-PIN.json is committed and its own self-entry cannot verify itself.
+    fix the pin (or land the ledger-backed re-pin) before reading any gate result
