@@ -10,7 +10,7 @@ Base URL: `http://localhost:7837` — the origin every recorded request was issu
 | `GET /` | 200 | static source read | — | http/J0-baseline/root.request.json |
 | `GET /metrics` | 200 | static source read | — | http/J1-settings/metrics-1.request.json, http/J1-settings/metrics-2.request.json |
 | `GET /models` | 200, 500 | static source read | — | http/J2-models/models.request.json |
-| `GET /restart` | 200 | static source read | — | http/J3d-restart/restart-get-not-a-route.request.json |
+| `GET /restart` | 404 | Express default `Cannot GET /restart` HTML page — NOT an app route (POST only; Q23; see the Q23 note below) | http/J3d-restart/restart-get-not-a-route.request.json |
 | `POST /restart` | 200, 400, 500 | static source read + runtime recording | — | http/J3d-restart/restart-after-manager-restart.request.json, http/J3d-restart/restart-before-any-launch.request.json |
 | `GET /settings` | 200 | static source read | — | http/J0-baseline/settings-first-run.request.json, http/J1-settings/settings-read.request.json |
 | `POST /settings` | 200, 400, 500 | static source read | modelsDirectory, serverPort | http/J1-settings/settings-post-with-port.request.json, http/J1-settings/settings-post-without-port.request.json |

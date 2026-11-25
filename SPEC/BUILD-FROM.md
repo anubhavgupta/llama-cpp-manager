@@ -34,14 +34,15 @@ Phase 4 suites owe those a test. `model-only:` marks a claim only the model pass
 ## 2. HTTP contract
 
 All request and response bodies are JSON (`application/json`), except the two file routes. The
-manager has 11 routes; registration order is part of the contract because the static-file route is
+manager has 10 application routes (GET /, /settings, /models, /metrics, /status; POST /settings, /start, /stop, /restart, /launch-presets) plus 2 static paths served by express.static ('/swagger', '/swagger.json'); SPEC/api-contract.md is the canonical route view; registration order is part of the contract because the static-file route is
 registered first.
 
 | route | statuses | body |
 |---|---|---|
 | `GET /` | 200 | `public/index.html` (`text/html`) |
 | `GET /swagger` | 200 | `public/swagger.json` (`application/json`, served as a file) |
-| `GET /swagger.json` | not a route — the framework default 404 body is what the recording holds (not-recorded: status line was never captured) | |
+| `GET /swagger.json` | 200 | `public/swagger.json` served by `express.static('public')` — the recording holds the OpenAPI document bytes (`fixtures/http/J0-baseline/swagger-json.response`); it is a static path, not an app route |
+| `GET /settings` | 200 | `{ modelsDirectory, serverPort }` read from `settings.json` (Q2 applies) |
 | `GET /models` | 200 | `{ models: [ { name, relativePath, path, size, mmprojFile? } ] }` from the models directory in `settings.json` |
 | `GET /metrics` | 200 | `{ cpu, ram, gpu, vram, vramUsage }` where `vramUsage` is the string `${total-free}/${total}` |
 | `GET /status` | 200 | `{ running: <boolean>, hasLastLaunch: <boolean> }` |
@@ -320,7 +321,12 @@ built in the browser and written verbatim by the server.
    `openApi=0`.
 2. Replay `fixtures/goldens/**` against the candidate's pure arg/ini builders: byte equality where
    `fixtures/COMPARISON.json` says `exact`, shape equality where it says `shape`.
-3. Run the L1–L4 suites against the candidate on port 7837 with the fixture tree. Every field of
+3. Run the L1–L4 suites against the candidate on port 7837 with the fixture tree. Candidate selection is by
+   CLI flag (not env): L1 `node tests/L1-backend/run.js --attach [--base-url http://localhost:7837]` against a
+   RUNNING candidate; L2 `node tests/L2-ui/run.js --ref <candidate-dir-or-ref>`; L3 `node tests/L3-seam/run.js
+   --app <candidate-dir>`; L4 `node tests/L4-dual/run.js --ref-a <candidate-ref> --ref-b parity-baseline` — L4
+   materialises BOTH sides with `git archive`, so the candidate must exist as a git ref in this repo (see
+   tests/L4-dual/CHECKS.md). Every field of
    `SPEC/field-manifest.json` carries `pointers` naming the derivation files and the recording that
    proves it.
 4. Anything this doc marks `not-recorded:` is Phase 4 test debt: capture it from legacy, re-record the
