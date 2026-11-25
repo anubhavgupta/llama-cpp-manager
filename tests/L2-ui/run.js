@@ -26,6 +26,11 @@ const parityLock = require('../../tools/parity/parity-lock.js');
 const HERE = __dirname;
 const CHECK_FILES = ['fields', 'conditional', 'storage', 'runtime', 'states', 'corpus', 'misc'];
 
+// The full suite is 433 assertions, so a run that reports fewer than this ran a subset. Passing a
+// subset is not passing the gate, which is why --verify-selftest has a floor rather than only a
+// zero-failure test.
+const MIN_ASSERTIONS = 200;
+
 function parseArgs(argv) {
     const out = { ref: 'parity-baseline', port: Number(process.env.L2_PORT || 7847),
         out: path.join(HERE, 'out'), repeat: 1, verifySelftest: false };
@@ -369,9 +374,20 @@ async function runSuite(options) {
     }
 
     if (options.verifySelftest) {
-        const green = worst === 0 && runs.every((run) => run.results.summary().total > 200);
+        const totals = runs.map((run) => run.results.summary().total);
+        const green = worst === 0 && totals.every((total) => total > MIN_ASSERTIONS);
+        if (worst === 0 && totals.some((total) => total <= MIN_ASSERTIONS)) {
+            // Finding 12: this used to print a bare `L2 SELF-TEST RED` under `150/150 assertions
+            // passed`, which reads like a broken suite when it is the coverage guard working. The
+            // verdict is still red — a filtered run certifies nothing — but it now says so.
+            console.log('\nSELF-TEST GUARD: only ' + Math.min(...totals) + ' assertions (<'
+                + MIN_ASSERTIONS + ' required) — every assertion that ran passed, but a partial run'
+                + ' (--only ...) cannot certify the suite, so this is not a green.');
+            console.log('  full gate: node tests/L2-ui/run.js --verify-selftest --repeat 2 (no --only)');
+        }
         console.log('\nL2 SELF-TEST ' + (green ? 'GREEN' : 'RED') + ' against '
-            + (sandbox.ref || sandbox.kind) + ' (' + runs.length + ' consecutive run(s))');
+            + (sandbox.ref || sandbox.kind) + ' (' + runs.length + ' consecutive run(s), '
+            + totals.join('/') + ' assertions)');
         return green ? 0 : 1;
     }
     return worst ? 1 : 0;
