@@ -39,11 +39,13 @@ const REGION_ANCHOR = {
     save: ANCHORS.SAVE_START
 };
 
-// Six mutants, one per named L3 assertion, spread over the three client generator regions. Why L3
-// and not L2: `tests/L2-ui/run.js --ref <dir>` was measured NOT to serve the directory it is given
-// (a renamed <h3> in the worktree still produced 15/15 passes, including the title claim), so an L2
-// control cannot observe a mutated oracle. L3's `--app <dir>` does start the manager and serve the
-// page from that directory, which is what these controls need.
+// One named assertion per row, spread over the four suite layers. The rows in the first block run L3
+// because their claims are byte-exact argv/ini outputs, which only L3 asserts.
+//
+// An earlier revision of this file claimed `tests/L2-ui/run.js --ref <dir>` does not serve the
+// directory it is given. That claim is false and was retired by measurement: see the PARITY.md row
+// 2026-11-24 ("Worker claim `--ref <dir>` does not serve that dir DISPROVED by decisive probe"), and
+// the L2 row below, where a mutated oracle in the served directory reddens `L2-CORPUS-argv-*`.
 // Every corpus row also runs `corpus-seed` first: that check is what materialises the corpus model
 // tree the other corpus checks assume. `expect` is the assertion id that must go red; a run that
 // reddens nothing (or nothing named) is reported as a coverage failure, not as a pass.
@@ -94,6 +96,49 @@ const NEGATIVES = [
             + 'collector, not the localStorage writer — see the coverage note below.'
     }
 ];
+
+// The server region is enumerated but not yet scored by the mutation gate (see
+// tools/parity/reports/mutation/SERVER-REGION-ENUMERATION.json), so these rows carry their own edit
+// instead of an id from mutants.json. Each one cites the SPEC/SPEC-ROWS.csv row it instantiates.
+const SERVER_NEGATIVES = [
+    {
+        id: 'SV-get-settings-3-string-literal',
+        server: {
+            row: 'SV-get-settings-3', file: 'server.js', line: 549, class: 'string-literal',
+            before: '.lmstudio', after: '.lmstudiX'
+        },
+        layer: 'L1', needsRef: true,
+        // L1 materialises its sandbox with `git archive <ref>`, so the mutation has to arrive as a
+        // commit rather than as a dirty directory; the commit is made in the throwaway worktree.
+        command: (app, sha) => ['tests/L1-backend/run.js', '--verify-against-selftest', '--ref', sha,
+            '--only', 'contract', '--keep-scratch'],
+        expect: 'L1.SETTINGS.FIRST-RUN.BYTES',
+        claim: 'the first-run fallback directory in GET /settings is replaced: the first-run response '
+            + 'bytes stop matching fixtures/http/J0-baseline/settings-first-run.response. This is the '
+            + 'route-level claim L1 owns and no client-region mutant can reach.'
+    }
+];
+
+// The same oracle mutant seen through a layer that had no control on 2026-11-25: L2 serves the mutated
+// directory through --ref.
+const LAYER_NEGATIVES = [
+    {
+        mutant: 'M-args-005-0022-string-literal-97ddd1c464',
+        layer: 'L2',
+        command: (app) => ['tests/L2-ui/run.js', '--ref', app, '--port', '7866', '--out',
+            NEG_ROOT + '/SEAM_SLUG/l2out', '--only', 'corpus-launch'],
+        expect: 'L2-CORPUS-argv',
+        claim: 'the `-m` flag string is mangled in the served directory: the per-config argv claims the '
+            + 'browser suite makes over the recorded corpus go red, which also disproves the retired '
+            + 'claim that L2 --ref cannot observe a mutated oracle'
+    },
+// The L4 layer was probed with the same argv mutant, committed on a throwaway commit as side A:
+// `node tests/L4-dual/run.js --ref-a <commit> --ref-b parity-baseline --only backend` observed 27
+// fields per side and diffs=0. The backend probe does not discriminate a mangled `-m` flag, so no L4
+// row is claimed here; the measurement is recorded as an open L4 coverage gap in the prose below.
+];
+
+const NEGATIVE_ROWS = () => NEGATIVES.concat(SERVER_NEGATIVES, LAYER_NEGATIVES);
 
 // One seam-layer run against the mutated checkout. Two constraints shape this command:
 // · The recorded seam bytes are byte-exact against the recording's scratch root (§8 keeps that row
@@ -160,12 +205,23 @@ function git(args, options = {}) {
         maxBuffer: 64 * 1024 * 1024 }, options));
 }
 
-function seamSlug(entry) {
-    return entry.mutant.replace(/[^A-Za-z0-9._-]/g, '-');
+// One mutant can be observed through several layers, so the evidence file carries the layer: with a
+// bare mutant id the last row to run overwrote the earlier rows' patch and log.
+function evidenceName(entry) {
+    return (entry.mutant || entry.id) + '-' + entry.layer.toLowerCase();
 }
 
+function seamSlug(entry) {
+    return (entry.mutant || entry.id).replace(/[^A-Za-z0-9._-]/g, '-');
+}
+
+// An L1 row must not live under the L1 suite's own scratch root: that suite cleanTrees its root, and
+// with it the worktree it is supposed to be testing (measured: the checkout vanished mid-run and the
+// revert then failed on a missing directory). L1 rows get a sibling root.
+const L1_WORKTREES = process.env.PARITY_NEG_L1 || 'C:/parity-neg-l1';
+
 function worktreeDir(entry) {
-    return path.join(NEG_ROOT, seamSlug(entry), 'checkout');
+    return path.join(entry.layer === 'L1' ? L1_WORKTREES : NEG_ROOT, seamSlug(entry), 'checkout');
 }
 
 // A fresh detached worktree of the oracle tag. `git worktree` is the only way to run a mutated
@@ -208,6 +264,30 @@ function unlinkModulesJunction(dir) {
 // Mutant sites are recorded as region-relative line + column offsets (mutants.json), where region
 // line 0 is the anchor's first line of the baseline blob. The `before` text is re-checked here, so
 // an offset that does not resolve fails loudly instead of writing a mutant nobody intended.
+// A server-region row names file + absolute line + the exact text to replace; nothing in the client
+// slicing machinery is involved, because the server region has no anchor and no gate mutants yet.
+function applyServerMutation(dir, spec) {
+    const file = path.join(dir, spec.file);
+    const raw = fs.readFileSync(file, 'utf8');
+    const eol = raw.includes('\r\n') ? '\r\n' : '\n';
+    const lines = raw.replace(/\r\n/g, '\n').split('\n');
+    // SPEC/SPEC-ROWS.csv counts route lines from its own pass over the oracle, which can sit a line or
+    // two off; the edit is located by the row's own text and spec.line is used only to break ties.
+    const hits = [];
+    lines.forEach((row, index) => { if (row.includes(spec.before)) hits.push(index); });
+    assert(hits.length > 0, 'NEG-SERVER-BEFORE: ' + spec.row + ': no line of ' + spec.file
+        + ' contains ' + JSON.stringify(spec.before));
+    const at = hits.reduce((best, index) => Math.abs(index + 1 - spec.line)
+        < Math.abs(best + 1 - spec.line) ? index : best, hits[0]);
+    assert(hits.length === 1 || Math.abs(at + 1 - spec.line) <= 2, 'NEG-SERVER-AMBIGUOUS: ' + spec.row
+        + ': ' + hits.length + ' lines contain ' + JSON.stringify(spec.before)
+        + ' and none is within 2 lines of the recorded row line ' + spec.line);
+    const row = lines[at];
+    lines[at] = row.replace(spec.before, spec.after);
+    fs.writeFileSync(file, lines.join(eol));
+    return { file, line: at, before: row, after: lines[at] };
+}
+
 function applyMutation(dir, mutant) {
     const file = path.join(dir, 'public', 'script.js');
     const anchor = REGION_ANCHOR[mutant.region];
@@ -248,8 +328,8 @@ function revert(dir) {
 
 function writePatch(dir, entry) {
     fs.mkdirSync(REPORTS, { recursive: true });
-    const patch = git(['-C', dir, 'diff', '--', 'public/script.js']);
-    const file = path.join(REPORTS, entry.mutant + '.patch');
+    const patch = git(['-C', dir, 'diff', '--', entry.server ? entry.server.file : 'public/script.js']);
+    const file = path.join(REPORTS, evidenceName(entry) + '.patch');
     fs.writeFileSync(file, patch);
     assert(patch.includes('+++'), 'NEG-PATCH: empty patch for ' + entry.mutant);
     return file;
@@ -279,7 +359,7 @@ function runTarget(entry, dir) {
             clearTimeout(timer);
             const text = output.join('');
             fs.mkdirSync(REPORTS, { recursive: true });
-            fs.writeFileSync(path.join(REPORTS, entry.mutant + '.log'),
+            fs.writeFileSync(path.join(REPORTS, evidenceName(entry) + '.log'),
                 '$ node ' + argv.join(' ') + '\n\n' + text);
             resolve({ command: 'node ' + argv.join(' '), code, seconds: (Date.now() - started) / 1000,
                 reds: redIds(text), excerpt: excerpt(text) });
@@ -291,7 +371,11 @@ function runTarget(entry, dir) {
 function redIds(text) {
     const ids = new Set();
     for (const match of text.matchAll(/^\s*RED (\S+)/gm)) ids.add(match[1]);
-    for (const match of text.matchAll(/^FAIL\s+\[[^\]]*\]\s+(L3\.[A-Za-z0-9._-]+)/gm)) ids.add(match[1]);
+    for (const match of text.matchAll(/^FAIL\s+\[[^\]]*\]\s+((?:L1|L3)\.[A-Za-z0-9._-]+)/gm)) {
+        ids.add(match[1]);
+    }
+    // L4 has no FAIL lines: its verdict is the field diff, one `DIFF <key> [mode]` line per field.
+    for (const match of text.matchAll(/^  DIFF (\S+)/gm)) ids.add('L4-DIFF:' + match[1]);
     return [...ids];
 }
 
@@ -305,6 +389,10 @@ function excerpt(text) {
 }
 
 function describe(entry, mutants) {
+    if (entry.server) {
+        return { id: entry.id, region: 'server', class: entry.server.class, row_ids: [entry.server.row],
+            before: entry.server.before, after: entry.server.after };
+    }
     const mutant = mutants.get(entry.mutant);
     assert(mutant, 'NEG-UNKNOWN: mutant ' + entry.mutant + ' is not in ' + MUTANTS);
     return mutant;
@@ -332,15 +420,26 @@ function resetFixtureTree() {
 async function runOne(entry, mutants, options) {
     const mutant = describe(entry, mutants);
     const dir = makeWorktree(entry);
-    console.log('\n== ' + entry.mutant + '  [' + mutant.region + ' ' + mutant.class + ']');
+    console.log('\n== ' + (entry.mutant || entry.id) + '  [' + mutant.region + ' ' + mutant.class + ']');
     console.log('   ' + JSON.stringify(mutant.before) + '  =>  ' + JSON.stringify(mutant.after));
-    const where = applyMutation(dir, mutant);
+    const where = entry.server ? applyServerMutation(dir, entry.server) : applyMutation(dir, mutant);
     console.log('   patched ' + path.relative(REPO, where.file) + ':' + (where.line + 1));
     console.log('     - ' + where.before.trim());
     console.log('     + ' + where.after.trim());
     const patch = writePatch(dir, entry);
+    // A layer that takes git refs rather than a directory (L4) needs the mutation as a commit. It is
+    // made inside the throwaway worktree, which is removed with the worktree; this repo's history is
+    // never touched.
+    let ref = null;
+    if (entry.needsRef) {
+        git(['-C', dir, 'add', '-A']);
+        git(['-C', dir, 'commit', '-q', '-m', 'negative control ' + (entry.mutant || entry.id)]);
+        ref = git(['-C', dir, 'rev-parse', 'HEAD']).trim();
+        console.log('   committed as ' + ref + ' (throwaway, removed with the worktree)');
+    }
     resetFixtureTree();
-    const run = await runTarget(entry, dir);
+    const run = await runTarget(Object.assign({}, entry, { command: (app) => entry.command(app, ref) }),
+        dir);
     const named = run.reds.filter((id) => id.startsWith(entry.expect));
     // A control that never got to assert anything (module missing, port busy, killed on timeout) is a
     // harness problem; calling it MUTANT-SURVIVED would blame the suite for a run that never happened.
@@ -397,29 +496,39 @@ function writeNegativesMd(records) {
         lines.push('- **' + record.entry.mutant + '** (' + record.entry.layer + ') — '
             + record.entry.claim);
         lines.push('  Red: `' + (record.named[0] || record.run.reds[0] || 'NONE') + '`; exit '
-            + record.run.code + '. Full log: `tools/parity/reports/negatives/' + record.entry.mutant
-            + '.log`. Patch: `tools/parity/reports/negatives/' + record.entry.mutant + '.patch`.');
+            + record.run.code + '. Full log: `tools/parity/reports/negatives/'
+            + evidenceName(record.entry) + '.log`. Patch: `tools/parity/reports/negatives/'
+            + evidenceName(record.entry) + '.patch`.');
     }
     lines.push('');
     lines.push('## Layer coverage, and the gaps this inventory cannot close');
     lines.push('');
     const layers = [...new Set(records.map((record) => record.entry.layer))].sort();
-    lines.push('Rows above cover ' + layers.join(' and ') + '. They cannot cover **L1**: every region in');
-    lines.push('`mutants.json` is a `public/script.js` generator region (`args`, `ini`, `config`), and L1');
-    lines.push('drives the manager over HTTP with no browser, so no mutant in that inventory can reach an');
-    lines.push('L1 assertion. Proving L1 has teeth needs a `server.js` region in the mutation inventory,');
-    lines.push('which is verifier-owned tooling — recorded here as an open gap rather than papered over');
-    lines.push('with an L1 row that would not be a real mutant.');
+    lines.push('Rows above cover ' + [...new Set(records.map((r) => r.entry.layer))].sort().join(', ')
+        + '. L1 is covered by a server-region row: the mutation is made in a throwaway commit and handed'
+        + ' to L1 as `--ref <commit>`, because L1 materialises its sandbox with `git archive <ref>` and'
+        + ' will not take a dirty directory. The mutated checkout therefore lives outside the L1'
+        + ' suite scratch root (C:/parity-neg-l1), which that suite cleanTrees.');
     lines.push('');
-    lines.push('A second gap, measured rather than assumed: the inventory has **no region for the');
-    lines.push('localStorage writer**. `config` is the launch value collector, so no inventory mutant can');
-    lines.push('change re-saved bytes. Measured with');
+    lines.push('Open gap, measured 2026-11-25: the **L4** differential does not yet have a control.');
+    lines.push('The argv mutant above was committed and run as side A against a clean side B');
+    lines.push('(`--only backend`): 27 fields per side, `diffs=0`. The backend probe does not observe the');
+    lines.push('mangled flag, so an L4 row would be a red gate for the wrong reason. Closing it needs an');
+    lines.push('L4 probe whose observed fields include the launch request body, or an L4 row driven by a');
+    lines.push('save-region mutant through the `ui` probe, which does read localStorage bytes.');
+    lines.push('');
+    lines.push('A second gap, measured rather than assumed and now **closed**: the inventory used to have');
+    lines.push('no region for the localStorage writer. `config` is the launch value collector, so no');
+    lines.push('inventory mutant could change re-saved bytes. Measured with');
     lines.push('`node tools/parity/negative-controls.js --probe M-config-004-0013-negation-insertion-619719c0b5 '
         + '--layer L3 --only corpus-seed,corpus-resave --expect L3.CORPUS-resave-bytes`,');
     lines.push('which re-saved all 48 configs byte-identical to the goldens with `ngl` collapsed to 0, and');
     lines.push('the same mutant on `--only models,argv`, which reddened `L3.ARGV-recorded-bytes`. That is');
-    lines.push('why the `config` row above targets argv. Closing the gap needs a `saveCurrentValues`');
-    lines.push('region (`ANCHORS.SAVE_START`) added to the mutation inventory.');
+    lines.push('why the `config` row above targets argv. The inventory now has the `saveCurrentValues`');
+    lines.push('region (`ANCHORS.SAVE_START`), scored against the recorded re-save corpus by');
+    lines.push('`node tools/parity/mutation-run.js`; that is also why the save region needs no row here -');
+    lines.push('its kill channel is the recorded corpus, and its two fallback-branch survivors are proven');
+    lines.push('statically by `node tools/parity/equiv-prove.js`.');
     lines.push('');
     lines.push('A third gap, also measured: dropping the ini\'s `mmproj = ` line');
     lines.push('(`M-ini-026-0037-string-literal-ec533f9648`) reddened `L3.CORPUS-INI-token-bytes` when the');
@@ -455,14 +564,16 @@ async function main() {
         const record = await runOne(probeEntry(options), mutants, options);
         return record.verdict === 'RED-AS-NAMED' ? 0 : 1;
     }
+    const rows = NEGATIVE_ROWS();
     const selected = options.mode === 'run' && options.id !== 'all'
-        ? NEGATIVES.filter((entry) => entry.mutant === options.id)
-        : NEGATIVES;
+        ? rows.filter((entry) => (entry.mutant || entry.id) === options.id)
+        : rows;
     assert(selected.length > 0, 'NEG-SELECT: no negative control matches ' + (options.id || options.mode));
     if (options.mode === 'plan') {
         for (const entry of selected) {
             const mutant = describe(entry, mutants);
-            console.log(entry.layer + '  ' + entry.mutant + '  [' + mutant.region + ' line ' + mutant.line
+            console.log(entry.layer + '  ' + (entry.mutant || entry.id) + '  [' + mutant.region
+                + ' line ' + mutant.line
                 + ' cols ' + mutant.start + '-' + mutant.end + ']  expect red ' + entry.expect);
             console.log('     ' + JSON.stringify(mutant.before) + ' => ' + JSON.stringify(mutant.after));
             console.log('     ' + entry.command('<worktree>').join(' '));
@@ -472,11 +583,12 @@ async function main() {
         const file = path.join(dir, 'public', 'script.js');
         const original = fs.readFileSync(file, 'utf8');
         for (const entry of selected) {
-            applyMutation(dir, describe(entry, mutants));
+            if (entry.server) applyServerMutation(dir, entry.server);
+            else applyMutation(dir, describe(entry, mutants));
             revert(dir);
             assert(fs.readFileSync(file, 'utf8') === original,
                 'NEG-REVERT: ' + entry.mutant + ': revert did not restore script.js');
-            console.log('patch resolves: ' + entry.mutant);
+            console.log('patch resolves: ' + (entry.mutant || entry.id));
         }
         if (!options.keep) removeWorktree(dir);
         console.log('\nall ' + selected.length + ' patches resolve against ' + BASELINE);
@@ -493,7 +605,8 @@ async function main() {
     console.log('\n' + (records.length - failed.length) + '/' + records.length
         + ' negative controls red as named');
     for (const record of failed) {
-        console.log('  ' + record.verdict + ': ' + record.entry.mutant + ' expected '
+        console.log('  ' + record.verdict + ': ' + (record.entry.mutant || record.entry.id)
+            + ' expected '
             + record.entry.expect + ', saw ' + (record.run.reds.join(', ') || 'no reds'));
     }
     return failed.length ? 1 : 0;
