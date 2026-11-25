@@ -129,5 +129,25 @@ Non-determinism addenda discovered during capture (beyond §8): dotenv v17 print
   golden, fixture or SPEC file changed since ff4eff0 (verified in the same run: MANIFEST 193/193,
   gen-goldens --check GREEN, spec-reconcile 0, nightly GREEN 403 s).
 
+- 2026-11-25 REMEDIATION SWEEP (Verifier, closing AUDIT-2026-11-25): audit findings 1-13 dispositioned
+  across commits fce8339..e847726 — F1/F2 bash PATH (fce8339) + F1-class PowerShell PATH (d7d712b,
+  found by the REAL scheduled fire; red fire nightly-2026-11-25T07-20-25Z retained as evidence);
+  GREEN scheduled fire 2026-11-25 13:35:23 local Last Result 0 (e847726) closes exit criterion
+  "nightly installed and green"; F3 scratch-root executor lock (b9c0b82); server region enumerated-
+  unrun artifact + task-server-mutation stub, NOT in shipped inventory per supervisor ruling
+  (3a1e36b); F11 fixtures/corpus/MANIFEST.json (additive exception; verify-manifest 193→196)
+  (a174913); F12 guard wording (3aec444); F5/F6 pin rewrite +78/−28 then regenerations (f99999b,
+  e847726) — deciders now pinned, volatile/gitignored dropped, self-entry records previous bytes
+  (pre-existing quirk, recorded); F7/F9/F13 nightly contract+durable logs (eb5d27e); 8/8 negative
+  controls red-as-named incl new L1+L2 rows (f99999b); save mutation channel shipped (05c815a:
+  59 mutants, 57 killed, 2 proven via new unreachable-element-guard-fallback strategy) — shipped
+  mutants.json/reports re-score PENDING (executor-3; gate 1 honestly RED until then, stated in
+  REPORT.md). F8: AGENTS.md:19 + plan.md:149 quirk-count wording replaced by PARITY-authoritative
+  pointers (this row is the ledger backing; both files re-pinned by executor-3's final regen).
+  Open, recorded not papered: L4 negative control gap (27 fields/side diffs=0 measured); L4 runner
+  lock wiring; 2 unmapped SV-* rows; server removal mutants (all in task-server-mutation.md).
+  L1.SOCKET.RELAY-BYTES-IDENTICAL: no re-flake under strict lock (3 full L1 + 3 nightlies); no
+  quarantine.
+
 Out of scope (C2 dead code, recorded not ported): `createDefaultConfigName` (script.js:205),
 client `restartServer` (script.js:968). `/restart` HTTP endpoint IS live and must be ported.

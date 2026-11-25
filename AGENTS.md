@@ -16,7 +16,7 @@ Full plan: `plan.md`. Machine state: `PARITY.md` (ledger), `ESCALATION.md` (bloc
 
 ## DO-NOT-FIX list
 
-Every quirk Q1–Q22 in `plan.md` §9 / `PARITY.md` is a **requirement**, not a defect.
+Every quirk row in `PARITY.md` (plan §9's Q1–Q22 plus Q23/Q24 and any later row the ledger gains) is a **requirement**, not a defect. PARITY.md is the authoritative quirk list; this file's examples never bound it.
 This includes: the /settings TDZ bug (Q2), 200-with-success:false on /start (Q3),
 simulated GPU metrics (Q6), partial delete reset (Q8), trailing `port = ` in ini (Q10),
 orphan keys dropped on re-save (Q16), silently-blanking retired enum values (Q18).

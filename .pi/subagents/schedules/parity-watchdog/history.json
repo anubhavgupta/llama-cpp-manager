@@ -3,6 +3,77 @@
   "runs": [
     {
       "schemaVersion": 1,
+      "id": "068a45c2",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-25T08:16:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-25T08:16:56.706Z",
+      "completedAt": "2026-11-25T08:16:56.706Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "adc39862",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-25T07:56:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-25T07:56:56.715Z",
+      "completedAt": "2026-11-25T07:56:56.715Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "bc25da8b",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-25T07:36:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-25T07:36:56.715Z",
+      "completedAt": "2026-11-25T07:36:56.715Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "33e494b3",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-25T07:16:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-25T07:16:56.711Z",
+      "completedAt": "2026-11-25T07:16:56.711Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "5a542c1b",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-25T06:56:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-25T06:56:56.705Z",
+      "completedAt": "2026-11-25T06:56:56.705Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "bbd92cb6",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-25T06:36:56.701Z",
+      "dueReason": "timer",
+      "state": "skipped",
+      "startedAt": "2026-11-25T06:36:56.714Z",
+      "completedAt": "2026-11-25T06:36:56.714Z"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "e4aafe15",
+      "scheduleId": "parity-watchdog",
+      "plannedAt": "2026-11-25T06:16:56.701Z",
+      "dueReason": "timer",
+      "state": "running",
+      "startedAt": "2026-11-25T06:16:56.712Z",
+      "asyncId": "01537a96-f34a-4a22-b5e1-9ba28e37a1fb",
+      "asyncDir": "C:\\Users\\anubh\\AppData\\Local\\Temp\\pi-subagents-user-anubh\\async-subagent-runs\\01537a96-f34a-4a22-b5e1-9ba28e37a1fb"
+    },
+    {
+      "schemaVersion": 1,
       "id": "1ec505ee",
       "scheduleId": "parity-watchdog",
       "plannedAt": "2026-11-25T05:56:56.701Z",

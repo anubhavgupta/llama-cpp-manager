@@ -146,7 +146,7 @@ No step requires a human. If a case cannot be probed, the ledger row becomes `bl
 | **Verifier** | harness, fixtures, ledger | write candidate feature code; hand-edit goldens (may only *re-record* from legacy) |
 | **Auditor** | final go/no-go; runs last in a fresh context | — |
 
-Auditor checks, all mechanical: all 15 quirks still reproduce · `/tests` + `MANIFEST.json` + threshold-config hashes unchanged (or each change backed by a ledger entry) · mutation suite re-run · every equivalence proof independently re-proven (unprovable ⇒ downgraded to a gap) · no `wontfix` status exists anywhere · quarantine rows resolved, not skipped.
+Auditor checks, all mechanical: every quirk row in PARITY.md still reproduces · `/tests` + `MANIFEST.json` + threshold-config hashes unchanged (or each change backed by a ledger entry) · mutation suite re-run · every equivalence proof independently re-proven (unprovable ⇒ downgraded to a gap) · no `wontfix` status exists anywhere · quarantine rows resolved, not skipped.
 
 **Anti-goal-post-moving (C8):** the dominant failure mode of unattended loops is silently loosening an assertion. Immutable hashes plus the Auditor are the control, not good intentions.
 

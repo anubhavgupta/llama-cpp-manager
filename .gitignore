@@ -62,3 +62,4 @@ tests/*/out/
 tools/parity/reports/watchdog-alert.json
 tests/L2-ui/out/run-*.json
 tests/L2-ui/out/screenshots/
+.pi/subagents/schedules/

@@ -27,7 +27,7 @@ Task specs in this directory are the exact prompts each worker phase ran on.
 | Phase | Commit | Gate |
 |---|---|---|
 | 4b L2 UI suite | ca7fa8e | `node tests/L2-ui/run.js --verify-selftest` GREEN vs legacy; corpus 48/48; DISAGREEMENTS.md 28/48 classified; C8 resave re-pin row in PARITY.md |
-| 5 L3 seam + L4 dual + nightly + negatives | 5563efb | L3 `--verify-against-selftest` GREEN; L4 `--self-mode` GREEN (62 fields, 0 diffs); `negative-controls.js --all` 6/6 red-as-named (fixtures/NEGATIVES.md); ParityNightly 03:00 registered |
+| 5 L3 seam + L4 dual + nightly + negatives | 5563efb | L3 `--verify-against-selftest` GREEN; L4 `--self-mode` GREEN (62 fields, 0 diffs); `negative-controls.js --all` 8/8 red-as-named (fixtures/NEGATIVES.md); ParityNightly 03:00 registered |
 | 5b Verifier harness fixes + pin sweep | 174201e + ff4eff0 | in-repo scratch guard REFUSED (was dead code); zombie closed; C8 row; L3/L4 pinned |
 
 ## REMAINING (exit sequence, no builders left)
