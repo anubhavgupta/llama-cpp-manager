@@ -1,0 +1,104 @@
+{
+  "producedBy": "node tests/L1-backend/run.js --verify-against-selftest --ref 88e65ed0455acfeb8a5a9e20aad451e94b6378bc --only contract --keep-scratch",
+  "at": "2026-11-25T09:31:55Z",
+  "mode": "verify-against-selftest",
+  "ref": "88e65ed0455acfeb8a5a9e20aad451e94b6378bc",
+  "repeat": 1,
+  "green": false,
+  "exitCode": 1,
+  "passes": [
+    {
+      "index": 1,
+      "seconds": 5,
+      "groups": [
+        "contract"
+      ],
+      "checks": 16,
+      "passed": 15,
+      "failed": 1,
+      "result": [
+        {
+          "id": "L1.ROOT.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SWAGGER.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SWAGGER-JSON.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.FIRST-RUN.BYTES",
+          "quirk": "contract",
+          "status": "fail",
+          "detail": "BYTES-HTTP-J0-BASELINE-SETTINGS-FIRST-RUN-RESPONSE — expected 103 bytes, got 103\n      fixture: fixtures/http/J0-baseline/settings-first-run.response\n      first difference at byte 73\n      expected: \"ue,\\\"settings\\\":{\\\"modelsDirectory\\\":\\\"C:\\\\\\\\Users\\\\\\\\anubh\\\\\\\\.lmstudio\\\\\\\\models\\\",\\\"serverPort\\\":8080}}\"\n      actual:   \"ue,\\\"settings\\\":{\\\"modelsDirectory\\\":\\\"C:\\\\\\\\Users\\\\\\\\anubh\\\\\\\\.lmstudiX\\\\\\\\models\\\",\\\"serverPort\\\":8080}}\""
+        },
+        {
+          "id": "L1.SETTINGS.POST-WITH-PORT.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.READ-BACK.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.TDZ-PORT-8080",
+          "quirk": "Q2",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PORT.HARD-CODED-7837",
+          "quirk": "Q11",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STATUS.IDLE.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.METRICS.STUB-SHAPE",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.MMPROJ-EXCLUDED",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.MMPROJ-FIRST-MATCH",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.UNREADABLE-ABSENT",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STATIC.INDEX-MATCHES-GOLDEN",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.REPLAY-MODELSDIR-REQUIRED",
+          "quirk": "contract",
+          "status": "pass"
+        }
+      ]
+    }
+  ]
+}

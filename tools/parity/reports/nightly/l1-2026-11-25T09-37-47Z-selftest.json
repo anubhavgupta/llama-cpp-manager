@@ -1,0 +1,350 @@
+{
+  "producedBy": "node tests/L1-backend/run.js --verify-against-selftest",
+  "at": "2026-11-25T09:37:47Z",
+  "mode": "verify-against-selftest",
+  "ref": "parity-baseline",
+  "repeat": 1,
+  "green": true,
+  "exitCode": 0,
+  "passes": [
+    {
+      "index": 1,
+      "seconds": 95.6,
+      "groups": [
+        "contract",
+        "process",
+        "restart",
+        "presets",
+        "metrics-simulated",
+        "metrics-unparsable",
+        "metrics-stub",
+        "socket"
+      ],
+      "checks": 64,
+      "passed": 64,
+      "failed": 0,
+      "result": [
+        {
+          "id": "L1.ROOT.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SWAGGER.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SWAGGER-JSON.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.FIRST-RUN.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.POST-WITH-PORT.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.READ-BACK.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.TDZ-PORT-8080",
+          "quirk": "Q2",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PORT.HARD-CODED-7837",
+          "quirk": "Q11",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STATUS.IDLE.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.METRICS.STUB-SHAPE",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.MMPROJ-EXCLUDED",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.MMPROJ-FIRST-MATCH",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.MODELS.UNREADABLE-ABSENT",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STATIC.INDEX-MATCHES-GOLDEN",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SETTINGS.REPLAY-MODELSDIR-REQUIRED",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STATUS.BEFORE-START.BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.START.MISSING-PATH-400",
+          "quirk": "Q3",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STOP.WHILE-IDLE-200",
+          "quirk": "Q3",
+          "status": "pass"
+        },
+        {
+          "id": "L1.START.OK-BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.START.ARGV-MATCHES-GOLDEN",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.LOG.STREAM-MATCHES-RECORDED-BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STATUS.RUNNING-BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STATUS.CADENCE-FREE-POLLING",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.START.ALREADY-RUNNING-200",
+          "quirk": "Q3",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STOP.OK-BYTES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.SERVER-ENDED-ORDER",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.LOG.RAW-CHUNK-BYTES-FORWARDED",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STOP.SIGTERM-THEN-SIGKILL",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.STOP.STALE-TIMER-WINDOW",
+          "quirk": "Q24",
+          "status": "pass"
+        },
+        {
+          "id": "L1.START.EXIT-CODE-PATH",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.START.EXIT-CODE-ARGV-GOLDEN",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.GROUP.SETTLED",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.RESTART.NO-CONFIG-400",
+          "quirk": "Q4",
+          "status": "pass"
+        },
+        {
+          "id": "L1.RESTART.START-FIRST",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.RESTART.GET-IS-EXPRESS-404",
+          "quirk": "Q23",
+          "status": "pass"
+        },
+        {
+          "id": "L1.RESTART.OK-200-TRUE",
+          "quirk": "Q3",
+          "status": "pass"
+        },
+        {
+          "id": "L1.RESTART.STATUS-SETTLES-FALSE",
+          "quirk": "Q23",
+          "status": "pass"
+        },
+        {
+          "id": "L1.RESTART.STOP-AFTER-RESTART-200-FALSE",
+          "quirk": "Q23",
+          "status": "pass"
+        },
+        {
+          "id": "L1.RESTART.ARGV-GAINED-ONE-SPAWN",
+          "quirk": "Q23",
+          "status": "pass"
+        },
+        {
+          "id": "L1.RESTART.EVENT-IDENTITY",
+          "quirk": "Q23",
+          "status": "pass"
+        },
+        {
+          "id": "L1.RESTART.SETTLE-RULE-BOUNDS",
+          "quirk": "Q23",
+          "status": "pass"
+        },
+        {
+          "id": "L1.RESTART.AFTER-MANAGER-RESTART-400",
+          "quirk": "Q4",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PRESETS.SEED-PORT-7838",
+          "quirk": "Q5",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PRESETS.DEFAULT-PORT-BYTES",
+          "quirk": "Q5",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PRESETS.INI-BYTES",
+          "quirk": "Q10",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PRESETS.ARGV-PORT-8080",
+          "quirk": "Q5",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PRESETS.STOP-AFTER-DEFAULT-PORT",
+          "quirk": "Q24",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PRESETS.EXPLICIT-PORT-7838",
+          "quirk": "Q5",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PRESETS.RESTART-STILL-400",
+          "quirk": "Q4",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PRESETS.STOP-AFTER-EXPLICIT-PORT",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.PRESETS.STANDIN-RELAY-ARGV-IDENTICAL",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.METRICS.SIMULATED-SHAPE",
+          "quirk": "Q6",
+          "status": "pass"
+        },
+        {
+          "id": "L1.METRICS.SIMULATED-NOT-REAL",
+          "quirk": "Q6",
+          "status": "pass"
+        },
+        {
+          "id": "L1.METRICS.GARBAGE-ZEROS",
+          "quirk": "Q6",
+          "status": "pass"
+        },
+        {
+          "id": "L1.METRICS.GARBAGE-RECORDED-NOTE",
+          "quirk": "Q6",
+          "status": "pass"
+        },
+        {
+          "id": "L1.METRICS.STUB-CANNED",
+          "quirk": "Q6",
+          "status": "pass"
+        },
+        {
+          "id": "L1.METRICS.STUB-FORMAT",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.EVENT-FAMILIES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.RELAY-BYTES-IDENTICAL",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.SERVER-ENDED-ON-EVERY-CLIENT",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.CONNECTED-CLIENTS-CLEANUP",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.DISCONNECT-REMOVES-CLIENT",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.SERVER-ERROR-UNSPAWNABLE-PATH",
+          "quirk": "contract",
+          "status": "pass"
+        }
+      ]
+    }
+  ]
+}

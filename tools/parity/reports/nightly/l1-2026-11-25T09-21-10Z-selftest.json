@@ -1,0 +1,53 @@
+{
+  "producedBy": "node tests/L1-backend/run.js --verify-against-selftest --only socket",
+  "at": "2026-11-25T09:21:10Z",
+  "mode": "verify-against-selftest",
+  "ref": "parity-baseline",
+  "repeat": 1,
+  "green": true,
+  "exitCode": 0,
+  "passes": [
+    {
+      "index": 1,
+      "seconds": 33,
+      "groups": [
+        "socket"
+      ],
+      "checks": 6,
+      "passed": 6,
+      "failed": 0,
+      "result": [
+        {
+          "id": "L1.SOCKET.EVENT-FAMILIES",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.RELAY-BYTES-IDENTICAL",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.SERVER-ENDED-ON-EVERY-CLIENT",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.CONNECTED-CLIENTS-CLEANUP",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.DISCONNECT-REMOVES-CLIENT",
+          "quirk": "contract",
+          "status": "pass"
+        },
+        {
+          "id": "L1.SOCKET.SERVER-ERROR-UNSPAWNABLE-PATH",
+          "quirk": "contract",
+          "status": "pass"
+        }
+      ]
+    }
+  ]
+}

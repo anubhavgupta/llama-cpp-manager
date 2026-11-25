@@ -1,0 +1,3 @@
+
+===== ParityNightly 2026-11-25T09:21:37Z  node v24.6.0  repo C:\projects\Cline-demo  gates refused (executor lock held)
+PARITY-LOCK-HELD: C:\parity-scratch\.parity-lock is held by pid 18440 (reaudit-holder probe) since 2026-11-25T09:21:24Z, 13 s ago. One executor runs on C:/parity-scratch at a time (AUDIT-2026-11-25 finding 3); a lock older than 45 minutes is taken over automatically.
