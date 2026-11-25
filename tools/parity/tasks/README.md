@@ -20,14 +20,23 @@ Task specs in this directory are the exact prompts each worker phase ran on.
 
 ## IN FLIGHT
 
-(none — next: Verifier L2 harness fixes, PARITY sweep, exit checklist, Auditor)
+(none)
 
 ## Landed since launch
 
 | Phase | Commit | Gate |
 |---|---|---|
 | 4b L2 UI suite | ca7fa8e | `node tests/L2-ui/run.js --verify-selftest` GREEN vs legacy; corpus 48/48; DISAGREEMENTS.md 28/48 classified; C8 resave re-pin row in PARITY.md |
-| 5 L3 seam + L4 dual + nightly + negatives | (this commit) | L3 `--verify-against-selftest` GREEN; L4 `--self-mode` GREEN (62 fields, 0 diffs); `negative-controls.js --all` 6/6 red-as-named (fixtures/NEGATIVES.md); ParityNightly 03:00 registered |
+| 5 L3 seam + L4 dual + nightly + negatives | 5563efb | L3 `--verify-against-selftest` GREEN; L4 `--self-mode` GREEN (62 fields, 0 diffs); `negative-controls.js --all` 6/6 red-as-named (fixtures/NEGATIVES.md); ParityNightly 03:00 registered |
+| 5b Verifier harness fixes + pin sweep | 174201e + ff4eff0 | in-repo scratch guard REFUSED (was dead code); zombie closed; C8 row; L3/L4 pinned |
+
+## REMAINING (exit sequence, no builders left)
+
+1. PARITY sweep: every Q-row -> `baseline-verified` citing the pinning checks (Verifier).
+2. Exit checklist plan §2: L1-L4 self-tests, gen-goldens --check (20), spec-reconcile unreconciled=0,
+   mutation --check, determinism gate, MANIFEST 193/196 re-hash, HASH-PIN verify --check, ESCALATION empty.
+3. Auditor cold-start go/no-go (fresh context, BUILD-FROM.md only).
+4. Report Part-1 verdict to user. Part 2 needs separate authorization.
 
 ## Next after L3/L4 (specs ready)
 
