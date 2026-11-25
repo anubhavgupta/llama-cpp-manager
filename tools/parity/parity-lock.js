@@ -4,7 +4,8 @@
 // under it and produced EPERM races on the ACL-deny fixture that read as suite reds).
 //
 //   node tools/parity/parity-lock.js --status     who holds it, and for how long
-//   node tools/parity/parity-lock.js --selftest   the exclusivity + stale-takeover contract
+//   node tools/parity/parity-lock.js --selftest   the exclusivity + stale-takeover contract, and the
+//                                                 scratch-owning entrypoints still acquiring it
 //
 // The lock is one O_EXCL file at <root>/.parity-lock holding the holder's pid and acquisition
 // time. A lock older than STALE_MINUTES is taken over with a printed line, because a holder that
@@ -20,7 +21,9 @@
 
 const fs = require('fs');
 const path = require('path');
+const { spawnSync } = require('child_process');
 
+const REPO = path.resolve(__dirname, '..', '..');
 const ROOT = process.env.PARITY_LOCK_ROOT || 'C:/parity-scratch';
 const LOCK_NAME = '.parity-lock';
 const LOCK_FILE = path.join(ROOT, LOCK_NAME);
@@ -103,10 +106,20 @@ function status() {
             || ageMs(payload) > STALE_MINUTES * 60000 };
 }
 
+// Every entrypoint that builds a sandbox under ROOT or owns the manager ports has to take the lock.
+// The --selftest greps their sources, because a suite that quietly stops acquiring it is the same
+// regression finding 3 recorded, and a green suite would not show it.
+const SCRATCH_ENTRYPOINTS = [
+    'tests/L1-backend/run.js', 'tests/L2-ui/run.js', 'tests/L3-seam/run.js', 'tests/L4-dual/run.js',
+    'tools/parity/nightly/run-nightly.js', 'tools/parity/negative-controls.js',
+    'tools/parity/restricted-path-proof.js'
+];
+
 // The contract finding 3 needs: a second holder is refused while the lock is live, releasing frees
 // the path for the next entrypoint, a stale lock is taken over with a printed line, a holder that
 // lost the file must not delete the new owner's lock, and an inherited run neither acquires nor
-// releases.
+// releases. The wiring is part of the contract too: every scratch-owning entrypoint must still call
+// acquire(), and an L4 --self-mode run started in a second process has to be refused by a live holder.
 function selftest() {
     const fs2 = require('fs');
     const root = fs2.mkdtempSync(path.join(require('os').tmpdir(), 'parity-lock-'));
@@ -160,11 +173,39 @@ function selftest() {
     if (!fs2.existsSync(file)) throw new Error('lock selftest: an inherited run released the parent lock');
     delete process.env[HELD_ENV];
     fs2.rmSync(file, { force: true });
+    // Wiring: the scratch-owning entrypoints still take the lock, and L4 — the suite that owns both
+    // halves of the differential scratch tree — refuses a live holder from a separate process. It
+    // reaches acquire() before it launches anything, so this costs one node startup.
+    const unwired = SCRATCH_ENTRYPOINTS.filter((relative) => {
+        const source = fs2.readFileSync(path.join(REPO, relative), 'utf8');
+        return !/parity-lock/.test(source) || !/\.acquire\(/.test(source);
+    });
+    if (unwired.length) {
+        throw new Error('lock selftest: scratch-owning entrypoint(s) no longer acquire the lock: '
+            + unwired.join(', '));
+    }
+    const holder = acquire('selftest-live-holder', { file, log });
+    const childEnv = { ...process.env, PARITY_LOCK_ROOT: root };
+    delete childEnv[HELD_ENV];
+    const l4 = spawnSync(process.execPath, [path.join(REPO, 'tests', 'L4-dual', 'run.js'),
+        '--self-mode'], { cwd: REPO, encoding: 'utf8', env: childEnv });
+    const output = (l4.stdout || '') + (l4.stderr || '');
+    if (l4.status === 0 || !output.includes('PARITY-LOCK-HELD')) {
+        throw new Error('lock selftest: tests/L4-dual/run.js --self-mode ran while the lock was held '
+            + '(exit ' + l4.status + '): ' + output.split('\n').slice(0, 4).join(' | '));
+    }
+    const stillHeld = readPayload(file);
+    if (!stillHeld || stillHeld.pid !== process.pid) {
+        throw new Error('lock selftest: a refused L4 run disturbed the holder\'s lock file');
+    }
+    holder.release();
     fs2.rmSync(root, { recursive: true, force: true });
     console.log('PARITY-LOCK SELFTEST GREEN');
     console.log('  lock file: ' + LOCK_NAME + ' under ' + ROOT + ' (O_EXCL, pid + acquiredAt)');
     console.log('  second holder refused; >' + STALE_MINUTES + ' min lock taken over with a printed line');
     console.log('  ' + HELD_ENV + ' children neither acquire nor release');
+    console.log('  acquired by all ' + SCRATCH_ENTRYPOINTS.length + ' scratch-owning entrypoints; a live '
+        + 'L4 --self-mode run in a separate process was refused by name');
     return 0;
 }
 

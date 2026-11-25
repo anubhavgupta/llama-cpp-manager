@@ -26,6 +26,7 @@ const path = require('path');
 const { DualSandbox } = require('./helpers/dual-sandbox');
 const { Observation, diff, printable } = require('./helpers/observe');
 const forwarder = require('./helpers/forwarder');
+const parityLock = require('../../tools/parity/parity-lock.js');
 
 const HERE = __dirname;
 const REPO = path.resolve(__dirname, '..', '..');
@@ -203,6 +204,19 @@ async function main() {
     if (options.list) return 0;
     enforceNoAppImports();
     fs.mkdirSync(options.out, { recursive: true });
+    // Both sides build and tear down their checkout under the shared scratch root, and each side owns
+    // manager port 7837 in turn (Q11), --self-mode included. A second executor in the same root is
+    // what manufactured false reds for the 2026-11-25 audit run (finding 3), so L4 takes the same
+    // one-executor lock the nightly holds; run-nightly.js hands it PARITY_LOCK_HELD instead.
+    const lock = parityLock.acquire('L4 tests/L4-dual/run.js ' + process.argv.slice(2).join(' '));
+    try {
+        return await runDual(options);
+    } finally {
+        lock.release();
+    }
+}
+
+async function runDual(options) {
     const { chromium } = require('playwright');
     const browser = await chromium.launch();
     const started = Date.now();
