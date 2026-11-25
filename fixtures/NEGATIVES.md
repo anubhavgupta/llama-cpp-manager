@@ -51,7 +51,7 @@ git worktree remove --force C:/parity-scratch/repro/checkout
 
 ## Layer coverage, and the gaps this inventory cannot close
 
-Rows above cover L1, L2, L3. L1 is covered by a server-region row: the mutation is made in a throwaway commit and handed to L1 as `--ref <commit>`, because L1 materialises its sandbox with `git archive <ref>` and will not take a dirty directory. The mutated checkout therefore lives outside the L1 suite scratch root (C:/parity-neg-l1), which that suite cleanTrees. That commit exists only for its run, so the Command column prints `--ref <throwaway-commit>` instead of a sha, and the literal command with the sha it actually used is the first line of the row's .log.
+Rows above cover L1, L2, L3. L1 is covered by a server-region row: the mutation is made in a throwaway commit and handed to L1 as `--ref <commit>`, because L1 materialises its sandbox with `git archive <ref>` and will not take a dirty directory. The mutated checkout therefore lives outside the L1 suite scratch root (C:/parity-neg-l1), which that suite cleanTrees. That commit exists only for its run, so the Command column prints `--ref <throwaway-commit>` instead of a sha, and the row's .log carries the same placeholder (a fresh sha for the same mutation would otherwise look like tampering, N3). Durations and the timestamped run-summary name are masked the same way, so two clean `--all` runs leave these files byte-identical.
 
 Open gap, measured 2026-11-25: the **L4** differential does not yet have a control.
 The argv mutant above was committed and run as side A against a clean side B

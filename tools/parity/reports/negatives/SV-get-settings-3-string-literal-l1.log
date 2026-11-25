@@ -1,9 +1,9 @@
-$ node tests/L1-backend/run.js --verify-against-selftest --ref e3ead344eb99df1baf4b20bb57def6530667cf93 --only contract --keep-scratch
+$ node tests/L1-backend/run.js --verify-against-selftest --ref <throwaway-commit> --only contract --keep-scratch
 
-L1 backend conformance suite — self-test against e3ead344eb99df1baf4b20bb57def6530667cf93
+L1 backend conformance suite — self-test against <throwaway-commit>
    fixtures: C:\projects\Cline-demo\fixtures  (193 recorded files, comparison policy 13 rules)
    groups: contract, process, restart, presets, metrics-simulated, metrics-unparsable, metrics-stub, socket
-== sandbox C:\parity-scratch  ref e3ead344eb99df1baf4b20bb57def6530667cf93
+== sandbox C:\parity-scratch  ref <throwaway-commit>
 --> group contract (NVIDIA_SMI_STUB_MODE=ok)
 
 checks per endpoint
@@ -39,7 +39,7 @@ PASS  [contract]  L1.MODELS.UNREADABLE-ABSENT  — no entries under models/unrea
 PASS  [contract]  L1.STATIC.INDEX-MATCHES-GOLDEN  — the served index.html is the recorded byte stream (24584 bytes)
 PASS  [contract]  L1.SETTINGS.REPLAY-MODELSDIR-REQUIRED  — 400 + {"success":false,"error":"Models directory path is required"}
 
-15 passed, 1 failed of 16 checks in 5.0 s
-run summary: tools\parity\reports\nightly\l1-2026-11-25T07-53-40Z-selftest.json
+15 passed, 1 failed of 16 checks in <elapsed> s
+run summary: tests\L1-backend\out\l1-<run-utc>-selftest.json
 
 L1 RED: see the FAIL lines above

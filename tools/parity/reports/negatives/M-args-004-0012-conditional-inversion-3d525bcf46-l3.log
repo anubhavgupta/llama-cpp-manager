@@ -5,7 +5,7 @@ $ node tests/L3-seam/run.js --app C:/parity-scratch/negatives/M-args-004-0012-co
 
 PASS  [§9A remapped mode]  L3.CORPUS-materialised  — 42 corpus model files created under C:\parity-scratch\fixtures\models; all 48 modelPaths are now /models options
 PASS  [§9 trap 6]  L3.CORPUS-list  — 48 rows in the recorded J6 order
-PASS  [Q18]  L3.CORPUS-launched-count  — 48/48 corpus configs launched through the real manager + stand-in
+PASS  [Q18]  L3.CORPUS-launched-count  — 48/48 corpus configs launched through the real manager + stand-in, no spawn-EINVAL re-post needed
 FAIL  [§9A §8 argv-jsonl]  L3.CORPUS-argv-recorded-j6  — SEAM-ARGV-J6-CORPUS-SMOKE-LAUNCH-JSONL — expected 4292 bytes, got 3036
                   fixture: fixtures/argv/J6-corpus-smoke/launch.jsonl
                   first difference at byte 25
@@ -72,6 +72,7 @@ notes
   corpus-seed: resolved seed: 48 configs, settings {"serverPort":7838,"modelsDirectory":"C:\\parity-scratch\\fixtures\\models\\"}
 
 checks by quirk: §9A remapped mode=1  §9 trap 6=1  Q18=1  §9A §8 argv-jsonl=0  Q7 Q18 Q19 Q20 Q21 Q22=0  Q20 Q21=1  Q10 Q17 §9 trap 6=1
-5 passed, 2 failed of 7 checks in 120.7 s
+manager spawn-EINVAL re-posts this fire: 0 (cap 2)
+5 passed, 2 failed of 7 checks in <elapsed> s
 
 L3 RED: 2 failing check(s), see the FAIL lines above

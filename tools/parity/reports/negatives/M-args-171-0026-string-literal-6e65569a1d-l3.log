@@ -17,6 +17,7 @@ PASS  [Q20]  L3.ARGV-chat-template-file-separators  — derived C:\parity-scratc
 PASS  [Q5 Q11]  L3.ARGV-port-from-localStorage-settings  — --port 7838 at index 38, same --host/-fit/--port tail as recorded (--host 0.0.0.0 -fit off)
 
 checks by quirk: Q11=1  §9 seam: window.models=1  §9 seam: first-match mmproj association=1  §9 seam: client argv through the real spawn path=0  §9 seam: mmproj association=0  Q20=1  Q5 Q11=1
-5 passed, 2 failed of 7 checks in 11.7 s
+manager spawn-EINVAL re-posts this fire: 0 (cap 2)
+5 passed, 2 failed of 7 checks in <elapsed> s
 
 L3 RED: 2 failing check(s), see the FAIL lines above

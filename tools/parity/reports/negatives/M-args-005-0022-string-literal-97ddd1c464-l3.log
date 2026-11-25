@@ -14,16 +14,17 @@ FAIL  [§9 seam: client argv through the real spawn path]  L3.ARGV-recorded-byte
                   shape rule: argv-jsonl
 FAIL  [§9 seam: mmproj association]  L3.ARGV-mmproj-from-window-models  — L3.WINDOW-MODELS-MATCH — the launched -m path is not in window.models (the browser launched a path the server never returned): null
 FAIL  [Q20]  L3.ARGV-chat-template-file-separators  — TypeError: Cannot read properties of null (reading 'lastIndexOf')
-                at modelDirOf (C:\projects\Cline-demo\tests\L3-seam\checks\seam.js:31:32)
-                at C:\projects\Cline-demo\tests\L3-seam\checks\seam.js:151:25
+                at modelDirOf (C:\projects\Cline-demo\tests\L3-seam\checks\seam.js:32:32)
+                at C:\projects\Cline-demo\tests\L3-seam\checks\seam.js:152:25
                 at Registry.check (C:\projects\Cline-demo\tests\L1-backend\lib\harness.js:328:34)
-                at Context.check (C:\projects\Cline-demo\tests\L3-seam\run.js:114:49)
-                at Object.argvSeam [as run] (C:\projects\Cline-demo\tests\L3-seam\checks\seam.js:147:19)
-                at async runOnce (C:\projects\Cline-demo\tests\L3-seam\run.js:137:21)
-                at async main (C:\projects\Cline-demo\tests\L3-seam\run.js:201:41)
+                at Context.check (C:\projects\Cline-demo\tests\L3-seam\run.js:142:49)
+                at Object.argvSeam [as run] (C:\projects\Cline-demo\tests\L3-seam\checks\seam.js:148:19)
+                at async runOnce (C:\projects\Cline-demo\tests\L3-seam\run.js:165:21)
+                at async main (C:\projects\Cline-demo\tests\L3-seam\run.js:232:41)
 PASS  [Q5 Q11]  L3.ARGV-port-from-localStorage-settings  — --port 7838 at index 38, same --host/-fit/--port tail as recorded (--host 0.0.0.0 -fit off)
 
 checks by quirk: Q11=1  §9 seam: window.models=1  §9 seam: first-match mmproj association=1  §9 seam: client argv through the real spawn path=0  §9 seam: mmproj association=0  Q20=0  Q5 Q11=1
-4 passed, 3 failed of 7 checks in 11.7 s
+manager spawn-EINVAL re-posts this fire: 0 (cap 2)
+4 passed, 3 failed of 7 checks in <elapsed> s
 
 L3 RED: 3 failing check(s), see the FAIL lines above
