@@ -147,6 +147,135 @@ function prepare(bag, gen) {
     }));
 }
 
+// ------------------------------------------------------------- save-channel corpus -------
+
+// The `save` region (saveCurrentValues) writes localStorage, which no argv/ini vector can see, so its
+// kill corpus is the recorded re-save family: the 48 browser-recorded re-save sessions in
+// fixtures/goldens/resave/inputs.jsonl and the bytes the legacy page wrote in the same session
+// (storage_actual) plus the key order it wrote (saved_field_order). Those are legacy output (C5), and
+// gen-goldens --check already proves the baseline slices reproduce them byte for byte.
+//
+// This corpus is read from the live tree rather than from the .snapshot because it is not a vector
+// family, so it carries its own integrity checks: the golden header pins the input file's sha256, and
+// every golden pins the form/config input shas it was composed from.
+const RESAVE_DIR = 'fixtures/goldens/resave';
+
+function loadResaveCorpus() {
+    const inputsFile = path.join(REPO, RESAVE_DIR, 'inputs.jsonl');
+    const goldensFile = path.join(REPO, RESAVE_DIR, 'goldens.jsonl');
+    for (const file of [inputsFile, goldensFile]) {
+        if (!fs.existsSync(file)) throw new Error('the save channel needs ' + path.relative(REPO, file));
+    }
+    const inputLines = vectors.readJsonl(inputsFile);
+    const inputHeader = inputLines[0];
+    vectors.assert(inputHeader.kind === 'header' && inputHeader.role === 'inputs',
+        'inputs.jsonl has no inputs header row');
+    vectors.assert(inputHeader.complete, 'inputs.jsonl is a partial recording — rerun '
+        + 'node tests/L2-ui/record-inputs.js');
+    const SAVE_OPS = ['resave', 'resave-edge'];
+    const inputs = inputLines.filter((row) => row.kind === 'input' && SAVE_OPS.includes(row.op));
+    const goldenLines = vectors.readJsonl(goldensFile);
+    const goldenHeader = goldenLines[0];
+    vectors.assert(goldenHeader.kind === 'header' && goldenHeader.family === 'resave',
+        'goldens.jsonl is not the resave family');
+    vectors.assert(vectors.sha256(fs.readFileSync(inputsFile)) === goldenHeader.inputs_sha256,
+        'inputs.jsonl does not match the sha256 the resave goldens pin — the save corpus moved');
+    const goldens = new Map(goldenLines.filter((row) => SAVE_OPS.includes(row.op))
+        .map((row) => [row.name, row]));
+    vectors.assert(goldens.size === inputs.length, 'resave golden count ' + goldens.size + ' != '
+        + inputs.length + ' recorded re-save inputs');
+    const corpus = [];
+    for (const input of inputs) {
+        const golden = goldens.get(input.name);
+        vectors.assert(golden, 'no resave golden for the recorded input ' + input.name);
+        vectors.assert(golden.input_form_sha256 === input.form_sha, input.name
+            + ': the golden pins a different form state than the input row carries');
+        vectors.assert(golden.input_configurations_sha256 === input.configurations_sha, input.name
+            + ': the golden pins different saved configs than the input row carries');
+        corpus.push({ name: input.name, input: input, golden: golden });
+    }
+    return corpus;
+}
+
+function prepareSave(gen, corpus) {
+    const kinds = slices.fieldKinds();
+    return corpus.map((row) => ({
+        name: row.name,
+        // A re-save writes into the store under the config it was loaded from; for the 48 real configs
+        // that is the row name, for an edge scenario it is the config the scenario edited.
+        configId: row.input.configId,
+        fields: slices.fieldsFromControls(row.input.form, kinds),
+        configurations: row.input.configurations,
+        golden: row.golden
+    }));
+}
+
+// What the writer PUTS: the localStorage bytes, the key order of the entry it rewrote, and whether it
+// threw. A save mutant is killed when any of those stops matching the recorded session.
+function observeSave(runner, item) {
+    try {
+        const run = runner.save(item.fields, JSON.parse(JSON.stringify(item.configurations)),
+            item.configId);
+        return { written: run.written, order: Object.keys(run.configs[item.configId] || {}),
+            threw: null };
+    } catch (error) {
+        return { written: [], order: [], threw: String(error && error.message) };
+    }
+}
+
+function compareSave(item, observed) {
+    const problems = [];
+    const golden = item.golden;
+    if (observed.threw) {
+        return ['threw: ' + observed.threw];
+    }
+    if (observed.written.length !== 1) {
+        problems.push('saveConfigurations() was called ' + observed.written.length
+            + ' time(s), the recorded session wrote exactly 1');
+        return problems;
+    }
+    if (observed.written[0] !== golden.storage_actual) {
+        problems.push('localStorage bytes differ from the bytes the legacy page wrote: '
+            + slices.firstLineDiff(observed.written[0], golden.storage_actual).split('\n')[0]);
+    }
+    if (observed.order.join('|') !== golden.saved_field_order.join('|')) {
+        problems.push('saved-field order differs: ' + observed.order.join('|'));
+    }
+    return problems;
+}
+
+function checkSave(gen, mutant, saveItems) {
+    if (!mutant._runner) mutant._runner = mutate.mutantRunner(gen, mutant, [mutant]);
+    for (let i = 0; i < saveItems.length; i += 1) {
+        const problems = compareSave(saveItems[i], observeSave(mutant._runner, saveItems[i]));
+        if (problems.length) {
+            return { status: 'killed', vector_id: 'resave:' + saveItems[i].name, index: i + 1,
+                problems: problems, checked: i + 1 };
+        }
+    }
+    return { status: 'survived', vector_id: null, index: -1, problems: [], checked: saveItems.length };
+}
+
+// One mutant, both tiers. A save mutant pays for its own 48-session corpus once (the whole corpus is
+// tier 1: it is the recorded set, there is no larger one to defer to), so tiering only applies to the
+// vector channels.
+function checkOne(gen, mutant, tier1, rest, saveItems) {
+    if (mutant.channel === 'save') {
+        return { result: checkSave(gen, mutant, saveItems), tier: 'save' };
+    }
+    let result = checkMutant(gen, mutant, tier1, 0);
+    if (result.status === 'survived') {
+        const second = checkMutant(gen, mutant, rest, tier1.length);
+        if (second.status === 'killed') {
+            return { result: { status: 'killed', vector_id: second.vector_id, index: second.index,
+                problems: second.problems, checked: tier1.length + second.checked }, tier: 'tier2' };
+        }
+        return { result: { status: 'survived', vector_id: null, index: -1, problems: [],
+            checked: tier1.length + second.checked }, tier: 'full' };
+    }
+    return { result: result, tier: 'tier1' };
+}
+
 // One channel of one vector under one mutant, shaped like a golden so equivalence.compare accepts it.
 // The untouched channel is copied from the golden, which is precisely the claim "this region cannot move
 // that output".
@@ -196,10 +325,12 @@ function checkMutant(gen, mutant, items, offset) {
 // Baseline control: the UNMUTATED slices through this runner's own observe/compare path, over every
 // vector. If this is not empty the runner is not reproducing the recording harness, and every mutant
 // verdict below it would be an artifact of the harness instead of a fact about the vectors.
-function baselineControl(gen, items) {
+function baselineControl(gen, items, saveItems) {
     const runner = {
         argv: (fields, settings, models) => slices.runBaselineArgv(gen, fields, settings, models).args,
-        ini: (configs, models) => slices.runBaselineIni(gen, configs, models)
+        ini: (configs, models) => slices.runBaselineIni(gen, configs, models),
+        save: (fields, configurations, configId) => slices.runBaselineSave(gen, fields,
+            configurations, configId)
     };
     const failures = [];
     for (const item of items) {
@@ -208,6 +339,12 @@ function baselineControl(gen, items) {
             if (problems.length) {
                 failures.push({ vector_id: item.vector.id, channel: channel, problems: problems });
             }
+        }
+    }
+    for (const item of saveItems) {
+        const problems = compareSave(item, observeSave(runner, item));
+        if (problems.length) {
+            failures.push({ vector_id: 'resave:' + item.name, channel: 'save', problems: problems });
         }
     }
     return failures;
@@ -253,6 +390,7 @@ function workerMain(job) {
     const gen = slices.slicedGenerators();
     const bag = loadSnapshot();
     const items = prepare(bag, gen);
+    const saveItems = prepareSave(gen, loadResaveCorpus());
     const tier1 = items.slice(0, job.tier1);
     const rest = items.slice(job.tier1);
     const all = mutate.enumerate().full;
@@ -275,21 +413,9 @@ function workerMain(job) {
         });
     };
     for (const mutant of todo) {
-        let result = checkMutant(gen, mutant, tier1, 0);
-        let tier = 'tier1';
-        if (result.status === 'survived') {
-            const second = checkMutant(gen, mutant, rest, tier1.length);
-            if (second.status === 'killed') {
-                result = { status: 'killed', vector_id: second.vector_id, index: second.index,
-                    problems: second.problems, checked: tier1.length + second.checked };
-                tier = 'tier2';
-            } else {
-                result = { status: 'survived', vector_id: null, index: -1, problems: [],
-                    checked: tier1.length + second.checked };
-                tier = 'full';
-            }
-        }
-        send({ id: mutant.id, status: result.status, tier: tier, vector_id: result.vector_id,
+        const once = checkOne(gen, mutant, tier1, rest, saveItems);
+        const result = once.result;
+        send({ id: mutant.id, status: result.status, tier: once.tier, vector_id: result.vector_id,
             first_killing_index: result.index, problems: result.problems.slice(0, 2),
             vectors_checked: result.checked });
     }
@@ -317,18 +443,21 @@ function runMain(options, rerun) {
     const gen = slices.slicedGenerators();
     const bag = loadSnapshot();
     const items = prepare(bag, gen);
+    const saveItems = prepareSave(gen, loadResaveCorpus());
     const list = mutate.enumerate();
     const all = list.full.slice(0, options.limit > 0 ? options.limit : list.full.length);
     vectors.assert(options.tier1 > 0 && options.tier1 < items.length,
         '--tier1 must be between 1 and ' + (items.length - 1));
 
-    const control = baselineControl(gen, items);
+    const control = baselineControl(gen, items, saveItems);
     vectors.assert(control.length === 0, 'the runner does not reproduce the recording harness: '
-        + control.length + ' vector(s) disagree with their own golden unmutated. First: '
+        + control.length + ' input(s) disagree with their own golden unmutated. First: '
         + (control[0] ? control[0].vector_id + ' ' + control[0].channel + ': ' + control[0].problems[0]
             : 'n/a'));
-    const controlResult = { vectors: items.length, channels: 2, disagreements: control.length };
-    console.log('baseline control: ' + items.length + ' vectors x 2 channels, 0 disagreements ['
+    const controlResult = { vectors: items.length, channels: 3, save_inputs: saveItems.length,
+        disagreements: control.length };
+    console.log('baseline control: ' + items.length + ' vectors x 2 channels + ' + saveItems.length
+        + ' recorded re-sessions x save, 0 disagreements ['
         + ((Date.now() - t0) / 1000).toFixed(1) + 's]');
 
     const journal = rerun ? new Map() : readJournal(all);
@@ -349,7 +478,7 @@ function runMain(options, rerun) {
     let started = 0;
     return new Promise((resolve, reject) => {
         if (pending.length === 0) {
-            resolve(finish(options, gen, bag, items, list, all, verdicts, t0, gate, 0, '',
+            resolve(finish(options, gen, bag, items, saveItems, list, all, verdicts, t0, gate, 0, '',
                 controlResult));
             return;
         }
@@ -386,21 +515,11 @@ function runMain(options, rerun) {
                             + 'recomputing serially');
                     }
                     missing.forEach((mutant, n) => {
-                        const tier1 = items.slice(0, options.tier1);
-                        let result = checkMutant(gen, mutant, tier1, 0);
-                        let tier = 'tier1';
-                        if (result.status === 'survived') {
-                            const second = checkMutant(gen, mutant, items.slice(options.tier1),
-                                tier1.length);
-                            tier = second.status === 'killed' ? 'tier2' : 'full';
-                            result = {
-                                status: second.status, vector_id: second.vector_id,
-                                index: second.index, problems: second.problems,
-                                checked: tier1.length + second.checked
-                            };
-                        }
+                        const once = checkOne(gen, mutant, items.slice(0, options.tier1),
+                            items.slice(options.tier1), saveItems);
+                        const result = once.result;
                         verdicts.set(mutant.id, appendVerdict(mutant, {
-                            id: mutant.id, status: result.status, tier: tier,
+                            id: mutant.id, status: result.status, tier: once.tier,
                             vector_id: result.vector_id, first_killing_index: result.index,
                             problems: result.problems.slice(0, 2), vectors_checked: result.checked
                         }));
@@ -408,8 +527,8 @@ function runMain(options, rerun) {
                             console.log('  recomputed ' + (n + 1) + '/' + missing.length);
                         }
                     });
-                    resolve(finish(options, gen, bag, items, list, all, verdicts, t0, gate, shardCount,
-                        stderr, controlResult));
+                    resolve(finish(options, gen, bag, items, saveItems, list, all, verdicts, t0,
+                        gate, shardCount, stderr, controlResult));
                 }
             });
         }
@@ -483,8 +602,8 @@ function compactJournal(mutants) {
     }
 }
 
-function finish(options, gen, bag, items, list, all, verdicts, t0, gate, shardCount, stderr,
-    controlResult) {
+function finish(options, gen, bag, items, saveItems, list, all, verdicts, t0, gate, shardCount,
+    stderr, controlResult) {
     const tier1Count = Math.min(options.tier1, items.length);
     const control = verifyTierSample(options, gen, items, all, verdicts);
 
@@ -527,11 +646,19 @@ function finish(options, gen, bag, items, list, all, verdicts, t0, gate, shardCo
             mismatched_against_commit: snapshotManifest.files.filter((f) => !f.matches_9d6a767).length },
         vectors: { total: items.length, tier1: tier1Count, rest: items.length - tier1Count,
             promoted: bag.promoted },
+        save_corpus: { recorded_resessions: saveItems.length,
+            file: 'fixtures/goldens/resave (inputs.jsonl + goldens.jsonl, sha-pinned pair)' },
         mutants: { enumerated: list.mutants.length, run: mutants.length,
             killed: mutants.filter((m) => m.status === 'killed').length, survived: survivors.length,
             score: (100 * mutants.filter((m) => m.status === 'killed').length / mutants.length)
                 .toFixed(2) + '%',
             by_class: byClass,
+            by_region: mutants.reduce((acc, m) => {
+                acc[m.region] = acc[m.region] || { mutants: 0, killed: 0, survived: 0 };
+                acc[m.region].mutants += 1;
+                acc[m.region][m.status] += 1;
+                return acc;
+            }, {}),
             by_tier: mutants.reduce((acc, m) => {
                 acc[m.killed_on_tier] = (acc[m.killed_on_tier] || 0) + 1;
                 return acc;
@@ -552,7 +679,11 @@ function finish(options, gen, bag, items, list, all, verdicts, t0, gate, shardCo
         + survivors.length + '  score ' + document.mutants.score);
     console.log('tiers: ' + (document.mutants.by_tier.tier1 || 0) + ' killed on tier1 (' + tier1Count
         + ' vectors), ' + (document.mutants.by_tier.tier2 || 0) + ' killed only on the rest, '
-        + (document.mutants.by_tier.full || 0) + ' survived everything');
+        + (document.mutants.by_tier.full || 0) + ' survived everything, '
+        + (document.mutants.by_tier.save || 0) + ' judged on the save channel (' + saveItems.length
+        + ' recorded re-sessions)');
+    console.log('regions: ' + Object.entries(document.mutants.by_region)
+        .map(([region, bucket]) => region + ' ' + bucket.killed + '/' + bucket.mutants + ' killed').join(', '));
     console.log('tier control: ' + control.sample_size + '/' + control.pool + ' seeded tier-1 kills'
         + ' re-run over all ' + items.length + ' vectors, ' + control.disagreements + ' disagreement(s)');
     console.log('runtime ' + ((Date.now() - t0) / 1000).toFixed(1) + 's, ' + shardCount
@@ -581,8 +712,10 @@ function selftest(options) {
     const gen = slices.slicedGenerators();
     const b = loadSnapshot();
     const items = prepare(b, gen);
-    const failures = baselineControl(gen, items);
-    console.log('baseline control: ' + items.length + ' vectors x 2 channels, ' + failures.length
+    const saveItems = prepareSave(gen, loadResaveCorpus());
+    const failures = baselineControl(gen, items, saveItems);
+    console.log('baseline control: ' + items.length + ' vectors x 2 channels + ' + saveItems.length
+        + ' recorded re-sessions x save, ' + failures.length
         + ' disagreement(s) with the recorded goldens [' + (failures.length ? 'RED' : 'GREEN') + ']');
     for (const failure of failures.slice(0, 3)) {
         console.log('  ' + failure.vector_id + ' ' + failure.channel + ': ' + failure.problems[0]);
@@ -597,7 +730,9 @@ function selftest(options) {
             red += 1;
             continue;
         }
-        const result = checkMutant(gen, mutant, items.slice(0, options.tier1), 0);
+        const result = named.region === 'save'
+            ? checkSave(gen, mutant, saveItems)
+            : checkMutant(gen, mutant, items.slice(0, options.tier1), 0);
         console.log('  ' + (result.status === 'killed' ? 'killed  ' : 'SURVIVED') + ' ' + mutant.id
             + ' (' + named.why + ') — ' + (result.vector_id || 'no vector') + ' at index '
             + result.index);
@@ -628,7 +763,8 @@ function main() {
     });
 }
 
-module.exports = { loadSnapshot, loadPromoted, prepare, observe, checkMutant, baselineControl, runMain,
+module.exports = { loadSnapshot, loadPromoted, prepare, prepareSave, loadResaveCorpus, observe,
+    observeSave, compareSave, checkSave, checkOne, checkMutant, baselineControl, runMain,
     selftest,
     options, readJournal, appendVerdict, compactJournal, verifyTierSample, NAMED_KILLS, SNAPSHOT,
     RESULTS, RUN_FILE };

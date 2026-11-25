@@ -92,17 +92,17 @@
     {
       "file": "fixtures/goldens/resave/inputs.jsonl",
       "command": "node tests/L2-ui/record-inputs.js",
-      "sha256": "34f2bda994dc04b6799b0cc3214408af334f0891da5683bd6d44ce90ef0cccac"
+      "sha256": "6b5aa098246d83886558c6b730f6a351dc233657e98f099e30f5f22f55cd6d67"
     },
     {
       "file": "fixtures/goldens/resave/inputs.manifest.json",
       "command": "node tests/L2-ui/record-inputs.js",
-      "sha256": "1e414e484099ee644a6473f68aa6f21259d527c9a97b16c0ffa5c8fa6f0b4719"
+      "sha256": "8a4f5f7a7fa4343ca143132034961eaa50c56f8144f205151e5dc8050ffcbb0c"
     },
     {
       "file": "fixtures/goldens/resave/goldens.jsonl",
       "command": "node tools/parity/gen-goldens.js",
-      "sha256": "53b34b1a3613135fd8d50f51a139bcde0a497fe4572a9fac6ca9f16fccc8cb1d"
+      "sha256": "8d8440ae7fbbe3f8e4b5a26694f5ce9cad48ae35f4adc596de2b730aa283a427"
     },
     {
       "file": "fixtures/vectors/MANIFEST.json",

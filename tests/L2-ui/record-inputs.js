@@ -53,6 +53,88 @@ async function main() {
     }
 }
 
+// 1b. The edge scenarios the 48 real configs never produce: every numeric field emptied (with the
+//     draft-model section opened, which is where two of them live), and the chat-template-kwargs field
+//     filled. These are recorded for the mutation inventory's `save` region (tools/parity/mutate.js):
+//     with only real configs as inputs, a mutant of `parseInt(x) || 0` or of the kwargs ternary has
+//     nothing to differ on, and 'no recorded input kills it' would be a property of the corpus rather
+//     than of the code. Still oracle output — the bytes come from the same baseline page in the same
+//     session, and gen-goldens throws if the pinned slice does not reproduce them (C5).
+const NUMERIC_FIELD_IDS = ['ngl', 'threads', 'temp', 'topK', 'topP', 'minP', 'repeatPenalty',
+    'presencePenalty', 'parallel', 'contextSize', 'nCpuMoe', 'cacheRam', 'specDraftNMax', 'ngld'];
+
+// The config form is a <dialog> that keeps document focus on #configName and whose subtree intercepts
+// pointer events for the fields below the fold, so Playwright cannot drive those inputs in a headless
+// session (measured: page.fill('#ngl','') leaves #ngl untouched, page.fill('#chatTemplateKwargs', text)
+// writes into #configName, and a click on #ngl is intercepted by the dialog). Setting the value and
+// dispatching the page's own input event is how a scenario reaches them; what the golden records is
+// still the bytes that baseline page's own saveCurrentValues / saveConfigurations wrote.
+async function setControlValue(page, id, value) {
+    await page.locator('#' + id).evaluate((element, text) => {
+        element.value = text;
+        element.dispatchEvent(new Event('input', { bubbles: true }));
+        element.dispatchEvent(new Event('change', { bubbles: true }));
+    }, value);
+}
+
+const EDGE_SCENARIOS = [
+    {
+        name: 'edge-empty-numeric',
+        label: 'speculation type draft-dflash, then every visible numeric field emptied',
+        async apply(page) {
+            // draft-dflash is what makes #specDraftNMax and the #draftModelSection (which holds #ngld)
+            // visible; with 'none' selected those two inputs are display:none and cannot be edited.
+            await page.selectOption('#speculationType', 'draft-dflash');
+            await page.waitForTimeout(60);
+            const emptied = [];
+            for (const id of NUMERIC_FIELD_IDS) {
+                const field = page.locator('#' + id);
+                if (!(await field.isVisible()) || !(await field.isEnabled())) continue;
+                await setControlValue(page, id, '');
+                emptied.push(id);
+            }
+            return { set_by: 'dom value + input event (see setControlValue)', emptied: emptied };
+        }
+    },
+    {
+        name: 'edge-chat-template-kwargs',
+        label: 'chat-template kwargs filled with space-padded JSON',
+        async apply(page) {
+            const value = '  {"a": 1}  ';
+            await setControlValue(page, 'chatTemplateKwargs', value);
+            return { set_by: 'dom value + input event (see setControlValue)',
+                filled: { chatTemplateKwargs: value } };
+        }
+    }
+];
+
+async function recordEdgeSession(rows, open, seed, name, scenario) {
+    const session = await open({ seed, models: 'corpus', configs: seed.configs });
+    const fresh = freshBase(await browserHelpers.fields(session.page));
+    await browserHelpers.clickConfig(session.page, name, '.edit-btn');
+    await session.page.waitForSelector('#configFormContainer[open]');
+    await session.page.waitForTimeout(60);
+    const applied = await scenario.apply(session.page);
+    await session.page.waitForTimeout(60);
+    const form = await browserHelpers.fields(session.page);
+    const configurations = JSON.parse(await browserHelpers.storageValue(session.page, 'llamaCppConfigs'));
+    await session.page.click('#saveConfigBtn');
+    await session.page.waitForTimeout(60);
+    const storageAfter = await browserHelpers.storageValue(session.page, 'llamaCppConfigs');
+    if (storageAfter === JSON.stringify(configurations)) {
+        throw new Error('the ' + scenario.name + ' re-save of ' + name
+            + ' left storage untouched — the snapshot is not the input');
+    }
+    const written = JSON.parse(storageAfter);
+    rows.push({ op: 'resave-edge', name: scenario.name, label: scenario.label, applied: applied,
+        base: fresh, form, configurations, configId: name,
+        form_sha: fixtures.sha256(JSON.stringify(form)),
+        configurations_sha: fixtures.sha256(JSON.stringify(configurations)),
+        storage_after: storageAfter,
+        saved_field_order: Object.keys(written[name]) });
+    await session.context.close();
+}
+
 async function record(browser, sandbox, server) {
     const rows = [];
     // Checkpoint after every session: a recorded session is expensive (a real browser driving the
@@ -130,6 +212,14 @@ async function record(browser, sandbox, server) {
         }
         await session.context.close();
         flush('resave');
+    }
+
+    // 1b. The edge re-saves (see EDGE_SCENARIOS).
+    {
+        for (const scenario of EDGE_SCENARIOS) {
+            await recordEdgeSession(rows, open, seed, seed.names[0], scenario);
+        }
+        flush('resave-edge');
     }
 
     // 2. Launch every config in both /models modes: the argv the browser posted, or the dialog it raised.

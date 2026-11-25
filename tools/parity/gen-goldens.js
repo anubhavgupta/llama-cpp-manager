@@ -126,6 +126,7 @@ function buildResave(gen, impl) {
     const launched = by('launch', 'corpus');
     const blocked = by('alert-blocked', 'recorded');
     const resaved = by('resave');
+    const edge = by('resave-edge');
     const created = by('create');
 
     const out = [JSON.stringify({
@@ -134,7 +135,7 @@ function buildResave(gen, impl) {
         impl: impl, inputs_file: RESAVE_INPUTS,
         inputs_sha256: vectors.sha256(slices.readText(path.join(REPO, RESAVE_INPUTS))),
         models_corpus_sha256: vectors.sha256(JSON.stringify(models)),
-        count: resaved.size + blocked.size + created.size,
+        count: resaved.size + edge.size + blocked.size + created.size,
         op_note: 'op=resave carries saved_config + saved_field_order + the exact localStorage bytes '
             + 'the composition wrote (storage_expected) and the baseline page wrote (storage_actual); '
             + 'op=launch-side values (argv, serverPath, serverPort) are composed from the recorded DOM '
@@ -142,6 +143,11 @@ function buildResave(gen, impl) {
             + 'op=alert-blocked are recorded-only (create is written by saveConfiguration, not '
             + 'saveCurrentValues; alert-blocked configs never posted anything, so argv is null and the '
             + 'recorded native dialog text is the expectation)',
+        edge_note: 'op=resave-edge is the save-channel kill input for the mutation inventory: the same '
+            + 'baseline re-save with form values the 48 real configs never produce (every numeric field '
+            + 'emptied, chat-template kwargs filled). Composed and cross-checked exactly like op=resave, '
+            + 'but it drives no launch, so it carries no argv. tools/parity/mutation-run.js scores the '
+            + '`save` region over op=resave + op=resave-edge.',
         ini_note: 'ini is base64 of a single-config ini built from the saved config (ini_from_saved), '
             + 'and ini_after_resave the same bytes rebuilt from the entry the re-save wrote — the '
             + 'difference is Q16 (orphan keys dropped, loadMode/reasoning migrated in)'
@@ -182,6 +188,29 @@ function buildResave(gen, impl) {
             serverPath: launch.serverPath, serverPort: launch.serverPort,
             ini_from_saved: ini, ini_after_resave: iniAfter,
             dialogs: launch.dialogs || []
+        }));
+    }
+    for (const [name, row] of edge) {
+        // The edge rows exist for the save channel only: composed from the recorded DOM state with the
+        // same pinned slice, and cross-checked against the bytes the baseline page wrote in that same
+        // session, so a save-region mutant is scored against legacy output rather than against a guess.
+        const fields = slices.fieldsFromControls(row.form, kinds);
+        const composed = slices.runBaselineSave(gen, fields,
+            JSON.parse(JSON.stringify(row.configurations)), row.configId);
+        vectors.assert(composed.written.length === 1, name + ': the edge save slice wrote '
+            + composed.written.length + ' times, expected one saveConfigurations() call');
+        vectors.assert(composed.written[0] === row.storage_after, name
+            + ': the composed edge localStorage bytes are not the bytes the baseline page wrote\n'
+            + slices.firstLineDiff(composed.written[0], row.storage_after));
+        const savedEntry = composed.configs[row.configId];
+        vectors.assert(Object.keys(savedEntry).join('|') === row.saved_field_order.join('|'),
+            name + ': the composed edge saved-field order is not the recorded one');
+        out.push(JSON.stringify({
+            kind: 'golden', family: RESAVE, op: 'resave-edge', name: name, impl: impl,
+            config_id: row.configId, label: row.label,
+            input_form_sha256: row.form_sha, input_configurations_sha256: row.configurations_sha,
+            saved_config: JSON.stringify(savedEntry), saved_field_order: Object.keys(savedEntry),
+            storage_expected: composed.written[0], storage_actual: row.storage_after
         }));
     }
     for (const [name, row] of created) {

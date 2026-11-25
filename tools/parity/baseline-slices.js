@@ -68,6 +68,47 @@ function baselineScript() {
     return bytes.toString('utf8').split('\r\n').join('\n');
 }
 
+function baselineMarkup() {
+    const bytes = execFileSync('git', ['show', BASELINE + ':public/index.html'],
+        { cwd: REPO, maxBuffer: 64 * 1024 * 1024 });
+    return bytes.toString('utf8').split('\r\n').join('\n');
+}
+
+// The elements between <html> and one element of a markup string, outermost first, as
+// {tag, id, classes}. Tag scan only: it walks the markup outside <script>/<style> bodies and returns
+// null when the id is not a rendered tag, so a caller that needs the chain declines rather than guessing.
+function ancestorChain(markup, id) {
+    const VOID = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta',
+        'source', 'track', 'wbr']);
+    const tag = /<!--[\s\S]*?-->|<\/(\w+)[^>]*>|<(\w+)((?:[^>"']|"[^"]*"|'[^']*')*)>/g;
+    const bodyless = markup.replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, '');
+    const classesFor = (found) => found
+        ? (found[1] === undefined ? found[2] : found[1]).split(/\s+/).filter(Boolean) : [];
+    const stack = [];
+    let match = tag.exec(bodyless);
+    while (match) {
+        if (!match[1] && !match[2]) { match = tag.exec(bodyless); continue; }
+        if (match[1]) {
+            const name = match[1].toLowerCase();
+            while (stack.length && stack[stack.length - 1].name !== name) stack.pop();
+            if (stack.length) stack.pop();
+            match = tag.exec(bodyless);
+            continue;
+        }
+        const name = match[2].toLowerCase();
+        const attrs = match[3] || '';
+        const found = /(?:^|\s)id\s*=\s*(?:"([^"]*)"|'([^']*)')/.exec(attrs);
+        const elementId = found ? (found[1] === undefined ? found[2] : found[1]) : null;
+        const classes = /(?:^|\s)class\s*=\s*(?:"([^"]*)"|'([^']*)')/.exec(attrs);
+        if (elementId === id) {
+            return stack.map((entry) => ({ tag: entry.name, id: entry.id, classes: entry.classes }));
+        }
+        if (!VOID.has(name)) stack.push({ name: name, id: elementId, classes: classesFor(classes) });
+        match = tag.exec(bodyless);
+    }
+    return null;
+}
+
 // id -> element variable name, from the baseline file's own getElementById declarations.
 function elementNameMap(source) {
     const map = new Map();
@@ -483,7 +524,8 @@ function selftest() {
 
 module.exports = {
     REPO, BASELINE, ANCHORS, sha256, readText, readJson, assert,
-    slice, normLines, firstLineDiff, baselineScript, elementNameMap, literalEntries, readShape,
+    slice, normLines, firstLineDiff, baselineScript, baselineMarkup, ancestorChain, elementNameMap,
+    literalEntries, readShape,
     slicedGenerators, loadLib, fieldKinds, runBaselineArgv, runBaselineIni, runBaselineSave,
     walk, modelsVectors, storageBlobs, settingsVectors, formStates, fieldsFromControls,
     fieldsFromConfig, selftest

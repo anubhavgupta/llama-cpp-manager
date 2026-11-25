@@ -177,6 +177,136 @@ function isNonNumericStringLiteral(text) {
     return m[2] !== '' && Number.isNaN(Number(m[2]));
 }
 
+// An `x ? <use> : <fallback>` guard where `x` is a top-level `const x = document.getElementById(id)`:
+// the fallback runs only when the element is not in the page. A mutation confined to that fallback is
+// non-effective when the oracle markup renders the id unconditionally and the oracle script cannot
+// remove the node. `falseBranchSpan` returns the fallback's span inside the holder expression.
+const ELEMENT_TRUTHY_GUARD = /^([A-Za-z_$][\w$]*)\s*\?/;
+
+function skipQuoted(text, at) {
+    const quote = text[at];
+    let i = at + 1;
+    while (i < text.length) {
+        if (text[i] === '\\') { i += 2; continue; }
+        if (text[i] === quote) return i + 1;
+        i += 1;
+    }
+    return text.length;
+}
+
+// Walks the ternary at the head of `text` at bracket depth 0. Declines (null) when the true branch
+// contains a `?` of its own, so a nested ternary is never mistaken for this one.
+function falseBranchSpan(text) {
+    const head = text.match(ELEMENT_TRUTHY_GUARD);
+    if (!head) return null;
+    const question = head.index + head[0].length - 1;
+    let depth = 0;
+    let i = question + 1;
+    while (i < text.length) {
+        const c = text[i];
+        if (c === '(' || c === '[' || c === '{') depth += 1;
+        else if (c === ')' || c === ']' || c === '}') { if (depth === 0) break; depth -= 1; }
+        else if (c === "'" || c === '"' || c === '`') { i = skipQuoted(text, i); continue; }
+        else if (depth === 0 && c === '?') return null;
+        else if (depth === 0 && c === ':') return { guard: head[1], start: i + 1, end: text.length };
+        i += 1;
+    }
+    return null;
+}
+
+// The oracle page as a set of facts a proof can lean on: which variable holds which element, and
+// whether anything in the oracle script can take that element out of the page.
+const DECLARED = /(?:const|let|var) (\w+) = [\w$.]*\.getElementById\('([^']+)'\)|(?:const|let|var) (\w+) = [\w$.]*\.querySelector\('(#[-\w]+)'\)|(?:const|let|var) (\w+) = [\w$.]*\.querySelector\('\.([-\w]+)'\)/g;
+// `x.innerHTML = `, `x.outerHTML = `, `x.remove()`, `x.replaceWith()`, `x.insertAdjacentHTML(`.
+const REWRITTEN = /(?:^|[^\w$.])([A-Za-z_$][\w$]*)\.(?:innerHTML|outerHTML)\s*=(?!=)|(?:^|[^\w$.])([A-Za-z_$][\w$]*)\.(?:remove|replaceWith)\(|(?:^|[^\w$.])([A-Za-z_$][\w$]*)\.insertAdjacentHTML\(/gm;
+
+function pageFacts() {
+    const markup = slices.baselineMarkup();
+    const script = slices.baselineScript();
+    const selectors = new Map();
+    const created = new Set();
+    let match = DECLARED.exec(script);
+    while (match) {
+        const shape = match[2] !== undefined ? { id: match[2] }
+            : match[4] !== undefined ? { id: match[4] } : { cls: match[6] };
+        const name = match[1] || match[3] || match[5];
+        if (!selectors.has(name)) selectors.set(name, []);
+        if (!selectors.get(name).some((row) => row.id === shape.id && row.cls === shape.cls)) {
+            selectors.get(name).push(shape);
+        }
+        match = DECLARED.exec(script);
+    }
+    for (const row of script.matchAll(/(?:const|let|var) (\w+) = document\.createElement\(/g)) {
+        created.add(row[1]);
+    }
+    const rewrites = [];
+    match = REWRITTEN.exec(script);
+    while (match) {
+        rewrites.push(match[1] || match[2] || match[3]);
+        match = REWRITTEN.exec(script);
+    }
+    const chains = new Map();
+    // A guard variable qualifies only when the script binds that name to exactly one element id.
+    const varToId = new Map();
+    const ambiguous = new Set();
+    for (const row of script.matchAll(/(?:const|let|var) (\w+) = document\.getElementById\('([^']+)'\)/g)) {
+        if (varToId.has(row[1]) && varToId.get(row[1]) !== row[2]) ambiguous.add(row[1]);
+        else varToId.set(row[1], row[2]);
+    }
+    for (const name of ambiguous) varToId.delete(name);
+    return {
+        markup: markup, script: script, selectors: selectors, created: created, varToId: varToId,
+        rewrites: [...new Set(rewrites)].sort(),
+        markupCount(id) {
+            return (this.markup.match(new RegExp('id\s*=\s*"' + id + '"', 'g')) || []).length;
+        },
+        chain(id) {
+            if (!chains.has(id)) chains.set(id, slices.ancestorChain(this.markup, id));
+            return chains.get(id);
+        },
+        // Why the element cannot leave the page, or the reason the argument is not available. A rewrite
+        // receiver is harmless when it resolves to a selector no ancestor of the element matches, or to
+        // a node the script created itself: a created node is a sibling of what the markup rendered,
+        // never its ancestor.
+        alwaysPresent(id) {
+            const declared = (this.selectors.get(idToVar(script, id)) || []);
+            const variable = idToVar(script, id);
+            if (this.markupCount(id) !== 1) {
+                return { ok: false, reason: '#' + id + ' is not rendered exactly once by '
+                    + slices.BASELINE + ':public/index.html' };
+            }
+            if (!variable || !declared.some((row) => row.id === id)) {
+                return { ok: false, reason: 'the oracle script never binds a const to "' + id
+                    + '" with document.getElementById, so the guard variable is not pinned to it' };
+            }
+            const chain = this.chain(id);
+            if (chain === null) return { ok: false, reason: '#' + id + ' is not a tag the oracle markup renders' };
+            const blocked = this.rewrites.filter((name) => {
+                const shapes = this.selectors.get(name) || [];
+                if (shapes.length) {
+                    return shapes.some((shape) => chain.some((row) => row.id === shape.id
+                        || (shape.cls && row.classes.includes(shape.cls))));
+                }
+                return !this.created.has(name);
+            });
+            if (blocked.length) {
+                return { ok: false, reason: 'the oracle script rewrites `' + blocked.join('`, `')
+                    + '`, which this proof cannot rule out as an ancestor of #' + id };
+            }
+            return { ok: true, variable: variable, ancestors: chain, rewrites: this.rewrites };
+        }
+    };
+}
+
+// The variable name the oracle script holds this element id in, when it holds it in exactly one.
+function idToVar(script, id) {
+    const names = [];
+    for (const row of script.matchAll(/(?:const|let|var) (\w+) = document\.getElementById\('([^']+)'\)/g)) {
+        if (row[2] === id) names.push(row[1]);
+    }
+    return names.length === 1 ? names[0] : null;
+}
+
 // Static equivalence arguments, per mutation class. Deliberately narrow: a class gets an argument only
 // where the operator pair provably cannot disagree over the operands' whole domain.
 function staticProof(mutant, site, ctx) {
@@ -246,6 +376,36 @@ function staticProof(mutant, site, ctx) {
                         + 'overlay that drops null and undefined before the generator runs.'),
                 operands: { left: left, left_type: lt }
             };
+        }
+    }
+    // A mutation that lives entirely in the fallback branch of an element-truthiness guard.
+    const branch = ctx.page ? falseBranchSpan(holder.text) : null;
+    if (branch && rel.start >= branch.start && rel.end <= branch.end) {
+        const id = ctx.page.varToId.get(branch.guard);
+        if (id) {
+            const fact = ctx.page.alwaysPresent(id);
+            if (fact.ok) {
+                const chain = fact.ancestors.map((row) => row.tag + (row.id ? '#' + row.id
+                    : row.classes.length ? '.' + row.classes[0] : ''));
+                return {
+                    kind: 'static',
+                    case: 'unreachable-element-guard-fallback',
+                    argument: 'The mutation is inside the `: `' + holder.text.slice(branch.start).trim()
+                        + '` branch of `' + holder.text.trim() + '`. That branch is evaluated only when '
+                        + '`' + branch.guard + '` is falsy, and `' + branch.guard + '` is `'
+                        + 'document.getElementById(\'' + id + '\')` taken once at load: ' + slices.BASELINE
+                        + ':public/index.html renders id="' + id + '" exactly once, inside '
+                        + chain.join(' > ') + ', and the '
+                        + 'only DOM-rewriting assignments in ' + slices.BASELINE + ':public/script.js are on '
+                        + (fact.rewrites.length ? '`' + fact.rewrites.join('`, `') + '`' : 'none') + ', none of '
+                        + 'which is that element or an ancestor of it. The guard is therefore truthy in every '
+                        + 'page state, the fallback is never evaluated, and no input can make the mutant '
+                        + 'differ from the baseline.',
+                    operands: { guard: branch.guard, element_id: id,
+                        fallback: holder.text.slice(branch.start).trim(),
+                        ancestors: fact.ancestors }
+                };
+            }
         }
     }
     return null;
@@ -487,13 +647,28 @@ function analyze(mutant, ctx, reference, index) {
     const gen = ctx.gen;
     mutant._runner = mutate.mutantRunner(gen, mutant, [mutant]);
     const site = { line: mutant.line, start: mutant.start, end: mutant.end };
-    const ctxStatic = { region: mutant.region, types: ctx.types, regionLines: ctx.regionLines };
+    const ctxStatic = { region: mutant.region, types: ctx.types, regionLines: ctx.regionLines,
+        page: ctx.page };
     const proof = staticProof(mutant, site, ctxStatic);
     if (proof) {
         return {
             survivor_id: mutant.id, status: 'equivalent-proven', method: 'static',
             row_ids: mutant.row_ids, class: mutant.class, region: mutant.region,
             before: mutant.before, after: mutant.after, static: proof,
+            probes: { run: 0, scope: null }
+        };
+    }
+    if (mutant.channel === 'save') {
+        // The probe machinery enumerates the argv/ini domain (settings sets, model lists, saved-config
+        // overlays). A save mutant leaves all three untouched, so probing it would compare two baseline
+        // generators and report a difference that cannot exist. Without a static argument the save
+        // channel has no domain enumerator yet, so the survivor stays a gap and gets escalated.
+        return {
+            survivor_id: mutant.id, status: 'unresolved-gap', method: 'save-domain-not-probed',
+            row_ids: mutant.row_ids, class: mutant.class, region: mutant.region,
+            before: mutant.before, after: mutant.after,
+            difference: 'the save channel has no boundary-domain enumerator; this survivor needs a '
+                + 'recorded re-save session that separates it from the baseline, or a static argument',
             probes: { run: 0, scope: null }
         };
     }
@@ -604,7 +779,8 @@ function buildContext() {
         regionLinesByRegion: mutate.regionSources(gen),
         regionLines: mutate.regionSources(gen).args.lines,
         rowsById: new Map(vectors.specRows().map((row) => [row.row_id, row])),
-        modelSets: modelSets(bag)
+        modelSets: modelSets(bag),
+        page: pageFacts()
     };
 }
 
@@ -1530,6 +1706,30 @@ function selftest() {
             'undefined is exactly where == and !== diverge');
     }
 
+    // The save channel's element-guard fallbacks, pinned by mutant id: the check has to say which two
+    // mutants it is talking about, not just that some proof worked.
+    const GUARD_MUTANTS = ['M-save-036-0092-branch-swap-418f9f7afd',
+        'M-save-036-0093-string-literal-2881fee7c3'].map((id) => byId.get(id));
+    if (GUARD_MUTANTS.every(Boolean)) {
+        const proven = GUARD_MUTANTS.map((mu) => {
+            withRegion(ctx, mu);
+            return staticProof(mu, { line: mu.line, start: mu.start, end: mu.end },
+                { region: mu.region, types: ctx.types, regionLines: ctx.regionLines, page: ctx.page });
+        });
+        withRegion(ctx, GUARD_MUTANTS[0]);
+        const trueAt = ctx.regionLines[GUARD_MUTANTS[0].line].indexOf('chatTemplateKwargsInput.value.trim()');
+        const control = staticProof({ class: 'string-literal', after: "'X'", before: '', channel: 'save',
+            region: 'save' }, { line: GUARD_MUTANTS[0].line, start: trueAt, end: trueAt + 10 },
+            { region: 'save', types: ctx.types, regionLines: ctx.regionLines, page: ctx.page });
+        check('the element-guard fallback proof covers the two save survivors and nothing else',
+            proven.every((p) => p && p.case === 'unreachable-element-guard-fallback') && !control,
+            proven.map((p) => (p ? p.case : 'no proof')).join(' + ') + '; same-line true-branch control '
+                + (control ? 'WRONGLY proven' : 'refused'));
+    } else {
+        check('the element-guard fallback proof covers the two save survivors and nothing else', false,
+            'those mutant ids are not in the current enumeration — refresh the ids, do not delete the check');
+    }
+
     const loop = eq.find((mu) => mu.class === 'loop-first-iteration');
     if (loop) {
         withRegion(ctx, loop);
@@ -1630,7 +1830,8 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { prove, buildContext, withRegion, analyze, staticProof, inferType, configLiteralTypes,
+module.exports = { prove, buildContext, withRegion, analyze, staticProof, pageFacts, falseBranchSpan,
+    inferType, configLiteralTypes,
     isNonNumericStringLiteral, enclosingExpression, observedValues, domainFor, probeVarsFor, probeSet,
     probeOutputs, probeVector, writeProposals, escalate, pruneProofs, writeReport, gates, selftest,
     applyPromotions, flipTargets, mutantEvaluator, appendOnly, statusOf, proofFile, PROOFS, PROMOTIONS,

@@ -12,7 +12,8 @@
 // the kill definition. Mutating lib instead would measure the extraction, not the vectors.
 //
 // Site inventory is SPEC/SPEC-ROWS.csv, not a hand list: every BA-*/INI-* row whose file is one of the
-// two generators contributes its own line + kind (operator class). A row's snippet is located inside
+// two generators contributes its own line + kind (operator class), and every SCV-* row (the
+// saveCurrentValues writer) contributes a site in the `save` region. A row's snippet is located inside
 // the baseline slice by shape-matching (a DOM read and its `fields.<id>` substitute collapse to one
 // marker), so the mutation lands on the baseline spelling of the row's own expression and on nothing
 // else that shares the line.
@@ -270,8 +271,20 @@ function regionSources(gen) {
     return {
         config: { text: gen.slices.config, lines: gen.slices.config.split('\n') },
         args: { text: gen.slices.args, lines: gen.slices.args.split('\n') },
-        ini: { text: gen.slices.ini, lines: gen.slices.ini.split('\n') }
+        ini: { text: gen.slices.ini, lines: gen.slices.ini.split('\n') },
+        // The localStorage writer: the region whose re-saved bytes the Q16 claims rest on. Its sites
+        // are the SCV-* rows, its kill corpus is the recorded re-save family.
+        save: { text: gen.slices.save, lines: gen.slices.save.split('\n') }
     };
+}
+
+// SCV-* rows cite public/script.js line numbers and the save slice is cut from that same file, so the
+// row's line maps onto the region by the anchor's own line — no shape walk needed (BA/INI rows cite lib
+// line numbers, which is why those regions align through alignments()).
+function saveRegionOffset(gen) {
+    const at = gen.baseline.indexOf(slices.ANCHORS.SAVE_START);
+    assert(at >= 0, 'ANCHORS.SAVE_START is not in the parity-baseline script.js');
+    return gen.baseline.slice(0, at).split('\n').length - 1;
 }
 
 function libLines(rel) {
@@ -584,34 +597,41 @@ function rowSites(gen, rows) {
     const regions = regionSources(gen);
     const map = alignments(gen);
     const ranges = libRanges();
+    const saveOffset = saveRegionOffset(gen);
     const sites = [];
     const unmapped = [];
     for (const row of rows) {
-        if (!/^(BA|INI)-/.test(row.row_id)) continue;
-        if (!vectors.inDomain(row)) {
-            unmapped.push({ row_id: row.row_id, reason: 'outside both generators (' + row.file + ':'
-                + row.line + '), no generator site exists', kind: row.kind });
-            continue;
-        }
-        const libLine = Number(row.line);
+        if (!/^(BA|INI|SCV)-/.test(row.row_id)) continue;
         let region = null;
-        if (row.file === 'legacy/lib/buildArgs.js') {
-            const [c0, c1] = ranges['legacy/lib/buildArgs.js'].config;
-            const [a0] = ranges['legacy/lib/buildArgs.js'].args;
-            region = libLine >= c0 && libLine <= c1 ? 'config' : libLine >= a0 ? 'args' : null;
+        let aligned = null;
+        if (row.row_id.indexOf('SCV-') === 0) {
+            region = 'save';
+            aligned = Number(row.line) - 1 - saveOffset;
         } else {
-            region = 'ini';
-        }
-        if (!region) {
-            unmapped.push({ row_id: row.row_id, reason: 'line ' + row.line + ' is inside ' + row.file
-                + ' but outside both extracted regions', kind: row.kind });
-            continue;
-        }
-        const aligned = map[region].pairs.get(libLine);
-        if (aligned === undefined) {
-            unmapped.push({ row_id: row.row_id, reason: 'lib line ' + row.line + ' does not align to the '
-                + region + ' slice', kind: row.kind });
-            continue;
+            if (!vectors.inDomain(row)) {
+                unmapped.push({ row_id: row.row_id, reason: 'outside both generators (' + row.file + ':'
+                    + row.line + '), no generator site exists', kind: row.kind });
+                continue;
+            }
+            const libLine = Number(row.line);
+            if (row.file === 'legacy/lib/buildArgs.js') {
+                const [c0, c1] = ranges['legacy/lib/buildArgs.js'].config;
+                const [a0] = ranges['legacy/lib/buildArgs.js'].args;
+                region = libLine >= c0 && libLine <= c1 ? 'config' : libLine >= a0 ? 'args' : null;
+            } else {
+                region = 'ini';
+            }
+            if (!region) {
+                unmapped.push({ row_id: row.row_id, reason: 'line ' + row.line + ' is inside ' + row.file
+                    + ' but outside both extracted regions', kind: row.kind });
+                continue;
+            }
+            aligned = map[region].pairs.get(libLine);
+            if (aligned === undefined) {
+                unmapped.push({ row_id: row.row_id, reason: 'lib line ' + row.line + ' does not align to the '
+                    + region + ' slice', kind: row.kind });
+                continue;
+            }
         }
         const lines = regions[region].lines;
         const span = spanInLine(lines[aligned], row.code_snippet);
@@ -622,7 +642,7 @@ function rowSites(gen, rows) {
         }
         sites.push({ row_id: row.row_id, kind: row.kind, region: region, line: aligned,
             start: span.start, end: span.end, before: lines[aligned].slice(span.start, span.end),
-            vars_read: row.vars_read, targets: row.targets, file: row.file, lib_line: libLine });
+            vars_read: row.vars_read, targets: row.targets, file: row.file, lib_line: Number(row.line) });
     }
     return { sites: sites, unmapped: unmapped };
 }
@@ -708,7 +728,7 @@ function enumerate(options) {
             entry.row_ids.sort();
             entry.kinds = [...new Set(entry.kinds)].sort();
             entry.mutated_sha256 = sha256(Buffer.from(entry.mutated, 'utf8'));
-            entry.channel = entry.region === 'ini' ? 'ini' : 'argv';
+            entry.channel = entry.region === 'ini' ? 'ini' : entry.region === 'save' ? 'save' : 'argv';
             void edit;
             return entry;
         })
@@ -731,7 +751,7 @@ function enumerate(options) {
     return {
         impl: 'parity-baseline',
         regions: { config: regions.config.lines.length, args: regions.args.lines.length,
-            ini: regions.ini.lines.length },
+            ini: regions.ini.lines.length, save: regions.save.lines.length },
         mutants: kept.map((mutant) => ({ id: mutant.id, class: mutant.class, region: mutant.region,
             line: mutant.line, start: mutant.start, end: mutant.end, before: mutant.before,
             after: mutant.after, row_ids: mutant.row_ids, kinds: mutant.kinds,
@@ -766,8 +786,31 @@ function compileSource(gen, region, text) {
     if (region === 'args') {
         return new Function('config', 'settings', 'modelPathSelect', 'window', text + '\n        return args;');
     }
+    if (region === 'save') {
+        return new Function('configurations', 'document', 'saveConfigurations', 'console', 'configId',
+            ...gen.saveElementNames,
+            text + '\n    saveCurrentValues(configId);\n    return configurations;');
+    }
     return new Function('configs', 'window', text + '\n        return presetContent;');
     /* eslint-enable no-new-func */
+}
+
+// The save channel observes what the writer PUTS: the localStorage bytes and the key order of the
+// entry it rewrote. These are slices.runBaselineSave's fakes, so a save mutant is judged on the same
+// DOM-shaped inputs the recorded re-save golden was composed from.
+function runSaveSlice(gen, saveFn, fields, configurations, configId) {
+    const kinds = slices.fieldKinds();
+    const read = (id) => (kinds.get(id) === 'checked'
+        ? { value: 'on', checked: fields[id] }
+        : { value: fields[id], checked: false });
+    const byName = {};
+    for (const [id, name] of gen.elements) byName[name] = read(id);
+    const written = [];
+    const saveConfigurations = () => written.push(JSON.stringify(configurations));
+    const out = saveFn(configurations, { getElementById: read }, saveConfigurations, { log() {} },
+        configId, ...gen.saveElementNames.map((name) => byName[name]));
+    assert(out === configurations, 'the mutated save slice returned a different map than it wrote');
+    return { configs: configurations, written: written };
 }
 
 // A mutant replaces exactly one region; the other generator stays baseline, so only the mutant's own
@@ -780,6 +823,8 @@ function mutantRunner(gen, mutant, mutatedFull) {
         ? compileSource(gen, 'args', entry.mutated) : gen.compiled.args;
     const iniFn = entry.region === 'ini'
         ? compileSource(gen, 'ini', entry.mutated) : gen.compiled.ini;
+    const saveFn = entry.region === 'save'
+        ? compileSource(gen, 'save', entry.mutated) : gen.compiled.save;
     const kinds = slices.fieldKinds();
     return {
         argv: (fields, settings, models) => {
@@ -792,7 +837,9 @@ function mutantRunner(gen, mutant, mutatedFull) {
                 ...gen.elementNames.map((name) => byName[name]));
             return argsFn(config, settings, byName.modelPathSelect, { models });
         },
-        ini: (configs, models) => iniFn(configs, { models })
+        ini: (configs, models) => iniFn(configs, { models }),
+        save: (fields, configurations, configId) => runSaveSlice(gen, saveFn, fields,
+            configurations, configId)
     };
 }
 
@@ -808,9 +855,10 @@ function dumpDocument(list) {
         generated_by: 'tools/parity/mutate.js',
         command: 'node tools/parity/mutate.js --dump',
         mutated_source: 'the parity-baseline inline blocks sliced by tools/parity/baseline-slices.js '
-            + '(config literal, argv block, ini block), mutated in memory; public/script.js, legacy/lib, '
-            + 'fixtures/** and tests/** are never touched',
-        site_inventory: 'SPEC/SPEC-ROWS.csv BA-*/INI-* rows (line + kind per row)',
+            + '(config literal, argv block, ini block, saveCurrentValues), mutated in memory; '
+            + 'public/script.js, legacy/lib, fixtures/** and tests/** are never touched',
+        site_inventory: 'SPEC/SPEC-ROWS.csv BA-*/INI-* rows (line + kind per row) for the two '
+            + 'generators and SCV-* rows for the saveCurrentValues region',
         base_commit: BASE_COMMIT,
         regions: list.regions,
         totals: {
@@ -836,8 +884,13 @@ function selftest() {
     const b = dumpDocument(second);
     assert(a === b, 'enumeration is not deterministic: two runs produced different mutants.json bytes');
     const ba = vectors.specRows().filter((row) => /^(BA|INI)-/.test(row.row_id));
+    const scv = vectors.specRows().filter((row) => /^SCV-/.test(row.row_id));
     const inDomain = ba.filter((row) => vectors.inDomain(row));
     assert(inDomain.length === 189, 'expected the 189 in-generator BA/INI rows, found ' + inDomain.length);
+    assert(scv.length === 28, 'expected the 28 saveCurrentValues (SCV-*) rows, found ' + scv.length);
+    const scvWithoutMutant = scv.filter((row) => !(first.per_row[row.row_id] || []).length);
+    assert(scvWithoutMutant.length === 0, 'save-region rows without a mutant: '
+        + scvWithoutMutant.map((row) => row.row_id).join(', '));
     const inDomainIds = new Set(inDomain.map((row) => row.row_id));
     const missing = first.unmapped_rows.filter((row) => inDomainIds.has(row.row_id));
     assert(missing.length === 0, 'in-generator rows without a site:\n  '
@@ -850,7 +903,8 @@ function selftest() {
     assert(ids.size === first.mutants.length, 'mutant ids are not unique');
     const bad = first.full.filter((m) => m.before === m.after);
     assert(bad.length === 0, bad.length + ' mutants are the identity');
-    return { gate: gate, list: first, ba_ini_rows: ba.length, in_domain: inDomain.length, bytes: Buffer.byteLength(a) };
+    return { gate: gate, list: first, ba_ini_rows: ba.length, in_domain: inDomain.length,
+        save_rows: scv.length, save_region_lines: first.regions.save, bytes: Buffer.byteLength(a) };
 }
 
 function main() {
@@ -866,8 +920,12 @@ function main() {
             + ' files byte-verified against git, plus the ' + result.gate.form_states.states.length
             + ' recorded form-state arrays in ' + result.gate.form_states.file + ')');
         console.log('  ' + result.in_domain + ' in-generator BA/INI rows, every one carrying >=1 mutant');
+        console.log('  ' + result.save_rows + ' SCV-* saveCurrentValues rows over a '
+            + result.save_region_lines + '-line slice, every one carrying >=1 mutant');
         console.log('  ' + result.list.mutants.length + ' mutants (' + Object.keys(classes).length
             + ' classes): ' + JSON.stringify(classes));
+        console.log('  by region: ' + JSON.stringify(result.list.mutants.reduce((all, m) => {
+            all[m.region] = (all[m.region] || 0) + 1; return all; }, {})));
         console.log('  ' + result.list.rejected.length + ' mutants rejected (would not compile), '
             + result.list.unmapped_rows.length + ' rows without a generator site');
         console.log('  --dump is byte-identical across reruns (' + result.bytes + ' bytes)');
@@ -887,8 +945,8 @@ function main() {
 module.exports = {
     REPO, REPORTS, SNAPSHOT, BASE_COMMIT, MUTANT_FILE, sha256, collapse, assert,
     committedInputs, requireCommittedInputs, shapeOf, spanInLine, scanLine, topOperators,
-    regionSources, libRanges, alignments, rowSites, enumerate, applyEdit, compiles, compileSource,
-    mutantRunner, dumpDocument, dumpPath, selftest
+    regionSources, saveRegionOffset, libRanges, alignments, rowSites, enumerate, applyEdit, compiles,
+    compileSource, runSaveSlice, mutantRunner, dumpDocument, dumpPath, selftest
 };
 
 if (require.main === module) main();
