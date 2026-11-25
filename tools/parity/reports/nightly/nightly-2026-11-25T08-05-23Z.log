@@ -1,0 +1,97 @@
+
+===== ParityNightly 2026-11-25T08:05:23Z  node v24.6.0  repo C:\projects\Cline-demo  gates L1,L2,L3,L4
+PASS  L1  99.4 s  exit=0  node tests/L1-backend/run.js --verify-against-selftest
+    | PASS  [Q4]  L1.RESTART.AFTER-MANAGER-RESTART-400  — 400 + {"success":false,"error":"No previous configuration found to restart from"}, argv log gained nothing
+    | PASS  [Q5]  L1.PRESETS.SEED-PORT-7838  — settings.json serverPort 7838 (so a DEFAULT_PORT fallback is unambiguous)
+    | PASS  [Q5]  L1.PRESETS.DEFAULT-PORT-BYTES  — 200 bytes == golden, incl. presetsFile C:\parity-scratch\app\models-preset.ini
+    | PASS  [Q10]  L1.PRESETS.INI-BYTES  — 410 bytes == fixtures/ini/J4-launch-presets/presets-direct.ini
+    | PASS  [Q5]  L1.PRESETS.ARGV-PORT-8080  — --port 8080 with settings.json at 7838, argv == the recorded dual-path evidence
+    | PASS  [Q24]  L1.PRESETS.STOP-AFTER-DEFAULT-PORT  — 200 success:true, then the recorded 1.5 s quiescence before relaunching (Q24)
+    | PASS  [Q5]  L1.PRESETS.EXPLICIT-PORT-7838  — same ini bytes, --port 7838 taken from the request body
+    | PASS  [Q4]  L1.PRESETS.RESTART-STILL-400  — 400 + "No previous configuration found to restart from"
+    | PASS  [contract]  L1.PRESETS.STOP-AFTER-EXPLICIT-PORT  — 200 success:true
+    | PASS  [contract]  L1.PRESETS.STANDIN-RELAY-ARGV-IDENTICAL  — 2 relay pairs, argv identical across the relay
+    | PASS  [Q6]  L1.METRICS.SIMULATED-SHAPE  — 220 samples (200 + 20 after 2500 ms), 2 distinct, rule metrics-body-simulated, fixture family fixtures/http/J2c-metrics-fail/
+    | PASS  [Q6]  L1.METRICS.SIMULATED-NOT-REAL  — vramUsage 606.168004755008/8192 — simulated total 8192, values not the recorded sample
+    | PASS  [Q6]  L1.METRICS.GARBAGE-ZEROS  — 220 samples (200 + 20 after 2500 ms), 2 distinct, rule metrics-body-unparsable, fixture family fixtures/http/J2b-metrics-garbage/
+    | PASS  [Q6]  L1.METRICS.GARBAGE-RECORDED-NOTE  — zeros + "0/0" confirmed against fixtures/http/J2b-metrics-garbage/shape-note.json
+    | PASS  [Q6]  L1.METRICS.STUB-CANNED  — 220 samples (200 + 20 after 2500 ms), 2 distinct, rule metrics-body-stub, fixture family fixtures/http/J1-settings/
+    | PASS  [contract]  L1.METRICS.STUB-FORMAT  — ${total-free}/${total} == 12345/24576 (24576 total, 12345 used)
+    | PASS  [contract]  L1.SOCKET.EVENT-FAMILIES  — events ["connect","log-stream"], every payload key set == SPEC/socket-contract.json
+    | PASS  [contract]  L1.SOCKET.RELAY-BYTES-IDENTICAL  — 150 payloads vs 162 relayed blocks; 481 bytes byte-identical
+    | PASS  [contract]  L1.SOCKET.SERVER-ENDED-ON-EVERY-CLIENT  — both clients got server-ended {"message":"Server process has ended"}
+    | PASS  [contract]  L1.SOCKET.CONNECTED-CLIENTS-CLEANUP  — fan-out reached the survivor only (0 payloads), the disconnected client received 0
+    | PASS  [contract]  L1.SOCKET.DISCONNECT-REMOVES-CLIENT  — a client connected after the cleanup is served and gets {"message":"Server process has ended"}
+    | PASS  [contract]  L1.SOCKET.SERVER-ERROR-UNSPAWNABLE-PATH  — unspawnable serverPath: 200 success:true on HTTP, socket got {"message":"Failed to start server: spawn C:\\parity-scratch\\app\\no-such-llama-server.exe ENOENT"}, /status back to running:false
+    | 64 passed, 0 failed of 64 checks in 99.0 s
+    | run summary: tools\parity\reports\nightly\l1-2026-11-25T08-07-03Z-selftest.json
+    | L1 SELF-TEST GREEN against parity-baseline
+PASS  L2  169.4 s  exit=0  node tests/L2-ui/run.js --verify-selftest --repeat 2
+    |    ok  http-mock: 4/4
+    |    ok  cadence: 5/5
+    |    ok  charts: 4/4
+    |    ok  dialogs: 7/7
+    |    ok  state-snapshots: 30/30
+    |    ok  corpus: 181/181
+    |    ok  misc: 21/21
+    |   report: C:\projects\Cline-demo\tests\L2-ui\out\run-1.json
+    |   disagreements: C:\projects\Cline-demo\tests\L2-ui\out\DISAGREEMENTS.md
+    | run 2/2: 433/433 assertions passed
+    |    ok  fields: 56/56
+    |    ok  conditional-ui: 96/96
+    |    ok  log-pane: 18/18
+    |    ok  socket-events: 11/11
+    |    ok  http-mock: 4/4
+    |    ok  cadence: 5/5
+    |    ok  charts: 4/4
+    |    ok  dialogs: 7/7
+    |    ok  state-snapshots: 30/30
+    |    ok  corpus: 181/181
+    |    ok  misc: 21/21
+    |   report: C:\projects\Cline-demo\tests\L2-ui\out\run-2.json
+    |   disagreements: C:\projects\Cline-demo\tests\L2-ui\out\DISAGREEMENTS.md
+    |   [diag] browser connection dropped
+    | L2 SELF-TEST GREEN against parity-baseline (2 consecutive run(s), 433/433 assertions)
+PASS  L3  335.9 s  exit=0  node tests/L3-seam/run.js --verify-against-selftest --repeat 2
+    | PASS  [§9 seam: settings split-brain]  L3.PORT-dialog-prefill-from-file  — dialog fields prefilled from settings.json (8080 + the fixture tree), localStorage still 7838
+    | PASS  [Q13]  L3.PORT-cancel-keeps-localStorage  — localStorage llamaCppSettings.serverPort still 7838
+    | PASS  [§9 seam: settings split-brain]  L3.PORT-launch-takes-merged-port  — --port 8080 (the settings.json value) while localStorage holds 7838
+    | PASS  [Q10 §9 seam: ini written verbatim]  L3.INI-presets-from-ui-bytes  — browser sha 799d3cf8929aedda === disk sha; the pane printed the sections without the trailing port line; ini existed before: false
+    | PASS  [Q5]  L3.PORT-presets-ui-argv  — ["--models-preset","C:\\parity-scratch\\app\\models-preset.ini","--host","0.0.0.0","--port","7838"]
+    | PASS  [Q5]  L3.PORT-start-vs-presets  — both paths carry --port 7838 with the client-supplied value; the 8080 fallback is the next check
+    | PASS  [Q5]  L3.PORT-presets-default-8080  — ["--models-preset","C:\\parity-scratch\\app\\models-preset.ini","--host","0.0.0.0","--port","8080"]
+    | PASS  [Q5]  L3.PORT-presets-explicit-port  — ["--models-preset","C:\\parity-scratch\\app\\models-preset.ini","--host","0.0.0.0","--port","7838"]
+    | PASS  [§9A remapped mode]  L3.CORPUS-materialised  — 42 corpus model files created under C:\parity-scratch\fixtures\models; all 48 modelPaths are now /models options
+    | PASS  [§9 trap 6]  L3.CORPUS-list  — 48 rows in the recorded J6 order
+    | PASS  [Q18]  L3.CORPUS-launched-count  — 48/48 corpus configs launched through the real manager + stand-in
+    | PASS  [§9A §8 argv-jsonl]  L3.CORPUS-argv-recorded-j6  — the first three corpus launches (2 argv-jsonl lines each) are byte-identical to the recorded J6 corpus journey (argv-jsonl)
+    | PASS  [Q7 Q18 Q19 Q20 Q21 Q22]  L3.CORPUS-argv-goldens  — 48/48 argvs positionally equal to the recorded legacy argv
+    | PASS  [Q20 Q21]  L3.CORPUS-spawn-target  — 96 corpus argv lines, every spawn aimed at fake-llama-server.exe
+    | PASS  [Q10 Q17 §9 trap 6]  L3.CORPUS-INI-bytes  — sha d5fc433e359162b4 equals the recorded corpus ini composed in insertion order, 48 sections, trailing `port = 7838` (Q10)
+    | PASS  [Q16]  L3.CORPUS-resave-bytes  — 48/48 re-saved entries byte-identical to the recorded goldens
+    | PASS  [Q16]  L3.CORPUS-resave-orphans  — Q16: the orphan keys are dropped for exactly the configs that carried them
+    | PASS  [§9 trap 6]  L3.CORPUS-resave-key-order  — storage key order survives all 48 re-saves
+    | PASS  [Q10 Q20]  L3.CORPUS-INI-token-bytes  — sha e103b55360e90aff equals the recorded token-form corpus ini exactly, 11 mixed-separator chat-template-file lines included
+    | PASS  [Q18 Q13]  L3.CORPUS-Q18-alert  — Q18: "Qwen 3 Q4 64K - 28TPS" blanks against the real option set and alerts with the recorded text
+    | notes
+    |   corpus-seed: resolved seed: 48 configs, settings {"serverPort":7838,"modelsDirectory":"C:\\parity-scratch\\fixtures\\models\\"}
+    | checks by quirk: Q11=2  §9 seam: window.models=1  §9 seam: first-match mmproj association=1  §9 seam: client argv through the real spawn path=1  §9 seam: mmproj association=1  Q20=1  Q5 Q11=1  Q2=1  §9 seam: settings split-brain=2  Q13=1  Q10 §9 seam: ini written verbatim=1  Q5=4  §9A remapped mode=1  §9 trap 6=2  Q18=1  §9A §8 argv-jsonl=1  Q7 Q18 Q19 Q20 Q21 Q22=1  Q20 Q21=1  Q10 Q17 §9 trap 6=1  Q16=2  Q10 Q20=1  Q18 Q13=1
+    | 29 passed, 0 failed of 29 checks in 167.5 s
+    | L3 SELF-TEST GREEN against parity-baseline (2 run(s))
+PASS  L4  67.1 s  exit=0  node tests/L4-dual/run.js --self-mode
+    | == side a  ref=parity-baseline  url=http://localhost:7841  scratch=C:\parity-scratch\L4-a
+    |   --> probe backend
+    |   --> probe ui
+    |   --> probe seam
+    |   side a: 62 fields, 0 problem(s)
+    | == side b  ref=parity-baseline  url=http://localhost:7842  scratch=C:\parity-scratch\L4-b
+    |   --> probe backend
+    |   --> probe ui
+    |   --> probe seam
+    |   side b: 62 fields, 0 problem(s)
+    | fields A=62 B=62  diffs=0  policy violations=0  problems=0  (66.7 s)
+    | report: C:\projects\Cline-demo\tests\L4-dual\out\report.md
+    |         C:\projects\Cline-demo\tests\L4-dual\out\report.json
+    | L4 SELF-MODE GREEN: A = B = parity-baseline produced zero field diffs.
+verdict GREEN — all gates green  (672 s)  exit=0 (red gate count)
+----- end 2026-11-25T08:16:35Z
